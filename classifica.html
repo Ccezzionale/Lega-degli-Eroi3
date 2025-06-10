@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Classifica</title>
+  <link rel="stylesheet" href="main.css" />
+</head>
+<body>
+  <nav><a href="index.html">🏠 Home</a></nav>
+  <main>
+    <h2>Classifica</h2>
+    <div class="tab-buttons">
+      <button onclick="mostraClassifica('roundrobin')">Round Robin</button>
+      <button onclick="mostraClassifica('conference')">Conference League</button>
+      <button onclick="mostraClassifica('championship')">Conference Championship</button>
+    </div>
+    <div id="contenitore-classifica"></div>
+  </main>
+  <script src="classifiche.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
