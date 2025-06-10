@@ -1,0 +1,102 @@
+
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <title>Draft Room - Lega degli Eroi (Scrittura Attiva)</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f4f4f4; padding: 20px; margin: 0; }
+    h1 { color: #1e3a8a; text-align: center; margin-bottom: 10px; }
+    select { padding: 5px; margin-top: 10px; }
+    table { width: 100%; margin-top: 20px; border-collapse: collapse; background: white; }
+    th, td { padding: 10px; border: 1px solid #ccc; text-align: center; }
+    th { background: #1e3a8a; color: white; }
+    button { padding: 6px 12px; background: #2563eb; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    button:disabled { background: #ccc; }
+  </style>
+</head>
+<body>
+
+<h1>Draft Room - Lega degli Eroi</h1>
+
+<div style="text-align: center;">
+  <label for="teamSelect">Squadra attuale:</label>
+  <select id="teamSelect">
+    <option value="">-- Scegli la tua squadra --</option>
+    <option value="Bayern">Bayern</option>
+    <option value="Desperados">Desperados</option>
+    <option value="Giulay">Giulay</option>
+    <option value="Ibla">Ibla</option>
+    <option value="Minnesode">Minnesode</option>
+    <option value="Minnesota Snakes">Minnesota Snakes</option>
+    <option value="Pandin">Pandin</option>
+    <option value="Team Bartowski">Team Bartowski</option>
+  </select>
+</div>
+
+<table id="draftTable">
+  <thead>
+    <tr><th>Pick</th><th>Squadra</th><th>Giocatore</th><th>Azione</th></tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+<script>
+  let currentTeam = "";
+
+  const scriptURL = "https://script.google.com/macros/s/AKfycby0W3NDRg4zc9RZqulatahxrlCjOzirVYmPLxZPliqPXiJxUOUBZww0pm1Y-KyzG3Y/exec";
+
+  document.getElementById("teamSelect").addEventListener("change", function () {
+    currentTeam = this.value;
+    loadDraftData();
+  });
+
+  function loadDraftData() {
+    Papa.parse("https://docs.google.com/spreadsheets/d/e/2PACX-1vSEqUua24q99bk7cVGpHkQhmNHc0EOQ0-x4v5Fut5Sqcb6G2iiJusueUPqZez2-iQ/pub?output=csv", {
+      download: true,
+      header: true,
+      complete: function (results) {
+        const data = results.data;
+        renderDraftTable(data);
+      }
+    });
+  }
+
+  function renderDraftTable(data) {
+    const tbody = document.querySelector("#draftTable tbody");
+    tbody.innerHTML = "";
+    let nextPickIndex = data.findIndex(row => row.Giocatore === "");
+    data.forEach((row, index) => {
+      const tr = document.createElement("tr");
+      const isMyTurn = row.Squadra === currentTeam && index === nextPickIndex;
+      const action = isMyTurn
+        ? `<button onclick="pickPlayer(${row.Pick}, '${row.Squadra}')">Scegli</button>`
+        : "";
+      tr.innerHTML = `<td>${row.Pick}</td><td>${row.Squadra}</td><td>${row.Giocatore || "-"}</td><td>${action}</td>`;
+      tbody.appendChild(tr);
+    });
+  }
+
+  function pickPlayer(pick, squadra) {
+    const giocatore = prompt("Inserisci il nome del giocatore scelto:");
+    if (!giocatore) return;
+
+    fetch(scriptURL, {
+      method: "POST",
+      body: JSON.stringify({ pick, squadra, giocatore }),
+      headers: { "Content-Type": "application/json" }
+    })
+    .then(res => res.text())
+    .then(msg => {
+      alert("Risposta: " + msg);
+      loadDraftData();
+    })
+    .catch(err => alert("Errore: " + err));
+  }
+
+  loadDraftData();
+</script>
+
+</body>
+</html>
