@@ -294,4 +294,4 @@ const rose = {
   }
 };
 
-export default rose;
+window.rose = rose;
