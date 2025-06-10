@@ -1,1 +1,0 @@
-const classifiche = {}; // Inserisci qui i dati reali
