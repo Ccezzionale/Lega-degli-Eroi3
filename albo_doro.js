@@ -1,0 +1,1 @@
+document.getElementById('contenitore-albo').innerText = 'Dati albo d\'oro caricati!';
