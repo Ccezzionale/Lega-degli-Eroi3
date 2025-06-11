@@ -62,6 +62,7 @@
       padding: 8px;
       text-align: center;
       font-size: 0.9em;
+      cursor: pointer;
     }
     th {
       background-color: #0074D9;
@@ -102,17 +103,23 @@
     button:hover {
       background-color: #ff6347;
     }
-    .giocatore-item {
-      background-color: #ffffff;
-      color: #000;
-      padding: 10px;
-      border-radius: 5px;
-      margin: 5px 0;
-      cursor: pointer;
-      transition: background 0.3s;
+    #lista-giocatori-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
     }
-    .giocatore-item:hover {
-      background-color: #e0e0e0;
+    #lista-giocatori-table th, #lista-giocatori-table td {
+      border: 1px solid #ffffff33;
+      padding: 8px;
+      text-align: center;
+      color: white;
+    }
+    #lista-giocatori-table th {
+      background-color: #005299;
+      cursor: pointer;
+    }
+    #lista-giocatori-table tbody tr:hover {
+      background-color: #004080;
     }
   </style>
 </head>
@@ -149,7 +156,17 @@
     <div class="lista-container">
       <label for="filtroSerieA">Filtra per Squadra Serie A:</label>
       <select id="filtroSerieA"><option value="">-- Tutte --</option></select>
-      <div id="lista-giocatori"></div>
+      <table id="lista-giocatori-table">
+        <thead>
+          <tr>
+            <th onclick="ordinaTabella(0, 'nome')">Giocatore</th>
+            <th onclick="ordinaTabella(1, 'ruolo')">Ruolo</th>
+            <th onclick="ordinaTabella(2, 'squadra')">Squadra</th>
+            <th onclick="ordinaTabella(3, 'quotazione', true)">Quotazione</th>
+          </tr>
+        </thead>
+        <tbody id="lista-giocatori"></tbody>
+      </table>
     </div>
   </div>
 
@@ -164,7 +181,6 @@
       const righe = csv.trim().split(/\r?\n/).slice(1);
       const prossima = righe.find(r => r.split(",")[2].trim() === "");
       if (!prossima) return document.getElementById("turno-attuale").textContent = "✅ Draft completato!";
-
       const [pick, squadra] = prossima.split(",");
       document.getElementById("turno-attuale").textContent = `🎯 È il turno di: ${squadra} (Pick ${pick})`;
     }
@@ -173,32 +189,40 @@
       const res = await fetch("giocatori_completo_finale.csv");
       const text = await res.text();
       allRows = text.trim().split(/\r?\n/).slice(1);
-
-      const pickCSV = await fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vTDKKMarxp0Kl7kiIWa-1X7jB-54KcQaLIGArN1FfR_X40rwAKVRgUYRGhrzIJ7SsKtUPnk_Cz8F0qt/pub?output=csv");
-      const pickText = await pickCSV.text();
+      const pickText = await (await fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vTDKKMarxp0Kl7kiIWa-1X7jB-54KcQaLIGArN1FfR_X40rwAKVRgUYRGhrzIJ7SsKtUPnk_Cz8F0qt/pub?output=csv")).text();
       pickText.split(/\r?\n/).slice(1).forEach(r => {
         const name = r.split(",")[2]?.trim();
         if (name) giocatoriScelti.add(normalize(name));
       });
 
-      const listaDiv = document.getElementById("lista-giocatori");
+      aggiornaLista();
       const filtro = document.getElementById("filtroSerieA");
       const setSA = new Set();
+      allRows.forEach(r => {
+        const [, , squadraSA] = r.split(",").map(c => c.trim());
+        setSA.add(squadraSA);
+      });
+      filtro.innerHTML = '<option value="">-- Tutte --</option>';
+      [...setSA].sort().forEach(sa => {
+        const o = document.createElement("option");
+        o.textContent = sa;
+        filtro.appendChild(o);
+      });
+      filtro.addEventListener("change", aggiornaLista);
+    }
 
-      listaDiv.innerHTML = "";
-
+    function aggiornaLista() {
+      const filtro = document.getElementById("filtroSerieA").value;
+      const tbody = document.getElementById("lista-giocatori");
+      tbody.innerHTML = "";
       allRows.forEach(r => {
         const [nome, ruolo, squadraSA, quot] = r.split(",").map(c => c.trim().replace(/^"|"$/g, ""));
         const key = normalize(nome);
         if (giocatoriScelti.has(key)) return;
-        ruoloMap[key] = ruolo;
-        squadraMap[key] = [squadraSA, quot];
-        setSA.add(squadraSA);
-
-        const div = document.createElement("div");
-        div.className = "giocatore-item";
-        div.textContent = `${nome} | ${ruolo} | ${squadraSA} | €${quot}`;
-        div.addEventListener("click", () => {
+        if (filtro && squadraSA !== filtro) return;
+        const tr = document.createElement("tr");
+        tr.innerHTML = `<td>${nome}</td><td>${ruolo}</td><td>${squadraSA}</td><td>${quot}</td>`;
+        tr.addEventListener("click", () => {
           if (confirm(`Vuoi davvero scegliere ${nome}?`)) {
             const form = document.createElement("form");
             form.method = "POST";
@@ -212,42 +236,20 @@
             form.submit();
           }
         });
-        listaDiv.appendChild(div);
+        tbody.appendChild(tr);
       });
+    }
 
-      filtro.innerHTML = '<option value="">-- Tutte --</option>';
-      [...setSA].sort().forEach(sa => {
-        const o = document.createElement("option");
-        o.textContent = sa;
-        filtro.appendChild(o);
+    function ordinaTabella(colIndex, key, numerico = false) {
+      const rows = Array.from(document.querySelectorAll("#lista-giocatori tr"));
+      rows.sort((a, b) => {
+        const aVal = a.cells[colIndex].textContent.trim();
+        const bVal = b.cells[colIndex].textContent.trim();
+        return numerico ? parseFloat(bVal) - parseFloat(aVal) : aVal.localeCompare(bVal);
       });
-
-      filtro.addEventListener("change", () => {
-        listaDiv.innerHTML = "";
-        allRows.forEach(r => {
-          const [nome, ruolo, squadraSA, quot] = r.split(",").map(c => c.trim().replace(/^"|"$/g, ""));
-          const key = normalize(nome);
-          if (giocatoriScelti.has(key) || (filtro.value && squadraSA !== filtro.value)) return;
-          const div = document.createElement("div");
-          div.className = "giocatore-item";
-          div.textContent = `${nome} | ${ruolo} | ${squadraSA} | €${quot}`;
-          div.addEventListener("click", () => {
-            if (confirm(`Vuoi davvero scegliere ${nome}?`)) {
-              const form = document.createElement("form");
-              form.method = "POST";
-              form.action = "https://script.google.com/macros/s/AKfycby0W3NDRg4zc9RZqulatahxrlCjOzirVYmPLxZPliqPXiJxUOUBZww0pm1Y-KyzG3Y/exec";
-              form.style.display = "none";
-              const g = document.createElement("input");
-              g.name = "giocatore";
-              g.value = nome;
-              form.appendChild(g);
-              document.body.appendChild(form);
-              form.submit();
-            }
-          });
-          listaDiv.appendChild(div);
-        });
-      });
+      const tbody = document.getElementById("lista-giocatori");
+      tbody.innerHTML = "";
+      rows.forEach(row => tbody.appendChild(row));
     }
 
     async function caricaPick() {
@@ -256,17 +258,14 @@
       const righe = text.trim().split(/\r?\n/).slice(1);
       const tbody = document.querySelector("#tabella-pick tbody");
       tbody.innerHTML = "";
-
       const ultime = [], perRuolo = {}, perSquadra = {};
       let evidenziata = false;
-
       righe.forEach(riga => {
         const [pick, squadraFant, giocatore] = riga.match(/(".*?"|[^",]+)(?=,|$)/g)?.map(c => c.replace(/^"|"$/g, "")) || [];
         const key = normalize(giocatore);
         const ruolo = ruoloMap[key] || "—";
         const squadraSA = squadraMap[key]?.[0] || "—";
         const quot = squadraMap[key]?.[1] || "—";
-
         const tr = document.createElement("tr");
         tr.innerHTML = `<td>${pick}</td><td>${squadraFant}</td><td>${giocatore}</td><td>${ruolo}</td><td>${squadraSA}</td><td>${quot}</td>`;
         if (!giocatore && !evidenziata) {
@@ -274,12 +273,10 @@
           evidenziata = true;
         }
         tbody.appendChild(tr);
-
         if (giocatore) ultime.push(giocatore);
         if (ruolo !== "—") perRuolo[ruolo] = (perRuolo[ruolo] || 0) + 1;
         if (squadraFant) perSquadra[squadraFant] = (perSquadra[squadraFant] || 0) + 1;
       });
-
       document.getElementById("ultime-pick").innerHTML = `<strong>Ultime 3 Pick:</strong> ${ultime.slice(-3).reverse().join(", ")}`;
       document.getElementById("stat-ruolo").innerHTML = `<strong>Pick per Ruolo:</strong> ${Object.entries(perRuolo).map(([r,c]) => `${r}: ${c}`).join(" | ")}`;
       document.getElementById("stat-squadra").innerHTML = `<strong>Pick per Squadra Fanta:</strong> ${Object.entries(perSquadra).map(([s,c]) => `${s}: ${c}`).join(" | ")}`;
