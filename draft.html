@@ -219,9 +219,11 @@
       allRows.forEach(r => {
         const [nome, ruolo, squadraSA, quot] = r.split(",").map(c => c.trim().replace(/^"|"$/g, ""));
         const key = nome ? normalize(nome) : "";
+      ruoloSet.add(ruolo);
         if (giocatoriScelti.has(key)) return;
         if (filtro && squadraSA !== filtro) return;
       if (filtroRuolo && ruolo !== filtroRuolo) return;
+      
         const tr = document.createElement("tr");
         tr.innerHTML = `<td>${nome}</td><td>${ruolo}</td><td>${squadraSA}</td><td>${quot}</td>`;
         tr.addEventListener("click", () => {
