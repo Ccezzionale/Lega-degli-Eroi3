@@ -166,7 +166,8 @@
           const pick = colonne[0] || "";
           const squadra = colonne[1] || "";
           const giocatore = colonne[2] || "";
-          const key = giocatore.toLowerCase();
+          const normalize = str => str.normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]/gi, "").toLowerCase();
+      const key = normalize(giocatore);
           const ruolo = ruoloMap[key] || "—";
           const squadraSerieA = squadraMap[key] || "—";
           const tr = document.createElement("tr");
