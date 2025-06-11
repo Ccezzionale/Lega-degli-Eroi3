@@ -218,7 +218,7 @@
       const ruoloSet = new Set();
       allRows.forEach(r => {
         const [nome, ruolo, squadraSA, quot] = r.split(",").map(c => c.trim().replace(/^"|"$/g, ""));
-        const key = normalize(nome);
+        const key = nome ? normalize(nome) : "";
         if (giocatoriScelti.has(key)) return;
         if (filtro && squadraSA !== filtro) return;
       if (filtroRuolo && ruolo !== filtroRuolo) return;
@@ -286,7 +286,7 @@
       let evidenziata = false;
       righe.forEach(riga => {
         const [pick, squadraFant, giocatore] = riga.match(/(".*?"|[^",]+)(?=,|$)/g)?.map(c => c.replace(/^"|"$/g, "")) || [];
-        const key = normalize(giocatore);
+        const key = giocatore ? normalize(giocatore) : "";
         const ruolo = ruoloMap[key] || "—";
         const squadraSA = squadraMap[key]?.[0] || "—";
         const quot = squadraMap[key]?.[1] || "—";
