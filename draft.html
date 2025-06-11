@@ -123,7 +123,15 @@
     #lista-giocatori-table tbody tr:hover {
       background-color: #004080;
     }
-  </style>
+  
+#tabella-pick-container {
+  max-height: 420px;
+  overflow-y: auto;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+</style>
 </head>
 <body>
 <h1>Draft Room - Lega degli Eroi</h1>
@@ -133,7 +141,7 @@
 <div id="turno-attuale">⏳ Caricamento turno in corso...</div>
 <div class="container">
 <div class="tabella-container">
-<table id="tabella-pick">
+<div id="tabella-pick-container"><table id="tabella-pick">
 <thead>
 <tr>
 <th>Pick</th>
@@ -145,7 +153,7 @@
 </tr>
 </thead>
 <tbody></tbody>
-</table>
+</table></div>
 <div class="stats">
 <h2>Statistiche Live</h2>
 <div id="ultime-pick"></div>
