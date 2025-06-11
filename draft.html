@@ -129,7 +129,7 @@
         <th>Squadra</th>
         <th>Giocatore</th>
         <th>Ruolo</th>
-        <th>Squadra Serie A</th>
+        <th>Squadra</th><th>Quotazione</th>
       </tr>
     </thead>
     <tbody></tbody>
@@ -170,7 +170,7 @@
           const ruolo = ruoloMap[key] || "—";
           const squadraSerieA = squadraMap[key] || "—";
           const tr = document.createElement("tr");
-          tr.innerHTML = `<td>${pick}</td><td>${squadra}</td><td>${giocatore}</td><td>${ruolo}</td><td>${squadraSerieA}</td>`;
+          tr.innerHTML = `<td>${pick}</td><td>${squadra}</td><td>${giocatore}</td><td>${ruolo}</td><td>${squadraMap[key] ? squadraMap[key][0] : "—"}</td><td>${squadraMap[key] ? squadraMap[key][1] : "—"}</td>`;
           tbody.appendChild(tr);
         }
       });
