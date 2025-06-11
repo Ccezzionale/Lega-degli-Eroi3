@@ -316,7 +316,18 @@
         filtroRuoloSelect.appendChild(opt);
       });
 
+      
+      const filtroRuoloSelect = document.getElementById("filtroRuolo");
+      filtroRuoloSelect.innerHTML = '<option value="">-- Tutti i Ruoli --</option>';
+      [...ruoloSet].sort().forEach(r => {
+        const opt = document.createElement("option");
+        opt.value = r;
+        opt.textContent = r;
+        filtroRuoloSelect.appendChild(opt);
+      });
+
       document.getElementById("stat-squadra")
+        
             .innerHTML = `<strong>Pick per Squadra Fanta:</strong> ${Object.entries(perSquadra).map(([s,c]) => `${s}: ${c}`).join(" | ")}`;
     }
 
