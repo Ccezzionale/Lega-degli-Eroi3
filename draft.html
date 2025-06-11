@@ -128,35 +128,52 @@
         <th>Pick</th>
         <th>Squadra</th>
         <th>Giocatore</th>
+        <th>Ruolo</th>
+        <th>Squadra Serie A</th>
       </tr>
     </thead>
     <tbody></tbody>
   </table>
 
   <script>
+    let ruoloMap = {};
+    let squadraMap = {};
+
+    async function caricaLookupGiocatori() {
+      const res = await fetch("giocatori_2024_base.csv");
+      const text = await res.text();
+      const lines = text.trim().split(/\r?\n/).slice(1);
+      lines.forEach(r => {
+        const [nome, ruolo, squadra] = r.split(",").map(c => c.trim().replace(/^"|"$/g, ""));
+        const key = nome.toLowerCase();
+        ruoloMap[key] = ruolo;
+        squadraMap[key] = squadra;
+      });
+    }
+
     async function caricaPick() {
-      try {
-        const response = await fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vTDKKMarxp0Kl7kiIWa-1X7jB-54KcQaLIGArN1FfR_X40rwAKVRgUYRGhrzIJ7SsKtUPnk_Cz8F0qt/pub?output=csv");
-        const text = await response.text();
-        const righe = text.trim().split(/\r?\n/).slice(1);
-        const tbody = document.querySelector("#tabella-pick tbody");
-        tbody.innerHTML = "";
+      if (Object.keys(ruoloMap).length === 0) await caricaLookupGiocatori();
 
-        righe.forEach(riga => {
-          const colonne = riga.match(/(".*?"|[^",]+)(?=,|$)/g)?.map(c => c.replace(/^"|"$/g, ""));
-          if (colonne && colonne.length >= 2) {
-            const pick = colonne[0] || "";
-            const squadra = colonne[1] || "";
-            const giocatore = colonne[2] || "";
-            const tr = document.createElement("tr");
-            tr.innerHTML = `<td>${pick}</td><td>${squadra}</td><td>${giocatore}</td>`;
-            tbody.appendChild(tr);
-          }
-        });
+      const response = await fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vTDKKMarxp0Kl7kiIWa-1X7jB-54KcQaLIGArN1FfR_X40rwAKVRgUYRGhrzIJ7SsKtUPnk_Cz8F0qt/pub?output=csv");
+      const text = await response.text();
+      const righe = text.trim().split(/\r?\n/).slice(1);
+      const tbody = document.querySelector("#tabella-pick tbody");
+      tbody.innerHTML = "";
 
-      } catch (err) {
-        console.error("Errore nel caricamento delle pick:", err);
-      }
+      righe.forEach(riga => {
+        const colonne = riga.match(/(".*?"|[^",]+)(?=,|$)/g)?.map(c => c.replace(/^"|"$/g, ""));
+        if (colonne && colonne.length >= 2) {
+          const pick = colonne[0] || "";
+          const squadra = colonne[1] || "";
+          const giocatore = colonne[2] || "";
+          const key = giocatore.toLowerCase();
+          const ruolo = ruoloMap[key] || "—";
+          const squadraSerieA = squadraMap[key] || "—";
+          const tr = document.createElement("tr");
+          tr.innerHTML = `<td>${pick}</td><td>${squadra}</td><td>${giocatore}</td><td>${ruolo}</td><td>${squadraSerieA}</td>`;
+          tbody.appendChild(tr);
+        }
+      });
     }
   </script>
 </body>
