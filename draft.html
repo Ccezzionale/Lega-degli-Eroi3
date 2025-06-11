@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-
 <html lang="it">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Draft Room ‑ Lega degli Eroi</title>
-<style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Draft Room ‑ Lega degli Eroi</title>
+  <style>
     /* ---- palette blu / oro / rosso ---- */
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -105,78 +104,70 @@
   </style>
 </head>
 <body>
-<h1>Draft Room ‑ Lega degli Eroi</h1>
-<div class="top-link">
-<a href="statistiche.html" target="_blank">📊 Vai alle Statistiche del Draft</a>
-</div>
-<!-- ===== FORM PICK ===== -->
-<div id="turno-attuale" style="text-align:center; font-weight:bold; margin-bottom:15px;">⏳ Caricamento turno in corso...</div><form action="https://script.google.com/macros/s/AKfycby0W3NDRg4zc9RZqulatahxrlCjOzirVYmPLxZPliqPXiJxUOUBZww0pm1Y-KyzG3Y/exec" method="POST">
+  <h1>Draft Room ‑ Lega degli Eroi</h1>
+  <div class="top-link">
+    <a href="statistiche.html" target="_blank">📊 Vai alle Statistiche del Draft</a>
+  </div>
 
+  <!-- ===== FORM PICK ===== -->
+  <form method="POST"
+        action="https://script.google.com/macros/s/AKfycby0W3NDRg4zc9RZqulatahxrlCjOzirVYmPLxZPliqPXiJxUOUBZww0pm1Y-KyzG3Y/exec">
+    <label for="pick">Numero Pick:</label>
+    <input type="number" name="pick" id="pick" required />
 
+    <label for="squadra">Nome Squadra:</label>
+    <select name="squadra" id="squadra" required>
+      <option value="">-- Seleziona una squadra --</option>
+      <option>MinneSota Snakes</option>
+      <option>Pandinicoccolosini</option>
+      <option>Desperados</option>
+      <option>Giulay</option>
+      <option>Ibla</option>
+      <option>Minnesode Timberland</option>
+      <option>Bayern Christiansen</option>
+      <option>Team Bartowski</option>
+    </select>
 
+    <label for="filtroSerieA">Filtra per Squadra Serie&nbsp;A:</label>
+    <select id="filtroSerieA">
+      <option value="">-- Tutte --</option>
+    </select>
 
-<label for="filtroSerieA">Filtra per Squadra Serie A:</label>
-<select id="filtroSerieA">
-<option value="">-- Tutte --</option>
-</select>
-<label for="giocatore">Giocatore:</label>
-<input id="giocatore" list="lista-giocatori" name="giocatore" required=""/>
-<datalist id="lista-giocatori"></datalist>
-<button type="submit">Invia Pick</button>
-<div id="message"></div>
-</form>
-<button id="aggiorna">🔁 Aggiorna Pick</button>
-<!-- ===== TABELLA PICK ===== -->
-<table id="tabella-pick">
-<thead>
-<tr>
-<th>Pick</th>
-<th>Squadra</th>
-<th>Giocatore</th>
-<th>Ruolo</th>
-<th>Squadra Serie A</th>
-<th>Quot.</th>
-</tr>
-</thead>
-<tbody></tbody>
-</table>
-<!-- ===== STATISTICHE ===== -->
-<div class="stats">
-<h2>Statistiche Live</h2>
-<div id="ultime-pick"></div>
-<div id="stat-ruolo"></div>
-<div id="stat-squadra"></div>
-</div>
-<!-- ===== SCRIPT ===== -->
-<script>
-async function mostraTurnoAttuale() {
-  const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTDKKMarxp0Kl7kiIWa-1X7jB-54KcQaLIGArN1FfR_X40rwAKVRgUYRGhrzIJ7SsKtUPnk_Cz8F0qt/pub?output=csv";
-  const csv = await (await fetch(url)).text();
-  const righe = csv.trim().split(/\r?\n/).slice(1);
-  const prossima = righe.find(r => r.split(",")[2].trim() === "");
-  if (!prossima) return document.getElementById("turno-attuale").textContent = "✅ Draft completato!";
+    <label for="giocatore">Giocatore:</label>
+    <input list="lista-giocatori" name="giocatore" id="giocatore" required />
+    <datalist id="lista-giocatori"></datalist>
 
-  const colonne = prossima.split(",");
-  const pick = colonne[0]?.trim();
-  const squadra = colonne[1]?.trim();
-  document.getElementById("turno-attuale").textContent = `🎯 È il turno di: ${squadra} (Pick ${pick})`;
+    <button type="submit">Invia Pick</button>
+    <div id="message"></div>
+  </form>
 
-  // auto-compilazione per invio
-  const form = document.querySelector("form");
-  const pickInput = document.createElement("input");
-  pickInput.type = "hidden";
-  pickInput.name = "pick";
-  pickInput.value = pick;
-  form.appendChild(pickInput);
+  <button id="aggiorna">🔁 Aggiorna Pick</button>
 
-  const squadraInput = document.createElement("input");
-  squadraInput.type = "hidden";
-  squadraInput.name = "squadra";
-  squadraInput.value = squadra;
-  form.appendChild(squadraInput);
-}
-window.addEventListener("DOMContentLoaded", mostraTurnoAttuale);
-</script><script>
+  <!-- ===== TABELLA PICK ===== -->
+  <table id="tabella-pick">
+    <thead>
+      <tr>
+        <th>Pick</th>
+        <th>Squadra</th>
+        <th>Giocatore</th>
+        <th>Ruolo</th>
+        <th>Squadra Serie A</th>
+        <th>Quot.</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <!-- ===== STATISTICHE ===== -->
+  <div class="stats">
+    <h2>Statistiche Live</h2>
+    <div id="ultime-pick"></div>
+    <div id="stat-ruolo"></div>
+    <div id="stat-squadra"></div>
+  </div>
+
+  <!-- ===== SCRIPT ===== -->
+  <script>
     // mappe globali
     const ruoloMap   = {};   // nome normalizzato -> ruolo
     const squadraMap = {};   // nome normalizzato -> [squadraSA, quotazione]
