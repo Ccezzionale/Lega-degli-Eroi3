@@ -141,7 +141,7 @@
     let squadraMap = {};
 
     async function caricaLookupGiocatori() {
-      const res = await fetch("giocatori_completo.csv");
+      const res = await fetch("giocatori_completo_finale.csv");
       const text = await res.text();
       const lines = text.trim().split(/\r?\n/).slice(1);
       lines.forEach(r => {
