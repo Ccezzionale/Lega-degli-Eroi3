@@ -216,6 +216,7 @@
       const tbody = document.getElementById("lista-giocatori");
       tbody.innerHTML = "";
       const ruoloSet = new Set();
+      const ruoloSet = new Set();
       allRows.forEach(r => {
         const [nome, ruolo, squadraSA, quot] = r.split(",").map(c => c.trim().replace(/^"|"$/g, ""));
         const key = normalize(nome);
@@ -259,6 +260,7 @@
         });
         tbody.appendChild(tr);
       ruoloSet.add(ruolo);
+      ruoloSet.add(ruolo);
       });
     }
 
@@ -272,6 +274,7 @@
       const tbody = document.getElementById("lista-giocatori");
       tbody.innerHTML = "";
       const ruoloSet = new Set();
+      const ruoloSet = new Set();
       rows.forEach(row => tbody.appendChild(row));
     }
 
@@ -281,6 +284,7 @@
       const righe = text.trim().split(/\r?\n/).slice(1);
       const tbody = document.querySelector("#tabella-pick tbody");
       tbody.innerHTML = "";
+      const ruoloSet = new Set();
       const ruoloSet = new Set();
       const ultime = [], perRuolo = {}, perSquadra = {};
       let evidenziata = false;
@@ -298,6 +302,7 @@
         }
         tbody.appendChild(tr);
       ruoloSet.add(ruolo);
+      ruoloSet.add(ruolo);
         if (giocatore) ultime.push(giocatore);
         if (ruolo !== "—") perRuolo[ruolo] = (perRuolo[ruolo] || 0) + 1;
         if (squadraFant) perSquadra[squadraFant] = (perSquadra[squadraFant] || 0) + 1;
@@ -305,7 +310,15 @@
       document.getElementById("ultime-pick").innerHTML = `<strong>Ultime 3 Pick:</strong> ${ultime.slice(-3).reverse().join(", ")}`;
       document.getElementById("stat-ruolo").innerHTML = `<strong>Pick per Ruolo:</strong> ${Object.entries(perRuolo).map(([r,c]) => `${r}: ${c}`).join(" | ")}`;
       
+      
       const filtroRuoloSelect = document.getElementById("filtroRuolo");
+      filtroRuoloSelect.innerHTML = '<option value="">-- Tutti i Ruoli --</option>';
+      [...ruoloSet].sort().forEach(r => {
+        const opt = document.createElement("option");
+        opt.value = r;
+        opt.textContent = r;
+        filtroRuoloSelect.appendChild(opt);
+      });
       filtroRuoloSelect.innerHTML = '<option value="">-- Tutti i Ruoli --</option>';
       [...ruoloSet].sort().forEach(r => {
         const o = document.createElement("option");
