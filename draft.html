@@ -1,10 +1,11 @@
 <!DOCTYPE html>
+
 <html lang="it">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Draft Room - Lega degli Eroi</title>
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Draft Room - Lega degli Eroi</title>
+<style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background-color: #001f3f;
@@ -125,53 +126,50 @@
   </style>
 </head>
 <body>
-  <h1>Draft Room - Lega degli Eroi</h1>
-  <div class="top-link">
-    <a href="statistiche.html" target="_blank">📊 Vai alle Statistiche del Draft</a>
-  </div>
-  <div id="turno-attuale">⏳ Caricamento turno in corso...</div>
-
-  <div class="container">
-    <div class="tabella-container">
-      <table id="tabella-pick">
-        <thead>
-          <tr>
-            <th>Pick</th>
-            <th>Squadra</th>
-            <th>Giocatore</th>
-            <th>Ruolo</th>
-            <th>Squadra Serie A</th>
-            <th>Quot.</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-      <div class="stats">
-        <h2>Statistiche Live</h2>
-        <div id="ultime-pick"></div>
-        <div id="stat-ruolo"></div>
-        <div id="stat-squadra"></div>
-      </div>
-    </div>
-
-    <div class="lista-container">
-      <label for="filtroSerieA">Filtra per Squadra Serie A:</label>
-      <select id="filtroSerieA"><option value="">-- Tutte --</option></select>
-      <table id="lista-giocatori-table">
-        <thead>
-          <tr>
-            <th onclick="ordinaTabella(0, 'nome')">Giocatore</th>
-            <th onclick="ordinaTabella(1, 'ruolo')">Ruolo</th>
-            <th onclick="ordinaTabella(2, 'squadra')">Squadra</th>
-            <th onclick="ordinaTabella(3, 'quotazione', true)">Quotazione</th>
-          </tr>
-        </thead>
-        <tbody id="lista-giocatori"></tbody>
-      </table>
-    </div>
-  </div>
-
-  <script>
+<h1>Draft Room - Lega degli Eroi</h1>
+<div class="top-link">
+<a href="statistiche.html" target="_blank">📊 Vai alle Statistiche del Draft</a>
+</div>
+<div id="turno-attuale">⏳ Caricamento turno in corso...</div>
+<div class="container">
+<div class="tabella-container">
+<table id="tabella-pick">
+<thead>
+<tr>
+<th>Pick</th>
+<th>Squadra</th>
+<th>Giocatore</th>
+<th>Ruolo</th>
+<th>Squadra Serie A</th>
+<th>Quot.</th>
+</tr>
+</thead>
+<tbody></tbody>
+</table>
+<div class="stats">
+<h2>Statistiche Live</h2>
+<div id="ultime-pick"></div>
+<div id="stat-ruolo"></div>
+<div id="stat-squadra"></div>
+</div>
+</div>
+<div class="lista-container">
+<label for="filtroSerieA">Filtra per Squadra Serie A:</label>
+<select id="filtroSerieA"><option value="">-- Tutte --</option></select>
+<table id="lista-giocatori-table">
+<thead>
+<tr>
+<th onclick="ordinaTabella(0, 'nome')">Giocatore</th>
+<th onclick="ordinaTabella(1, 'ruolo')">Ruolo</th>
+<th onclick="ordinaTabella(2, 'squadra')">Squadra</th>
+<th onclick="ordinaTabella(3, 'quotazione', true)">Quotazione</th>
+</tr>
+</thead>
+<tbody id="lista-giocatori"></tbody>
+</table>
+</div>
+</div>
+<script>
     let ruoloMap = {}, squadraMap = {}, allRows = [], giocatoriScelti = new Set();
 
     const normalize = str => str.normalize("NFD").replace(/\p{Diacritic}/gu, "").replace(/[^a-z0-9]/gi, "").toLowerCase();
