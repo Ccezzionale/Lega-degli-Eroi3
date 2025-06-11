@@ -177,34 +177,58 @@
     const normalize = s => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]/gi, "").toLowerCase();
 
     // -------- Carica il file giocatori & popola datalist + filtro --------
-    async function caricaLookupGiocatori() {
-      const res  = await fetch("giocatori_completo_finale.csv");
-      const text = await res.text();
-      allRows    = text.trim().split(/\r?\n/).slice(1);
+  async function caricaLookupGiocatori() {
+  const res  = await fetch("giocatori_completo_finale.csv");
+  const text = await res.text();
+  allRows    = text.trim().split(/\r?\n/).slice(1);
 
-      const dl      = document.getElementById("lista-giocatori");
-      const filtro  = document.getElementById("filtroSerieA");
-      const setSA   = new Set();
+  // 👇 Carichiamo le pick già fatte
+  const draftCSV = await (await fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vTDKKMarxp0Kl7kiIWa-1X7jB-54KcQaLIGArN1FfR_X40rwAKVRgUYRGhrzIJ7SsKtUPnk_Cz8F0qt/pub?output=csv")).text();
+  const pickFatte = draftCSV.split(/\r?\n/).slice(1)
+    .map(r => r.split(",")[2]?.trim().toLowerCase())
+    .filter(nome => nome); // solo se non vuoto
 
-      allRows.forEach(r => {
-        const [nome, ruolo, squadraSA, quot] = r.split(",").map(c => c.trim().replace(/^"|"$/g, ""));
-        const key = normalize(nome);
-        ruoloMap[key]   = ruolo;
-        squadraMap[key] = [squadraSA, quot];
-        setSA.add(squadraSA);
+  const scelti = new Set(pickFatte.map(n => normalize(n)));
 
-        const opt = document.createElement("option");
-        opt.value = nome;
-        opt.label = `${ruolo} | ${squadraSA} | €${quot}`;
-        dl.appendChild(opt);
-      });
+  const dl      = document.getElementById("lista-giocatori");
+  const filtro  = document.getElementById("filtroSerieA");
+  const setSA   = new Set();
 
-      [...setSA].sort().forEach(sa => {
-        const o = document.createElement("option");
-        o.textContent = sa;
-        filtro.appendChild(o);
-      });
+  allRows.forEach(r => {
+    const [nome, ruolo, squadraSA, quot] = r.split(",").map(c => c.trim().replace(/^\"|\"$/g, ""));
+    const key = normalize(nome);
+    if (scelti.has(key)) return; // 👈 salta giocatori già scelti
 
+    ruoloMap[key]   = ruolo;
+    squadraMap[key] = [squadraSA, quot];
+    setSA.add(squadraSA);
+
+    const opt = document.createElement("option");
+    opt.value = nome;
+    opt.label = `${ruolo} | ${squadraSA} | €${quot}`;
+    dl.appendChild(opt);
+  });
+
+  [...setSA].sort().forEach(sa => {
+    const o = document.createElement("option");
+    o.textContent = sa;
+    filtro.appendChild(o);
+  });
+
+  filtro.addEventListener("change", () => {
+    dl.innerHTML = "";
+    allRows.forEach(r => {
+      const [nome, ruolo, squadraSA, quot] = r.split(",").map(c => c.trim().replace(/^\"|\"$/g, ""));
+      const key = normalize(nome);
+      if ((filtro.value && squadraSA !== filtro.value) || scelti.has(key)) return;
+
+      const opt = document.createElement("option");
+      opt.value = nome;
+      opt.label = `${ruolo} | ${squadraSA} | €${quot}`;
+      dl.appendChild(opt);
+    });
+  });
+}
       // filtro squadra Serie A
       filtro.addEventListener("change", () => {
         const scelta = filtro.value;
