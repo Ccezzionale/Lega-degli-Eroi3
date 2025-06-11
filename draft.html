@@ -215,15 +215,14 @@
       const filtroRuolo = document.getElementById("filtroRuolo").value;
       const tbody = document.getElementById("lista-giocatori");
       tbody.innerHTML = "";
-      let ruoloSet = new Set();
+      const ruoloSet = new Set();
       allRows.forEach(r => {
         const [nome, ruolo, squadraSA, quot] = r.split(",").map(c => c.trim().replace(/^"|"$/g, ""));
-        const key = nome ? normalize(nome) : "";
-      ruoloSet.add(ruolo);
+        const key = normalize(nome);
         if (giocatoriScelti.has(key)) return;
-        if (filtro && squadraSA !== filtro) return;
+        ruoloSet.add(ruolo);
+      if (filtro && squadraSA !== filtro) return;
       if (filtroRuolo && ruolo !== filtroRuolo) return;
-      
         const tr = document.createElement("tr");
         tr.innerHTML = `<td>${nome}</td><td>${ruolo}</td><td>${squadraSA}</td><td>${quot}</td>`;
         tr.addEventListener("click", () => {
@@ -260,7 +259,6 @@
           }
         });
         tbody.appendChild(tr);
-      ruoloSet.add(ruolo);
       });
     }
 
@@ -273,7 +271,7 @@
       });
       const tbody = document.getElementById("lista-giocatori");
       tbody.innerHTML = "";
-      let ruoloSet = new Set();
+      const ruoloSet = new Set();
       rows.forEach(row => tbody.appendChild(row));
     }
 
@@ -283,12 +281,12 @@
       const righe = text.trim().split(/\r?\n/).slice(1);
       const tbody = document.querySelector("#tabella-pick tbody");
       tbody.innerHTML = "";
-      let ruoloSet = new Set();
+      const ruoloSet = new Set();
       const ultime = [], perRuolo = {}, perSquadra = {};
       let evidenziata = false;
       righe.forEach(riga => {
         const [pick, squadraFant, giocatore] = riga.match(/(".*?"|[^",]+)(?=,|$)/g)?.map(c => c.replace(/^"|"$/g, "")) || [];
-        const key = giocatore ? normalize(giocatore) : "";
+        const key = normalize(giocatore);
         const ruolo = ruoloMap[key] || "—";
         const squadraSA = squadraMap[key]?.[0] || "—";
         const quot = squadraMap[key]?.[1] || "—";
@@ -299,15 +297,13 @@
           evidenziata = true;
         }
         tbody.appendChild(tr);
-      ruoloSet.add(ruolo);
         if (giocatore) ultime.push(giocatore);
         if (ruolo !== "—") perRuolo[ruolo] = (perRuolo[ruolo] || 0) + 1;
         if (squadraFant) perSquadra[squadraFant] = (perSquadra[squadraFant] || 0) + 1;
       });
       document.getElementById("ultime-pick").innerHTML = `<strong>Ultime 3 Pick:</strong> ${ultime.slice(-3).reverse().join(", ")}`;
       document.getElementById("stat-ruolo").innerHTML = `<strong>Pick per Ruolo:</strong> ${Object.entries(perRuolo).map(([r,c]) => `${r}: ${c}`).join(" | ")}`;
-      
-      let filtroRuoloSelect = document.getElementById("filtroRuolo");
+      const filtroRuoloSelect = document.getElementById("filtroRuolo");
       filtroRuoloSelect.innerHTML = '<option value="">-- Tutti i Ruoli --</option>';
       [...ruoloSet].sort().forEach(r => {
         const opt = document.createElement("option");
@@ -316,19 +312,7 @@
         filtroRuoloSelect.appendChild(opt);
       });
 
-      
-      let filtroRuoloSelect = document.getElementById("filtroRuolo");
-      filtroRuoloSelect.innerHTML = '<option value="">-- Tutti i Ruoli --</option>';
-      [...ruoloSet].sort().forEach(r => {
-        const opt = document.createElement("option");
-        opt.value = r;
-        opt.textContent = r;
-        filtroRuoloSelect.appendChild(opt);
-      });
-
-      document.getElementById("stat-squadra")
-        
-            .innerHTML = `<strong>Pick per Squadra Fanta:</strong> ${Object.entries(perSquadra).map(([s,c]) => `${s}: ${c}`).join(" | ")}`;
+      document.getElementById("stat-squadra").innerHTML = `<strong>Pick per Squadra Fanta:</strong> ${Object.entries(perSquadra).map(([s,c]) => `${s}: ${c}`).join(" | ")}`;
     }
 
     window.addEventListener("DOMContentLoaded", async () => {
