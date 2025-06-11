@@ -154,7 +154,7 @@
 </div>
 </div>
 <div class="lista-container">
-<label for="filtroSerieA">Filtra per Squadra Serie A:</label><label for="filtroRuolo">Filtra per Ruolo:</label><select id="filtroRuolo"><option value="">-- Tutti i Ruoli --</option></select>
+<label for="filtroSerieA">Filtra per Squadra Serie A:</label><label for="filtroRuolo">Filtra per Ruolo:</label><select id="filtroRuolo"><option value="">-- Tutti i Ruoli --</option></select><label for="searchGiocatore">Cerca Giocatore:</label><input id="searchGiocatore" placeholder="Digita un nome..." type="text"/>
 <select id="filtroSerieA"><option value="">-- Tutte --</option></select>
 <table id="lista-giocatori-table">
 <thead>
@@ -341,6 +341,16 @@ function popolaFiltroRuolo() {
       await caricaGiocatori();
       await caricaPick();
     });
-  </script>
+  
+
+document.getElementById("searchGiocatore").addEventListener("input", function() {
+  const filtro = this.value.toLowerCase();
+  const righe = document.querySelectorAll("#lista-giocatori-table tbody tr");
+  righe.forEach(r => {
+    const nome = r.children[0]?.textContent.toLowerCase();
+    r.style.display = !filtro || nome.includes(filtro) ? "" : "none";
+  });
+});
+</script>
 </body>
 </html>
