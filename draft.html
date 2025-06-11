@@ -232,7 +232,26 @@
             g.value = nome;
             form.appendChild(g);
             document.body.appendChild(form);
+            
+            // Aggiunge pick e squadra al form prima dell'invio
+            const turnoEl = document.getElementById("turno-attuale");
+            const pick = turnoEl?.textContent.match(/Pick (\d+)/)?.[1] || "";
+            const squadra = turnoEl?.textContent.match(/di: (.*?) \(/)?.[1] || "";
+
+            const inputPick = document.createElement("input");
+            inputPick.name = "pick";
+            inputPick.value = pick;
+            inputPick.type = "hidden";
+            form.appendChild(inputPick);
+
+            const inputSquadra = document.createElement("input");
+            inputSquadra.name = "squadra";
+            inputSquadra.value = squadra;
+            inputSquadra.type = "hidden";
+            form.appendChild(inputSquadra);
+
             form.submit();
+            
           }
         });
         tbody.appendChild(tr);
