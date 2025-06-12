@@ -183,6 +183,7 @@ window.addEventListener("DOMContentLoaded", function () {
     })
   );
 });
+
 function aggiornaChiamatePerSquadra() {
   const righe = document.querySelectorAll("#tabella-pick tbody tr");
   const riepilogo = {};
@@ -203,16 +204,51 @@ function aggiornaChiamatePerSquadra() {
   for (const [team, picks] of Object.entries(riepilogo)) {
     const div = document.createElement("div");
     div.className = "riepilogo-team";
+    div.style.padding = "12px";
+    div.style.borderRadius = "12px";
+    div.style.backgroundColor = "#00274d";
+    div.style.color = "#ffffff";
+    div.style.minWidth = "220px";
+    div.style.flex = "1 1 220px";
+    div.style.transition = "transform 0.3s ease, box-shadow 0.3s ease";
+    div.style.boxShadow = "0 0 10px rgba(0,0,0,0.3)";
+    div.style.textAlign = "center";
+
+    div.onmouseover = () => {
+      div.style.transform = "scale(1.03)";
+      div.style.boxShadow = "0 0 15px rgba(255, 204, 0, 0.5)";
+    };
+    div.onmouseout = () => {
+      div.style.transform = "scale(1)";
+      div.style.boxShadow = "0 0 10px rgba(0,0,0,0.3)";
+    };
+
+    const logoPath = `img/${team}.png`;
+    const img = document.createElement("img");
+    img.src = logoPath;
+    img.alt = team;
+    img.style.maxWidth = "60px";
+    img.style.margin = "0 auto 10px";
+    img.style.display = "block";
+    div.appendChild(img);
+
     const h4 = document.createElement("h4");
     h4.textContent = team;
+    h4.style.marginBottom = "10px";
+    h4.style.color = "#ffcc00";
     div.appendChild(h4);
+
     picks.forEach(txt => {
       const riga = document.createElement("div");
       riga.textContent = txt;
+      riga.style.fontSize = "0.9em";
+      riga.style.padding = "2px 0";
       div.appendChild(riga);
     });
+
     container.appendChild(div);
   }
+}
 }
 
 let ordinamentoCorrente = {
