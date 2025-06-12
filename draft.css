@@ -60,3 +60,49 @@
 #btn-riepilogo-refresh:hover {
   background-color: #005ea2;
 }
+/* ✅ Contenitore flessibile: 4 sopra, 4 sotto */
+.riepilogo-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+/* ✅ Singolo box squadra */
+.riepilogo-team {
+  background-color: #003366;
+  border-radius: 15px;
+  padding: 15px;
+  width: 22%;
+  min-width: 200px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+.riepilogo-team:hover {
+  transform: scale(1.05);
+}
+
+/* ✅ Immagine logo */
+.riepilogo-team img {
+  max-width: 60px;
+  margin-bottom: 8px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ✅ Responsive: su mobile 2 squadre per riga */
+@media (max-width: 768px) {
+  .riepilogo-team {
+    width: 45%;
+  }
+}
+
+@media (max-width: 480px) {
+  .riepilogo-team {
+    width: 90%;
+  }
+}
+
