@@ -314,15 +314,16 @@ function popolaFiltroRuolo() {
       const ultime = [], perRuolo = {}, perSquadra = {};
       let evidenziata = false;
       righe.forEach(riga => {
-     const cols = riga.match(/(".*?"|[^",]+)(?=,|$)/g)?.map(c => c.replace(/^"|"$/g, ""));
-        if (!cols) return;
-        const pick          = cols[0] || "";
-        const squadraFant   = cols[1] || "";
-        const giocatore     = cols[2] || "";
-        const key           = normalize(giocatore);
-        const ruolo         = ruoloMap[key]        || "—";
-        const squadraSA     = squadraMap[key]?.[0] || "—";
-        const quotazione    = squadraMap[key]?.[1] || "—";
+        const [pick, squadraFant, giocatore] = riga.match(/(".*?"|[^",]+)(?=,|$)/g)?.map(c => c.replace(/^"|"$/g, "")) || [];
+        const key = normalize(giocatore);
+        const ruolo = ruoloMap[key] || "—";
+        const squadraSA = squadraMap[key]?.[0] || "—";
+        const quot = squadraMap[key]?.[1] || "—";
+        const tr = document.createElement("tr");
+        tr.innerHTML = `<td>${pick}</td><td>${squadraFant}</td><td>${giocatore}</td><td>${ruolo}</td><td>${squadraSA}</td><td>${quot}</td>`;
+        if (!giocatore && !evidenziata) {
+          tr.classList.add("next-pick");
+          evidenziata = true;
         }
         tbody.appendChild(tr);
         if (giocatore) ultime.push(giocatore);
