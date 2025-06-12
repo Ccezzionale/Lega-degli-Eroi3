@@ -69,7 +69,7 @@ function caricaPick() {
           <td>${nome}</td>
           <td>${ruolo}</td>
           <td>${squadra}</td>
-          <td>${quotazione}</td>`;
+          <td>${parseInt(quotazione)}</td>`;
 
         if (!nome && !prossima) {
           prossima = { fantaTeam, pick };
@@ -102,7 +102,7 @@ function popolaListaDisponibili() {
       <td>${nome}</td>
       <td>${ruolo}</td>
       <td>${squadra}</td>
-      <td>${quotazione}</td>`;
+      <td>${parseInt(quotazione)}</td>`;
 
     tr.addEventListener("click", () => {
       const conferma = confirm(`Vuoi selezionare ${nome} per la squadra al turno?`);
