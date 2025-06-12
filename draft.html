@@ -36,12 +36,29 @@
       color: #ffcc00;
       margin-bottom: 20px;
     }
-    .container {
-      display: flex;
-      justify-content: space-between;
-      gap: 20px;
-      padding: 0 20px 40px;
-    }
+    
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 0 20px 40px;
+}
+
+.tabella-container,
+.lista-container {
+  flex: 1;
+  min-width: 0;
+}
+
+.lista-container {
+  background-color: #003366;
+  padding: 20px;
+  border-radius: 10px;
+  overflow-x: auto;
+}
+
     .tabella-container {
       flex: 1;
     }
