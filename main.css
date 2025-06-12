@@ -79,6 +79,45 @@ nav ul.navbar li a {
   color: black;
   font-weight: bold;
 }
+#tabella-pick {
+  width: 100% !important;
+  border-collapse: collapse !important;
+  background-color: #004080 !important;
+  color: white !important;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+  border-radius: 10px !important;
+  overflow: hidden !important;
+}
+
+#tabella-pick th {
+  background-color: #005299 !important;
+  color: white !important;
+  text-transform: uppercase !important;
+  font-size: 0.9em !important;
+  padding: 8px !important;
+  border: 1px solid #ffffff33 !important;
+  text-align: center !important;
+}
+
+#tabella-pick td {
+  background-color: #003366 !important;
+  color: white !important;
+  font-size: 0.9em !important;
+  padding: 8px !important;
+  border: 1px solid #ffffff33 !important;
+  text-align: center !important;
+}
+
+#tabella-pick tr:nth-child(even) {
+  background-color: #002b5c !important;
+}
+
+#tabella-pick tr.next-pick {
+  background-color: #ffe680 !important;
+  color: black !important;
+  font-weight: bold !important;
+}
+
 
 /* --------- RESPONSIVE PER MOBILE --------- */
 @media (max-width: 768px) {
