@@ -7,6 +7,18 @@
   <title>Draft Room - Lega degli Eroi</title>
   <link rel="stylesheet" href="main.css">
   <style>
+
+table {
+  width: 100% !important;
+  table-layout: auto;
+  font-size: 0.78em;
+}
+
+th, td {
+  white-space: nowrap;
+  padding: 6px;
+}
+
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background-color: #001f3f;
@@ -36,29 +48,12 @@
       color: #ffcc00;
       margin-bottom: 20px;
     }
-    
-.container {
-  max-width: 1400px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
-  padding: 0 20px 40px;
-}
-
-.tabella-container,
-.lista-container {
-  flex: 1;
-  min-width: 0;
-}
-
-.lista-container {
-  background-color: #003366;
-  padding: 20px;
-  border-radius: 10px;
-  overflow-x: auto;
-}
-
+    .container {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 0 20px 40px;
+    }
     .tabella-container {
       flex: 1;
     }
@@ -151,20 +146,6 @@
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0,0,0,0.2);
   margin-top: 10px;
-}
-
-
-table {
-  width: 100% !important;
-  table-layout: fixed;
-  word-wrap: break-word;
-  font-size: 0.78em;
-}
-
-th, td {
-  max-width: 100px;
-  white-space: normal;
-  overflow-wrap: break-word;
 }
 
 </style>
