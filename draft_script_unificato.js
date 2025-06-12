@@ -254,3 +254,26 @@ function aggiornaChiamatePerSquadra(pickData) {
     contenitore.appendChild(div);
   });
 }
+
+
+
+function ordinaTabella(indice, chiave, èNumero = false) {
+  const righe = Array.from(document.querySelectorAll("#lista-giocatori-table tbody tr"));
+  const asc = !ordinaTabella.sortAsc;
+  ordinaTabella.sortAsc = asc;
+
+  righe.sort((a, b) => {
+    const aVal = a.children[indice].textContent.trim();
+    const bVal = b.children[indice].textContent.trim();
+    const valA = èNumero ? parseFloat(aVal) : aVal.toLowerCase();
+    const valB = èNumero ? parseFloat(bVal) : bVal.toLowerCase();
+
+    if (valA < valB) return asc ? -1 : 1;
+    if (valA > valB) return asc ? 1 : -1;
+    return 0;
+  });
+
+  const tbody = document.querySelector("#lista-giocatori-table tbody");
+  tbody.innerHTML = "";
+  righe.forEach(r => tbody.appendChild(r));
+}
