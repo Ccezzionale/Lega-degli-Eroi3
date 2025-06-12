@@ -1,12 +1,14 @@
+/* --------- STILE GENERALE --------- */
 body {
-  font-family: Arial, sans-serif;
-  background-color: white;
-  color: #333;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #001f3f;
+  color: #ffffff;
   margin: 0;
   padding: 0;
   text-align: center;
 }
 
+/* --------- NAVBAR --------- */
 nav {
   background-color: #004080;
   padding: 1em;
@@ -30,8 +32,7 @@ nav ul.navbar li a {
   font-weight: bold;
 }
 
-/* Tabella sinistra - stile coerente con tabella destra */
-/* --- Stile uniforme per tabella sinistra (#tabella-pick) --- */
+/* --------- TABELLA PICK (SINISTRA) --------- */
 #tabella-pick-container {
   background-color: #004080;
   border-radius: 10px;
@@ -44,7 +45,6 @@ nav ul.navbar li a {
 #tabella-pick {
   width: 100%;
   border-collapse: collapse;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: #004080;
   color: white;
   border-radius: 10px;
@@ -80,7 +80,7 @@ nav ul.navbar li a {
   font-weight: bold;
 }
 
-
+/* --------- RESPONSIVE PER MOBILE --------- */
 @media (max-width: 768px) {
   .container {
     flex-direction: column;
@@ -113,3 +113,4 @@ nav ul.navbar li a {
     padding: 6px;
   }
 }
+
