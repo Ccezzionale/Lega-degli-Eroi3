@@ -347,7 +347,15 @@ function popolaFiltroRuolo() {
     window.addEventListener("DOMContentLoaded", async () => {
       await mostraTurnoAttuale();
       await caricaGiocatori();
-      await caricaPick();
+      
+allRows.forEach(r => {
+  const [nome, ruolo, squadraSA, quot] = r.split(",").map(c => c.trim().replace(/^"|"$/g, ""));
+  const key = normalize(nome);
+  ruoloMap[key] = ruolo;
+  squadraMap[key] = [squadraSA, quot];
+});
+
+  await caricaPick();
     });
   
 
