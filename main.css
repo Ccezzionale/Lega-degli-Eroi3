@@ -56,7 +56,9 @@ nav ul.navbar li a {
     font-size: 0.9em;
     padding: 6px;
   }
-  /* Tabella sinistra - stile coerente con tabella destra */
+}
+
+/* 🔵 Queste vanno FUORI dal media query! */
 #tabella-pick-container table {
   background-color: #004080;
   border-radius: 10px;
@@ -94,6 +96,7 @@ nav ul.navbar li a {
   color: black;
   font-weight: bold;
 }
+
 #tabella-pick {
   border-collapse: collapse;
   background-color: #004080;
