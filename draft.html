@@ -202,15 +202,18 @@ function popolaFiltroRuolo() {
 
     const normalize = str => str.normalize("NFD").replace(/\p{Diacritic}/gu, "").replace(/[^a-z0-9]/gi, "").toLowerCase();
 
-    async function mostraTurnoAttuale() {
-      const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTDKKMarxp0Kl7kiIWa-1X7jB-54KcQaLIGArN1FfR_X40rwAKVRgUYRGhrzIJ7SsKtUPnk_Cz8F0qt/pub?output=csv";
-const csv = await (fetch(url).then(res => res.text());
+function mostraTurnoAttuale() {
+  const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTDKKMarxp0Kl7kiIWa-1X7jB-54KcQaLIGArN1FfR_X40rwAKVRgUYRGhrzIJ7SsKtUPnk_Cz8F0qt/pub?output=csv";
+  fetch(url)
+    .then(res => res.text())
+    .then(csv => {
       const righe = csv.trim().split(/\r?\n/).slice(1);
       const prossima = righe.find(r => r.split(",")[2].trim() === "");
       if (!prossima) return document.getElementById("turno-attuale").textContent = "✅ Draft completato!";
       const [pick, squadra] = prossima.split(",");
       document.getElementById("turno-attuale").textContent = `🎯 È il turno di: ${squadra} (Pick ${pick})`;
-    }
+    });
+}
 
     async function caricaGiocatori() {
 fetch("giocatori_completo_finale.csv").then(res => res.text()).then(text => {
