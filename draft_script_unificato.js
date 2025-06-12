@@ -136,7 +136,7 @@ function popolaListaDisponibili() {
 
 function filtraLista() {
   const ruoloTesto = cercaRuolo.value.toLowerCase();
-  const ruoloSelect = filtroRuolo.value.toLowerCase();
+  const ruoloSelect = filtroRuolo.value.toLowerCase().split(/[,;\s]+/).filter(Boolean);
   const squadra = filtroSerieA.value.toLowerCase();
   const cerca = searchInput.value.toLowerCase();
 
@@ -145,10 +145,10 @@ function filtraLista() {
     const r = row.children[1].textContent.toLowerCase();
     const s = row.children[2].textContent.toLowerCase();
 
-    const ruoliGiocatore = r.split(/[,;]+/).map(part => part.trim());
+    const ruoliGiocatore = r.split(/[,;\s]+/).map(part => part.trim());
 
     const matchInput = !ruoloTesto || ruoliGiocatore.some(part => part.includes(ruoloTesto));
-    const matchSelect = !ruoloSelect || ruoliGiocatore.includes(ruoloSelect);
+    const matchSelect = !ruoloSelect.length || ruoloSelect.some(rs => ruoliGiocatore.includes(rs));
     const matchSquadra = !squadra || s === squadra;
     const matchNome = !cerca || nome.includes(cerca);
 
