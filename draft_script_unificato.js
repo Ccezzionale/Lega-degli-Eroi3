@@ -124,5 +124,5 @@ function filtraLista() {
 );
 
 window.addEventListener("DOMContentLoaded", function () {
-  caricaGiocatori().then(caricaPick);
+  caricaPick().then(caricaGiocatori);
 });
