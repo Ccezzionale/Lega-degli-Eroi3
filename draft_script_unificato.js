@@ -1,4 +1,3 @@
-
 const tabella = document.querySelector("#tabella-pick tbody");
 const listaGiocatori = document.getElementById("lista-giocatori");
 const giocatoriScelti = new Set();
@@ -28,8 +27,8 @@ function inviaPickAlFoglio(pick, squadra, giocatore, ruolo, squadraSerieA, quota
     body: dati
   })
   .then(res => res.text())
-  .then(txt => console.log("Risposta foglio:", txt))
-  .catch(err => console.error("Errore invio pick:", err));
+  .then(txt => console.log("✅ Risposta foglio:", txt))
+  .catch(err => console.error("❌ Errore invio pick:", err));
 }
 
 function caricaGiocatori() {
@@ -38,12 +37,11 @@ function caricaGiocatori() {
     .then(csv => {
       const righe = csv.trim().split(/\r?\n/).slice(1);
       righe.forEach(r => {
-        const [nome, ruolo, squadraSerieA, quotazione] = r.split(",");
+        const [nome, ruolo, squadra, quotazione] = r.split(",");
         const key = normalize(nome);
-        mappaGiocatori[key] = { nome, ruolo, squadraSerieA, quotazione };
-
+        mappaGiocatori[key] = { nome, ruolo, squadra, quotazione };
         if (ruolo) ruoli.add(ruolo);
-        if (squadraSerieA) squadre.add(squadraSerieA);
+        if (squadra) squadre.add(squadra);
       });
     });
 }
@@ -86,14 +84,13 @@ function caricaPick() {
         document.getElementById("turno-attuale").textContent =
           `🎯 È il turno di: ${prossima.squadra} (Pick ${prossima.pick})`;
       else
-        document.getElementById("turno-attuale").textContent =
-          "✅ Draft completato!";
+        document.getElementById("turno-attuale").textContent = "✅ Draft completato!";
     });
 }
 
 function popolaListaDisponibili() {
   listaGiocatori.innerHTML = "";
-  Object.values(mappaGiocatori).forEach(({ nome, ruolo, squadraSerieA, quotazione }) => {
+  Object.values(mappaGiocatori).forEach(({ nome, ruolo, squadra, quotazione }) => {
     const key = normalize(nome);
     if (giocatoriScelti.has(key)) return;
 
@@ -101,7 +98,7 @@ function popolaListaDisponibili() {
     tr.innerHTML = `
       <td>${nome}</td>
       <td>${ruolo}</td>
-      <td>${squadraSerieA}</td>
+      <td>${squadra}</td>
       <td>${quotazione}</td>`;
 
     tr.addEventListener("click", () => {
@@ -113,6 +110,7 @@ function popolaListaDisponibili() {
           if (!celle[2].textContent.trim()) {
             const pick = celle[0].textContent;
             const squadra = celle[1].textContent;
+            const squadraSerieA = mappaGiocatori[normalize(nome)]?.squadra || "";
 
             celle[2].textContent = nome;
             celle[3].textContent = ruolo;
