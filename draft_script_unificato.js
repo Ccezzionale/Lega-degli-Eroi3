@@ -141,7 +141,10 @@ function filtraLista() {
     const nome = row.children[0].textContent.toLowerCase();
     const r = row.children[1].textContent.toLowerCase();
     const s = row.children[2].textContent.toLowerCase();
-    const visibile = (!ruolo || r === ruolo) && (!squadra || s === squadra) && (!cerca || nome.includes(cerca));
+    const visibile = 
+  (!ruolo || r.split(",").some(part => part.trim().includes(ruolo))) &&
+  (!squadra || s === squadra) &&
+  (!cerca || nome.includes(cerca));
     row.style.display = visibile ? "" : "none";
   });
 }
