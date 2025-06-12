@@ -134,7 +134,7 @@ function popolaListaDisponibili() {
 }
 
 function filtraLista() {
-  const ruoloInput = document.getElementById("cercaRuolo").value.toLowerCase();
+  const ruoloInput = document.getElementById("cercaRuolo")?.value?.toLowerCase() || "";
   const ruoloSelect = filtroRuolo.value.toLowerCase();
   const squadra = filtroSerieA.value.toLowerCase();
   const cerca = searchInput.value.toLowerCase();
@@ -144,12 +144,14 @@ function filtraLista() {
     const r = row.children[1].textContent.toLowerCase();
     const s = row.children[2].textContent.toLowerCase();
 
-    const matchRuolo = !ruoloInput || r.includes(ruoloInput);
-    const matchSelect = !ruoloSelect || r.split(/[,;]+/).some(part => part.trim() === ruoloSelect);
+    const ruoliGiocatore = r.split(/[,;/]+/).map(part => part.trim());
+
+    const matchRuoloInput = !ruoloInput || ruoliGiocatore.some(part => part.includes(ruoloInput));
+    const matchRuoloSelect = !ruoloSelect || ruoliGiocatore.includes(ruoloSelect);
     const matchSquadra = !squadra || s === squadra;
     const matchNome = !cerca || nome.includes(cerca);
 
-    const visibile = matchRuolo && matchSelect && matchSquadra && matchNome;
+    const visibile = matchRuoloInput && matchRuoloSelect && matchSquadra && matchNome;
     row.style.display = visibile ? "" : "none";
   });
 }
