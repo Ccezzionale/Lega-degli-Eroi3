@@ -124,7 +124,7 @@ function popolaListaDisponibili() {
 
             document.getElementById("turno-attuale").textContent = `✅ ${nome} selezionato!`;
 
-            inviaPickAlFoglio(pick, squadra, nome, ruolo, squadra, quotazione);
+            inviaPickAlFoglio(pick, squadra, nome, ruolo, squadraSerieA, quotazione);
             break;
           }
         }
