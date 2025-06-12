@@ -134,17 +134,22 @@ function popolaListaDisponibili() {
 }
 
 function filtraLista() {
-  const ruolo = filtroRuolo.value.toLowerCase();
+  const ruoloInput = document.getElementById("cercaRuolo").value.toLowerCase();
+  const ruoloSelect = filtroRuolo.value.toLowerCase();
   const squadra = filtroSerieA.value.toLowerCase();
   const cerca = searchInput.value.toLowerCase();
+
   Array.from(listaGiocatori.children).forEach(row => {
     const nome = row.children[0].textContent.toLowerCase();
     const r = row.children[1].textContent.toLowerCase();
     const s = row.children[2].textContent.toLowerCase();
-    const ruoloMatch = !ruolo || r.split(",").map(x => x.trim().toLowerCase()).includes(ruolo);
-const visibile = ruoloMatch &&
-  (!squadra || s === squadra) &&
-  (!cerca || nome.includes(cerca));
+
+    const matchRuolo = !ruoloInput || r.includes(ruoloInput);
+    const matchSelect = !ruoloSelect || r.split(/[,;]+/).some(part => part.trim() === ruoloSelect);
+    const matchSquadra = !squadra || s === squadra;
+    const matchNome = !cerca || nome.includes(cerca);
+
+    const visibile = matchRuolo && matchSelect && matchSquadra && matchNome;
     row.style.display = visibile ? "" : "none";
   });
 }
