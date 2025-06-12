@@ -153,7 +153,8 @@ function popolaListaDisponibili() {
 
 function filtraLista() {
   const ruolo = filtroRuolo.value.toLowerCase();
-const squadraSerieA = cells[4].textContent.trim();
+const cells = row.querySelectorAll('td');
+    const squadraSerieA = cells[4].textContent.trim();
   const squadra = filtroSerieA.value.toLowerCase();
   const cerca = searchInput.value.toLowerCase();
 
