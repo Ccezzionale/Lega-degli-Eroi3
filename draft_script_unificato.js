@@ -14,13 +14,13 @@ function normalize(nome) {
   return nome.trim().toLowerCase();
 }
 
-function inviaPickAlFoglio(pick, squadra, giocatore, ruolo, squadraSerieA, quotazione) {
+function inviaPickAlFoglio(pick, fantaTeam, nome, ruolo, squadra, quotazione) {
   const dati = new URLSearchParams();
   dati.append("pick", pick);
-  dati.append("squadra", squadra);
-  dati.append("giocatore", giocatore);
+  dati.append("squadra", squadra); // Squadra Serie A
+  dati.append("fantaTeam", fantaTeam); // Squadra fantacalcio
+  dati.append("giocatore", nome);
   dati.append("ruolo", ruolo);
-  dati.append("squadraSerieA", squadraSerieA);
   dati.append("quotazione", quotazione);
 
   fetch("https://script.google.com/macros/s/AKfycbxFamdCRhlGfZ3j53yPUlGzE3dlrpxHvsJbXGht2D4fHJJ1HDybWoWg5Doin2d0BccF8Q/exec", {
@@ -38,12 +38,12 @@ function caricaGiocatori() {
     .then(csv => {
       const righe = csv.trim().split(/\r?\n/).slice(1);
       righe.forEach(r => {
-        const [nome, ruolo, squadraSerieA, quotazione] = r.split(",");
+        const [nome, ruolo, squadra, quotazione] = r.split(",");
         const key = normalize(nome);
-        mappaGiocatori[key] = { nome, ruolo, squadra: squadraSerieA, quotazione };
+        mappaGiocatori[key] = { nome, ruolo, squadra, quotazione };
 
         if (ruolo) ruoli.add(ruolo);
-        if (squadraSerieA) squadre.add(squadraSerieA);
+        if (squadra) squadre.add(squadra);
       });
     });
 }
@@ -56,7 +56,7 @@ function caricaPick() {
       let prossima = null;
 
       righe.forEach(r => {
-        const [pick, squadra, nomeGrezzo, ruolo, squadraSerieA, quotazione] = r.split(",");
+        const [pick, fantaTeam, nomeGrezzo, ruolo, squadra, quotazione] = r.split(",");
         const nome = nomeGrezzo ? nomeGrezzo.trim() : "";
         const key = normalize(nome);
         const tr = document.createElement("tr");
@@ -65,14 +65,14 @@ function caricaPick() {
 
         tr.innerHTML = `
           <td>${pick}</td>
-          <td>${squadra}</td>
+          <td>${fantaTeam}</td>
           <td>${nome}</td>
           <td>${ruolo}</td>
-          <td>${squadraSerieA}</td>
+          <td>${squadra}</td>
           <td>${quotazione}</td>`;
 
         if (!nome && !prossima) {
-          prossima = { squadra, pick };
+          prossima = { fantaTeam, pick };
           tr.classList.add("next-pick");
         } else {
           tr.style.backgroundColor = "#d4edda";
@@ -84,7 +84,7 @@ function caricaPick() {
 
       if (prossima)
         document.getElementById("turno-attuale").textContent =
-          `🎯 È il turno di: ${prossima.squadra} (Pick ${prossima.pick})`;
+          `🎯 È il turno di: ${prossima.fantaTeam} (Pick ${prossima.pick})`;
       else
         document.getElementById("turno-attuale").textContent =
           "✅ Draft completato!";
@@ -112,12 +112,11 @@ function popolaListaDisponibili() {
           const celle = r.querySelectorAll("td");
           if (!celle[2].textContent.trim()) {
             const pick = celle[0].textContent;
-            const squadra = celle[1].textContent;
-            const { ruolo, squadra: squadraSerieA, quotazione } = mappaGiocatori[key];
+            const fantaTeam = celle[1].textContent;
 
             celle[2].textContent = nome;
             celle[3].textContent = ruolo;
-            celle[4].textContent = squadraSerieA;
+            celle[4].textContent = squadra;
             celle[5].textContent = quotazione;
 
             r.style.backgroundColor = "#d4edda";
@@ -126,7 +125,7 @@ function popolaListaDisponibili() {
 
             document.getElementById("turno-attuale").textContent = `✅ ${nome} selezionato!`;
 
-            inviaPickAlFoglio(pick, squadra, nome, ruolo, squadraSerieA, quotazione);
+            inviaPickAlFoglio(pick, fantaTeam, nome, ruolo, squadra, quotazione);
             break;
           }
         }
