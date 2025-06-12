@@ -315,17 +315,17 @@ function popolaFiltroRuolo() {
       let evidenziata = false;
 
       righe.forEach(riga => {
-        const celle = riga.split(",").map(c => c.replace(/^"|"$/g, ""));
-        const pick = celle[0] || "";
-        const squadraFant = celle[1] || "";
-        const giocatore = celle[2] || "";
+        const celle = riga.split(",").map(c => c.replace(/^"|"$/g, "").trim());
+        const pick = celle?.[0] || "—";
+        const squadraFant = celle?.[1] || "—";
+        const giocatore = celle?.[2] || "";
         const key = normalize(giocatore);
-        const ruolo = ruoloMap[key] || "—";
-        const squadraSA = squadraMap[key]?.[0] || "—";
-        const quot = squadraMap[key]?.[1] || "—";
+        const ruolo = giocatore ? (ruoloMap[key] || "—") : "—";
+        const squadraSA = giocatore ? (squadraMap[key]?.[0] || "—") : "—";
+        const quot = giocatore ? (squadraMap[key]?.[1] || "—") : "—";
 
         const tr = document.createElement("tr");
-        tr.innerHTML = `<td>${pick}</td><td>${squadraFant}</td><td>${giocatore}</td><td>${ruolo}</td><td>${squadraSA}</td><td>${quot}</td>`;
+        tr.innerHTML = `<td>${pick}</td><td>${squadraFant}</td><td>${giocatore || "—"}</td><td>${ruolo}</td><td>${squadraSA}</td><td>${quot}</td>`;
 
         if (!giocatore && !evidenziata) {
           tr.classList.add("next-pick");
@@ -341,22 +341,9 @@ function popolaFiltroRuolo() {
       });
 
       document.getElementById("ultime-pick").innerHTML = `<strong>Ultime 3 Pick:</strong> ${ultime.slice(-3).reverse().join(", ")}`;
-      document.getElementById("stat-ruolo").innerHTML = `<strong>Pick per Ruolo:</strong> ${Object.entries(perRuolo).map(([r,c]) => `${r}: ${c}`).join(" | ")}`;
-      document.getElementById("stat-squadra").innerHTML = `<strong>Pick per Squadra Fanta:</strong> ${Object.entries(perSquadra).map(([s,c]) => `${s}: ${c}`).join(" | ")}`;
+      document.getElementById("stat-ruolo").innerHTML = `<strong>Pick per Ruolo:</strong> ${Object.entries(perRuolo).map(([r,c]) => \`\${r}: \${c}\`).join(" | ")}`;
+      document.getElementById("stat-squadra").innerHTML = `<strong>Pick per Squadra Fanta:</strong> ${Object.entries(perSquadra).map(([s,c]) => \`\${s}: \${c}\`).join(" | ")}`;
     });
-
-  await caricaPick();
-    });
-  
-
-document.getElementById("searchGiocatore").addEventListener("input", function() {
-  const filtro = this.value.toLowerCase();
-  const righe = document.querySelectorAll("#lista-giocatori-table tbody tr");
-  righe.forEach(r => {
-    const nome = r.children[0]?.textContent.toLowerCase();
-    r.style.display = !filtro || nome.includes(filtro) ? "" : "none";
-  });
-});
 </script>
 </body>
 </html>
