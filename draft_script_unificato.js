@@ -17,8 +17,8 @@ function normalize(nome) {
 function inviaPickAlFoglio(pick, fantaTeam, nome, ruolo, squadra, quotazione) {
   const dati = new URLSearchParams();
   dati.append("pick", pick);
-  dati.append("squadra", squadra); // Squadra Serie A
-  dati.append("fantaTeam", fantaTeam); // Squadra fantacalcio
+  dati.append("squadra", squadra);
+  dati.append("fantaTeam", fantaTeam);
   dati.append("giocatore", nome);
   dati.append("ruolo", ruolo);
   dati.append("quotazione", quotazione);
@@ -41,7 +41,6 @@ function caricaGiocatori() {
         const [nome, ruolo, squadra, quotazione] = r.split(",");
         const key = normalize(nome);
         mappaGiocatori[key] = { nome, ruolo, squadra, quotazione };
-
         if (ruolo) ruoli.add(ruolo);
         if (squadra) squadre.add(squadra);
       });
@@ -54,15 +53,12 @@ function caricaPick() {
     .then(csv => {
       const righe = csv.trim().split(/\r?\n/).slice(1);
       let prossima = null;
-
       righe.forEach(r => {
         const [pick, fantaTeam, nomeGrezzo, ruolo, squadra, quotazione] = r.split(",");
         const nome = nomeGrezzo ? nomeGrezzo.trim() : "";
         const key = normalize(nome);
         const tr = document.createElement("tr");
-
         giocatoriScelti.add(key);
-
         tr.innerHTML = `
           <td>${pick}</td>
           <td>${fantaTeam}</td>
@@ -70,7 +66,6 @@ function caricaPick() {
           <td>${ruolo}</td>
           <td>${squadra}</td>
           <td>${parseInt(quotazione)}</td>`;
-
         if (!nome && !prossima) {
           prossima = { fantaTeam, pick };
           tr.classList.add("next-pick");
@@ -78,16 +73,10 @@ function caricaPick() {
           tr.style.backgroundColor = "#d4edda";
           tr.style.fontWeight = "bold";
         }
-
         tabella.appendChild(tr);
       });
-
-      if (prossima)
-        document.getElementById("turno-attuale").textContent =
-          `🎯 È il turno di: ${prossima.fantaTeam} (Pick ${prossima.pick})`;
-      else
-        document.getElementById("turno-attuale").textContent =
-          "✅ Draft completato!";
+      document.getElementById("turno-attuale").textContent =
+        prossima ? `🎯 È il turno di: ${prossima.fantaTeam} (Pick ${prossima.pick})` : "✅ Draft completato!";
     });
 }
 
@@ -96,14 +85,12 @@ function popolaListaDisponibili() {
   Object.values(mappaGiocatori).forEach(({ nome, ruolo, squadra, quotazione }) => {
     const key = normalize(nome);
     if (giocatoriScelti.has(key)) return;
-
     const tr = document.createElement("tr");
     tr.innerHTML = `
       <td>${nome}</td>
       <td>${ruolo}</td>
       <td>${squadra}</td>
       <td>${parseInt(quotazione)}</td>`;
-
     tr.addEventListener("click", () => {
       const conferma = confirm(`Vuoi selezionare ${nome} per la squadra al turno?`);
       if (conferma) {
@@ -113,27 +100,21 @@ function popolaListaDisponibili() {
           if (!celle[2].textContent.trim()) {
             const pick = celle[0].textContent;
             const fantaTeam = celle[1].textContent;
-
             celle[2].textContent = nome;
             celle[3].textContent = ruolo;
             celle[4].textContent = squadra;
             celle[5].textContent = quotazione;
-
             r.style.backgroundColor = "#d4edda";
             r.style.fontWeight = "bold";
             r.classList.remove("next-pick");
-
             document.getElementById("turno-attuale").textContent = `✅ ${nome} selezionato!`;
-
             inviaPickAlFoglio(pick, fantaTeam, nome, ruolo, squadra, quotazione);
             break;
           }
         }
-
         tr.remove();
       }
     });
-
     listaGiocatori.appendChild(tr);
   });
 
@@ -156,30 +137,22 @@ function filtraLista() {
   const ruolo = filtroRuolo.value.toLowerCase();
   const squadra = filtroSerieA.value.toLowerCase();
   const cerca = searchInput.value.toLowerCase();
-
   Array.from(listaGiocatori.children).forEach(row => {
     const nome = row.children[0].textContent.toLowerCase();
     const r = row.children[1].textContent.toLowerCase();
     const s = row.children[2].textContent.toLowerCase();
-
-    const visibile =
-      (!ruolo || r === ruolo) &&
-      (!squadra || s === squadra) &&
-      (!cerca || nome.includes(cerca));
-
+    const visibile = (!ruolo || r === ruolo) && (!squadra || s === squadra) && (!cerca || nome.includes(cerca));
     row.style.display = visibile ? "" : "none";
   });
 }
 
-[filtroRuolo, filtroSerieA, searchInput].forEach(el =>
-  el.addEventListener("input", filtraLista)
-);
+[filtroRuolo, filtroSerieA, searchInput].forEach(el => el.addEventListener("input", filtraLista));
 
 window.addEventListener("DOMContentLoaded", function () {
   caricaGiocatori().then(() =>
     caricaPick().then(() => {
       popolaListaDisponibili();
-      aggiornaChiamatePerSquadra(); // 💥 AGGIUNTA QUI
+      aggiornaChiamatePerSquadra();
     })
   );
 });
@@ -187,13 +160,11 @@ window.addEventListener("DOMContentLoaded", function () {
 function aggiornaChiamatePerSquadra() {
   const righe = document.querySelectorAll("#tabella-pick tbody tr");
   const riepilogo = {};
-
   righe.forEach(r => {
     const celle = r.querySelectorAll("td");
     const team = celle[1]?.textContent?.trim();
     const nome = celle[2]?.textContent?.trim();
     const ruolo = celle[3]?.textContent?.trim();
-
     if (!team || !nome) return;
     if (!riepilogo[team]) riepilogo[team] = [];
     riepilogo[team].push(`${riepilogo[team].length + 1}. ${nome} (${ruolo})`);
@@ -201,78 +172,32 @@ function aggiornaChiamatePerSquadra() {
 
   const container = document.getElementById("riepilogo-squadre");
   container.innerHTML = "";
+
   for (const [team, picks] of Object.entries(riepilogo)) {
     const div = document.createElement("div");
     div.className = "riepilogo-team";
-    div.style.padding = "12px";
-    div.style.borderRadius = "12px";
-    div.style.backgroundColor = "#00274d";
-    div.style.color = "#ffffff";
-    div.style.minWidth = "220px";
-    div.style.flex = "1 1 220px";
-    div.style.transition = "transform 0.3s ease, box-shadow 0.3s ease";
-    div.style.boxShadow = "0 0 10px rgba(0,0,0,0.3)";
-    div.style.textAlign = "center";
-
-    div.onmouseover = () => {
-      div.style.transform = "scale(1.03)";
-      div.style.boxShadow = "0 0 15px rgba(255, 204, 0, 0.5)";
-    };
-    div.onmouseout = () => {
-      div.style.transform = "scale(1)";
-      div.style.boxShadow = "0 0 10px rgba(0,0,0,0.3)";
-    };
-
     const logoPath = `img/${team}.png`;
     const img = document.createElement("img");
     img.src = logoPath;
     img.alt = team;
     img.style.maxWidth = "60px";
-    img.style.margin = "0 auto 10px";
+    img.style.margin = "0 auto 8px";
     img.style.display = "block";
     div.appendChild(img);
 
     const h4 = document.createElement("h4");
     h4.textContent = team;
-    h4.style.marginBottom = "10px";
-    h4.style.color = "#ffcc00";
+    h4.style.textAlign = "center";
+    h4.style.color = "#ffffff";
     div.appendChild(h4);
 
     picks.forEach(txt => {
       const riga = document.createElement("div");
       riga.textContent = txt;
-      riga.style.fontSize = "0.9em";
-      riga.style.padding = "2px 0";
+      riga.style.textAlign = "center";
+      riga.style.color = "#ffffff";
       div.appendChild(riga);
     });
-
     container.appendChild(div);
   }
-}
-}
-
-let ordinamentoCorrente = {
-  colonna: null,
-  asc: true
-};
-
-function ordinaTabella(indice, chiave, èNumero = false) {
-  const righe = Array.from(listaGiocatori.querySelectorAll("tr"));
-  const asc = (ordinamentoCorrente.colonna === indice) ? !ordinamentoCorrente.asc : true;
-  ordinamentoCorrente = { colonna: indice, asc };
-
-  righe.sort((a, b) => {
-    const aVal = a.children[indice].textContent.trim();
-    const bVal = b.children[indice].textContent.trim();
-
-    const valoreA = èNumero ? parseFloat(aVal) : aVal.toLowerCase();
-    const valoreB = èNumero ? parseFloat(bVal) : bVal.toLowerCase();
-
-    if (valoreA < valoreB) return asc ? -1 : 1;
-    if (valoreA > valoreB) return asc ? 1 : -1;
-    return 0;
-  });
-
-  listaGiocatori.innerHTML = '';
-  righe.forEach(row => listaGiocatori.appendChild(row));
 }
