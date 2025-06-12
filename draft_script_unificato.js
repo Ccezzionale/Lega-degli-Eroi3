@@ -70,7 +70,7 @@ function caricaPick() {
           prossima = { fantaTeam, pick };
           tr.classList.add("next-pick");
         } else {
-          tr.removeAttribute("style"); // Rimuove eventuali vecchi stili inline
+          tr.removeAttribute("style"); 
           tr.classList.add("pick-completata");
         }
         tabella.appendChild(tr);
