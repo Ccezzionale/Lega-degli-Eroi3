@@ -158,5 +158,14 @@ input {
   max-width: 150px;
   border-radius: 6px;
 }
+/* Ridimensionamento filtri */
+#filtroRuolo,
+#filtroSerieA,
+#searchGiocatore {
+  padding: 4px 8px;
+  font-size: 0.8em;
+  max-width: 150px;
+  margin: 0 5px;
+}
 
   
