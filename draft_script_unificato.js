@@ -88,12 +88,28 @@ function popolaListaDisponibili() {
       <td>${ruolo}</td>
       <td>${squadra}</td>
       <td>${quotazione}</td>`;
+
     tr.addEventListener("click", () => {
       const conferma = confirm(`Vuoi selezionare ${nome}?`);
       if (conferma) {
-        alert(`${nome} selezionato! (azione da definire)`);
+        // Trova la prima riga senza nome nella tabella delle pick
+        const righe = document.querySelectorAll("#tabella-pick tbody tr");
+        for (let r of righe) {
+          const celle = r.querySelectorAll("td");
+          if (!celle[2].textContent.trim()) {
+            celle[2].textContent = nome;
+            celle[3].textContent = ruolo;
+            celle[4].textContent = squadra;
+            celle[5].textContent = quotazione;
+            r.classList.remove("next-pick");
+            break;
+          }
+        }
+
+        alert(`${nome} selezionato! (solo a livello visivo)`);
       }
     });
+
     listaGiocatori.appendChild(tr);
 
   });
