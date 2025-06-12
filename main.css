@@ -117,7 +117,12 @@ nav ul.navbar li a {
   color: black !important;
   font-weight: bold !important;
 }
-
+/* Rimuove inline style e centralizza tutto nel CSS */
+.pick-completata {
+  background-color: #003366 !important;
+  font-weight: bold;
+  color: white !important;
+}
 
 /* --------- RESPONSIVE PER MOBILE --------- */
 @media (max-width: 768px) {
