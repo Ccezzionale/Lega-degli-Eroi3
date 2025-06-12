@@ -203,6 +203,20 @@ function aggiornaChiamatePerSquadra() {
   for (const [team, picks] of Object.entries(riepilogo)) {
     const div = document.createElement("div");
     div.className = "riepilogo-team";
+// ⬇️ BLOCCO PER INSERIRE IL LOGO
+const logoPath = `img/${team}.png`;
+const img = document.createElement("img");
+img.src = logoPath;
+img.alt = team;
+img.style.maxWidth = "60px";
+img.style.margin = "0 auto 8px";
+img.style.display = "block";
+div.appendChild(img);
+
+// ⬇️ Titolo squadra
+const h4 = document.createElement("h4");
+h4.textContent = team;
+div.appendChild(h4);
     const h4 = document.createElement("h4");
     h4.textContent = team;
     div.appendChild(h4);
