@@ -123,6 +123,12 @@ nav ul.navbar li a {
   font-weight: bold;
   color: white !important;
 }
+/* Evidenzia pick completate in arancione */
+.pick-completata {
+  background-color: #ff9900 !important;
+  color: white !important;
+  font-weight: bold;
+}
 
 /* --------- RESPONSIVE PER MOBILE --------- */
 @media (max-width: 768px) {
