@@ -179,6 +179,7 @@ window.addEventListener("DOMContentLoaded", function () {
   caricaGiocatori().then(() =>
     caricaPick().then(() => {
       popolaListaDisponibili();
+      aggiornaChiamatePerSquadra(); // 💥 AGGIUNTA QUI
     })
   );
 });
