@@ -152,8 +152,11 @@ nav ul.navbar li a {
   }
 
   select,
-  input {
-    font-size: 0.9em;
-    padding: 6px;
-  }
+input {
+  font-size: 0.8em;
+  padding: 4px 6px;
+  max-width: 150px;
+  border-radius: 6px;
+}
+
   
