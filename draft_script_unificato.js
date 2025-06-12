@@ -44,7 +44,7 @@ function caricaPick() {
 }
 
 function caricaGiocatori() {
-  fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vSEqUua24q99bk7cVGpHkQhmNHc0EOQ0-x4v5Fut5Sqcb6G2iiJusueUPqZez2-iQ/pub?output=csv")
+  fetch("giocatori_completo_finale.csv")
     .then(res => res.text())
     .then(csv => {
       const righe = csv.trim().split(/\r?\n/).slice(1);
@@ -63,8 +63,8 @@ function caricaGiocatori() {
           <td>${quotazione}</td>`;
         listaGiocatori.appendChild(tr);
 
-        ruoli.add(ruolo);
-        squadre.add(squadra);
+        if (ruolo) ruoli.add(ruolo);
+        if (squadra) squadre.add(squadra);
       });
 
       // Popola i filtri
