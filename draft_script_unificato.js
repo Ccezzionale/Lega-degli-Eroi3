@@ -141,8 +141,8 @@ function filtraLista() {
     const nome = row.children[0].textContent.toLowerCase();
     const r = row.children[1].textContent.toLowerCase();
     const s = row.children[2].textContent.toLowerCase();
-    const visibile = 
-  (!ruolo || r.split(",").some(part => part.trim().toLowerCase() === ruolo)) &&
+    const ruoloMatch = !ruolo || r.split(",").map(x => x.trim().toLowerCase()).includes(ruolo);
+const visibile = ruoloMatch &&
   (!squadra || s === squadra) &&
   (!cerca || nome.includes(cerca));
     row.style.display = visibile ? "" : "none";
