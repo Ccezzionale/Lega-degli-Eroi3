@@ -162,13 +162,18 @@ nav ul.navbar li a {
     font-size: 0.9em;
     padding: 6px;
   }
-  /* 🔶 Colore arancione per pick completate */
   
-#tabella-pick tr.pick-completata td {
+/* 🟧 Forza colore arancione sulle righe completate */
+#tabella-pick tr.pick-completata > td {
+  all: unset;
   background-color: #ff9900 !important;
   color: white !important;
   font-weight: bold !important;
+  text-align: center;
+  padding: 8px;
+  border: 1px solid #ffffff33;
 }
+
 
 }
 
