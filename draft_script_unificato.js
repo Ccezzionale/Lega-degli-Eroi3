@@ -38,12 +38,12 @@ function caricaGiocatori() {
     .then(csv => {
       const righe = csv.trim().split(/\r?\n/).slice(1);
       righe.forEach(r => {
-        const [nome, ruolo, squadra, quotazione] = r.split(",");
+        const [nome, ruolo, squadraSerieA, quotazione] = r.split(",");
         const key = normalize(nome);
-        mappaGiocatori[key] = { nome, ruolo, squadra, quotazione };
+        mappaGiocatori[key] = { nome, ruolo, squadraSerieA, quotazione };
 
         if (ruolo) ruoli.add(ruolo);
-        if (squadra) squadre.add(squadra);
+        if (squadraSerieA) squadre.add(squadraSerieA);
       });
     });
 }
@@ -93,7 +93,7 @@ function caricaPick() {
 
 function popolaListaDisponibili() {
   listaGiocatori.innerHTML = "";
-  Object.values(mappaGiocatori).forEach(({ nome, ruolo, squadra, quotazione }) => {
+  Object.values(mappaGiocatori).forEach(({ nome, ruolo, squadraSerieA, quotazione }) => {
     const key = normalize(nome);
     if (giocatoriScelti.has(key)) return;
 
@@ -101,15 +101,14 @@ function popolaListaDisponibili() {
     tr.innerHTML = `
       <td>${nome}</td>
       <td>${ruolo}</td>
-      <td>${squadra}</td>
+      <td>${squadraSerieA}</td>
       <td>${quotazione}</td>`;
 
     tr.addEventListener("click", () => {
       const conferma = confirm(`Vuoi selezionare ${nome} per la squadra al turno?`);
       if (conferma) {
         const righe = document.querySelectorAll("#tabella-pick tbody tr");
-        for (let i = 0; i < righe.length; i++) {
-        let r = righe[i];
+        for (let r of righe) {
           const celle = r.querySelectorAll("td");
           if (!celle[2].textContent.trim()) {
             const pick = celle[0].textContent;
@@ -117,7 +116,7 @@ function popolaListaDisponibili() {
 
             celle[2].textContent = nome;
             celle[3].textContent = ruolo;
-            celle[4].textContent = squadra;
+            celle[4].textContent = squadraSerieA;
             celle[5].textContent = quotazione;
 
             r.style.backgroundColor = "#d4edda";
@@ -126,7 +125,7 @@ function popolaListaDisponibili() {
 
             document.getElementById("turno-attuale").textContent = `✅ ${nome} selezionato!`;
 
-            inviaPickAlFoglio(pick, squadra, nome, ruolo, squadra, quotazione);
+            inviaPickAlFoglio(pick, squadra, nome, ruolo, squadraSerieA, quotazione);
             break;
           }
         }
@@ -159,7 +158,7 @@ function filtraLista() {
   const cerca = searchInput.value.toLowerCase();
 
   Array.from(listaGiocatori.children).forEach(row => {
-    let nome = row.children[0].textContent.toLowerCase();
+    const nome = row.children[0].textContent.toLowerCase();
     const r = row.children[1].textContent.toLowerCase();
     const s = row.children[2].textContent.toLowerCase();
 
