@@ -94,3 +94,27 @@ nav ul.navbar li a {
   color: black;
   font-weight: bold;
 }
+#tabella-pick {
+  border-collapse: collapse;
+  background-color: #004080;
+  color: white;
+  width: 100%;
+}
+
+#tabella-pick th {
+  background-color: #005299;
+  color: white;
+  border: 1px solid #ffffff33;
+  padding: 8px;
+  text-align: center;
+  font-size: 0.9em;
+  text-transform: uppercase;
+}
+
+#tabella-pick td {
+  border: 1px solid #ffffff33;
+  padding: 8px;
+  text-align: center;
+  font-size: 0.9em;
+  background-color: #003366;
+}
