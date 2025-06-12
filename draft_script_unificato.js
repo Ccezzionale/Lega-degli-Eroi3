@@ -1,3 +1,4 @@
+
 const tabella = document.querySelector("#tabella-pick tbody");
 const listaGiocatori = document.getElementById("lista-giocatori");
 const giocatoriScelti = new Set();
@@ -27,8 +28,8 @@ function inviaPickAlFoglio(pick, squadra, giocatore, ruolo, squadraSerieA, quota
     body: dati
   })
   .then(res => res.text())
-  .then(txt => console.log("✅ Risposta foglio:", txt))
-  .catch(err => console.error("❌ Errore invio pick:", err));
+  .then(txt => console.log("Risposta foglio:", txt))
+  .catch(err => console.error("Errore invio pick:", err));
 }
 
 function caricaGiocatori() {
@@ -37,11 +38,12 @@ function caricaGiocatori() {
     .then(csv => {
       const righe = csv.trim().split(/\r?\n/).slice(1);
       righe.forEach(r => {
-        const [nome, ruolo, squadra, quotazione] = r.split(",");
+        const [nome, ruolo, squadraSerieA, quotazione] = r.split(",");
         const key = normalize(nome);
-        mappaGiocatori[key] = { nome, ruolo, squadra, quotazione };
+        mappaGiocatori[key] = { nome, ruolo, squadra: squadraSerieA, quotazione };
+
         if (ruolo) ruoli.add(ruolo);
-        if (squadra) squadre.add(squadra);
+        if (squadraSerieA) squadre.add(squadraSerieA);
       });
     });
 }
@@ -84,7 +86,8 @@ function caricaPick() {
         document.getElementById("turno-attuale").textContent =
           `🎯 È il turno di: ${prossima.squadra} (Pick ${prossima.pick})`;
       else
-        document.getElementById("turno-attuale").textContent = "✅ Draft completato!";
+        document.getElementById("turno-attuale").textContent =
+          "✅ Draft completato!";
     });
 }
 
@@ -110,7 +113,7 @@ function popolaListaDisponibili() {
           if (!celle[2].textContent.trim()) {
             const pick = celle[0].textContent;
             const squadra = celle[1].textContent;
-            const squadraSerieA = mappaGiocatori[normalize(nome)]?.squadra || "";
+            const { ruolo, squadra: squadraSerieA, quotazione } = mappaGiocatori[key];
 
             celle[2].textContent = nome;
             celle[3].textContent = ruolo;
