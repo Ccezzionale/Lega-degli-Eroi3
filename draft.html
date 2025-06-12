@@ -305,25 +305,35 @@ function popolaFiltroRuolo() {
     }
 
     async function caricaPick() {
-      const response = await fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vTDKKMarxp0Kl7kiIWa-1X7jB-54KcQaLIGArN1FfR_X40rwAKVRgUYRGhrzIJ7SsKtUPnk_Cz8F0qt/pub?output=csv");
-      const text = await response.text();
-      const righe = text.trim().split(/\r?\n/).slice(1);
+      if (Object.keys(ruoloMap).length === 0) await caricaLookupGiocatori();
+
+      const sheetCSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTDKKMarxp0Kl7kiIWa-1X7jB-54KcQaLIGArN1FfR_X40rwAKVRgUYRGhrzIJ7SsKtUPnk_Cz8F0qt/pub?output=csv";
+      const text  = await (await fetch(sheetCSV)).text();
+      const righe = text.split(/
+?
+/).slice(1); // lasciamo righe vuote
+
       const tbody = document.querySelector("#tabella-pick tbody");
       tbody.innerHTML = "";
-      const ruoloSet = new Set();
-      const ultime = [], perRuolo = {}, perSquadra = {};
-      let evidenziata = false;
+
+      const ultime = [];
+      const perRuolo = {}, perSquadra = {};
+      let evidenziata = false; // per marcare la prima pick vuota
+
       righe.forEach(riga => {
-        const [pick, squadraFant, giocatore] = riga.match(/(".*?"|[^",]+)(?=,|$)/g)?.map(c => c.replace(/^"|"$/g, "")) || [];
+        const cols = riga.match(/(".*?"|[^",]+)(?=,|$)/g)?.map(c => c.replace(/^"|"$/g, ""));
+        if (!cols) return;
         const pick          = cols[0] || "";
         const squadraFant   = cols[1] || "";
         const giocatore     = cols[2] || "";
-        const key = normalize(giocatore);
-        const ruolo = ruoloMap[key] || "—";
-        const squadraSA = squadraMap[key]?.[0] || "—";
-        const quot = squadraMap[key]?.[1] || "—";
+        const key           = normalize(giocatore);
+        const ruolo         = ruoloMap[key]        || "—";
+        const squadraSA     = squadraMap[key]?.[0] || "—";
+        const quotazione    = squadraMap[key]?.[1] || "—";
+
         const tr = document.createElement("tr");
-        tr.innerHTML = `<td>${pick}</td><td>${squadraFant}</td><td>${giocatore}</td><td>${ruolo}</td><td>${squadraSA}</td><td>${quot}</td>`;
+        tr.innerHTML = `<td>${pick}</td><td>${squadraFant}</td><td>${giocatore}</td><td>${ruolo}</td><td>${squadraSA}</td><td>${quotazione}</td>`;
+
         if (!giocatore && !evidenziata) {
           tr.classList.add("next-pick");
           evidenziata = true;
@@ -347,16 +357,12 @@ function popolaFiltroRuolo() {
       document.getElementById("stat-squadra").innerHTML = `<strong>Pick per Squadra Fanta:</strong> ${Object.entries(perSquadra).map(([s,c]) => `${s}: ${c}`).join(" | ")}`;
     }
 
-    window.addEventListener("DOMContentLoaded", async () => {
-      await mostraTurnoAttuale();
-      await caricaGiocatori();
-      
-allRows.forEach(r => {
-  const [nome, ruolo, squadraSA, quot] = r.split(",").map(c => c.trim().replace(/^"|"$/g, ""));
-  const key = normalize(nome);
-  ruoloMap[key] = ruolo;
-  squadraMap[key] = [squadraSA, quot];
+    
+window.addEventListener("DOMContentLoaded", async () => {
+  await caricaGiocatori();
+  await caricaPick();
 });
+
 
   await caricaPick();
     });
