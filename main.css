@@ -173,7 +173,24 @@ nav ul.navbar li a {
   padding: 8px;
   border: 1px solid #ffffff33;
 }
+@media (max-width: 768px) {
+  #tabella-pick {
+    table-layout: fixed;
+    width: 100%;
+  }
 
+  #tabella-pick td,
+  #tabella-pick th {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    font-size: 0.75em;
+    padding: 6px 4px;
+  }
 
+  #tabella-pick tr.pick-completata > td {
+    font-size: 0.75em;
+    padding: 6px 4px;
+  }
 }
+
 
