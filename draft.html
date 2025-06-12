@@ -127,7 +127,16 @@
       margin-bottom: 20px;
       box-shadow: 0 0 10px rgba(0,0,0,0.2);
     }
-  </style>
+  
+#lista-giocatori-table-container {
+  max-height: 420px;
+  overflow-y: auto;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  margin-top: 10px;
+}
+
+</style>
 </head>
 <body>
 <h1>Draft Room - Lega degli Eroi</h1>
@@ -152,6 +161,7 @@
     <tbody></tbody>
   </table>
 </div>
+</div>
 <div class="stats">
   <h2>Statistiche Live</h2>
   <div id="ultime-pick"></div>
@@ -166,7 +176,8 @@
   <select id="filtroRuolo"><option value="">-- Tutti i Ruoli --</option></select>
   <label for="searchGiocatore">Cerca Giocatore:</label>
   <input id="searchGiocatore" placeholder="Digita un nome..." type="text"/>
-  <table id="lista-giocatori-table">
+  <div id="lista-giocatori-table-container">
+<table id="lista-giocatori-table">
     <thead>
       <tr>
         <th onclick="ordinaTabella(0, 'nome')">Giocatore</th>

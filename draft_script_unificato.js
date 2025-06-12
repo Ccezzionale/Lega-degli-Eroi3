@@ -182,3 +182,29 @@ window.addEventListener("DOMContentLoaded", function () {
     })
   );
 });
+
+let ordinamentoCorrente = {
+  colonna: null,
+  asc: true
+};
+
+function ordinaTabella(indice, chiave, èNumero = false) {
+  const righe = Array.from(listaGiocatori.querySelectorAll("tr"));
+  const asc = (ordinamentoCorrente.colonna === indice) ? !ordinamentoCorrente.asc : true;
+  ordinamentoCorrente = { colonna: indice, asc };
+
+  righe.sort((a, b) => {
+    const aVal = a.children[indice].textContent.trim();
+    const bVal = b.children[indice].textContent.trim();
+
+    const valoreA = èNumero ? parseFloat(aVal) : aVal.toLowerCase();
+    const valoreB = èNumero ? parseFloat(bVal) : bVal.toLowerCase();
+
+    if (valoreA < valoreB) return asc ? -1 : 1;
+    if (valoreA > valoreB) return asc ? 1 : -1;
+    return 0;
+  });
+
+  listaGiocatori.innerHTML = '';
+  righe.forEach(row => listaGiocatori.appendChild(row));
+}
