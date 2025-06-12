@@ -83,10 +83,12 @@ function caricaPick() {
       });
 
       if (prossima)
-        document.getElementById("turno-attuale").textContent =
+        aggiornaChiamatePerSquadra(righe.map(r => r.split(",")));
+  document.getElementById("turno-attuale").textContent =
           `🎯 È il turno di: ${prossima.fantaTeam} (Pick ${prossima.pick})`;
       else
-        document.getElementById("turno-attuale").textContent =
+        aggiornaChiamatePerSquadra(righe.map(r => r.split(",")));
+  document.getElementById("turno-attuale").textContent =
           "✅ Draft completato!";
     });
 }
@@ -123,7 +125,8 @@ function popolaListaDisponibili() {
             r.style.fontWeight = "bold";
             r.classList.remove("next-pick");
 
-            document.getElementById("turno-attuale").textContent = `✅ ${nome} selezionato!`;
+            aggiornaChiamatePerSquadra(righe.map(r => r.split(",")));
+  document.getElementById("turno-attuale").textContent = `✅ ${nome} selezionato!`;
 
             inviaPickAlFoglio(pick, fantaTeam, nome, ruolo, squadra, quotazione);
             break;
@@ -207,4 +210,47 @@ function ordinaTabella(indice, chiave, èNumero = false) {
 
   listaGiocatori.innerHTML = '';
   righe.forEach(row => listaGiocatori.appendChild(row));
+}
+
+
+
+function aggiornaChiamatePerSquadra(pickData) {
+  const contenitore = document.getElementById("tabella-chiamate-per-squadra");
+  contenitore.innerHTML = "";
+
+  const squadre = {};
+
+  pickData.forEach(r => {
+    const [pick, fantaTeam, nome, ruolo] = [r[0], r[1], r[2], r[3]];
+    if (!nome.trim()) return;
+    if (!squadre[fantaTeam]) squadre[fantaTeam] = [];
+    squadre[fantaTeam].push({ nome, ruolo });
+  });
+
+  Object.entries(squadre).forEach(([team, picks]) => {
+    const div = document.createElement("div");
+    div.style.flex = "1 1 300px";
+    div.style.background = "#003366";
+    div.style.padding = "10px";
+    div.style.borderRadius = "10px";
+    div.style.color = "white";
+    div.style.boxShadow = "0 0 10px rgba(0,0,0,0.3)";
+
+    const titolo = document.createElement("h3");
+    titolo.textContent = team;
+    titolo.style.color = "#ffcc00";
+    titolo.style.borderBottom = "1px solid #ffcc00";
+    titolo.style.paddingBottom = "5px";
+    div.appendChild(titolo);
+
+    const lista = document.createElement("ol");
+    picks.forEach(p => {
+      const li = document.createElement("li");
+      li.textContent = `${p.nome} (${p.ruolo})`;
+      lista.appendChild(li);
+    });
+
+    div.appendChild(lista);
+    contenitore.appendChild(div);
+  });
 }
