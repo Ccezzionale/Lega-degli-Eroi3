@@ -89,10 +89,10 @@ function popolaListaDisponibili() {
       <td>${squadra}</td>
       <td>${quotazione}</td>`;
 
+
     tr.addEventListener("click", () => {
-      const conferma = confirm(`Vuoi selezionare ${nome}?`);
+      const conferma = confirm(`Vuoi selezionare ${nome} per la squadra al turno?`);
       if (conferma) {
-        // Trova la prima riga senza nome nella tabella delle pick
         const righe = document.querySelectorAll("#tabella-pick tbody tr");
         for (let r of righe) {
           const celle = r.querySelectorAll("td");
@@ -101,14 +101,25 @@ function popolaListaDisponibili() {
             celle[3].textContent = ruolo;
             celle[4].textContent = squadra;
             celle[5].textContent = quotazione;
+
+            // blocca e colora
+            r.style.backgroundColor = "#d4edda";
+            r.style.fontWeight = "bold";
             r.classList.remove("next-pick");
+            r.setAttribute("data-locked", "true");
+
+            // aggiorna messaggio in alto
+            document.getElementById("turno-attuale").textContent = `✅ ${nome} selezionato!`;
+
             break;
           }
         }
 
-        alert(`${nome} selezionato! (solo a livello visivo)`);
+        // rimuove la riga dal listone
+        tr.remove();
       }
     });
+
 
     listaGiocatori.appendChild(tr);
 
