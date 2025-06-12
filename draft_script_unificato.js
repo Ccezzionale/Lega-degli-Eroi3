@@ -22,7 +22,7 @@ function inviaPickAlFoglio(pick, squadra, giocatore, ruolo, squadraSerieA, quota
   dati.append("squadraSerieA", squadraSerieA);
   dati.append("quotazione", quotazione);
 
-  fetch("https://script.google.com/macros/s/AKfycbyaGwstLI9sNkhWUqjYME_vFgJYYNo9TGivkq0gA_YvYojILF347mtU6gOZ6Tw9tF9PWg/exec", {
+  fetch("https://script.google.com/macros/library/d/1jZtPY9AniR4M9YS7Pyp_GUiuxctcxrlvXXDm6N24Q8xG9LNT8KG4Yc2h/4", {
     method: "POST",
     body: dati
   })
