@@ -219,10 +219,15 @@ function mostraTurnoAttuale() {
 fetch("giocatori_completo_finale.csv").then(res => res.text()).then(text => {
 // testo restituito da fetch
       allRows = text.trim().split(/\r?\n/).slice(1);
-const pickText = await (fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vTDKKMarxp0Kl7kiIWa-1X7jB-54KcQaLIGArN1FfR_X40rwAKVRgUYRGhrzIJ7SsKtUPnk_Cz8F0qt/pub?output=csv").then(res => res.text());
-      pickText.split(/\r?\n/).slice(1).forEach(r => {
-        const name = r.split(",")[2]?.trim();
-        if (name) giocatoriScelti.add(normalize(name));
+fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vTDKKMarxp0Kl7kiIWa-1X7jB-54KcQaLIGArN1FfR_X40rwAKVRgUYRGhrzIJ7SsKtUPnk_Cz8F0qt/pub?output=csv")
+  .then(res => res.text())
+  .then(pickText => {
+    pickText.split(/\r?\n/).slice(1).forEach(r => {
+      const parts = r.split(",");
+      const name = parts[2] ? parts[2].trim() : "";
+      if (name) giocatoriScelti.add(normalize(name));
+    });
+  });
       });
 
       aggiornaLista();
