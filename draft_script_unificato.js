@@ -81,13 +81,21 @@ function popolaListaDisponibili() {
     const key = normalize(nome);
     if (giocatoriScelti.has(key)) return;
 
+
     const tr = document.createElement("tr");
     tr.innerHTML = `
       <td>${nome}</td>
       <td>${ruolo}</td>
       <td>${squadra}</td>
       <td>${quotazione}</td>`;
+    tr.addEventListener("click", () => {
+      const conferma = confirm(`Vuoi selezionare ${nome}?`);
+      if (conferma) {
+        alert(`${nome} selezionato! (azione da definire)`);
+      }
+    });
     listaGiocatori.appendChild(tr);
+
   });
 
   // Popola i filtri una sola volta
