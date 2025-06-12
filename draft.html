@@ -315,6 +315,9 @@ function popolaFiltroRuolo() {
       let evidenziata = false;
       righe.forEach(riga => {
         const [pick, squadraFant, giocatore] = riga.match(/(".*?"|[^",]+)(?=,|$)/g)?.map(c => c.replace(/^"|"$/g, "")) || [];
+        const pick          = cols[0] || "";
+        const squadraFant   = cols[1] || "";
+        const giocatore     = cols[2] || "";
         const key = normalize(giocatore);
         const ruolo = ruoloMap[key] || "—";
         const squadraSA = squadraMap[key]?.[0] || "—";
