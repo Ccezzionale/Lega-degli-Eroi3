@@ -175,7 +175,6 @@ function filtraLista() {
   el.addEventListener("input", filtraLista)
 );
 
-window.addEventListener("DOMContentLoaded", function () {
   caricaGiocatori().then(() =>
     caricaPick().then(() => {
       popolaListaDisponibili();
@@ -208,3 +207,44 @@ function ordinaTabella(indice, chiave, èNumero = false) {
   listaGiocatori.innerHTML = '';
   righe.forEach(row => listaGiocatori.appendChild(row));
 }
+
+function aggiornaChiamatePerSquadra() {
+  const righe = document.querySelectorAll("#tabella-pick tbody tr");
+  const riepilogo = {};
+
+  righe.forEach(r => {
+    const celle = r.querySelectorAll("td");
+    const team = celle[1]?.textContent?.trim();
+    const nome = celle[2]?.textContent?.trim();
+    const ruolo = celle[3]?.textContent?.trim();
+
+    if (!team || !nome) return;
+    if (!riepilogo[team]) riepilogo[team] = [];
+    riepilogo[team].push(`${riepilogo[team].length + 1}. ${nome} (${ruolo})`);
+  });
+
+  const container = document.getElementById("riepilogo-squadre");
+  container.innerHTML = "";
+  for (const [team, picks] of Object.entries(riepilogo)) {
+    const div = document.createElement("div");
+    div.className = "riepilogo-team";
+    const h4 = document.createElement("h4");
+    h4.textContent = team;
+    div.appendChild(h4);
+    picks.forEach(txt => {
+      const riga = document.createElement("div");
+      riga.textContent = txt;
+      div.appendChild(riga);
+    });
+    container.appendChild(div);
+  }
+}
+
+window.addEventListener("DOMContentLoaded", function () {
+  caricaGiocatori().then(() =>
+    caricaPick().then(() => {
+      popolaListaDisponibili();
+      aggiornaChiamatePerSquadra(); // nuova funzione richiamata
+    })
+  );
+});
