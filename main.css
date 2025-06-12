@@ -163,7 +163,8 @@ nav ul.navbar li a {
     padding: 6px;
   }
   /* 🔶 Colore arancione per pick completate */
-tr.pick-completata {
+  
+#tabella-pick tr.pick-completata td {
   background-color: #ff9900 !important;
   color: white !important;
   font-weight: bold !important;
