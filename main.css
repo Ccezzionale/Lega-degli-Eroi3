@@ -6,10 +6,12 @@ body {
   padding: 0;
   text-align: center;
 }
+
 nav {
   background-color: #004080;
   padding: 1em;
 }
+
 nav ul.navbar {
   list-style: none;
   display: flex;
@@ -17,48 +19,18 @@ nav ul.navbar {
   padding: 0;
   margin: 0;
 }
+
 nav ul.navbar li {
   margin: 0 15px;
 }
+
 nav ul.navbar li a {
   color: white;
   text-decoration: none;
   font-weight: bold;
 }
-@media (max-width: 768px) {
-  .container {
-    flex-direction: column;
-    padding: 10px;
-    gap: 10px;
-  }
 
-  .tabella-container,
-  .lista-container {
-    width: 100%;
-    min-width: unset;
-  }
-
-  table {
-    font-size: 0.8em;
-  }
-
-  th, td {
-    padding: 4px;
-  }
-
-  #lista-giocatori-table-container,
-  #tabella-pick-container {
-    max-height: 300px;
-  }
-
-  select,
-  input {
-    font-size: 0.9em;
-    padding: 6px;
-  }
-}
-
-/* 🔵 Queste vanno FUORI dal media query! */
+/* Tabella sinistra - stile coerente con tabella destra */
 #tabella-pick-container table {
   background-color: #004080;
   border-radius: 10px;
@@ -120,4 +92,37 @@ nav ul.navbar li a {
   text-align: center;
   font-size: 0.9em;
   background-color: #003366;
+}
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .tabella-container,
+  .lista-container {
+    width: 100%;
+    min-width: unset;
+  }
+
+  table {
+    font-size: 0.8em;
+  }
+
+  th, td {
+    padding: 4px;
+  }
+
+  #lista-giocatori-table-container,
+  #tabella-pick-container {
+    max-height: 300px;
+  }
+
+  select,
+  input {
+    font-size: 0.9em;
+    padding: 6px;
+  }
 }
