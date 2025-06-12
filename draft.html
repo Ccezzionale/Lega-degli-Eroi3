@@ -356,9 +356,10 @@ function popolaFiltroRuolo() {
     }
 
     
-window.addEventListener("DOMContentLoaded", () => {
-  (async () => {
-  })();
+window.addEventListener("DOMContentLoaded", function () {
+  caricaGiocatori().then(() => {
+    caricaPick();
+  });
 });
 
 
