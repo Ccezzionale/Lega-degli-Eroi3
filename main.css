@@ -31,75 +31,22 @@ nav ul.navbar li a {
 }
 
 /* Tabella sinistra - stile coerente con tabella destra */
-#tabella-pick-container table {
+/* --- Stile uniforme per tabella sinistra (#tabella-pick) --- */
+#tabella-pick-container {
   background-color: #004080;
   border-radius: 10px;
   overflow: hidden;
-  color: white;
-  width: 100%;
-  border-collapse: collapse;
-}
-
-#tabella-pick-container th {
-  background-color: #005299;
-  color: white;
-  padding: 8px;
-  text-transform: uppercase;
-  font-size: 0.9em;
-}
-
-#tabella-pick-container td {
-  border: 1px solid #ffffff33;
-  padding: 8px;
-  text-align: center;
-  font-size: 0.9em;
-}
-
-#tabella-pick-container tr:nth-child(even) {
-  background-color: #003366;
-}
-
-#tabella-pick-container tr:nth-child(odd) {
-  background-color: #002b5c;
-}
-
-#tabella-pick-container tr.next-pick {
-  background-color: #ffe680 !important;
-  color: black;
-  font-weight: bold;
+  padding: 0;
+  margin-bottom: 20px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
 }
 
 #tabella-pick {
-  border-collapse: collapse;
-  background-color: #004080;
-  color: white;
   width: 100%;
-}
-
-#tabella-pick th {
-  background-color: #005299;
-  color: white;
-  border: 1px solid #ffffff33;
-  padding: 8px;
-  text-align: center;
-  font-size: 0.9em;
-  text-transform: uppercase;
-}
-
-#tabella-pick td {
-  border: 1px solid #ffffff33;
-  padding: 8px;
-  text-align: center;
-  font-size: 0.9em;
-  background-color: #003366;
-}
-/* Tabella sinistra - stile uguale a destra */
-#tabella-pick {
   border-collapse: collapse;
-  width: 100%;
-  background-color: #004080;
-  color: white;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #004080;
+  color: white;
   border-radius: 10px;
   overflow: hidden;
 }
@@ -107,9 +54,9 @@ nav ul.navbar li a {
 #tabella-pick th {
   background-color: #005299;
   color: white;
+  padding: 8px;
   text-transform: uppercase;
   font-size: 0.9em;
-  padding: 8px;
   border: 1px solid #ffffff33;
   text-align: center;
 }
@@ -132,6 +79,7 @@ nav ul.navbar li a {
   color: black;
   font-weight: bold;
 }
+
 
 @media (max-width: 768px) {
   .container {
