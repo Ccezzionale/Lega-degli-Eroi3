@@ -25,3 +25,35 @@ nav ul.navbar li a {
   text-decoration: none;
   font-weight: bold;
 }
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .tabella-container,
+  .lista-container {
+    width: 100%;
+    min-width: unset;
+  }
+
+  table {
+    font-size: 0.8em;
+  }
+
+  th, td {
+    padding: 4px;
+  }
+
+  #lista-giocatori-table-container,
+  #tabella-pick-container {
+    max-height: 300px;
+  }
+
+  select,
+  input {
+    font-size: 0.9em;
+    padding: 6px;
+  }
+}
