@@ -1,16 +1,16 @@
 // SCRIPT UNIFICATO JS
 
-// Variabili
 const tabella = document.querySelector("#tabella-pick tbody");
 const listaGiocatori = document.getElementById("lista-giocatori");
 const giocatoriScelti = new Set();
+const filtroRuolo = document.getElementById("filtroRuolo");
+const filtroSerieA = document.getElementById("filtroSerieA");
+const searchInput = document.getElementById("searchGiocatore");
 
-// Normalizza nomi
 function normalize(nome) {
   return nome.trim().toLowerCase();
 }
 
-// Carica Pick
 function caricaPick() {
   fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vTDKKMarxp0Kl7kiIWa-1X7jB-54KcQaLIGArN1FfR_X40rwAKVRgUYRGhrzIJ7SsKtUPnk_Cz8F0qt/pub?output=csv")
     .then(res => res.text())
@@ -43,15 +43,18 @@ function caricaPick() {
     });
 }
 
-// Carica Giocatori
 function caricaGiocatori() {
   fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vSEqUua24q99bk7cVGpHkQhmNHc0EOQ0-x4v5Fut5Sqcb6G2iiJusueUPqZez2-iQ/pub?output=csv")
     .then(res => res.text())
     .then(csv => {
       const righe = csv.trim().split(/\r?\n/).slice(1);
+      const ruoli = new Set();
+      const squadre = new Set();
+
       righe.forEach(r => {
         const [nome, ruolo, squadra, quotazione] = r.split(",");
-        if (giocatoriScelti.has(normalize(nome))) return;
+        if (!nome || giocatoriScelti.has(normalize(nome))) return;
+
         const tr = document.createElement("tr");
         tr.innerHTML = `
           <td>${nome}</td>
@@ -59,11 +62,51 @@ function caricaGiocatori() {
           <td>${squadra}</td>
           <td>${quotazione}</td>`;
         listaGiocatori.appendChild(tr);
+
+        ruoli.add(ruolo);
+        squadre.add(squadra);
+      });
+
+      // Popola i filtri
+      ruoli.forEach(r => {
+        const opt = document.createElement("option");
+        opt.value = r;
+        opt.textContent = r;
+        filtroRuolo.appendChild(opt);
+      });
+
+      squadre.forEach(s => {
+        const opt = document.createElement("option");
+        opt.value = s;
+        opt.textContent = s;
+        filtroSerieA.appendChild(opt);
       });
     });
 }
 
-// Avvio
+function filtraLista() {
+  const ruolo = filtroRuolo.value.toLowerCase();
+  const squadra = filtroSerieA.value.toLowerCase();
+  const cerca = searchInput.value.toLowerCase();
+
+  Array.from(listaGiocatori.children).forEach(row => {
+    const nome = row.children[0].textContent.toLowerCase();
+    const r = row.children[1].textContent.toLowerCase();
+    const s = row.children[2].textContent.toLowerCase();
+
+    const visibile =
+      (!ruolo || r === ruolo) &&
+      (!squadra || s === squadra) &&
+      (!cerca || nome.includes(cerca));
+
+    row.style.display = visibile ? "" : "none";
+  });
+}
+
+[filtroRuolo, filtroSerieA, searchInput].forEach(el =>
+  el.addEventListener("input", filtraLista)
+);
+
 window.addEventListener("DOMContentLoaded", function () {
   caricaPick();
   caricaGiocatori();
