@@ -268,8 +268,8 @@ function popolaFiltroRuolo() {
             
             // Aggiunge pick e squadra al form prima dell'invio
             const turnoEl = document.getElementById("turno-attuale");
-            const pick = turnoEl?.textContent.match(/Pick (\d+)/)?.[1] || "";
-            const squadra = turnoEl?.textContent.match(/di: (.*?) \(/)?.[1] || "";
+            const pick = turnoEl?.textContent.match(/Pick (\d+)/) && [1] || "";
+            const squadra = turnoEl?.textContent.match(/di: (.*?) \(/) && [1] || "";
 
             const inputPick = document.createElement("input");
             inputPick.name = "pick";
@@ -328,8 +328,8 @@ function popolaFiltroRuolo() {
         const giocatore     = cols[2] || "";
         const key           = normalize(giocatore);
         const ruolo         = ruoloMap[key]        || "—";
-        const squadraSA     = squadraMap[key]?.[0] || "—";
-        const quotazione    = squadraMap[key]?.[1] || "—";
+        const squadraSA     = squadraMap[key] && [0] || "—";
+        const quotazione    = squadraMap[key] && [1] || "—";
 
         const tr = document.createElement("tr");
         tr.innerHTML = `<td>${pick}</td><td>${squadraFant}</td><td>${giocatore}</td><td>${ruolo}</td><td>${squadraSA}</td><td>${quotazione}</td>`;
