@@ -5,6 +5,7 @@ const giocatoriScelti = new Set();
 const filtroRuolo = document.getElementById("filtroRuolo");
 const filtroSerieA = document.getElementById("filtroSerieA");
 const searchInput = document.getElementById("searchGiocatore");
+const cercaRuolo = document.getElementById("cercaRuolo");
 
 const mappaGiocatori = {};
 let ruoli = new Set();
@@ -134,7 +135,7 @@ function popolaListaDisponibili() {
 }
 
 function filtraLista() {
-  const ruoloInput = document.getElementById("cercaRuolo")?.value?.toLowerCase() || "";
+  const ruoloTesto = cercaRuolo.value.toLowerCase();
   const ruoloSelect = filtroRuolo.value.toLowerCase();
   const squadra = filtroSerieA.value.toLowerCase();
   const cerca = searchInput.value.toLowerCase();
@@ -144,19 +145,20 @@ function filtraLista() {
     const r = row.children[1].textContent.toLowerCase();
     const s = row.children[2].textContent.toLowerCase();
 
-    const ruoliGiocatore = r.split(/[,;/]+/).map(part => part.trim());
+    const ruoliGiocatore = r.split(/[,;]+/).map(part => part.trim());
 
-    const matchRuoloInput = !ruoloInput || ruoliGiocatore.some(part => part.includes(ruoloInput));
-    const matchRuoloSelect = !ruoloSelect || ruoliGiocatore.includes(ruoloSelect);
+    const matchInput = !ruoloTesto || ruoliGiocatore.some(part => part.includes(ruoloTesto));
+    const matchSelect = !ruoloSelect || ruoliGiocatore.includes(ruoloSelect);
     const matchSquadra = !squadra || s === squadra;
     const matchNome = !cerca || nome.includes(cerca);
 
-    const visibile = matchRuoloInput && matchRuoloSelect && matchSquadra && matchNome;
-    row.style.display = visibile ? "" : "none";
+    row.style.display = (matchInput && matchSelect && matchSquadra && matchNome) ? "" : "none";
   });
 }
 
-[filtroRuolo, filtroSerieA, searchInput].forEach(el => el.addEventListener("input", filtraLista));
+[filtroRuolo, filtroSerieA, searchInput, cercaRuolo].forEach(el => {
+  if (el) el.addEventListener("input", filtraLista);
+});
 
 window.addEventListener("DOMContentLoaded", function () {
   caricaGiocatori().then(() =>
