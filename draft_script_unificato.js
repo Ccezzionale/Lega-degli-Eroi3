@@ -1,4 +1,3 @@
-
 const tabella = document.querySelector("#tabella-pick tbody");
 const listaGiocatori = document.getElementById("lista-giocatori");
 const giocatoriScelti = new Set();
@@ -17,8 +16,8 @@ function normalize(nome) {
 function inviaPickAlFoglio(pick, fantaTeam, nome, ruolo, squadra, quotazione) {
   const dati = new URLSearchParams();
   dati.append("pick", pick);
-  dati.append("squadra", squadra); // Squadra Serie A
-  dati.append("fantaTeam", fantaTeam); // Squadra fantacalcio
+  dati.append("squadra", squadra);
+  dati.append("fantaTeam", fantaTeam);
   dati.append("giocatore", nome);
   dati.append("ruolo", ruolo);
   dati.append("quotazione", quotazione);
@@ -41,7 +40,6 @@ function caricaGiocatori() {
         const [nome, ruolo, squadra, quotazione] = r.split(",");
         const key = normalize(nome);
         mappaGiocatori[key] = { nome, ruolo, squadra, quotazione };
-
         if (ruolo) ruoli.add(ruolo);
         if (squadra) squadre.add(squadra);
       });
@@ -86,8 +84,7 @@ function caricaPick() {
         document.getElementById("turno-attuale").textContent =
           `🎯 È il turno di: ${prossima.fantaTeam} (Pick ${prossima.pick})`;
       else
-        document.getElementById("turno-attuale").textContent =
-          "✅ Draft completato!";
+        document.getElementById("turno-attuale").textContent = "✅ Draft completato!";
     });
 }
 
@@ -126,6 +123,7 @@ function popolaListaDisponibili() {
             document.getElementById("turno-attuale").textContent = `✅ ${nome} selezionato!`;
 
             inviaPickAlFoglio(pick, fantaTeam, nome, ruolo, squadra, quotazione);
+            aggiornaChiamatePerSquadra();
             break;
           }
         }
@@ -179,10 +177,11 @@ window.addEventListener("DOMContentLoaded", function () {
   caricaGiocatori().then(() =>
     caricaPick().then(() => {
       popolaListaDisponibili();
-      aggiornaChiamatePerSquadra(); // 💥 AGGIUNTA QUI
+      aggiornaChiamatePerSquadra();
     })
   );
 });
+
 function aggiornaChiamatePerSquadra() {
   const righe = document.querySelectorAll("#tabella-pick tbody tr");
   const riepilogo = {};
@@ -192,41 +191,59 @@ function aggiornaChiamatePerSquadra() {
     const team = celle[1]?.textContent?.trim();
     const nome = celle[2]?.textContent?.trim();
     const ruolo = celle[3]?.textContent?.trim();
-
     if (!team || !nome) return;
     if (!riepilogo[team]) riepilogo[team] = [];
-    riepilogo[team].push(`${riepilogo[team].length + 1}. ${nome} (${ruolo})`);
+    riepilogo[team].push({ nome, ruolo });
   });
 
-  const container = document.getElementById("riepilogo-squadre");
+  const container = document.getElementById("tabella-chiamate-per-squadra");
   container.innerHTML = "";
-  for (const [team, picks] of Object.entries(riepilogo)) {
+
+  Object.entries(riepilogo).forEach(([team, picks]) => {
     const div = document.createElement("div");
     div.className = "riepilogo-team";
-// ⬇️ BLOCCO PER INSERIRE IL LOGO
-const logoPath = `img/${team}.png`;
-const img = document.createElement("img");
-img.src = logoPath;
-img.alt = team;
-img.style.maxWidth = "60px";
-img.style.margin = "0 auto 8px";
-img.style.display = "block";
-div.appendChild(img);
+    div.style.flex = "1 1 240px";
+    div.style.background = "#003366";
+    div.style.padding = "15px";
+    div.style.margin = "10px 0";
+    div.style.borderRadius = "10px";
+    div.style.color = "white";
+    div.style.boxShadow = "0 0 8px rgba(0,0,0,0.4)";
+    div.style.display = "flex";
+    div.style.flexDirection = "column";
+    div.style.alignItems = "center";
+    div.style.gap = "8px";
 
-// ⬇️ Titolo squadra
-const h4 = document.createElement("h4");
-h4.textContent = team;
-div.appendChild(h4);
-    const h4 = document.createElement("h4");
-    h4.textContent = team;
-    div.appendChild(h4);
-    picks.forEach(txt => {
-      const riga = document.createElement("div");
-      riga.textContent = txt;
-      div.appendChild(riga);
+    const logoPath = `img/${team}.png`;
+    const img = document.createElement("img");
+    img.src = logoPath;
+    img.alt = team;
+    img.style.maxHeight = "50px";
+    img.style.display = "block";
+    img.style.marginBottom = "6px";
+    div.appendChild(img);
+
+    const titolo = document.createElement("h3");
+    titolo.textContent = team;
+    titolo.style.color = "#ffcc00";
+    titolo.style.fontSize = "1.1em";
+    titolo.style.margin = "0";
+    div.appendChild(titolo);
+
+    const lista = document.createElement("ol");
+    lista.style.margin = "0";
+    lista.style.paddingLeft = "20px";
+    lista.style.textAlign = "left";
+
+    picks.forEach((p, i) => {
+      const li = document.createElement("li");
+      li.textContent = `${i + 1}. ${p.nome} (${p.ruolo})`;
+      lista.appendChild(li);
     });
+
+    div.appendChild(lista);
     container.appendChild(div);
-  }
+  });
 }
 
 let ordinamentoCorrente = {
@@ -242,10 +259,8 @@ function ordinaTabella(indice, chiave, èNumero = false) {
   righe.sort((a, b) => {
     const aVal = a.children[indice].textContent.trim();
     const bVal = b.children[indice].textContent.trim();
-
     const valoreA = èNumero ? parseFloat(aVal) : aVal.toLowerCase();
     const valoreB = èNumero ? parseFloat(bVal) : bVal.toLowerCase();
-
     if (valoreA < valoreB) return asc ? -1 : 1;
     if (valoreA > valoreB) return asc ? 1 : -1;
     return 0;
