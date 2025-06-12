@@ -108,7 +108,8 @@ function popolaListaDisponibili() {
       const conferma = confirm(`Vuoi selezionare ${nome} per la squadra al turno?`);
       if (conferma) {
         const righe = document.querySelectorAll("#tabella-pick tbody tr");
-        for (let r of righe) {
+        for (let i = 0; i < righe.length; i++) {
+        let r = righe[i];
           const celle = r.querySelectorAll("td");
           if (!celle[2].textContent.trim()) {
             const pick = celle[0].textContent;
@@ -158,7 +159,7 @@ function filtraLista() {
   const cerca = searchInput.value.toLowerCase();
 
   Array.from(listaGiocatori.children).forEach(row => {
-    const nome = row.children[0].textContent.toLowerCase();
+    let nome = row.children[0].textContent.toLowerCase();
     const r = row.children[1].textContent.toLowerCase();
     const s = row.children[2].textContent.toLowerCase();
 
