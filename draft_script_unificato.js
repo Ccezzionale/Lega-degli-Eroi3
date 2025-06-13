@@ -48,11 +48,12 @@ function caricaGiocatori() {
     });
 }
 
-        tabella.appendChild(tr);
+                tabella.appendChild(tr);
       });
+
       document.getElementById("turno-attuale").textContent =
         prossima
-          ? `🎯 È il turno di: ${prossima.fantaTeam} (Pick ${prossima.pick})`
+          ? "🎯 È il turno di: " + prossima.fantaTeam + " (Pick " + prossima.pick + ")"
           : "✅ Draft completato!";
     });
 }
