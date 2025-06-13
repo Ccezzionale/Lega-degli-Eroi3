@@ -88,10 +88,11 @@ function popolaListaDisponibili() {
     if (giocatoriScelti.has(key)) return;
     const tr = document.createElement("tr");
     tr.innerHTML = `
-      <td>${nome}</td>
-      <td>${ruolo}</td>
-      <td>${squadra}</td>
-      <td>${parseInt(quotazione)}</td>`;
+  <td>${pick}</td>
+  <td>${fantaTeam}</td>
+  <td>${nome}</td>
+  <td>${ruolo}</td>
+`;
     tr.addEventListener("click", () => {
       const conferma = confirm(`Vuoi selezionare ${nome} per la squadra al turno?`);
       if (conferma) {
