@@ -24,7 +24,7 @@ function inviaPickAlFoglio(pick, fantaTeam, nome, ruolo, squadra, quotazione) {
   dati.append("ruolo", ruolo);
   dati.append("quotazione", quotazione);
 
-  fetch("https://script.google.com/macros/s/AKfycbxFamdCRhlGfZ3j53yPUlGzE3dlrpxHvsJbXGht2D4fHJJ1HDybWoWg5Doin2d0BccF8Q/exec", {
+  fetch("https://script.google.com/macros/s/AKfycbyav1BQF0IIa2Acklx2bDHzuIXM2V8QSCdolnZu9o2WDQl2gmMIFfiE8BXsC8YoUVLNkA/exec", {
     method: "POST",
     body: dati
   })
