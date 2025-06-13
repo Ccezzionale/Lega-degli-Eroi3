@@ -76,8 +76,8 @@ function caricaPick() {
       });
 document.getElementById("turno-attuale").textContent =
   prossima
-    ? "🎯 È il turno di: " + prossima.fantaTeam + " (Pick " + prossima.pick + ")"
-    : "✅ Draft completato!";
+    ? "E' il turno di: " + prossima.fantaTeam + " (Pick " + prossima.pick + ")"
+    : "Draft completato!";
     });
 }
 
