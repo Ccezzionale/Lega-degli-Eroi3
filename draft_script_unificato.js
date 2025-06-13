@@ -215,13 +215,23 @@ function aggiornaChiamatePerSquadra() {
 
 let ordineAscendente = {};
 
+let ordineAscendente = {};
+
 function ordinaPick(colonnaIndex, numerico = false) {
   const tbody = document.querySelector("#tabella-pick tbody");
   const righe = Array.from(tbody.querySelectorAll("tr"));
-  // ...
-}
+
+  // Toggle ordine
   const asc = !ordineAscendente[colonnaIndex];
   ordineAscendente[colonnaIndex] = asc;
+
+  // Rimuovi le freccette da tutti gli header
+  document.querySelectorAll("#tabella-pick thead th").forEach((th, idx) => {
+    th.textContent = th.textContent.replace(/[\u2191\u2193]/g, ""); // freccia su/giù
+    if (idx === colonnaIndex) {
+      th.textContent += asc ? " \u2191" : " \u2193"; // ↑ o ↓
+    }
+  });
 
   righe.sort((a, b) => {
     const aText = a.children[colonnaIndex]?.textContent.trim();
@@ -235,6 +245,10 @@ function ordinaPick(colonnaIndex, numerico = false) {
       return asc ? aText.localeCompare(bText) : bText.localeCompare(aText);
     }
   });
+
+  tbody.innerHTML = "";
+  righe.forEach(r => tbody.appendChild(r));
+}
 
   tbody.innerHTML = "";
   righe.forEach(r => tbody.appendChild(r));
