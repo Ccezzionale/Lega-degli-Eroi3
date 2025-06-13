@@ -212,4 +212,30 @@ function aggiornaChiamatePerSquadra() {
     });
     container.appendChild(div);
   }
+  
+}let ordineAscendente = {};
+
+function ordinaPick(colonnaIndex, numerico = false) {
+  const tbody = document.querySelector("#tabella-pick tbody");
+  const righe = Array.from(tbody.querySelectorAll("tr"));
+
+  const asc = !ordineAscendente[colonnaIndex];
+  ordineAscendente[colonnaIndex] = asc;
+
+  righe.sort((a, b) => {
+    const aText = a.children[colonnaIndex]?.textContent.trim();
+    const bText = b.children[colonnaIndex]?.textContent.trim();
+
+    if (numerico) {
+      const aNum = parseFloat(aText) || 0;
+      const bNum = parseFloat(bText) || 0;
+      return asc ? aNum - bNum : bNum - aNum;
+    } else {
+      return asc ? aText.localeCompare(bText) : bText.localeCompare(aText);
+    }
+  });
+
+  tbody.innerHTML = "";
+  righe.forEach(r => tbody.appendChild(r));
 }
+
