@@ -97,6 +97,10 @@ tbody tr:hover {
   color: #000 !important;
   font-weight: bold !important;
 }
+.completed-pick {
+  background-color: #d4edda;
+  font-weight: bold;
+}
 
 /* === MOBILE === */
 @media (max-width: 768px) {
