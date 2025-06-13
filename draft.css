@@ -95,59 +95,52 @@ tbody tr:hover {
 
 /* === MOBILE === */
 @media (max-width: 768px) {
-  body {
-    font-size: 13px;
-    padding: 8px;
-  }
-
-  h1 {
-    font-size: 1.4em;
-    margin: 10px 0;
-  }
-
+  /* Tabelle compatte */
   table {
     font-size: 12px;
-    width: 100%;
     border-collapse: collapse;
+    width: 100%;
   }
 
   th, td {
-    padding: 4px;
+    padding: 4px 6px;
+    text-align: center;
   }
 
-  .tabella-listone,
+  /* Tabella sinistra: scroll verticale limitato */
   .tabella-pick {
+    max-height: 200px;
+    overflow-y: auto;
+    display: block;
+  }
+
+  /* Tabella destra: scroll orizzontale */
+  .tabella-listone {
     display: block;
     overflow-x: auto;
     white-space: nowrap;
-    margin-bottom: 20px;
+    margin-top: 10px;
   }
 
-  .tabella-listone thead th,
-  .tabella-pick thead th {
-    white-space: nowrap;
+  /* Riduci spazio tra i filtri */
+  .filtro-container {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 6px 0;
   }
 
-  /* Colonne meno importanti nascoste */
-  .col-quotazione,
-  .col-squadra-seriea {
-    display: none;
+  .filtro-container select,
+  .filtro-container input {
+    font-size: 13px;
+    padding: 4px;
   }
 
   /* Sezione riepilogo pick compatta */
-  .riepilogo-pick {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-
   .riepilogo-pick .squadra {
     font-size: 12px;
     padding: 6px 8px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    background-color: #f5f5f5;
-    color: #000;
+    margin-bottom: 8px;
   }
 
   .riepilogo-pick .squadra h3 {
@@ -156,14 +149,18 @@ tbody tr:hover {
   }
 
   .riepilogo-pick .squadra ol {
-    padding-left: 16px;
-    margin: 0;
+    padding-left: 18px;
   }
 
-  .riepilogo-pick .squadra ol li {
-    line-height: 1.4;
+  /* Riduci header */
+  h1 {
+    font-size: 1.6em;
+    margin: 10px 0;
   }
-}
 
+  /* Testo stato pick */
+  #currentPick {
+    font-size: 14px;
+    padding: 6px 0;
   }
 }
