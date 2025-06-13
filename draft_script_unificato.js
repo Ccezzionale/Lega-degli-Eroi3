@@ -55,21 +55,17 @@ function caricaPick() {
       const righe = csv.trim().split(/\r?\n/).slice(1);
       let prossima = null;
       righe.forEach(r => {
-        const [pick, fantaTeam, nomeGrezzo, ruolo, quotazione] = r.split(",");
+        const [pick, fantaTeam, nomeGrezzo, ruolo, squadra] = r.split(",");
         const nome = nomeGrezzo ? nomeGrezzo.trim() : "";
         const key = normalize(nome);
         const tr = document.createElement("tr");
-
         giocatoriScelti.add(key);
-
-tr.innerHTML = `
-  <td>${pick}</td>   
-  <td>${fantaTeam}</td>  
-  <td>${nome}</td>
-  <td>${ruolo}</td>
-`;
-        `;
-
+        tr.innerHTML = `
+          <td>${pick}</td>
+          <td>${fantaTeam}</td>
+          <td>${nome}</td>
+          <td>${ruolo}</td>
+          `;
         if (!nome && !prossima) {
           prossima = { fantaTeam, pick };
           tr.classList.add("next-pick");
@@ -77,13 +73,11 @@ tr.innerHTML = `
           tr.style.backgroundColor = "#d4edda";
           tr.style.fontWeight = "bold";
         }
-
         tabella.appendChild(tr);
       });
-
       document.getElementById("turno-attuale").textContent =
         prossima
-          ? "🎯 È il turno di: " + prossima.fantaTeam + " (Pick " + prossima.pick + ")"
+          ? `🎯 È il turno di: ${prossima.fantaTeam} (Pick ${prossima.pick})`
           : "✅ Draft completato!";
     });
 }
@@ -93,13 +87,12 @@ function popolaListaDisponibili() {
   Object.values(mappaGiocatori).forEach(({ nome, ruolo, squadra, quotazione }) => {
     const key = normalize(nome);
     if (giocatoriScelti.has(key)) return;
-const tr = document.createElement("tr");
-tr.innerHTML = `
-  <td>${pick}</td>
-  <td>${fantaTeam}</td>
-  <td>${nome}</td>
-  <td>${ruolo}</td>
-`;
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${nome}</td>
+      <td>${ruolo}</td>
+      
+      <td>${parseInt(quotazione)}</td>`;
     tr.addEventListener("click", () => {
       const conferma = confirm(`Vuoi selezionare ${nome} per la squadra al turno?`);
       if (conferma) {
