@@ -55,7 +55,44 @@ function caricaPick() {
       const righe = csv.trim().split(/\r?\n/).slice(1);
       let prossima = null;
       righe.forEach(r => {
-        const [pick, fantaTeam, nomeGrezzo, ruolo, squadra, _] = r.split(",");
+        const colonne = r.split(",");
+        const pick = colonne[0];
+        const fantaTeam = colonne[1];
+        const nomeGrezzo = colonne[2];
+        const ruolo = colonne[3];
+        const squadra = colonne[4]; // Squadra Serie A
+        const nome = nomeGrezzo ? nomeGrezzo.trim() : "";
+        const key = normalize(nome);
+        const tr = document.createElement("tr");
+        giocatoriScelti.add(key);
+        tr.innerHTML = `
+          <td>${pick}</td>
+          <td>${fantaTeam}</td>
+          <td>${nome}</td>
+          <td>${ruolo}</td>
+          <td>${squadra}</td>`;
+        if (!nome && !prossima) {
+          prossima = { fantaTeam, pick };
+          tr.classList.add("next-pick");
+        } else {
+          tr.style.backgroundColor = "#d4edda";
+          tr.style.fontWeight = "bold";
+        }
+        tabella.appendChild(tr);
+      });
+      document.getElementById("turno-attuale").textContent =
+        prossima
+          ? `🎯 È il turno di: ${prossima.fantaTeam} (Pick ${prossima.pick})`
+          : "✅ Draft completato!";
+    });
+}
+  return fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vTDKKMarxp0Kl7kiIWa-1X7jB-54KcQaLIGArN1FfR_X40rwAKVRgUYRGhrzIJ7SsKtUPnk_Cz8F0qt/pub?output=csv")
+    .then(res => res.text())
+    .then(csv => {
+      const righe = csv.trim().split(/\r?\n/).slice(1);
+      let prossima = null;
+      righe.forEach(r => {
+        const [pick, fantaTeam, nomeGrezzo, ruolo, squadra] = r.split(",");
         const nome = nomeGrezzo ? nomeGrezzo.trim() : "";
         const key = normalize(nome);
         const tr = document.createElement("tr");
