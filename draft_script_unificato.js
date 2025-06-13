@@ -105,8 +105,7 @@ function popolaListaDisponibili() {
             celle[2].textContent = nome;
             celle[3].textContent = ruolo;
             celle[4].textContent = squadra;
-            r.style.backgroundColor = "#d4edda";
-            r.style.fontWeight = "bold";
+           r.classList.add("completed-pick");
             r.classList.remove("next-pick");
             document.getElementById("turno-attuale").textContent = `✅ ${nome} selezionato!`;
             inviaPickAlFoglio(pick, fantaTeam, nome, ruolo, squadra, quotazione);
