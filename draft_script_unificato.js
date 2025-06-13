@@ -37,6 +37,9 @@ function caricaPick() {
     });
 }
 
+// Assicura che la funzione aggiornaChiamatePerSquadra sia globale
+window.aggiornaChiamatePerSquadra = aggiornaChiamatePerSquadra;
+
 
 
 const tabella = document.querySelector("#tabella-pick tbody");
