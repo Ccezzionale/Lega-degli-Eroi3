@@ -48,12 +48,36 @@ function caricaGiocatori() {
     });
 }
 
-                tabella.appendChild(tr);
+function caricaPick() {
+  return fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vTDKKMarxp0Kl7kiIWa-1X7jB-54KcQaLIGArN1FfR_X40rwAKVRgUYRGhrzIJ7SsKtUPnk_Cz8F0qt/pub?output=csv")
+    .then(res => res.text())
+    .then(csv => {
+      const righe = csv.trim().split(/\r?\n/).slice(1);
+      let prossima = null;
+      righe.forEach(r => {
+        const [pick, fantaTeam, nomeGrezzo, ruolo, squadra] = r.split(",");
+        const nome = nomeGrezzo ? nomeGrezzo.trim() : "";
+        const key = normalize(nome);
+        const tr = document.createElement("tr");
+        giocatoriScelti.add(key);
+        tr.innerHTML = `
+          <td>${pick}</td>
+          <td>${fantaTeam}</td>
+          <td>${nome}</td>
+          <td>${ruolo}</td>
+          <td>${squadra}</td>`;
+        if (!nome && !prossima) {
+          prossima = { fantaTeam, pick };
+          tr.classList.add("next-pick");
+        } else {
+          tr.style.backgroundColor = "#d4edda";
+          tr.style.fontWeight = "bold";
+        }
+        tabella.appendChild(tr);
       });
-
       document.getElementById("turno-attuale").textContent =
         prossima
-          ? "🎯 È il turno di: " + prossima.fantaTeam + " (Pick " + prossima.pick + ")"
+          ? `🎯 È il turno di: ${prossima.fantaTeam} (Pick ${prossima.pick})`
           : "✅ Draft completato!";
     });
 }
@@ -258,47 +282,3 @@ function ordinaLista(colonnaIndex, numerico = false) {
   righe.forEach(r => tbody.appendChild(r));
 }
 window.ordinaLista = ordinaLista;
-
-function caricaPick() {
-  fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vTDKKMarxp0Kl7kiIWa-1X7jB-54KcQaLIGArN1FfR_X40rwAKVRgUYRGhrzIJ7SsKtUPnk_Cz8F0qt/pub?output=csv")
-    .then(res => res.text())
-    .then(csv => {
-      const righe = csv.trim().split(/\r?\n/).slice(1);
-      let prossima = null;
-      righe.forEach(r => {
-        const colonne = r.split(",");
-        const pick = colonne[0];
-        const fantaTeam = colonne[1];
-        const nome = colonne[2]?.trim();
-        const key = normalize(nome);
-        const info = mappaGiocatori[key] || {};
-
-        const ruolo = info.ruolo || colonne[3] || "";
-        const squadra = info.squadra || colonne[4] || "";
-        const quotazione = info.quotazione || colonne[5] || "";
-
-        const tr = document.createElement("tr");
-        giocatoriScelti.add(key);
-        tr.innerHTML = "<td>" + pick + "</td>" +
-                       "<td>" + fantaTeam + "</td>" +
-                       "<td>" + nome + "</td>" +
-                       "<td>" + ruolo + "</td>" +
-                       "<td>" + squadra + "</td>" +
-                       "<td>" + parseInt(quotazione || 0) + "</td>";
-
-        if (!nome && !prossima) {
-          prossima = { fantaTeam: fantaTeam, pick: pick };
-          tr.classList.add("next-pick");
-        } else {
-          tr.style.backgroundColor = "#d4edda";
-          tr.style.fontWeight = "bold";
-        }
-        tabella.appendChild(tr);
-      });
-
-      const turno = document.getElementById("turno-attuale");
-      turno.textContent = prossima
-        ? "🎯 È il turno di: " + prossima.fantaTeam + " (Pick " + prossima.pick + ")"
-        : "✅ Draft completato!";
-    });
-}
