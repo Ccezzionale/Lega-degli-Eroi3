@@ -1,47 +1,4 @@
 
-const API_URL = "https://script.google.com/macros/s/AKfycbyav1BQF0IIa2Acklx2bDHzuIXM2V8QSCdolnZu9o2WDQl2gmMIFfiE8BXsC8YoUVLNkA/exec";
-
-function caricaPick() {
-  return fetch(API_URL)
-    .then(res => res.json())
-    .then(righe => {
-      let prossima = null;
-      righe.sort((a, b) => parseInt(a.Pick) - parseInt(b.Pick));
-      righe.forEach(r => {
-        const pick = r.Pick;
-        const fantaTeam = r.Squadra;
-        const nomeGrezzo = r.Giocatore;
-        const ruolo = r.Ruolo;
-        const squadra = r["Squadra Serie A"];
-        const nome = nomeGrezzo ? nomeGrezzo.trim() : "";
-        const key = normalize(nome);
-        const tr = document.createElement("tr");
-        giocatoriScelti.add(key);
-        tr.innerHTML = "<td>" + pick + "</td>" +
-                       "<td>" + fantaTeam + "</td>" +
-                       "<td>" + nome + "</td>" +
-                       "<td>" + ruolo + "</td>";
-        if (!nome && !prossima) {
-          prossima = { fantaTeam, pick };
-          tr.classList.add("next-pick");
-        } else {
-          tr.style.backgroundColor = "#d4edda";
-          tr.style.fontWeight = "bold";
-        }
-        tabella.appendChild(tr);
-      });
-      document.getElementById("turno-attuale").textContent =
-        prossima
-          ? "🎯 È il turno di: " + prossima.fantaTeam + " (Pick " + prossima.pick + ")"
-          : "✅ Draft completato!";
-    });
-}
-
-// Assicura che la funzione aggiornaChiamatePerSquadra sia globale
-window.aggiornaChiamatePerSquadra = aggiornaChiamatePerSquadra;
-
-
-
 const tabella = document.querySelector("#tabella-pick tbody");
 const listaGiocatori = document.getElementById("lista-giocatori");
 const giocatoriScelti = new Set();
@@ -91,6 +48,31 @@ function caricaGiocatori() {
     });
 }
 
+function caricaPick() {
+  return fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vTDKKMarxp0Kl7kiIWa-1X7jB-54KcQaLIGArN1FfR_X40rwAKVRgUYRGhrzIJ7SsKtUPnk_Cz8F0qt/pub?output=csv")
+    .then(res => res.text())
+    .then(csv => {
+      const righe = csv.trim().split(/\r?\n/).slice(1);
+      let prossima = null;
+      righe.forEach(r => {
+        const [pick, fantaTeam, nomeGrezzo, ruolo, squadra] = r.split(",");
+        const nome = nomeGrezzo ? nomeGrezzo.trim() : "";
+        const key = normalize(nome);
+        const tr = document.createElement("tr");
+        giocatoriScelti.add(key);
+        tr.innerHTML = `
+          <td>${pick}</td>
+          <td>${fantaTeam}</td>
+          <td>${nome}</td>
+          <td>${ruolo}</td>
+          `;
+        if (!nome && !prossima) {
+          prossima = { fantaTeam, pick };
+          tr.classList.add("next-pick");
+        } else {
+          tr.style.backgroundColor = "#d4edda";
+          tr.style.fontWeight = "bold";
+        }
         tabella.appendChild(tr);
       });
       document.getElementById("turno-attuale").textContent =
@@ -122,8 +104,7 @@ function popolaListaDisponibili() {
             const fantaTeam = celle[1].textContent;
             celle[2].textContent = nome;
             celle[3].textContent = ruolo;
-          // celle[4].textContent = squadra; // ⛔️ ELIMINATA QUESTA
-
+            celle[4].textContent = squadra;
             r.style.backgroundColor = "#d4edda";
             r.style.fontWeight = "bold";
             r.classList.remove("next-pick");
