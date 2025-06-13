@@ -91,7 +91,7 @@ function popolaListaDisponibili() {
     tr.innerHTML = `
       <td>${nome}</td>
       <td>${ruolo}</td>
-      
+      <td>${squadra}</td>
       <td>${parseInt(quotazione)}</td>`;
     tr.addEventListener("click", () => {
       const conferma = confirm(`Vuoi selezionare ${nome} per la squadra al turno?`);
