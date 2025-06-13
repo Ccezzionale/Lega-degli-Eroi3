@@ -38,9 +38,10 @@ tbody tr:nth-child(odd) {
   background-color: #002b5c;
 }
 
-tbody tr:hover {
-  background-color: #00509e;
+#lista-giocatori tr:hover {
+  background-color: #f0f8ff; /* Azzurro chiaro */
   cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
 }
 
 /* Responsive */
