@@ -55,7 +55,7 @@ function caricaPick() {
       const righe = csv.trim().split(/\r?\n/).slice(1);
       let prossima = null;
       righe.forEach(r => {
-        const [pick, fantaTeam, nomeGrezzo, ruolo, squadra, quotazione] = r.split(",");
+        const [pick, fantaTeam, nomeGrezzo, ruolo, squadra] = r.split(",");
         const nome = nomeGrezzo ? nomeGrezzo.trim() : "";
         const key = normalize(nome);
         const tr = document.createElement("tr");
@@ -65,7 +65,7 @@ function caricaPick() {
           <td>${fantaTeam}</td>
           <td>${nome}</td>
           <td>${ruolo}</td>
-          <td>${squadra}</td>
+          <td>${squadra}</td>`;
         if (!nome && !prossima) {
           prossima = { fantaTeam, pick };
           tr.classList.add("next-pick");
@@ -76,9 +76,9 @@ function caricaPick() {
         tabella.appendChild(tr);
       });
       document.getElementById("turno-attuale").textContent =
-  prossima
-    ? `🎯 È il turno di: ${prossima.fantaTeam} (Pick ${prossima.pick})`
-    : "✅ Draft completato!";
+        prossima
+          ? `🎯 È il turno di: ${prossima.fantaTeam} (Pick ${prossima.pick})`
+          : "✅ Draft completato!";
     });
 }
 
@@ -119,16 +119,14 @@ function popolaListaDisponibili() {
     listaGiocatori.appendChild(tr);
   });
 
-  ruoli.forEach(r => {
+  Array.from(ruoli).forEach(r => {
     const opt = document.createElement("option");
     opt.value = r;
     opt.textContent = r;
     filtroRuolo.appendChild(opt);
   });
 
-Array.from(squadre)
-  .sort((a, b) => a.localeCompare(b))
-  .forEach(s => {
+  Array.from(squadre).sort((a, b) => a.localeCompare(b)).forEach(s => {
     const opt = document.createElement("option");
     opt.value = s;
     opt.textContent = s;
@@ -249,7 +247,6 @@ function ordinaPick(colonnaIndex, numerico = false) {
   tbody.innerHTML = "";
   righe.forEach(r => tbody.appendChild(r));
 }
-
 window.ordinaPick = ordinaPick;
 
 let ordineListaAscendente = {};
@@ -284,3 +281,4 @@ function ordinaLista(colonnaIndex, numerico = false) {
   tbody.innerHTML = "";
   righe.forEach(r => tbody.appendChild(r));
 }
+window.ordinaLista = ordinaLista;
