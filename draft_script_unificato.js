@@ -1,3 +1,4 @@
+
 const tabella = document.querySelector("#tabella-pick tbody");
 const listaGiocatori = document.getElementById("lista-giocatori");
 const giocatoriScelti = new Set();
@@ -48,29 +49,25 @@ function caricaGiocatori() {
 }
 
 function caricaPick() {
-  fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vTDKKMarxp0Kl7kiIWa-1X7jB-54KcQaLIGArN1FfR_X40rwAKVRgUYRGhrzIJ7SsKtUPnk_Cz8F0qt/pub?output=csv")
+  return fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vTDKKMarxp0Kl7kiIWa-1X7jB-54KcQaLIGArN1FfR_X40rwAKVRgUYRGhrzIJ7SsKtUPnk_Cz8F0qt/pub?output=csv")
     .then(res => res.text())
     .then(csv => {
       const righe = csv.trim().split(/\r?\n/).slice(1);
       let prossima = null;
       righe.forEach(r => {
-        const colonne = r.split(",");
-        const pick = colonne[0];
-        const fantaTeam = colonne[1];
-        const nome = colonne[2];
-        const ruolo = colonne[3];
-        const squadraSerieA = colonne[4];
+        const [pick, fantaTeam, nomeGrezzo, ruolo, squadra] = r.split(",");
+        const nome = nomeGrezzo ? nomeGrezzo.trim() : "";
         const key = normalize(nome);
         const tr = document.createElement("tr");
         giocatoriScelti.add(key);
-        tr.innerHTML =
-          "<td>" + pick + "</td>" +
-          "<td>" + fantaTeam + "</td>" +
-          "<td>" + nome + "</td>" +
-          "<td>" + ruolo + "</td>" +
-          "<td>" + squadraSerieA + "</td>";
+        tr.innerHTML = `
+          <td>${pick}</td>
+          <td>${fantaTeam}</td>
+          <td>${nome}</td>
+          <td>${ruolo}</td>
+          <td>${squadra}</td>`;
         if (!nome && !prossima) {
-          prossima = { fantaTeam: fantaTeam, pick: pick };
+          prossima = { fantaTeam, pick };
           tr.classList.add("next-pick");
         } else {
           tr.style.backgroundColor = "#d4edda";
@@ -78,10 +75,10 @@ function caricaPick() {
         }
         tabella.appendChild(tr);
       });
-      const turno = document.getElementById("turno-attuale");
-      turno.textContent = prossima
-        ? "🎯 È il turno di: " + prossima.fantaTeam + " (Pick " + prossima.pick + ")"
-        : "✅ Draft completato!";
+      document.getElementById("turno-attuale").textContent =
+        prossima
+          ? `🎯 È il turno di: ${prossima.fantaTeam} (Pick ${prossima.pick})`
+          : "✅ Draft completato!";
     });
 }
 
@@ -91,13 +88,13 @@ function popolaListaDisponibili() {
     const key = normalize(nome);
     if (giocatoriScelti.has(key)) return;
     const tr = document.createElement("tr");
-    tr.innerHTML =
-      "<td>" + nome + "</td>" +
-      "<td>" + ruolo + "</td>" +
-      "<td>" + squadra + "</td>" +
-      "<td>" + parseInt(quotazione) + "</td>";
+    tr.innerHTML = `
+      <td>${nome}</td>
+      <td>${ruolo}</td>
+      <td>${squadra}</td>
+      <td>${parseInt(quotazione)}</td>`;
     tr.addEventListener("click", () => {
-      const conferma = confirm("Vuoi selezionare " + nome + " per la squadra al turno?");
+      const conferma = confirm(`Vuoi selezionare ${nome} per la squadra al turno?`);
       if (conferma) {
         const righe = document.querySelectorAll("#tabella-pick tbody tr");
         for (let r of righe) {
@@ -111,7 +108,7 @@ function popolaListaDisponibili() {
             r.style.backgroundColor = "#d4edda";
             r.style.fontWeight = "bold";
             r.classList.remove("next-pick");
-            document.getElementById("turno-attuale").textContent = "✅ " + nome + " selezionato!";
+            document.getElementById("turno-attuale").textContent = `✅ ${nome} selezionato!`;
             inviaPickAlFoglio(pick, fantaTeam, nome, ruolo, squadra, quotazione);
             break;
           }
@@ -129,7 +126,7 @@ function popolaListaDisponibili() {
     filtroRuolo.appendChild(opt);
   });
 
-  Array.from(squadre).sort().forEach(s => {
+  Array.from(squadre).sort((a, b) => a.localeCompare(b)).forEach(s => {
     const opt = document.createElement("option");
     opt.value = s;
     opt.textContent = s;
@@ -163,12 +160,13 @@ function filtraLista() {
 });
 
 window.addEventListener("DOMContentLoaded", function () {
-  caricaGiocatori().then(() => {
-    caricaPick();
-    setTimeout(popolaListaDisponibili, 300);
-  });
+  caricaGiocatori().then(() =>
+    caricaPick().then(() => {
+      popolaListaDisponibili();
+      aggiornaChiamatePerSquadra();
+    })
+  );
 });
-
 
 function aggiornaChiamatePerSquadra() {
   const righe = document.querySelectorAll("#tabella-pick tbody tr");
@@ -180,16 +178,16 @@ function aggiornaChiamatePerSquadra() {
     const ruolo = celle[3]?.textContent?.trim();
     if (!team || !nome) return;
     if (!riepilogo[team]) riepilogo[team] = [];
-    riepilogo[team].push((riepilogo[team].length + 1) + ". " + nome + " (" + ruolo + ")");
+    riepilogo[team].push(`${riepilogo[team].length + 1}. ${nome} (${ruolo})`);
   });
 
   const container = document.getElementById("riepilogo-squadre");
   container.innerHTML = "";
 
-  for (const team in riepilogo) {
+  for (const [team, picks] of Object.entries(riepilogo)) {
     const div = document.createElement("div");
     div.className = "riepilogo-team";
-    const logoPath = "img/" + team + ".png";
+    const logoPath = `img/${team}.png`;
     const img = document.createElement("img");
     img.src = logoPath;
     img.alt = team;
@@ -204,7 +202,7 @@ function aggiornaChiamatePerSquadra() {
     h4.style.color = "#ffffff";
     div.appendChild(h4);
 
-    riepilogo[team].forEach(txt => {
+    picks.forEach(txt => {
       const riga = document.createElement("div");
       riga.textContent = txt;
       riga.style.textAlign = "center";
@@ -216,3 +214,71 @@ function aggiornaChiamatePerSquadra() {
   }
 }
 window.aggiornaChiamatePerSquadra = aggiornaChiamatePerSquadra;
+
+let ordineAscendente = {};
+
+function ordinaPick(colonnaIndex, numerico = false) {
+  const tbody = document.querySelector("#tabella-pick tbody");
+  const righe = Array.from(tbody.querySelectorAll("tr"));
+
+  const asc = !ordineAscendente[colonnaIndex];
+  ordineAscendente[colonnaIndex] = asc;
+
+  document.querySelectorAll("#tabella-pick thead th").forEach((th, idx) => {
+    th.textContent = th.textContent.replace(/[\u2191\u2193]/g, "");
+    if (idx === colonnaIndex) {
+      th.textContent += asc ? " \u2191" : " \u2193";
+    }
+  });
+
+  righe.sort((a, b) => {
+    const aText = a.children[colonnaIndex]?.textContent.trim();
+    const bText = b.children[colonnaIndex]?.textContent.trim();
+
+    if (numerico) {
+      const aNum = parseFloat(aText) || 0;
+      const bNum = parseFloat(bText) || 0;
+      return asc ? aNum - bNum : bNum - aNum;
+    } else {
+      return asc ? aText.localeCompare(bText) : bText.localeCompare(aText);
+    }
+  });
+
+  tbody.innerHTML = "";
+  righe.forEach(r => tbody.appendChild(r));
+}
+window.ordinaPick = ordinaPick;
+
+let ordineListaAscendente = {};
+
+function ordinaLista(colonnaIndex, numerico = false) {
+  const tbody = document.getElementById("lista-giocatori");
+  const righe = Array.from(tbody.querySelectorAll("tr"));
+
+  const asc = !ordineListaAscendente[colonnaIndex];
+  ordineListaAscendente[colonnaIndex] = asc;
+
+  document.querySelectorAll("#lista-giocatori-table thead th").forEach((th, idx) => {
+    th.textContent = th.textContent.replace(/[\u2191\u2193]/g, "");
+    if (idx === colonnaIndex) {
+      th.textContent += asc ? " \u2191" : " \u2193";
+    }
+  });
+
+  righe.sort((a, b) => {
+    const aText = a.children[colonnaIndex]?.textContent.trim();
+    const bText = b.children[colonnaIndex]?.textContent.trim();
+
+    if (numerico) {
+      const aNum = parseFloat(aText) || 0;
+      const bNum = parseFloat(bText) || 0;
+      return asc ? aNum - bNum : bNum - aNum;
+    } else {
+      return asc ? aText.localeCompare(bText) : bText.localeCompare(aText);
+    }
+  });
+
+  tbody.innerHTML = "";
+  righe.forEach(r => tbody.appendChild(r));
+}
+window.ordinaLista = ordinaLista;
