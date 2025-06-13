@@ -247,3 +247,37 @@ function ordinaPick(colonnaIndex, numerico = false) {
   tbody.innerHTML = "";
   righe.forEach(r => tbody.appendChild(r));
 }
+
+
+let ordineListaAscendente = {};
+
+function ordinaLista(colonnaIndex, numerico = false) {
+  const tbody = document.getElementById("lista-giocatori");
+  const righe = Array.from(tbody.querySelectorAll("tr"));
+
+  const asc = !ordineListaAscendente[colonnaIndex];
+  ordineListaAscendente[colonnaIndex] = asc;
+
+  document.querySelectorAll("#lista-giocatori-table thead th").forEach((th, idx) => {
+    th.textContent = th.textContent.replace(/[\u2191\u2193]/g, "");
+    if (idx === colonnaIndex) {
+      th.textContent += asc ? " \u2191" : " \u2193";
+    }
+  });
+
+  righe.sort((a, b) => {
+    const aText = a.children[colonnaIndex]?.textContent.trim();
+    const bText = b.children[colonnaIndex]?.textContent.trim();
+
+    if (numerico) {
+      const aNum = parseFloat(aText) || 0;
+      const bNum = parseFloat(bText) || 0;
+      return asc ? aNum - bNum : bNum - aNum;
+    } else {
+      return asc ? aText.localeCompare(bText) : bText.localeCompare(aText);
+    }
+  });
+
+  tbody.innerHTML = "";
+  righe.forEach(r => tbody.appendChild(r));
+}
