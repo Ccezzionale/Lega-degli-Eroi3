@@ -92,6 +92,11 @@ tbody tr:hover {
   font-size: 1.1rem;
   color: #ffffff;
 }
+.next-pick {
+  background-color: #ffe680 !important;
+  color: #000 !important;
+  font-weight: bold !important;
+}
 
 /* === MOBILE === */
 @media (max-width: 768px) {
