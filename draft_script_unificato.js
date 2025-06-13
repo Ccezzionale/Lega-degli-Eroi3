@@ -248,6 +248,7 @@ function ordinaPick(colonnaIndex, numerico = false) {
   righe.forEach(r => tbody.appendChild(r));
 }
 
+window.ordinaPick = ordinaPick;
 
 let ordineListaAscendente = {};
 
