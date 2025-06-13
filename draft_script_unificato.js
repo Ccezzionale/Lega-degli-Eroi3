@@ -86,8 +86,8 @@ function popolaListaDisponibili() {
   Object.values(mappaGiocatori).forEach(({ nome, ruolo, squadra, quotazione }) => {
     const key = normalize(nome);
     if (giocatoriScelti.has(key)) return;
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
+const tr = document.createElement("tr");
+tr.innerHTML = `
   <td>${pick}</td>
   <td>${fantaTeam}</td>
   <td>${nome}</td>
