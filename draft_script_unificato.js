@@ -61,17 +61,16 @@ function caricaPick() {
         const fantaTeam = colonne[1];
         const nomeGrezzo = colonne[2];
         const ruolo = colonne[3];
-        const squadra = colonne[4]; // Squadra Serie A
+        const squadra = colonne[4];
         const nome = nomeGrezzo ? nomeGrezzo.trim() : "";
         const key = normalize(nome);
         const tr = document.createElement("tr");
         giocatoriScelti.add(key);
-        tr.innerHTML = `
-          <td>${pick}</td>
-          <td>${fantaTeam}</td>
-          <td>${nome}</td>
-          <td>${ruolo}</td>
-          <td>${squadra}</td>`;
+        tr.innerHTML = "<td>" + pick + "</td>" +
+                       "<td>" + fantaTeam + "</td>" +
+                       "<td>" + nome + "</td>" +
+                       "<td>" + ruolo + "</td>" +
+                       "<td>" + squadra + "</td>";
         if (!nome && !prossima) {
           prossima = { fantaTeam, pick };
           tr.classList.add("next-pick");
@@ -81,10 +80,10 @@ function caricaPick() {
         }
         tabella.appendChild(tr);
       });
-      document.getElementById("turno-attuale").textContent =
-        prossima
-          ? `🎯 È il turno di: ${prossima.fantaTeam} (Pick ${prossima.pick})`
-          : "✅ Draft completato!";
+      const turno = document.getElementById("turno-attuale");
+      turno.textContent = prossima
+        ? "🎯 È il turno di: " + prossima.fantaTeam + " (Pick " + prossima.pick + ")"
+        : "✅ Draft completato!";
     });
 }
 
