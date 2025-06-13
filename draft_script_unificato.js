@@ -126,7 +126,7 @@ function popolaListaDisponibili() {
     filtroRuolo.appendChild(opt);
   });
 
- Array.from(squadre)
+Array.from(squadre)
   .sort((a, b) => a.localeCompare(b))
   .forEach(s => {
     const opt = document.createElement("option");
