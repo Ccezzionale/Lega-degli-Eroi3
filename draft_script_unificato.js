@@ -50,12 +50,12 @@ function caricaGiocatori() {
 
 
 function caricaPick() {
-  return fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vTDKKMarxp0Kl7kiIWa-1X7jB-54KcQaLIGArN1FfR_X40rwAKVRgUYRGhrzIJ7SsKtUPnk_Cz8F0qt/pub?output=csv")
-    .then(res => res.text())
-    .then(csv => {
+  fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vTDKKMarxp0Kl7kiIWa-1X7jB-54KcQaLIGArN1FfR_X40rwAKVRgUYRGhrzIJ7SsKtUPnk_Cz8F0qt/pub?output=csv")
+    .then(function(res) { return res.text(); })
+    .then(function(csv) {
       const righe = csv.trim().split(/\r?\n/).slice(1);
       let prossima = null;
-      righe.forEach(r => {
+      righe.forEach(function(r) {
         const colonne = r.split(",");
         const pick = colonne[0];
         const fantaTeam = colonne[1];
@@ -66,13 +66,14 @@ function caricaPick() {
         const key = normalize(nome);
         const tr = document.createElement("tr");
         giocatoriScelti.add(key);
-        tr.innerHTML = "<td>" + pick + "</td>" +
-                       "<td>" + fantaTeam + "</td>" +
-                       "<td>" + nome + "</td>" +
-                       "<td>" + ruolo + "</td>" +
-                       "<td>" + squadra + "</td>";
+        tr.innerHTML =
+          "<td>" + pick + "</td>" +
+          "<td>" + fantaTeam + "</td>" +
+          "<td>" + nome + "</td>" +
+          "<td>" + ruolo + "</td>" +
+          "<td>" + squadra + "</td>";
         if (!nome && !prossima) {
-          prossima = { fantaTeam, pick };
+          prossima = { fantaTeam: fantaTeam, pick: pick };
           tr.classList.add("next-pick");
         } else {
           tr.style.backgroundColor = "#d4edda";
@@ -80,6 +81,7 @@ function caricaPick() {
         }
         tabella.appendChild(tr);
       });
+
       const turno = document.getElementById("turno-attuale");
       turno.textContent = prossima
         ? "🎯 È il turno di: " + prossima.fantaTeam + " (Pick " + prossima.pick + ")"
