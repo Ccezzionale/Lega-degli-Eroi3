@@ -49,23 +49,25 @@ function caricaGiocatori() {
 }
 
 function caricaPick() {
-  return fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vTDKKMarxp0Kl7kiIWa-1X7jB-54KcQaLIGArN1FfR_X40rwAKVRgUYRGhrzIJ7SsKtUPnk_Cz8F0qt/pub?output=csv")
-    .then(res => res.text())
-    .then(csv => {
-      const righe = csv.trim().split(/\r?\n/).slice(1);
+  return fetch("https://script.google.com/macros/s/AKfycbwlbFaswGVUJeSDnlU-xpQYAnpk5C2kSB-R6Vz7jfXO63ijMkEzfpOjmM66QZwAvNlo/exec")
+    .then(res => res.json())
+    .then(dati => {
       let prossima = null;
-      righe.forEach(r => {
-        const [pick, fantaTeam, nomeGrezzo, ruolo, squadra] = r.split(",");
-        const nome = nomeGrezzo ? nomeGrezzo.trim() : "";
-        const key = normalize(nome);
+      dati.forEach(riga => {
         const tr = document.createElement("tr");
-        giocatoriScelti.add(key);
+        const nome = riga["Giocatore"]?.trim() || "";
+        const fantaTeam = riga["Squadra"];
+        const ruolo = riga["Ruolo"];
+        const pick = riga["Pick"];
+
+        giocatoriScelti.add(normalize(nome));
+
         tr.innerHTML = `
           <td>${pick}</td>
           <td>${fantaTeam}</td>
           <td>${nome}</td>
-          <td>${ruolo}</td>
-          `;
+          <td>${ruolo}</td>`;
+
         if (!nome && !prossima) {
           prossima = { fantaTeam, pick };
           tr.classList.add("next-pick");
@@ -73,8 +75,10 @@ function caricaPick() {
           tr.style.backgroundColor = "#d4edda";
           tr.style.fontWeight = "bold";
         }
+
         tabella.appendChild(tr);
       });
+
       document.getElementById("turno-attuale").textContent =
         prossima
           ? `🎯 È il turno di: ${prossima.fantaTeam} (Pick ${prossima.pick})`
