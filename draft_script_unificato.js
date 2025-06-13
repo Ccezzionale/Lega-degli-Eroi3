@@ -207,18 +207,19 @@ function aggiornaChiamatePerSquadra() {
       const riga = document.createElement("div");
       riga.textContent = txt;
       riga.style.textAlign = "center";
-      riga.style.color = "#ffffff";
-      div.appendChild(riga);
-    });
-    container.appendChild(div);
-  }
-  
-}let ordineAscendente = {};
+    riga.style.color = "#ffffff";
+    div.appendChild(riga);
+  });
+  container.appendChild(div);
+}  // <-- CHIUDE SOLO aggiornaChiamatePerSquadra, il punto giusto!
+
+let ordineAscendente = {};
 
 function ordinaPick(colonnaIndex, numerico = false) {
   const tbody = document.querySelector("#tabella-pick tbody");
   const righe = Array.from(tbody.querySelectorAll("tr"));
-
+  // ...
+}
   const asc = !ordineAscendente[colonnaIndex];
   ordineAscendente[colonnaIndex] = asc;
 
@@ -238,4 +239,3 @@ function ordinaPick(colonnaIndex, numerico = false) {
   tbody.innerHTML = "";
   righe.forEach(r => tbody.appendChild(r));
 }
-
