@@ -48,6 +48,7 @@ function caricaGiocatori() {
     });
 }
 
+
 function caricaPick() {
   return fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vTDKKMarxp0Kl7kiIWa-1X7jB-54KcQaLIGArN1FfR_X40rwAKVRgUYRGhrzIJ7SsKtUPnk_Cz8F0qt/pub?output=csv")
     .then(res => res.text())
@@ -86,6 +87,7 @@ function caricaPick() {
           : "✅ Draft completato!";
     });
 }
+
   return fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vTDKKMarxp0Kl7kiIWa-1X7jB-54KcQaLIGArN1FfR_X40rwAKVRgUYRGhrzIJ7SsKtUPnk_Cz8F0qt/pub?output=csv")
     .then(res => res.text())
     .then(csv => {
