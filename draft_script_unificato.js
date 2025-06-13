@@ -24,18 +24,13 @@ function inviaPickAlFoglio(pick, fantaTeam, nome, ruolo, squadra, quotazione) {
   dati.append("ruolo", ruolo);
   dati.append("quotazione", quotazione);
 
-fetch("https://script.google.com/macros/s/AKfycbwlbFaswGVUJeSDnlU-xpQYAnpk5C2kSB-R6Vz7jfXO63ijMkEzfpOjmM66QZwAvNlo/exec", {
-  method: "POST",
-  body: dati
-})
-", {
-  method: "POST",
-  body: dati
-})
-.then(res => res.text())
-.then(txt => console.log("Risposta foglio:", txt))
-.catch(err => console.error("Errore invio pick:", err));
-
+  fetch("https://script.google.com/macros/s/AKfycbwlbFaswGVUJeSDnlU-xpQYAnpk5C2kSB-R6Vz7jfXO63ijMkEzfpOjmM66QZwAvNlo/exec", {
+    method: "POST",
+    body: dati
+  })
+  .then(res => res.text())
+  .then(txt => console.log("Risposta foglio:", txt))
+  .catch(err => console.error("Errore invio pick:", err));
 }
 
 function caricaGiocatori() {
