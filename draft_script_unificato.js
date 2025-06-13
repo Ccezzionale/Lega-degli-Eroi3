@@ -1,6 +1,6 @@
 
 function caricaPick() {
-  return fetch("const API_URL = "https://script.google.com/macros/s/AKfycbxyz123abc/exec";")
+  return fetch("const API_URL = "https://script.google.com/macros/s/AKfycbyav1BQF0IIa2Acklx2bDHzuIXM2V8QSCdolnZu9o2WDQl2gmMIFfiE8BXsC8YoUVLNkA/exec;")
     .then(res => res.json())
     .then(righe => {
       let prossima = null;
