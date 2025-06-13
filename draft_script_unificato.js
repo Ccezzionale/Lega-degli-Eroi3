@@ -72,7 +72,7 @@ function caricaPick() {
           tr.classList.add("next-pick");
         } else {
           tr.style.backgroundColor = "#d4edda";
-        tr.style.fontWeight = "bold";
+          tr.style.fontWeight = "bold";
         }
         tabella.appendChild(tr);
       });
@@ -144,7 +144,6 @@ function filtraLista() {
     const nome = row.children[0].textContent.toLowerCase();
     const r = row.children[1].textContent.toLowerCase();
     const s = row.children[2].textContent.toLowerCase();
-
     const ruoliGiocatore = r.split(/[,;\s]+/).map(part => part.trim());
 
     const matchInput = !ruoloTesto || ruoliGiocatore.some(part => part.includes(ruoloTesto));
@@ -207,13 +206,14 @@ function aggiornaChiamatePerSquadra() {
       const riga = document.createElement("div");
       riga.textContent = txt;
       riga.style.textAlign = "center";
-    riga.style.color = "#ffffff";
-    div.appendChild(riga);
-  });
-  container.appendChild(div);
-}  // <-- CHIUDE SOLO aggiornaChiamatePerSquadra, il punto giusto!
+      riga.style.color = "#ffffff";
+      div.appendChild(riga);
+    });
 
-let ordineAscendente = {};
+    container.appendChild(div);
+  }
+}
+window.aggiornaChiamatePerSquadra = aggiornaChiamatePerSquadra;
 
 let ordineAscendente = {};
 
@@ -221,15 +221,13 @@ function ordinaPick(colonnaIndex, numerico = false) {
   const tbody = document.querySelector("#tabella-pick tbody");
   const righe = Array.from(tbody.querySelectorAll("tr"));
 
-  // Toggle ordine
   const asc = !ordineAscendente[colonnaIndex];
   ordineAscendente[colonnaIndex] = asc;
 
-  // Rimuovi le freccette da tutti gli header
   document.querySelectorAll("#tabella-pick thead th").forEach((th, idx) => {
-    th.textContent = th.textContent.replace(/[\u2191\u2193]/g, ""); // freccia su/giù
+    th.textContent = th.textContent.replace(/[\u2191\u2193]/g, "");
     if (idx === colonnaIndex) {
-      th.textContent += asc ? " \u2191" : " \u2193"; // ↑ o ↓
+      th.textContent += asc ? " \u2191" : " \u2193";
     }
   });
 
@@ -245,10 +243,6 @@ function ordinaPick(colonnaIndex, numerico = false) {
       return asc ? aText.localeCompare(bText) : bText.localeCompare(aText);
     }
   });
-
-  tbody.innerHTML = "";
-  righe.forEach(r => tbody.appendChild(r));
-}
 
   tbody.innerHTML = "";
   righe.forEach(r => tbody.appendChild(r));
