@@ -161,6 +161,74 @@
     font-weight: bold;
   }
 </style>
+
+<style>
+@media (max-width: 768px) {
+
+  body {
+    font-size: 13px;
+    padding: 8px;
+  }
+
+  h1 {
+    font-size: 1.6em;
+    margin: 10px 0;
+  }
+
+  #turno-attuale {
+    font-size: 14px;
+    padding: 4px 0;
+  }
+
+  .container {
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+  }
+
+  .tabella-container, .lista-container {
+    width: 100%;
+    min-width: 100%;
+  }
+
+  #tabella-pick-container {
+    max-height: 200px;
+    overflow-y: auto;
+  }
+
+  #tabella-pick {
+    font-size: 12px;
+  }
+
+  #tabella-pick th, #tabella-pick td {
+    padding: 4px;
+  }
+
+  #lista-giocatori-table {
+    font-size: 12px;
+  }
+
+  #lista-giocatori-table th, #lista-giocatori-table td {
+    padding: 4px;
+  }
+
+  #lista-giocatori-table-container {
+    max-height: 200px;
+    overflow-x: auto;
+  }
+
+  #riepilogo-squadre {
+    flex-direction: column;
+    padding: 10px;
+  }
+
+  select, input {
+    font-size: 13px;
+    padding: 4px;
+  }
+}
+</style>
+
 </head>
 <body>
 <h1>Draft Room - Lega degli Eroi</h1>
