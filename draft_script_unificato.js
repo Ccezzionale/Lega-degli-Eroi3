@@ -65,7 +65,6 @@ function caricaPick() {
           <td>${fantaTeam}</td>
           <td>${nome}</td>
           <td>${ruolo}</td>
-          <td>${squadra}</td>`;
         if (!nome && !prossima) {
           prossima = { fantaTeam, pick };
           tr.classList.add("next-pick");
