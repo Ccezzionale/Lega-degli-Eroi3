@@ -95,29 +95,75 @@ tbody tr:hover {
 
 /* === MOBILE === */
 @media (max-width: 768px) {
+  body {
+    font-size: 13px;
+    padding: 8px;
+  }
+
+  h1 {
+    font-size: 1.4em;
+    margin: 10px 0;
+  }
+
   table {
-    font-size: 0.75rem;
+    font-size: 12px;
+    width: 100%;
+    border-collapse: collapse;
   }
 
   th, td {
     padding: 4px;
   }
 
-  button {
-    padding: 6px 12px;
-    font-size: 0.9rem;
+  .tabella-listone,
+  .tabella-pick {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+    margin-bottom: 20px;
   }
 
-  #riepilogo-squadre {
+  .tabella-listone thead th,
+  .tabella-pick thead th {
+    white-space: nowrap;
+  }
+
+  /* Colonne meno importanti nascoste */
+  .col-quotazione,
+  .col-squadra-seriea {
+    display: none;
+  }
+
+  /* Sezione riepilogo pick compatta */
+  .riepilogo-pick {
+    display: flex;
     flex-direction: column;
-    align-items: center;
+    gap: 10px;
   }
 
-  .riepilogo-team {
-    width: 90%;
+  .riepilogo-pick .squadra {
+    font-size: 12px;
+    padding: 6px 8px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: #f5f5f5;
+    color: #000;
   }
 
-  .riepilogo-team img {
-    max-width: 60px;
+  .riepilogo-pick .squadra h3 {
+    font-size: 14px;
+    margin-bottom: 4px;
+  }
+
+  .riepilogo-pick .squadra ol {
+    padding-left: 16px;
+    margin: 0;
+  }
+
+  .riepilogo-pick .squadra ol li {
+    line-height: 1.4;
+  }
+}
+
   }
 }
