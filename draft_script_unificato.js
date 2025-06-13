@@ -55,7 +55,7 @@ function caricaPick() {
       const righe = csv.trim().split(/\r?\n/).slice(1);
       let prossima = null;
       righe.forEach(r => {
-        const [pick, fantaTeam, nomeGrezzo, ruolo] = r.split(",");
+        const [pick, fantaTeam, nomeGrezzo, ruolo, quotazione] = r.split(",");
         const nome = nomeGrezzo ? nomeGrezzo.trim() : "";
         const key = normalize(nome);
         const tr = document.createElement("tr");
