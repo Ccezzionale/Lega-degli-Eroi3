@@ -95,39 +95,56 @@ tbody tr:hover {
 
 /* === MOBILE === */
 @media (max-width: 768px) {
-  /* Tabelle compatte */
-  table {
-    font-size: 12px;
-    border-collapse: collapse;
-    width: 100%;
+
+  /* RIDUZIONE HEADER */
+  h1 {
+    font-size: 1.4em;
+    margin: 10px 0;
   }
 
-  th, td {
-    padding: 4px 6px;
+  #currentPick {
+    font-size: 14px;
+    padding: 4px 0;
+  }
+
+  /* BLOCCO TABELLA PICK COMPATTA */
+  .tabella-pick {
+    max-height: 180px;
+    overflow-y: scroll;
+    display: block;
+    margin-bottom: 10px;
+    border: 1px solid #fff;
+    border-radius: 6px;
+  }
+
+  .tabella-pick table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+  }
+
+  .tabella-pick th,
+  .tabella-pick td {
+    padding: 3px 5px;
     text-align: center;
   }
 
-  /* Tabella sinistra: scroll verticale limitato */
-  .tabella-pick {
-    max-height: 200px;
-    overflow-y: auto;
-    display: block;
-  }
-
-  /* Tabella destra: scroll orizzontale */
+  /* TABELLA LISTONE: SCROLL ORIZZONTALE */
   .tabella-listone {
     display: block;
     overflow-x: auto;
     white-space: nowrap;
+    font-size: 12px;
     margin-top: 10px;
   }
 
-  /* Riduci spazio tra i filtri */
+  /* FILTRI COMPATTI */
   .filtro-container {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
     gap: 6px;
-    padding: 6px 0;
+    justify-content: center;
+    margin-bottom: 10px;
   }
 
   .filtro-container select,
@@ -136,11 +153,14 @@ tbody tr:hover {
     padding: 4px;
   }
 
-  /* Sezione riepilogo pick compatta */
+  /* COMPATTA RIEPILOGO PICK (SE PRESENTE) */
   .riepilogo-pick .squadra {
     font-size: 12px;
     padding: 6px 8px;
     margin-bottom: 8px;
+    background-color: #f5f5f5;
+    color: #000;
+    border-radius: 6px;
   }
 
   .riepilogo-pick .squadra h3 {
@@ -152,15 +172,4 @@ tbody tr:hover {
     padding-left: 18px;
   }
 
-  /* Riduci header */
-  h1 {
-    font-size: 1.6em;
-    margin: 10px 0;
-  }
-
-  /* Testo stato pick */
-  #currentPick {
-    font-size: 14px;
-    padding: 6px 0;
-  }
 }
