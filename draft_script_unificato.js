@@ -62,11 +62,13 @@ function caricaPick() {
 
         giocatoriScelti.add(key);
 
-        tr.innerHTML = `
-          <td>${pick}</td>
-          <td>${fantaTeam}</td>
-          <td>${nome}</td>
-          <td>${ruolo}</td>
+tr.innerHTML = `
+  <td>${nome}</td>
+  <td>${ruolo}</td>
+  <td>${squadra}</td>
+  <td>${parseInt(quotazione)}</td>
+`;
+
         `;
 
         if (!nome && !prossima) {
