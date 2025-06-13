@@ -103,7 +103,6 @@ function popolaListaDisponibili() {
             celle[2].textContent = nome;
             celle[3].textContent = ruolo;
             celle[4].textContent = squadra;
-            celle[5].textContent = quotazione;
             r.style.backgroundColor = "#d4edda";
             r.style.fontWeight = "bold";
             r.classList.remove("next-pick");
