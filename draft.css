@@ -1,59 +1,24 @@
-/* === Stile Generale === */
+/* === IMPOSTAZIONI GENERALI === */
 body {
-  margin: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: #001f3f;
   color: #ffffff;
+  margin: 0;
+  padding: 0;
 }
 
 h1, h2, h3, h4 {
   color: #ffcc00;
-}
-
-/* === Tabelle === */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 20px;
-}
-
-th, td {
-  padding: 12px;
   text-align: center;
-  border: 1px solid #003366;
 }
 
-th {
-  background-color: #004080;
-  color: #ffffff;
-  font-size: 1em;
-}
-
-tr:nth-child(even) {
-  background-color: #00264d;
-}
-
-tr:hover {
-  background-color: #00509e;
-  cursor: pointer;
-}
-
-/* === Filtri === */
-select, input[type="text"] {
-  padding: 8px;
-  font-size: 1em;
-  margin: 10px 0;
-  border-radius: 6px;
-  border: none;
-}
-
-/* === Bottone === */
+/* === BOTTONI === */
 button {
-  padding: 10px 18px;
-  font-size: 1em;
   background-color: #ffcc00;
   color: #001f3f;
   border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
   border-radius: 8px;
   cursor: pointer;
   font-weight: bold;
@@ -63,38 +28,96 @@ button:hover {
   background-color: #e6b800;
 }
 
-/* === Riepilogo per Squadra === */
+/* === TABELLE === */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+  font-size: 0.9rem;
+}
+
+th, td {
+  padding: 8px;
+  text-align: center;
+}
+
+thead {
+  background-color: #003366;
+  font-weight: bold;
+}
+
+th {
+  cursor: pointer;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #002b5c;
+}
+
+tbody tr:nth-child(odd) {
+  background-color: #003366;
+}
+
+tbody tr:hover {
+  background-color: #00509e;
+  cursor: pointer;
+}
+
+/* === RIEPILOGO PER SQUADRA === */
 #riepilogo-squadre {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 24px;
-  padding: 20px;
+  gap: 1rem;
+  margin-top: 2rem;
 }
 
 .riepilogo-team {
   background-color: #003366;
-  padding: 16px;
-  border-radius: 16px;
+  padding: 1rem;
+  border-radius: 20px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+  width: 220px;
   text-align: center;
-  max-width: 220px;
-  flex: 1 1 220px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
 .riepilogo-team img {
-  max-width: 64px;
-  margin-bottom: 12px;
+  max-width: 80px;
+  display: block;
+  margin: 0 auto 1rem;
 }
 
 .riepilogo-team h4 {
   margin-top: 0;
-  font-size: 1.2em;
+  font-size: 1.1rem;
   color: #ffffff;
 }
 
-.riepilogo-team div {
-  font-size: 0.95em;
-  color: #ffffff;
-  margin: 2px 0;
+/* === MOBILE === */
+@media (max-width: 768px) {
+  table {
+    font-size: 0.75rem;
+  }
+
+  th, td {
+    padding: 4px;
+  }
+
+  button {
+    padding: 6px 12px;
+    font-size: 0.9rem;
+  }
+
+  #riepilogo-squadre {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .riepilogo-team {
+    width: 90%;
+  }
+
+  .riepilogo-team img {
+    max-width: 60px;
+  }
 }
