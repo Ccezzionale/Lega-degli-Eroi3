@@ -1,4 +1,3 @@
-
 const tabella = document.querySelector("#tabella-pick tbody");
 const listaGiocatori = document.getElementById("lista-giocatori");
 const giocatoriScelti = new Set();
@@ -169,3 +168,51 @@ window.addEventListener("DOMContentLoaded", function () {
     setTimeout(popolaListaDisponibili, 300);
   });
 });
+
+
+function aggiornaChiamatePerSquadra() {
+  const righe = document.querySelectorAll("#tabella-pick tbody tr");
+  const riepilogo = {};
+  righe.forEach(r => {
+    const celle = r.querySelectorAll("td");
+    const team = celle[1]?.textContent?.trim();
+    const nome = celle[2]?.textContent?.trim();
+    const ruolo = celle[3]?.textContent?.trim();
+    if (!team || !nome) return;
+    if (!riepilogo[team]) riepilogo[team] = [];
+    riepilogo[team].push((riepilogo[team].length + 1) + ". " + nome + " (" + ruolo + ")");
+  });
+
+  const container = document.getElementById("riepilogo-squadre");
+  container.innerHTML = "";
+
+  for (const team in riepilogo) {
+    const div = document.createElement("div");
+    div.className = "riepilogo-team";
+    const logoPath = "img/" + team + ".png";
+    const img = document.createElement("img");
+    img.src = logoPath;
+    img.alt = team;
+    img.style.maxWidth = "60px";
+    img.style.margin = "0 auto 8px";
+    img.style.display = "block";
+    div.appendChild(img);
+
+    const h4 = document.createElement("h4");
+    h4.textContent = team;
+    h4.style.textAlign = "center";
+    h4.style.color = "#ffffff";
+    div.appendChild(h4);
+
+    riepilogo[team].forEach(txt => {
+      const riga = document.createElement("div");
+      riga.textContent = txt;
+      riga.style.textAlign = "center";
+      riga.style.color = "#ffffff";
+      div.appendChild(riga);
+    });
+
+    container.appendChild(div);
+  }
+}
+window.aggiornaChiamatePerSquadra = aggiornaChiamatePerSquadra;
