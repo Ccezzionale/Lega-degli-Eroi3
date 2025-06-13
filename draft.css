@@ -1,184 +1,77 @@
-/* === IMPOSTAZIONI GENERALI === */
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #001f3f;
-  color: #ffffff;
-  margin: 0;
-  padding: 0;
-}
-
-h1, h2, h3, h4 {
-  color: #ffcc00;
-  text-align: center;
-}
-
-/* === BOTTONI === */
-button {
-  background-color: #ffcc00;
-  color: #001f3f;
-  border: none;
-  padding: 10px 20px;
-  font-size: 1rem;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-button:hover {
-  background-color: #e6b800;
-}
-
-/* === TABELLE === */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 1rem 0;
-  font-size: 0.9rem;
-}
-
-th, td {
-  padding: 8px;
-  text-align: center;
-}
-
-thead {
-  background-color: #003366;
-  font-weight: bold;
-}
-
-th {
-  cursor: pointer;
-}
-
-tbody tr:nth-child(even) {
-  background-color: #002b5c;
-}
-
-tbody tr:nth-child(odd) {
-  background-color: #003366;
-}
-
-tbody tr:hover {
-  background-color: #00509e;
-  cursor: pointer;
-}
-
-/* === RIEPILOGO PER SQUADRA === */
+/* ✅ Contenitore flessibile: 4 sopra, 4 sotto su desktop */
 #riepilogo-squadre {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 1rem;
-  margin-top: 2rem;
+  gap: 20px;
+  padding: 20px;
 }
 
+/* ✅ Singolo box squadra */
 .riepilogo-team {
-  background-color: #003366;
-  padding: 1rem;
-  border-radius: 20px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-  width: 220px;
+  background-color: #002b5c;
+  border-radius: 12px;
+  padding: 16px;
+  width: 22%;
+  min-width: 200px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.4);
   text-align: center;
+  color: white;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  transition: transform 0.3s ease;
+}
+.riepilogo-team:hover {
+  transform: translateY(-4px);
 }
 
+/* ✅ Logo */
 .riepilogo-team img {
-  max-width: 80px;
+  max-width: 70px;
+  margin-bottom: 8px;
   display: block;
-  margin: 0 auto 1rem;
+  margin: 0 auto 8px;
+  border-radius: 8px;
 }
 
+/* ✅ Nome squadra */
 .riepilogo-team h4 {
-  margin-top: 0;
-  font-size: 1.1rem;
-  color: #ffffff;
-}
-.next-pick {
-  background-color: #ffe680 !important;
-  color: #000 !important;
-  font-weight: bold !important;
-}
-.completed-pick {
-  background-color: #d4edda;
-  font-weight: bold;
+  font-size: 1.1em;
+  margin-bottom: 10px;
+  color: #ffcc00;
 }
 
-/* === MOBILE === */
+/* ✅ Lista pick */
+.riepilogo-team div {
+  margin: 3px 0;
+  font-size: 0.9em;
+}
+
+/* ✅ Bottone refresh */
+#btn-riepilogo-refresh {
+  background-color: #0074D9;
+  border: none;
+  padding: 10px 18px;
+  font-size: 1em;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.3s ease;
+}
+#btn-riepilogo-refresh:hover {
+  background-color: #005ea2;
+}
+
+/* ✅ Responsive per tablet: 2 per riga */
 @media (max-width: 768px) {
-
-  /* RIDUZIONE HEADER */
-  h1 {
-    font-size: 1.4em;
-    margin: 10px 0;
+  .riepilogo-team {
+    width: 45%;
   }
+}
 
-  #currentPick {
-    font-size: 14px;
-    padding: 4px 0;
+/* ✅ Responsive per mobile: 1 per riga */
+@media (max-width: 480px) {
+  .riepilogo-team {
+    width: 90%;
   }
-
-  /* BLOCCO TABELLA PICK COMPATTA */
-  .tabella-pick {
-    max-height: 180px;
-    overflow-y: scroll;
-    display: block;
-    margin-bottom: 10px;
-    border: 1px solid #fff;
-    border-radius: 6px;
-  }
-
-  .tabella-pick table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 12px;
-  }
-
-  .tabella-pick th,
-  .tabella-pick td {
-    padding: 3px 5px;
-    text-align: center;
-  }
-
-  /* TABELLA LISTONE: SCROLL ORIZZONTALE */
-  .tabella-listone {
-    display: block;
-    overflow-x: auto;
-    white-space: nowrap;
-    font-size: 12px;
-    margin-top: 10px;
-  }
-
-  /* FILTRI COMPATTI */
-  .filtro-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    justify-content: center;
-    margin-bottom: 10px;
-  }
-
-  .filtro-container select,
-  .filtro-container input {
-    font-size: 13px;
-    padding: 4px;
-  }
-
-  /* COMPATTA RIEPILOGO PICK (SE PRESENTE) */
-  .riepilogo-pick .squadra {
-    font-size: 12px;
-    padding: 6px 8px;
-    margin-bottom: 8px;
-    background-color: #f5f5f5;
-    color: #000;
-    border-radius: 6px;
-  }
-
-  .riepilogo-pick .squadra h3 {
-    font-size: 14px;
-    margin-bottom: 4px;
-  }
-
-  .riepilogo-pick .squadra ol {
-    padding-left: 18px;
-  }
-
 }
