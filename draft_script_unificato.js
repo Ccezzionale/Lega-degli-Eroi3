@@ -104,7 +104,6 @@ function popolaListaDisponibili() {
             const fantaTeam = celle[1].textContent;
             celle[2].textContent = nome;
             celle[3].textContent = ruolo;
-            celle[4].textContent = squadra;
             r.style.backgroundColor = "#d4edda";
             r.style.fontWeight = "bold";
             r.classList.remove("next-pick");
