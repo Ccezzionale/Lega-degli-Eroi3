@@ -70,8 +70,8 @@ function caricaPick() {
           prossima = { fantaTeam, pick };
           tr.classList.add("next-pick");
         } else {
-          tr.style.backgroundColor = "#d4edda";
-          tr.style.fontWeight = "bold";
+          tr.classList.remove("next-pick");
+          tr.classList.add("completed-pick");
         }
         tabella.appendChild(tr);
       });
