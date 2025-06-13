@@ -49,14 +49,14 @@ function caricaGiocatori() {
 }
 
 function caricaPick() {
-  return fetch("https://script.google.com/macros/s/AKfycbwlbFaswGVUJeSDnlU-xpQYAnpk5C2kSB-R6Vz7jfXO63ijMkEzfpOjmM66QZwAvNlo/exec")
+  return fetch("https://script.google.com/macros/s/AKfycby8hk9db1JtLsi6UyuKCBrDntO7JAATwuI3lEHJmqx1VXKrPmlOnFGv3k6Ie3UKQspyPA/exec")
     .then(res => res.json())
     .then(dati => {
       let prossima = null;
       dati.forEach(riga => {
         const tr = document.createElement("tr");
         const nome = riga["Giocatore"]?.trim() || "";
-        const fantaTeam = riga["Squadra"];
+        const fantaTeam = riga["Fanta Team"];
         const ruolo = riga["Ruolo"];
         const pick = riga["Pick"];
 
