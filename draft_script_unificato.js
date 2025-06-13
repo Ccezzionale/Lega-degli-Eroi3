@@ -126,7 +126,9 @@ function popolaListaDisponibili() {
     filtroRuolo.appendChild(opt);
   });
 
-  squadre.forEach(s => {
+ Array.from(squadre)
+  .sort((a, b) => a.localeCompare(b))
+  .forEach(s => {
     const opt = document.createElement("option");
     opt.value = s;
     opt.textContent = s;
