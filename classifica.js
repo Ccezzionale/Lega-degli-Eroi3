@@ -53,3 +53,5 @@ function caricaClassifica(nomeFoglio) {
 }
 
 window.onload = () => caricaClassifica("Conference");
+console.log("✅ Script partito!");
+
