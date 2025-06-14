@@ -1,11 +1,10 @@
 
-/* Evidenziazione posizioni - su TD per forzare il colore */
+/* Evidenziazione posizioni */
 
 #tabella-classifica tbody tr.top1 td {
-  background-color: #002c4c !important; /* uguale a top4 */
+  background-color: #002c4c !important;
   font-weight: bold;
 }
-
 #tabella-classifica tbody tr.top1 td:nth-child(2)::before {
   content: "👑 ";
 }
@@ -36,4 +35,16 @@
 
 #tabella-classifica td img[alt]:not([src]) {
   display: none;
+}
+
+/* Layout compatto mobile */
+@media (max-width: 600px) {
+  #tabella-classifica {
+    font-size: 0.78rem;
+  }
+
+  #tabella-classifica td,
+  #tabella-classifica th {
+    padding: 3px 4px;
+  }
 }
