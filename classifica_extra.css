@@ -2,11 +2,10 @@
 /* Evidenziazione posizioni - su TD per forzare il colore */
 
 #tabella-classifica tbody tr.top1 td {
-  background-color: #003b66 !important;
+  background-color: #002c4c !important; /* uguale a top4 */
   font-weight: bold;
 }
 
-#tabella-classifica tbody tr.top1 td:first-child::before,
 #tabella-classifica tbody tr.top1 td:nth-child(2)::before {
   content: "👑 ";
 }
@@ -14,7 +13,6 @@
 #tabella-classifica tbody tr.top4 td {
   background-color: #002c4c !important;
 }
-#tabella-classifica tbody tr.top4 td:first-child::before,
 #tabella-classifica tbody tr.top4 td:nth-child(2)::before {
   content: "🎖️ ";
 }
@@ -23,7 +21,6 @@
   background-color: #5c0000 !important;
   color: #fff;
 }
-#tabella-classifica tbody tr.ultime4 td:first-child::before,
 #tabella-classifica tbody tr.ultime4 td:nth-child(2)::before {
   content: "💀 ";
 }
