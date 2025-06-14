@@ -13,31 +13,13 @@ function formattaNumero(val) {
 }
 
 function parseCSV(csv) {
-  const rows = [];
   const lines = csv.trim().split("\n");
-
-  for (let line of lines) {
-    const regex = /(?:"([^"]*(?:""[^"]*)*)"|([^",]+)|)(?:,|$)/g;
-    const cells = [];
-    let match;
-    let attempts = 0;
-
-    while ((match = regex.exec(line)) !== null && attempts < 1000) {
-      const val = match[1] !== undefined
-        ? match[1].replace(/""/g, '"').trim()
-        : (match[2] !== undefined ? match[2].trim() : "");
-      cells.push(val);
-      attempts++;
-    }
-
-    if (attempts >= 1000) {
-      console.warn("⛔ Troppi match in una riga, interrotto per sicurezza:", line);
-    }
-
-    if (cells.length > 0) rows.push(cells);
-  }
-
-  return rows;
+  return lines.map(line =>
+    line
+      .split(",")
+      .map(cell => cell.replace(/"/g, "").trim())
+      .filter(cell => cell !== "")
+  );
 }
 
 function caricaClassifica(nomeFoglio) {
@@ -47,9 +29,9 @@ function caricaClassifica(nomeFoglio) {
   fetch(url)
     .then(response => response.text())
     .then(csv => {
-      console.log("✅ CSV caricato, parsing in corso...");
+      console.log("✅ CSV caricato, parsing semplice in corso...");
       const righe = parseCSV(csv);
-      console.log("📄 Righe parseate:", righe);
+      console.log("📄 Righe:", righe);
 
       const intestazione = righe[0];
       const corpoTabella = document.querySelector("#tabella-classifica tbody");
@@ -65,7 +47,7 @@ function caricaClassifica(nomeFoglio) {
       });
       thead.appendChild(headerRow);
 
-      for (let i = 1; i < Math.min(righe.length, 100); i++) {
+      for (let i = 1; i < righe.length; i++) {
         const colonne = righe[i];
         const tr = document.createElement("tr");
         colonne.forEach(val => {
@@ -76,7 +58,7 @@ function caricaClassifica(nomeFoglio) {
         corpoTabella.appendChild(tr);
       }
 
-      console.log("✅ Classifica caricata correttamente.");
+      console.log("✅ Classifica caricata con parser leggero.");
     })
     .catch(err => {
       console.error("❌ Errore nel caricamento della classifica:", err);
