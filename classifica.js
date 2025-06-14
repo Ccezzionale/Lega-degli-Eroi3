@@ -4,7 +4,6 @@ const URL_MAP = {
   "Totale": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQmFvlkbYkEqaD6i9XsoNde2ls0fVSqXahKNuNQegtERRuG5N702OAu9mihLbolzCdiY_nVJTEvPJyM/pub?output=csv&gid=2134024333"
 };
 
-
 function formattaNumero(val) {
   if (!isNaN(val) && val.toString().includes(".")) {
     return parseFloat(val).toString().replace(".", ",");
@@ -12,14 +11,15 @@ function formattaNumero(val) {
   return val;
 }
 
-function caricaClassifica() {
-  fetch(CSV_URL)
+function caricaClassifica(nomeFoglio = "Conference") {
+  const url = URL_MAP[nomeFoglio];
+
+  fetch(url)
     .then(response => response.text())
     .then(csv => {
       const righe = csv.trim().split("\n");
       let intestazione = righe[0].split(",").map(cell => cell.replace(/"/g, "").trim());
 
-      // Se c'è una colonna vuota subito dopo Squadra, rimuovila
       const hasBlankColumn = intestazione[2] === "";
       if (hasBlankColumn) intestazione.splice(2, 1);
 
@@ -64,4 +64,10 @@ function caricaClassifica() {
     });
 }
 
-window.onload = () => caricaClassifica();
+window.onload = () => caricaClassifica("Conference");
+
+document.querySelectorAll(".switcher button").forEach(btn => {
+  btn.addEventListener("click", () => {
+    caricaClassifica(btn.textContent);
+  });
+});
