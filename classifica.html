@@ -1,28 +1,74 @@
-
 <!DOCTYPE html>
 <html lang="it">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Classifica - Lega degli Eroi</title>
   <link rel="stylesheet" href="main.css" />
   <link rel="stylesheet" href="classifica.css" />
+  <style>
+    @media (max-width: 768px) {
+      #tabella-classifica, .switch-container {
+        display: none;
+      }
+      .mobile-classifica {
+        display: block;
+        padding: 1rem;
+      }
+      details {
+        background-color: #001f3f;
+        margin-bottom: 0.5rem;
+        border-radius: 10px;
+        padding: 0.5rem 1rem;
+        color: white;
+        border: 1px solid #003b66;
+      }
+      summary {
+        cursor: pointer;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 1rem;
+      }
+      .team-info {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .team-info img {
+        height: 20px;
+        border-radius: 4px;
+        background-color: white;
+      }
+    }
+
+    @media (min-width: 769px) {
+      .mobile-classifica {
+        display: none;
+      }
+    }
+  </style>
 </head>
 <body>
-  <main>
+  <div class="container">
     <h1>Classifica</h1>
-    <div class="switcher">
-      <button>Conference</button>
-      <button>Championship</button>
-      <button>Totale</button>
+    <div class="switch-container">
+      <button onclick="caricaClassifica('Conference')">Conference</button>
+      <button onclick="caricaClassifica('Championship')">Championship</button>
+      <button onclick="caricaClassifica('Totale')">Totale</button>
     </div>
-    <div id="classifica-container">
-      <table id="tabella-classifica">
-        <thead></thead>
-        <tbody></tbody>
-      </table>
+    <table id="tabella-classifica">
+      <thead></thead>
+      <tbody></tbody>
+    </table>
+
+    <!-- MOBILE FISARMONICA -->
+    <div class="mobile-classifica" id="mobile-classifica">
+      <!-- Le righe saranno generate dinamicamente da classifica.js -->
     </div>
-  </main>
-  <script src="classifica.js"></script>
+  </div>
+
+  <script src="classifica.js" defer></script>
 </body>
 </html>
