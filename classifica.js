@@ -20,7 +20,13 @@ function caricaClassifica(nomeFoglio) {
     .then(response => response.text())
     .then(csv => {
       const righe = csv.trim().split("\n");
-      const intestazione = righe[0].split(",");
+      let intestazione = righe[0].split(",").map(h => h.replace(/"/g, "").trim());
+
+      // Rimuovi colonna vuota dopo "Squadra"
+      if (intestazione[2] === "") {
+        intestazione.splice(2, 1);
+      }
+
       const corpoTabella = document.querySelector("#tabella-classifica tbody");
       const thead = document.querySelector("#tabella-classifica thead");
       corpoTabella.innerHTML = "";
@@ -30,14 +36,21 @@ function caricaClassifica(nomeFoglio) {
       const headerRow = document.createElement("tr");
       intestazione.forEach(col => {
         const th = document.createElement("th");
-        th.textContent = col.replace(/"/g, "");
+        th.textContent = col;
         headerRow.appendChild(th);
       });
       thead.appendChild(headerRow);
 
-      // Righe
+      // Righe dati
       for (let i = 1; i < righe.length; i++) {
-        let colonne = righe[i].split(",");
+        let colonne = righe[i].split(",").map(cell => cell.replace(/"/g, "").trim());
+
+        // Rimuovi colonna vuota dopo nome squadra se esiste
+        if (colonne[2] === "") {
+          colonne.splice(2, 1);
+        }
+
+        // Ricuce eventuali colonne in più (decimali spaccati)
         while (colonne.length > intestazione.length) {
           colonne[intestazione.length - 1] += "." + colonne[intestazione.length];
           colonne.splice(intestazione.length, 1);
@@ -46,7 +59,7 @@ function caricaClassifica(nomeFoglio) {
         const tr = document.createElement("tr");
         colonne.forEach(val => {
           const td = document.createElement("td");
-          td.textContent = formattaNumero(val.replace(/"/g, ""));
+          td.textContent = formattaNumero(val);
           tr.appendChild(td);
         });
         corpoTabella.appendChild(tr);
