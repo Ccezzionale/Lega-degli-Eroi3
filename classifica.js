@@ -1,3 +1,4 @@
+
 const URL_MAP = {
   "Conference": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQmFvlkbYkEqaD6i9XsoNde2ls0fVSqXahKNuNQegtERRuG5N702OAu9mihLbolzCdiY_nVJTEvPJyM/pub?output=csv&gid=0",
   "Championship": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQmFvlkbYkEqaD6i9XsoNde2ls0fVSqXahKNuNQegtERRuG5N702OAu9mihLbolzCdiY_nVJTEvPJyM/pub?output=csv&gid=1102946509",
@@ -11,6 +12,10 @@ function formattaNumero(val) {
   return val;
 }
 
+function normalizzaNomeSquadra(nome) {
+  return nome.toLowerCase().replace(/[^a-z0-9]/g, "_");
+}
+
 function caricaClassifica(nomeFoglio = "Conference") {
   const url = URL_MAP[nomeFoglio];
 
@@ -19,7 +24,6 @@ function caricaClassifica(nomeFoglio = "Conference") {
     .then(csv => {
       const righe = csv.trim().split("\n");
       let intestazione = righe[0].split(",").map(cell => cell.replace(/"/g, "").trim());
-
       const hasBlankColumn = intestazione[2] === "";
       if (hasBlankColumn) intestazione.splice(2, 1);
 
@@ -37,25 +41,47 @@ function caricaClassifica(nomeFoglio = "Conference") {
       });
       thead.appendChild(headerRow);
 
-      // Righe dati
+      // Righe
       for (let i = 1; i < righe.length; i++) {
         let colonne = righe[i].split(",").map(cell => cell.replace(/"/g, "").trim());
-
-        if (hasBlankColumn && colonne[2] === "") {
-          colonne.splice(2, 1);
-        }
-
+        if (hasBlankColumn && colonne[2] === "") colonne.splice(2, 1);
         while (colonne.length > intestazione.length) {
           colonne[intestazione.length - 1] += "." + colonne[intestazione.length];
           colonne.splice(intestazione.length, 1);
         }
 
         const tr = document.createElement("tr");
-        colonne.forEach(val => {
+
+        // Evidenziazione dinamica
+        if (nomeFoglio === "Totale" && i >= righe.length - 4) {
+          tr.classList.add("ultime4");
+        } else if ((nomeFoglio === "Conference" || nomeFoglio === "Championship") && i === 1) {
+          tr.classList.add("top1");
+        }
+
+        colonne.forEach((val, idx) => {
           const td = document.createElement("td");
-          td.textContent = formattaNumero(val);
+
+          // Se è la colonna Squadra, aggiungi il logo
+          if (idx === 1) {
+            const img = document.createElement("img");
+            const slug = normalizzaNomeSquadra(val);
+            img.src = `img/${slug}.png`;
+            img.alt = val;
+            img.onerror = () => { img.style.display = "none"; };
+            img.style.height = "20px";
+            img.style.marginRight = "8px";
+            img.style.verticalAlign = "middle";
+
+            td.appendChild(img);
+            td.appendChild(document.createTextNode(val));
+          } else {
+            td.textContent = formattaNumero(val);
+          }
+
           tr.appendChild(td);
         });
+
         corpoTabella.appendChild(tr);
       }
     })
