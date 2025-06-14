@@ -1,63 +1,58 @@
 <!DOCTYPE html>
 <html lang="it">
-
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Classifica - Lega degli Eroi</title>
-  <link rel="stylesheet" href="main.css">
-  <link rel="stylesheet" href="classifica_extra.css">
+  <link rel="stylesheet" href="main.css" />
+  <link rel="stylesheet" href="classifica_extra.css" />
   <style>
-    @media screen and (max-width: 768px) {
-      table,
-      thead,
-      tbody,
-      th,
-      td,
-      tr {
-        display: block;
-      }
-
-      table {
-        border: none;
-      }
-
-      thead tr {
+    @media (max-width: 768px) {
+      #tabella-classifica {
         display: none;
       }
-
-      tr {
-        margin-bottom: 1rem;
-        background: #002c4c;
-        border-radius: 0.5rem;
-        padding: 0.5rem;
-      }
-
-      td {
+      #classifica-mobile {
         display: flex;
-        justify-content: space-between;
-        padding: 0.3rem 0.6rem;
-        font-size: 0.9rem;
-        border: none;
-        border-bottom: 1px solid #001f3f;
+        flex-direction: column;
+        gap: 10px;
+        margin: 1em;
       }
-
-      td::before {
-        content: attr(data-label);
-        font-weight: bold;
-        color: #ccc;
-        margin-right: 1rem;
-      }
-
-      .logo-nome {
+      .scheda-squadra {
+        background-color: #012b50;
+        color: white;
+        border: 1px solid #005288;
+        padding: 12px;
+        border-radius: 12px;
         display: flex;
         align-items: center;
-        gap: 0.5rem;
+        justify-content: space-between;
+        font-size: 0.9em;
+      }
+      .info-sinistra {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .info-sinistra img {
+        height: 28px;
+        border-radius: 4px;
+        background-color: white;
+      }
+      .info-destra {
+        text-align: right;
+        font-weight: bold;
+        font-size: 0.9em;
+        line-height: 1.2;
+      }
+    }
+
+    @media (min-width: 769px) {
+      #classifica-mobile {
+        display: none;
       }
     }
   </style>
 </head>
-
 <body>
   <main>
     <h1>Classifica</h1>
@@ -71,10 +66,9 @@
         <thead></thead>
         <tbody></tbody>
       </table>
+      <div id="classifica-mobile"></div>
     </div>
   </main>
   <script src="classifica.js"></script>
 </body>
-
 </html>
-
