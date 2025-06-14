@@ -5,6 +5,13 @@ const GID_MAP = {
   "Totale": "2134024333"
 };
 
+function formattaNumero(val) {
+  if (!isNaN(val) && val.toString().includes(".")) {
+    return parseFloat(val).toString().replace(".", ",");
+  }
+  return val;
+}
+
 function caricaClassifica(nomeFoglio) {
   const gid = GID_MAP[nomeFoglio];
   const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&gid=${gid}`;
@@ -34,7 +41,7 @@ function caricaClassifica(nomeFoglio) {
         const tr = document.createElement("tr");
         colonne.forEach(val => {
           const td = document.createElement("td");
-          td.textContent = val.replace(/"/g, "");
+          td.textContent = formattaNumero(val.replace(/"/g, ""));
           tr.appendChild(td);
         });
         corpoTabella.appendChild(tr);
