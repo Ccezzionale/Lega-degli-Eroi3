@@ -12,6 +12,12 @@ function formattaNumero(val) {
   return val;
 }
 
+function rilevaSeparatore(riga) {
+  if (riga.includes("\t")) return "\t";
+  if (riga.includes(";")) return ";";
+  return ",";
+}
+
 function caricaClassifica(nomeFoglio) {
   const gid = GID_MAP[nomeFoglio];
   const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&gid=${gid}`;
@@ -20,12 +26,8 @@ function caricaClassifica(nomeFoglio) {
     .then(response => response.text())
     .then(csv => {
       const righe = csv.trim().split("\n");
-      let intestazione = righe[0].split(",").map(h => h.replace(/"/g, "").trim());
-
-      // Rimuovi colonna vuota dopo "Squadra"
-      if (intestazione[2] === "") {
-        intestazione.splice(2, 1);
-      }
+      const separatore = rilevaSeparatore(righe[0]);
+      const intestazione = righe[0].split(separatore).map(cell => cell.replace(/"/g, "").trim());
 
       const corpoTabella = document.querySelector("#tabella-classifica tbody");
       const thead = document.querySelector("#tabella-classifica thead");
@@ -41,16 +43,10 @@ function caricaClassifica(nomeFoglio) {
       });
       thead.appendChild(headerRow);
 
-      // Righe dati
+      // Righe
       for (let i = 1; i < righe.length; i++) {
-        let colonne = righe[i].split(",").map(cell => cell.replace(/"/g, "").trim());
+        let colonne = righe[i].split(separatore).map(cell => cell.replace(/"/g, "").trim());
 
-        // Rimuovi colonna vuota dopo nome squadra se esiste
-        if (colonne[2] === "") {
-          colonne.splice(2, 1);
-        }
-
-        // Ricuce eventuali colonne in più (decimali spaccati)
         while (colonne.length > intestazione.length) {
           colonne[intestazione.length - 1] += "." + colonne[intestazione.length];
           colonne.splice(intestazione.length, 1);
