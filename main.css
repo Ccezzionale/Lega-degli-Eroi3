@@ -165,3 +165,58 @@ main, h1, .container {
     margin: 0 5px;
   }
 }
+
+/* --------- TABELLA CHIAMATE --------- */
+#chiamate-container table {
+  width: 90%;
+  margin: 20px auto;
+  border-collapse: collapse;
+  background-color: #004080;
+  color: white;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+
+#chiamate-container th {
+  background-color: #005299;
+  padding: 10px;
+  font-weight: bold;
+  text-transform: uppercase;
+  border: 1px solid #ffffff33;
+}
+
+#chiamate-container td {
+  background-color: #003366;
+  padding: 10px;
+  border: 1px solid #ffffff33;
+}
+
+#chiamate-container tr:nth-child(even) {
+  background-color: #002b5c;
+}
+
+#chiamate-container tr:hover {
+  background-color: #336699;
+}
+
+/* --------- BOTTONE CHIAMATE --------- */
+.bottone-chiamata {
+  display: inline-block;
+  background-color: #ffcc00;
+  color: #001f3f;
+  padding: 10px 20px;
+  margin: 15px auto;
+  border-radius: 8px;
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 1rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.bottone-chiamata:hover {
+  background-color: #ffd633;
+  color: #000;
+}

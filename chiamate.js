@@ -1,3 +1,4 @@
+
 function caricaChiamate() {
   const url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRK5ADcukTU83udU_Z9Zd9w66-2LGi8TlWJP_F5WfcaHQePIUpRBynnpbnxbkEGnrh44jMvvBo7Wzo3/pub?output=csv';
 
@@ -21,7 +22,6 @@ function caricaChiamate() {
       });
 
       html += '</tbody></table>';
-
       document.getElementById('chiamate-container').innerHTML = html;
     })
     .catch(err => {
