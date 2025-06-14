@@ -1,3 +1,4 @@
+// classifica.js aggiornato - mantiene il desktop invariato e aggiunge fisarmonica mobile
 
 const SHEET_ID = "1aHVZ8nXLns5bPQN3V7WJr8MKpwd5KvZmPYFhkE2pZqc";
 const GID_MAP = {
@@ -26,14 +27,13 @@ function caricaClassifica(nomeFoglio) {
     .then(csv => {
       const righe = csv.trim().split("\n");
       const intestazione = pulisciRigaCSV(righe[0]);
-
       const corpoTabella = document.querySelector("#tabella-classifica tbody");
       const thead = document.querySelector("#tabella-classifica thead");
-      const mobileContainer = document.getElementById("mobile-classifica");
+      const mobileDiv = document.getElementById("mobile-classifica");
 
       corpoTabella.innerHTML = "";
       thead.innerHTML = "";
-      mobileContainer.innerHTML = "";
+      mobileDiv.innerHTML = "";
 
       // Intestazione tabella desktop
       const headerRow = document.createElement("tr");
@@ -44,8 +44,11 @@ function caricaClassifica(nomeFoglio) {
       });
       thead.appendChild(headerRow);
 
+      // Righe dati
       for (let i = 1; i < righe.length; i++) {
         const colonne = pulisciRigaCSV(righe[i]);
+
+        // Versione desktop
         const tr = document.createElement("tr");
         colonne.forEach(val => {
           const td = document.createElement("td");
@@ -54,39 +57,32 @@ function caricaClassifica(nomeFoglio) {
         });
         corpoTabella.appendChild(tr);
 
-        // MOBILE - costruisci <details>
+        // Versione mobile (fisarmonica)
         const details = document.createElement("details");
         const summary = document.createElement("summary");
-        const teamInfo = document.createElement("div");
-        teamInfo.className = "team-info";
+        const nomeSquadra = colonne[1];
+        const posizione = colonne[0];
+        const punti = colonne[8];
+        const tot = colonne[9];
 
-        const img = document.createElement("img");
-        const nomeSquadra = colonne[1].trim();
-        const posizione = colonne[0].trim();
-        const pt = colonne[8] || "";
-        const tot = colonne[9] || "";
-
-        img.src = `img/${nomeSquadra.toLowerCase().replace(/\s+/g, "_")}.png`;
-        img.alt = nomeSquadra;
-        teamInfo.appendChild(img);
-        teamInfo.appendChild(document.createTextNode(nomeSquadra));
-
-        const span = document.createElement("span");
-        span.textContent = `#${posizione} - ${pt} pt. / ${tot}`;
-
-        summary.appendChild(teamInfo);
-        summary.appendChild(span);
+        summary.innerHTML = `
+          <div class="team-info">
+            <img src="img/${nomeSquadra.toLowerCase().replaceAll(" ", "_")}.png" alt="${nomeSquadra}" />
+            ${nomeSquadra}
+          </div>
+          <span>#${posizione} - ${punti} pt. / ${tot}</span>
+        `;
 
         const ul = document.createElement("ul");
-        const vinte = colonne[2] || "0";
-        const perse = colonne[3] || "0";
-        const pari = colonne[4] || "0";
-
-        ul.innerHTML = `<li>Vinte: ${vinte}</li><li>Perse: ${perse}</li><li>Pari: ${pari}</li>`;
+        ul.innerHTML = `
+          <li>Vinte: ${colonne[2]}</li>
+          <li>Perse: ${colonne[3]}</li>
+          <li>Pari: ${colonne[4]}</li>
+        `;
 
         details.appendChild(summary);
         details.appendChild(ul);
-        mobileContainer.appendChild(details);
+        mobileDiv.appendChild(details);
       }
     })
     .catch(err => {
