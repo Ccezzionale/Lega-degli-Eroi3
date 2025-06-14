@@ -220,3 +220,22 @@ main, h1, .container {
   background-color: #ffd633;
   color: #000;
 }
+
+/* --------- SWITCHER CONFERENCE --------- */
+.switcher {
+  margin: 20px;
+}
+.switcher button {
+  background-color: #004080;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin: 0 10px;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.switcher button:hover {
+  background-color: #0059b3;
+}

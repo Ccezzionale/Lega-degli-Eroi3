@@ -1,6 +1,12 @@
 
-function caricaChiamate() {
-  const url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRK5ADcukTU83udU_Z9Zd9w66-2LGi8TlWJP_F5WfcaHQePIUpRBynnpbnxbkEGnrh44jMvvBo7Wzo3/pub?output=csv';
+function caricaChiamate(conference) {
+  const urls = {
+    champ: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRK5ADcukTU83udU_Z9Zd9w66-2LGi8TlWJP_F5WfcaHQePIUpRBynnpbnxbkEGnrh44jMvvBo7Wzo3/pub?output=csv",
+    league: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSGbT5qMBn_PHnAyGfR1IayL3BgrfBYENXZ1tMoBXjvoZxQAFVI5wRk7kY0M9sAXuJg0wVImKh0g_bB/pub?gid=1279168385&single=true&output=csv"
+  };
+
+  const url = urls[conference];
+  if (!url) return;
 
   fetch(url)
     .then(response => response.text())
@@ -10,7 +16,9 @@ function caricaChiamate() {
       const dati = righe.slice(1);
 
       let html = '<table><thead><tr>';
-      intestazioni.forEach(col => html += `<th>${col}</th>`);
+      for (let i = 0; i < intestazioni.length; i++) {
+        html += `<th>${intestazioni[i]}</th>`;
+      }
       html += '</tr></thead><tbody>';
 
       dati.forEach(riga => {
@@ -29,5 +37,3 @@ function caricaChiamate() {
       document.getElementById('chiamate-container').innerHTML = '❌ Errore nel caricamento delle chiamate.';
     });
 }
-
-caricaChiamate();

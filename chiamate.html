@@ -9,16 +9,19 @@
 <body>
   <h2>Chiamate Settimanali</h2>
 
-  <!-- Bottone al modulo -->
   <a class="bottone-chiamata"
      href="https://docs.google.com/forms/d/e/1FAIpQLScNaxnbpVmIW_t23uvRqLkRy6sDrzyEvQQ-mpLDkk67DVDLag/viewform?usp=dialog"
      target="_blank">
      ➕ Compila una chiamata
   </a>
 
-  <!-- Tabella chiamate -->
+  <div class="switcher">
+    <button onclick="caricaChiamate('champ')">Conference Championship</button>
+    <button onclick="caricaChiamate('league')">Conference League</button>
+  </div>
+
   <div id="chiamate-container">
-    <p>⏳ Caricamento chiamate...</p>
+    <p>⏳ Seleziona una conference per visualizzare le chiamate.</p>
   </div>
 
   <script src="chiamate.js"></script>
