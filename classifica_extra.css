@@ -48,3 +48,20 @@
     padding: 3px 4px;
   }
 }
+
+
+@media (max-width: 600px) {
+  #tabella-classifica {
+    font-size: 0.68rem;
+  }
+
+  #tabella-classifica td,
+  #tabella-classifica th {
+    padding: 2px 3px;
+  }
+
+  #tabella-classifica td img {
+    height: 16px;
+    margin-right: 5px;
+  }
+}
