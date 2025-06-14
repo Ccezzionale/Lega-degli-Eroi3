@@ -1,74 +1,102 @@
+
 <!DOCTYPE html>
 <html lang="it">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Classifica - Lega degli Eroi</title>
   <link rel="stylesheet" href="main.css" />
   <link rel="stylesheet" href="classifica_extra.css" />
   <style>
     @media (max-width: 768px) {
-      #tabella-classifica {
+      #tabella-classifica, .switch-container {
         display: none;
       }
-      #classifica-mobile {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        margin: 1em;
+      .mobile-classifica {
+        display: block;
+        padding: 1rem;
       }
-      .scheda-squadra {
-        background-color: #012b50;
+      details {
+        background-color: #001f3f;
+        margin-bottom: 0.5rem;
+        border-radius: 10px;
+        padding: 0.5rem 1rem;
         color: white;
-        border: 1px solid #005288;
-        padding: 12px;
-        border-radius: 12px;
+        border: 1px solid #003b66;
+      }
+      summary {
+        cursor: pointer;
+        font-weight: bold;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        font-size: 0.9em;
+        font-size: 1rem;
       }
-      .info-sinistra {
+      .team-info {
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: 0.5rem;
       }
-      .info-sinistra img {
-        height: 28px;
+      .team-info img {
+        height: 20px;
         border-radius: 4px;
         background-color: white;
-      }
-      .info-destra {
-        text-align: right;
-        font-weight: bold;
-        font-size: 0.9em;
-        line-height: 1.2;
       }
     }
 
     @media (min-width: 769px) {
-      #classifica-mobile {
+      .mobile-classifica {
         display: none;
       }
     }
   </style>
 </head>
 <body>
-  <main>
+  <div class="container">
     <h1>Classifica</h1>
-    <div class="switcher">
+    <div class="switch-container">
       <button onclick="caricaClassifica('Conference')">Conference</button>
       <button onclick="caricaClassifica('Championship')">Championship</button>
       <button onclick="caricaClassifica('Totale')">Totale</button>
     </div>
-    <div id="classifica-container">
-      <table id="tabella-classifica">
-        <thead></thead>
-        <tbody></tbody>
-      </table>
-      <div id="classifica-mobile"></div>
+    <table id="tabella-classifica">
+      <thead></thead>
+      <tbody></tbody>
+    </table>
+
+    <!-- FISARMONICA MOBILE -->
+    <div class="mobile-classifica" id="mobile-classifica">
+      <details>
+        <summary>
+          <div class="team-info">
+            <img src="img/team_bartowski.png" alt="Team Bartowski" />
+            Team Bartowski
+          </div>
+          <span>#1 - 24 pt. / 1033.5</span>
+        </summary>
+        <ul>
+          <li>Vinte: 8</li>
+          <li>Perse: 3</li>
+          <li>Pari: 1</li>
+        </ul>
+      </details>
+
+      <details>
+        <summary>
+          <div class="team-info">
+            <img src="img/real_mimmo.png" alt="Real Mimmo" />
+            Real Mimmo
+          </div>
+          <span>#2 - 21 pt. / 1001.5</span>
+        </summary>
+        <ul>
+          <li>Vinte: 7</li>
+          <li>Perse: 4</li>
+          <li>Pari: 1</li>
+        </ul>
+      </details>
     </div>
-  </main>
-  <script src="classifica.js"></script>
+  </div>
+  <script src="classifica.js" defer></script>
 </body>
 </html>
