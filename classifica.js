@@ -1,4 +1,4 @@
-const SHEET_ID = "1aHVZ8nXLns5bPQN3V7WJr8MKpwd5KvZmPYFhkE2pZqc";
+const SHEET_ID = "1aHVZ8nXLns5bPQN3V7Jr8MKpwd5KvZmPYFhkE2pZqc";
 const GID_MAP = {
   "Conference": "0",
   "Championship": "1102946509",
@@ -12,38 +12,25 @@ function formattaNumero(val) {
   return val;
 }
 
-function rilevaSeparatore(riga) {
-  if (riga.includes("\t")) return "\t";
-  if (riga.includes(";")) return ";";
-  return ",";
-}
-
 function caricaClassifica(nomeFoglio) {
   const gid = GID_MAP[nomeFoglio];
   const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&gid=${gid}`;
-  console.log("📥 Fetching URL:", url);
 
   fetch(url)
     .then(response => response.text())
     .then(csv => {
-      console.log("📦 CSV ricevuto:");
-      console.log(csv);
-
       const righe = csv.trim().split("\n");
-      console.log("🔍 Righe trovate:", righe.length);
+      let intestazione = righe[0].split(",").map(cell => cell.replace(/"/g, "").trim());
 
-      const separatore = rilevaSeparatore(righe[0]);
-      console.log("📐 Separatore rilevato:", separatore === "\t" ? "[TAB]" : separatore);
-
-      const intestazione = righe[0].split(separatore).map(cell => cell.replace(/"/g, "").trim());
-      console.log("🔠 Intestazione:", intestazione);
+      const hasBlankColumn = intestazione[2] === "";
+      if (hasBlankColumn) intestazione.splice(2, 1);
 
       const corpoTabella = document.querySelector("#tabella-classifica tbody");
       const thead = document.querySelector("#tabella-classifica thead");
       corpoTabella.innerHTML = "";
       thead.innerHTML = "";
 
-      // Intestazioni
+      // Intestazione
       const headerRow = document.createElement("tr");
       intestazione.forEach(col => {
         const th = document.createElement("th");
@@ -54,9 +41,11 @@ function caricaClassifica(nomeFoglio) {
 
       // Righe dati
       for (let i = 1; i < righe.length; i++) {
-        let colonne = righe[i].split(separatore).map(cell => cell.replace(/"/g, "").trim());
+        let colonne = righe[i].split(",").map(cell => cell.replace(/"/g, "").trim());
 
-        console.log(`📄 Riga ${i}:`, colonne);
+        if (hasBlankColumn && colonne[2] === "") {
+          colonne.splice(2, 1);
+        }
 
         while (colonne.length > intestazione.length) {
           colonne[intestazione.length - 1] += "." + colonne[intestazione.length];
