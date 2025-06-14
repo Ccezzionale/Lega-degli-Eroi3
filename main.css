@@ -300,7 +300,7 @@ main, h1, .container {
 }
 
 #tabella-classifica th {
-  background-color: #005299;
+  background-color: #ffcc00; color: #001f3f;
   padding: 10px;
   font-weight: bold;
   text-transform: uppercase;
