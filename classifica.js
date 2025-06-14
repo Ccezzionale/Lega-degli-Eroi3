@@ -12,26 +12,37 @@ function caricaClassifica(nomeFoglio) {
   fetch(url)
     .then(response => response.text())
     .then(csv => {
-      const righe = csv.trim().split('\n');
+      const righe = csv.trim().split("\n");
+      const intestazione = righe[0].split(",");
       const corpoTabella = document.querySelector("#tabella-classifica tbody");
+      const thead = document.querySelector("#tabella-classifica thead");
       corpoTabella.innerHTML = "";
-      righe.forEach((riga, i) => {
-        const colonne = riga.split(',');
-        if (colonne.length >= 3 && i > 0) {
-          const tr = document.createElement("tr");
-          colonne.slice(0, 3).forEach(testo => {
-            const td = document.createElement("td");
-            td.textContent = testo;
-            tr.appendChild(td);
-          });
-          corpoTabella.appendChild(tr);
-        }
+      thead.innerHTML = "";
+
+      // Intestazioni
+      const headerRow = document.createElement("tr");
+      intestazione.forEach(col => {
+        const th = document.createElement("th");
+        th.textContent = col.replace(/"/g, "");
+        headerRow.appendChild(th);
       });
+      thead.appendChild(headerRow);
+
+      // Righe
+      for (let i = 1; i < righe.length; i++) {
+        const colonne = righe[i].split(",");
+        const tr = document.createElement("tr");
+        colonne.forEach(val => {
+          const td = document.createElement("td");
+          td.textContent = val.replace(/"/g, "");
+          tr.appendChild(td);
+        });
+        corpoTabella.appendChild(tr);
+      }
     })
     .catch(err => {
       console.error("Errore nel caricamento della classifica:", err);
     });
 }
 
-// Carica la Conference di default
 window.onload = () => caricaClassifica("Conference");
