@@ -1,8 +1,8 @@
 const SHEET_ID = "1aHVZ8nXLns5bPQN3V7WJr8MKpwd5KvZmPYFhkE2pZqc";
 const GID_MAP = {
   "Conference": "0",
-  "Championship": "823705445",
-  "Totale": "532992734"
+  "Championship": "1102946509",
+  "Totale": "2134024333"
 };
 
 function caricaClassifica(nomeFoglio) {
