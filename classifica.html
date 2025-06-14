@@ -1,70 +1,36 @@
-
 <!DOCTYPE html>
-
 <html lang="it">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Classifica - Lega degli Eroi</title>
-<link href="main.css" rel="stylesheet"/>
-<link href="classifica_extra.css" rel="stylesheet"/>
-<style>
-@media (max-width: 768px) {
-  #tabella-classifica, .switch-container {
-    display: none;
-  }
-  .mobile-classifica {
-    display: block;
-    padding: 1rem;
-  }
-  details {
-    background-color: #001f3f;
-    margin-bottom: 0.5rem;
-    border-radius: 10px;
-    padding: 0.5rem 1rem;
-    color: white;
-    border: 1px solid #003b66;
-  }
-  summary {
-    cursor: pointer;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-size: 1rem;
-  }
-  .team-info {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-  .team-info img {
-    height: 20px;
-    border-radius: 4px;
-    background-color: white;
-  }
-}
-@media (min-width: 769px) {
-  .mobile-classifica {
-    display: none;
-  }
-}
-</style></head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Classifica - Lega degli Eroi</title>
+  <link rel="stylesheet" href="main.css" />
+</head>
 <body>
-<main>
-<h1>Classifica</h1>
-<div class="switcher">
-<button>Conference</button>
-<button>Championship</button>
-<button>Totale</button>
-</div>
-<div id="classifica-container">
-<table id="tabella-classifica">
-<thead></thead>
-<tbody></tbody>
-</table>
-</div>
-</main>
-<script src="classifica.js"></script>
-<div class="mobile-classifica" id="mobile-classifica"></div></body>
+  <nav>
+    <ul class="navbar">
+      <li><a href="rose.html">Rose</a></li>
+      <li><a href="classifica.html" class="active">Classifica</a></li>
+      <li><a href="draft.html">Draft</a></li>
+      <li><a href="svincolati.html">Svincolati</a></li>
+      <li><a href="chiamate.html">Chiamate</a></li>
+      <li><a href="albo.html">Albo d'Oro</a></li>
+    </ul>
+  </nav>
+  <main>
+    <h1>Classifica</h1>
+    <div class="switcher">
+      <button onclick="caricaClassifica('Conference')">Conference</button>
+      <button onclick="caricaClassifica('Championship')">Championship</button>
+      <button onclick="caricaClassifica('Totale')">Totale</button>
+    </div>
+    <div id="classifica-container">
+      <table id="tabella-classifica">
+        <thead></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </main>
+  <script src="classifica.js"></script>
+</body>
 </html>
