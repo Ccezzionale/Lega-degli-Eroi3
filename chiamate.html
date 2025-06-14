@@ -9,15 +9,22 @@
 <body>
   <h2>Chiamate Settimanali</h2>
 
-  <a class="bottone-chiamata"
-     href="https://docs.google.com/forms/d/e/1FAIpQLScNaxnbpVmIW_t23uvRqLkRy6sDrzyEvQQ-mpLDkk67DVDLag/viewform?usp=dialog"
-     target="_blank">
-     ➕ Compila una chiamata
-  </a>
+  <div class="moduli-container">
+    <a class="bottone-chiamata"
+       href="https://docs.google.com/forms/d/e/1FAIpQLScNaxnbpVmIW_t23uvRqLkRy6sDrzyEvQQ-mpLDkk67DVDLag/viewform?usp=dialog"
+       target="_blank">
+       ➕ Compila una chiamata (Conference League)
+    </a>
+    <a class="bottone-chiamata"
+       href="https://docs.google.com/forms/d/e/1FAIpQLSdxOpFrvWkhi6TrhryrIVJUeMISAxo-CatGtw8TuNApRyU8Yg/viewform?usp=dialog"
+       target="_blank">
+       ➕ Compila una chiamata (Conference Championship)
+    </a>
+  </div>
 
   <div class="switcher">
-    <button onclick="caricaChiamate('champ')">Conference Championship</button>
     <button onclick="caricaChiamate('league')">Conference League</button>
+    <button onclick="caricaChiamate('champ')">Conference Championship</button>
   </div>
 
   <div id="chiamate-container">
