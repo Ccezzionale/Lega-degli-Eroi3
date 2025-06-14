@@ -12,10 +12,6 @@ function formattaNumero(val) {
   return val;
 }
 
-function normalizzaNomeSquadra(nome) {
-  return nome.toLowerCase().replace(/[^a-z0-9]/g, "_");
-}
-
 function caricaClassifica(nomeFoglio = "Conference") {
   const url = URL_MAP[nomeFoglio];
 
@@ -67,8 +63,8 @@ function caricaClassifica(nomeFoglio = "Conference") {
 
           if (idx === 1) {
             const img = document.createElement("img");
-            const slug = normalizzaNomeSquadra(val);
-            img.src = `img/${slug}.png`;
+            const nomeFile = val + ".png";
+            img.src = `img/${nomeFile}`;
             img.alt = val;
             img.onerror = () => { img.style.display = "none"; };
             td.appendChild(img);
