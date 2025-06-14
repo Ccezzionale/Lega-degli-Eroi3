@@ -37,7 +37,11 @@ function caricaClassifica(nomeFoglio) {
 
       // Righe
       for (let i = 1; i < righe.length; i++) {
-        const colonne = righe[i].split(",");
+        let colonne = righe[i].split(",");
+        if (colonne.length > intestazione.length) {
+          colonne = colonne.slice(0, intestazione.length - 1).concat([colonne.slice(intestazione.length - 1).join(".")]);
+        }
+
         const tr = document.createElement("tr");
         colonne.forEach(val => {
           const td = document.createElement("td");
