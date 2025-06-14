@@ -1,21 +1,21 @@
 
 /* Evidenziazione posizioni */
 
-tr.top1 {
+#tabella-classifica tbody tr.top1 {
   background-color: #003b66 !important;
   font-weight: bold;
 }
 
-tr.top1 td:first-child::before,
-tr.top1 td:nth-child(2)::before {
+#tabella-classifica tbody tr.top1 td:first-child::before,
+#tabella-classifica tbody tr.top1 td:nth-child(2)::before {
   content: "👑 ";
 }
 
-tr.top4 {
+#tabella-classifica tbody tr.top4 {
   background-color: #002c4c !important;
 }
 
-tr.ultime4 {
+#tabella-classifica tbody tr.ultime4 {
   background-color: #5c0000 !important;
   color: #fff;
 }
