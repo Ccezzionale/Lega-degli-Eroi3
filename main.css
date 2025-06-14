@@ -165,9 +165,3 @@ main, h1, .container {
     margin: 0 5px;
   }
 }
-
-
-/* === FIX: MARGINE SOTTO LA NAVBAR === */
-main, h1, .container, .top-link, #turno-attuale {
-  margin-top: 100px;
-}
