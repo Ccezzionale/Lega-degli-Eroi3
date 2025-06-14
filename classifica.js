@@ -12,6 +12,10 @@ function formattaNumero(val) {
   return val;
 }
 
+function pulisciRigaCSV(riga) {
+  return riga.split(",").map(cell => cell.replace(/^"+|"+$/g, "").trim()).filter(cell => cell !== "");
+}
+
 function caricaClassifica(nomeFoglio) {
   const gid = GID_MAP[nomeFoglio];
   const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&gid=${gid}`;
@@ -20,7 +24,7 @@ function caricaClassifica(nomeFoglio) {
     .then(response => response.text())
     .then(csv => {
       const righe = csv.trim().split("\n");
-      const intestazione = righe[0].split(",");
+      const intestazione = pulisciRigaCSV(righe[0]);
       const corpoTabella = document.querySelector("#tabella-classifica tbody");
       const thead = document.querySelector("#tabella-classifica thead");
       corpoTabella.innerHTML = "";
@@ -30,18 +34,18 @@ function caricaClassifica(nomeFoglio) {
       const headerRow = document.createElement("tr");
       intestazione.forEach(col => {
         const th = document.createElement("th");
-        th.textContent = col.replace(/"/g, "");
+        th.textContent = col;
         headerRow.appendChild(th);
       });
       thead.appendChild(headerRow);
 
       // Righe
       for (let i = 1; i < righe.length; i++) {
-        const colonne = righe[i].split(",");
+        const colonne = pulisciRigaCSV(righe[i]);
         const tr = document.createElement("tr");
         colonne.forEach(val => {
           const td = document.createElement("td");
-          td.textContent = formattaNumero(val.replace(/"/g, ""));
+          td.textContent = formattaNumero(val);
           tr.appendChild(td);
         });
         corpoTabella.appendChild(tr);
@@ -53,5 +57,3 @@ function caricaClassifica(nomeFoglio) {
 }
 
 window.onload = () => caricaClassifica("Conference");
-console.log("✅ Script partito!");
-
