@@ -1,1 +1,38 @@
-
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Classifica - Lega degli Eroi</title>
+  <link rel="stylesheet" href="main.css" />
+  <script defer src="classifica.js"></script>
+</head>
+<body>
+  <nav>
+    <ul class="navbar">
+      <li><a href="rose.html">Rose</a></li>
+      <li><a href="classifica.html" class="active">Classifica</a></li>
+      <li><a href="draft.html">Draft</a></li>
+      <li><a href="svincolati.html">Svincolati</a></li>
+      <li><a href="chiamate.html">Chiamate</a></li>
+      <li><a href="albo.html">Albo d'Oro</a></li>
+    </ul>
+  </nav>
+  <main>
+    <h1>Classifica</h1>
+    <div class="switcher">
+      <button onclick="caricaClassifica('Conference')">Conference</button>
+      <button onclick="caricaClassifica('Championship')">Championship</button>
+      <button onclick="caricaClassifica('Totale')">Totale</button>
+    </div>
+    <div id="classifica-container">
+      <table id="tabella-classifica">
+        <thead>
+          <tr><th>Pos</th><th>Squadra</th><th>Punti</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </main>
+</body>
+</html>
