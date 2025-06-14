@@ -1,10 +1,8 @@
-// classifica.js
 
-const SHEET_ID = "1aHVZ8nXLns5bPQN3V7WJr8MKpwd5KvZmPYFhkE2pZqc";
-const GID_MAP = {
-  "Conference": "0",
-  "Championship": "1102946509",
-  "Totale": "2134024333"
+const URL_MAP = {
+  "Conference": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQmFvlkbYkEqaD6i9XsoNde2ls0fVSqXahKNuNQegtERRuG5N702OAu9mihLbolzCdiY_nVJTEvPJyM/pub?output=csv&gid=0",
+  "Championship": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQmFvlkbYkEqaD6i9XsoNde2ls0fVSqXahKNuNQegtERRuG5N702OAu9mihLbolzCdiY_nVJTEvPJyM/pub?output=csv&gid=1102946509",
+  "Totale": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQmFvlkbYkEqaD6i9XsoNde2ls0fVSqXahKNuNQegtERRuG5N702OAu9mihLbolzCdiY_nVJTEvPJyM/pub?output=csv&gid=2134024333"
 };
 
 function formattaNumero(val) {
@@ -14,28 +12,23 @@ function formattaNumero(val) {
   return val;
 }
 
-function pulisciRigaCSV(riga) {
-  return riga.split(",").map(cell => cell.replace(/^"+|"+$/g, "").trim());
-}
-
-function caricaClassifica(nomeFoglio) {
-  const gid = GID_MAP[nomeFoglio];
-  const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&gid=${gid}`;
+function caricaClassifica(nomeFoglio = "Conference") {
+  const url = URL_MAP[nomeFoglio];
 
   fetch(url)
     .then(response => response.text())
     .then(csv => {
       const righe = csv.trim().split("\n");
-      const intestazione = pulisciRigaCSV(righe[0]);
+      let intestazione = righe[0].split(",").map(cell => cell.replace(/"/g, "").trim());
+      const hasBlankColumn = intestazione[2] === "";
+      if (hasBlankColumn) intestazione.splice(2, 1);
+
       const corpoTabella = document.querySelector("#tabella-classifica tbody");
       const thead = document.querySelector("#tabella-classifica thead");
-      const mobileContainer = document.querySelector("#mobile-classifica");
-
       corpoTabella.innerHTML = "";
       thead.innerHTML = "";
-      mobileContainer.innerHTML = "";
 
-      // Intestazioni tabella
+      // Intestazione
       const headerRow = document.createElement("tr");
       intestazione.forEach(col => {
         const th = document.createElement("th");
@@ -44,53 +37,57 @@ function caricaClassifica(nomeFoglio) {
       });
       thead.appendChild(headerRow);
 
+      const numSquadre = righe.length - 1;
+
       // Righe
       for (let i = 1; i < righe.length; i++) {
-        const colonne = pulisciRigaCSV(righe[i]);
+        let colonne = righe[i].split(",").map(cell => cell.replace(/"/g, "").trim());
+        if (hasBlankColumn && colonne[2] === "") colonne.splice(2, 1);
+        while (colonne.length > intestazione.length) {
+          colonne[intestazione.length - 1] += "." + colonne[intestazione.length];
+          colonne.splice(intestazione.length, 1);
+        }
+
         const tr = document.createElement("tr");
-        colonne.forEach(val => {
+
+        // Evidenziazione dinamica
+        if (nomeFoglio === "Totale") {
+          if (i <= 4) tr.classList.add("top4");
+          if (i > numSquadre - 4) tr.classList.add("ultime4");
+        } else {
+          if (i === 1) tr.classList.add("top1");
+        }
+
+        colonne.forEach((val, idx) => {
           const td = document.createElement("td");
-          td.textContent = formattaNumero(val);
+
+          if (idx === 1) {
+            const img = document.createElement("img");
+            const nomeFile = val + ".png";
+            img.src = `img/${nomeFile}`;
+            img.alt = val;
+            img.onerror = () => { img.style.display = "none"; };
+            td.appendChild(img);
+            td.appendChild(document.createTextNode(val));
+          } else {
+            td.textContent = formattaNumero(val);
+          }
+
           tr.appendChild(td);
         });
+
         corpoTabella.appendChild(tr);
-
-        // Mobile
-        const [pos, squadra, , , , , , , , pt, ptTot] = colonne;
-        const logoSrc = `img/${squadra}.png`;
-
-        const details = document.createElement("details");
-
-        const summary = document.createElement("summary");
-        summary.innerHTML = `
-          <div class="team-info">
-            <img src="${logoSrc}" alt="${squadra}" />
-            ${squadra}
-          </div>
-          <span>#${pos} - ${pt} pt. / ${ptTot}</span>
-        `;
-
-        const ul = document.createElement("ul");
-        ul.innerHTML = `
-          <li>Giocate: ${colonne[2]}</li>
-          <li>Vinte: ${colonne[3]}</li>
-          <li>Pari: ${colonne[4]}</li>
-          <li>Perse: ${colonne[5]}</li>
-          <li>GF: ${colonne[6]}</li>
-          <li>GS: ${colonne[7]}</li>
-          <li>DR: ${colonne[8]}</li>
-        `;
-
-        details.appendChild(summary);
-        details.appendChild(ul);
-        mobileContainer.appendChild(details);
       }
     })
     .catch(err => {
-      console.error("Errore nel caricamento della classifica:", err);
+      console.error("❌ Errore nel caricamento della classifica:", err);
     });
 }
 
 window.onload = () => caricaClassifica("Conference");
 
+document.querySelectorAll(".switcher button").forEach(btn => {
+  btn.addEventListener("click", () => {
+    caricaClassifica(btn.textContent);
+  });
 });

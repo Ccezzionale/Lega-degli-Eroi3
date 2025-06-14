@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -6,97 +5,32 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Classifica - Lega degli Eroi</title>
   <link rel="stylesheet" href="main.css" />
-  <link rel="stylesheet" href="classifica_extra.css" />
-  <style>
-    @media (max-width: 768px) {
-      #tabella-classifica, .switch-container {
-        display: none;
-      }
-      .mobile-classifica {
-        display: block;
-        padding: 1rem;
-      }
-      details {
-        background-color: #001f3f;
-        margin-bottom: 0.5rem;
-        border-radius: 10px;
-        padding: 0.5rem 1rem;
-        color: white;
-        border: 1px solid #003b66;
-      }
-      summary {
-        cursor: pointer;
-        font-weight: bold;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        font-size: 1rem;
-      }
-      .team-info {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-      }
-      .team-info img {
-        height: 20px;
-        border-radius: 4px;
-        background-color: white;
-      }
-    }
-
-    @media (min-width: 769px) {
-      .mobile-classifica {
-        display: none;
-      }
-    }
-  </style>
 </head>
 <body>
-  <div class="container">
+  <nav>
+    <ul class="navbar">
+      <li><a href="rose.html">Rose</a></li>
+      <li><a href="classifica.html" class="active">Classifica</a></li>
+      <li><a href="draft.html">Draft</a></li>
+      <li><a href="svincolati.html">Svincolati</a></li>
+      <li><a href="chiamate.html">Chiamate</a></li>
+      <li><a href="albo.html">Albo d'Oro</a></li>
+    </ul>
+  </nav>
+  <main>
     <h1>Classifica</h1>
-    <div class="switch-container">
+    <div class="switcher">
       <button onclick="caricaClassifica('Conference')">Conference</button>
       <button onclick="caricaClassifica('Championship')">Championship</button>
       <button onclick="caricaClassifica('Totale')">Totale</button>
     </div>
-    <table id="tabella-classifica">
-      <thead></thead>
-      <tbody></tbody>
-    </table>
-
-    <!-- FISARMONICA MOBILE -->
-    <div class="mobile-classifica" id="mobile-classifica">
-      <details>
-        <summary>
-          <div class="team-info">
-            <img src="img/team_bartowski.png" alt="Team Bartowski" />
-            Team Bartowski
-          </div>
-          <span>#1 - 24 pt. / 1033.5</span>
-        </summary>
-        <ul>
-          <li>Vinte: 8</li>
-          <li>Perse: 3</li>
-          <li>Pari: 1</li>
-        </ul>
-      </details>
-
-      <details>
-        <summary>
-          <div class="team-info">
-            <img src="img/real_mimmo.png" alt="Real Mimmo" />
-            Real Mimmo
-          </div>
-          <span>#2 - 21 pt. / 1001.5</span>
-        </summary>
-        <ul>
-          <li>Vinte: 7</li>
-          <li>Perse: 4</li>
-          <li>Pari: 1</li>
-        </ul>
-      </details>
+    <div id="classifica-container">
+      <table id="tabella-classifica">
+        <thead></thead>
+        <tbody></tbody>
+      </table>
     </div>
-  </div>
-  <script src="classifica.js" defer></script>
+  </main>
+  <script src="classifica.js"></script>
 </body>
 </html>
