@@ -1,7 +1,7 @@
 
-/* Evidenziazione posizioni */
+/* Evidenziazione posizioni - su TD per forzare il colore */
 
-#tabella-classifica tbody tr.top1 {
+#tabella-classifica tbody tr.top1 td {
   background-color: #003b66 !important;
   font-weight: bold;
 }
@@ -11,11 +11,11 @@
   content: "👑 ";
 }
 
-#tabella-classifica tbody tr.top4 {
+#tabella-classifica tbody tr.top4 td {
   background-color: #002c4c !important;
 }
 
-#tabella-classifica tbody tr.ultime4 {
+#tabella-classifica tbody tr.ultime4 td {
   background-color: #5c0000 !important;
   color: #fff;
 }
