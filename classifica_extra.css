@@ -1,14 +1,23 @@
 
 /* Evidenziazione posizioni */
 tr.top1 {
-  background-color: #004d00 !important; /* verde scuro */
+  background-color: #003b66 !important; /* blu più chiaro per 1° posto */
   font-weight: bold;
 }
 
 tr.ultime4 {
-  background-color: #660000 !important; /* rosso scuro */
+  background-color: #5c0000 !important; /* rosso scuro per ultime 4 */
+  color: #fff;
 }
 
 #tabella-classifica td img {
   vertical-align: middle;
+  height: 20px;
+  margin-right: 8px;
+  border-radius: 4px;
+  background-color: white;
+}
+
+#tabella-classifica td img[alt]:not([src]) {
+  display: none;
 }
