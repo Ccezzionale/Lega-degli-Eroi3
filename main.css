@@ -1,4 +1,206 @@
+/* --------- STILE GENERALE --------- */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #001f3f;
+  color: #ffffff;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
 
+/* --------- NAVBAR DESKTOP --------- */
+nav {
+  background-color: #004080;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+nav ul.navbar {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  padding: 1rem 0;
+  margin: 0;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+nav ul.navbar li a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+nav ul.navbar li a.active,
+nav ul.navbar li a:hover {
+  color: #ffcc00;
+  text-decoration: underline;
+}
+
+/* --------- MARGINE SOTTO LA NAVBAR --------- */
+main, h1, .container {
+  margin-top: 90px;
+}
+
+/* --------- TABELLA PICK --------- */
+#tabella-pick-container {
+  background-color: #004080;
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 0;
+  margin-bottom: 20px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+
+#tabella-pick {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #004080;
+  color: white;
+  border-radius: 10px;
+  overflow: hidden;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#tabella-pick th {
+  background-color: #005299;
+  color: white;
+  text-transform: uppercase;
+  font-size: 0.9em;
+  padding: 8px;
+  border: 1px solid #ffffff33;
+  text-align: center;
+}
+
+#tabella-pick td {
+  background-color: #003366;
+  color: white;
+  font-size: 0.9em;
+  padding: 8px;
+  border: 1px solid #ffffff33;
+  text-align: center;
+}
+
+#tabella-pick tr:nth-child(even) {
+  background-color: #002b5c;
+}
+
+#tabella-pick tr.next-pick {
+  background-color: #ffe680 !important;
+  color: black;
+  font-weight: bold;
+}
+
+.pick-completata {
+  background-color: #003366 !important;
+  font-weight: bold;
+  color: white !important;
+}
+
+/* --------- RESPONSIVE PER MOBILE --------- */
+@media (max-width: 768px) {
+  nav ul.navbar {
+    overflow-x: auto;
+    white-space: nowrap;
+    justify-content: flex-start;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  nav ul.navbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  nav ul.navbar li {
+    flex: 0 0 auto;
+  }
+
+  nav ul.navbar li a {
+    font-size: 1rem;
+  }
+
+  .container {
+    flex-direction: column;
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .tabella-container,
+  .lista-container {
+    width: 100%;
+    min-width: unset;
+  }
+
+  table {
+    font-size: 0.8em;
+  }
+
+  th, td {
+    padding: 4px;
+  }
+
+  #lista-giocatori-table-container,
+  #tabella-pick-container {
+    max-height: 300px;
+  }
+
+  select,
+  input {
+    font-size: 0.8em;
+    padding: 4px 6px;
+    max-width: 150px;
+    border-radius: 6px;
+  }
+
+  #filtroRuolo,
+  #filtroSerieA,
+  #searchGiocatore {
+    padding: 4px 8px;
+    font-size: 0.8em;
+    max-width: 150px;
+    margin: 0 5px;
+  }
+}
+
+/* --------- TABELLA CHIAMATE --------- */
+#chiamate-container table {
+  width: 90%;
+  margin: 20px auto;
+  border-collapse: collapse;
+  background-color: #004080;
+  color: white;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+
+#chiamate-container th {
+  background-color: #005299;
+  padding: 10px;
+  font-weight: bold;
+  text-transform: uppercase;
+  border: 1px solid #ffffff33;
+}
+
+#chiamate-container td {
+  background-color: #003366;
+  padding: 10px;
+  border: 1px solid #ffffff33;
+}
+
+#chiamate-container tr:nth-child(even) {
+  background-color: #002b5c;
+}
+
+#chiamate-container tr:hover {
+  background-color: #336699;
+}
+
+/* --------- BOTTONE CHIAMATE --------- */
 .bottone-chiamata {
   display: inline-block;
   background-color: #ffcc00;
@@ -12,10 +214,13 @@
   box-shadow: 0 4px 6px rgba(0,0,0,0.3);
   transition: background-color 0.3s, color 0.3s;
 }
+
 .bottone-chiamata:hover {
   background-color: #ffd633;
   color: #000;
 }
+
+/* --------- SWITCHER CONFERENCE --------- */
 .switcher {
   margin: 20px;
 }
@@ -33,6 +238,38 @@
 .switcher button:hover {
   background-color: #0059b3;
 }
+
+/* --------- AVVISO CHIAMATE BLOCCATE --------- */
+.avviso {
+  background-color: #0059b3;
+  padding: 15px;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin: 20px auto;
+  max-width: 600px;
+}
+
+/* --------- SWITCHER CONFERENCE --------- */
+.switcher {
+  margin: 20px;
+}
+.switcher button {
+  background-color: #004080;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin: 0 10px;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.switcher button:hover {
+  background-color: #0059b3;
+}
+
+/* --------- AVVISO CHIAMATE BLOCCATE --------- */
 .avviso {
   background-color: #0059b3;
   padding: 15px;
