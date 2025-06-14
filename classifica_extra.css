@@ -1,15 +1,26 @@
 
 /* Evidenziazione posizioni */
+
 tr.top1 {
-  background-color: #003b66 !important; /* blu più chiaro per 1° posto */
+  background-color: #003b66 !important;
   font-weight: bold;
 }
 
+tr.top1 td:first-child::before,
+tr.top1 td:nth-child(2)::before {
+  content: "👑 ";
+}
+
+tr.top4 {
+  background-color: #002c4c !important;
+}
+
 tr.ultime4 {
-  background-color: #5c0000 !important; /* rosso scuro per ultime 4 */
+  background-color: #5c0000 !important;
   color: #fff;
 }
 
+/* Loghi */
 #tabella-classifica td img {
   vertical-align: middle;
   height: 20px;

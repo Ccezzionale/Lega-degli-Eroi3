@@ -41,6 +41,8 @@ function caricaClassifica(nomeFoglio = "Conference") {
       });
       thead.appendChild(headerRow);
 
+      const numSquadre = righe.length - 1;
+
       // Righe
       for (let i = 1; i < righe.length; i++) {
         let colonne = righe[i].split(",").map(cell => cell.replace(/"/g, "").trim());
@@ -53,26 +55,22 @@ function caricaClassifica(nomeFoglio = "Conference") {
         const tr = document.createElement("tr");
 
         // Evidenziazione dinamica
-        if (nomeFoglio === "Totale" && i >= righe.length - 4) {
-          tr.classList.add("ultime4");
-        } else if ((nomeFoglio === "Conference" || nomeFoglio === "Championship") && i === 1) {
-          tr.classList.add("top1");
+        if (nomeFoglio === "Totale") {
+          if (i <= 4) tr.classList.add("top4");
+          if (i > numSquadre - 4) tr.classList.add("ultime4");
+        } else {
+          if (i === 1) tr.classList.add("top1");
         }
 
         colonne.forEach((val, idx) => {
           const td = document.createElement("td");
 
-          // Se è la colonna Squadra, aggiungi il logo
           if (idx === 1) {
             const img = document.createElement("img");
             const slug = normalizzaNomeSquadra(val);
             img.src = `img/${slug}.png`;
             img.alt = val;
             img.onerror = () => { img.style.display = "none"; };
-            img.style.height = "20px";
-            img.style.marginRight = "8px";
-            img.style.verticalAlign = "middle";
-
             td.appendChild(img);
             td.appendChild(document.createTextNode(val));
           } else {
