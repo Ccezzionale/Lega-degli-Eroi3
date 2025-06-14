@@ -1,93 +1,111 @@
-// classifica.js aggiornato - mantiene il desktop invariato e aggiunge fisarmonica mobile
+<style>
+  @media (max-width: 768px) {
+    #tabella-classifica, .switch-container {
+      display: none;
+    }
+    .mobile-classifica {
+      display: block;
+      padding: 1rem;
+    }
+    details {
+      background-color: #001f3f;
+      margin-bottom: 0.5rem;
+      border-radius: 10px;
+      padding: 0.5rem 1rem;
+      color: white;
+      border: 1px solid #003b66;
+    }
+    summary {
+      cursor: pointer;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 1rem;
+    }
+    .team-info {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .team-info img {
+      height: 24px;
+      border-radius: 4px;
+      background-color: white;
+    }
+    .mobile-classifica ul {
+      margin-top: 0.5rem;
+      padding-left: 1rem;
+    }
+    .mobile-classifica li {
+      list-style: disc;
+    }
+  }
+  @media (min-width: 769px) {
+    .mobile-classifica {
+      display: none;
+    }
+  }
+</style>
 
-const SHEET_ID = "1aHVZ8nXLns5bPQN3V7WJr8MKpwd5KvZmPYFhkE2pZqc";
+<div class="mobile-classifica" id="mobile-classifica">
+  <!-- Sarà riempito via JavaScript -->
+</div>
+
+<script>
 const GID_MAP = {
   "Conference": "0",
   "Championship": "1102946509",
   "Totale": "2134024333"
 };
+const SHEET_ID = "1aHVZ8nXLns5bPQN3V7WJr8MKpwd5KvZmPYFhkE2pZqc";
 
-function formattaNumero(val) {
-  if (!isNaN(val) && val.toString().includes(".")) {
-    return parseFloat(val).toString().replace(".", ",");
-  }
-  return val;
-}
-
-function pulisciRigaCSV(riga) {
-  return riga.split(",").map(cell => cell.replace(/^"+|"+$/g, "").trim());
-}
-
-function caricaClassifica(nomeFoglio) {
+function creaFisarmonica(nomeFoglio) {
   const gid = GID_MAP[nomeFoglio];
   const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&gid=${gid}`;
-
   fetch(url)
-    .then(response => response.text())
+    .then(res => res.text())
     .then(csv => {
-      const righe = csv.trim().split("\n");
-      const intestazione = pulisciRigaCSV(righe[0]);
-      const corpoTabella = document.querySelector("#tabella-classifica tbody");
-      const thead = document.querySelector("#tabella-classifica thead");
-      const mobileDiv = document.getElementById("mobile-classifica");
+      const righe = csv.trim().split("\n").map(r => r.split(","));
+      const header = righe[0];
+      const corpo = righe.slice(1);
+      const container = document.getElementById("mobile-classifica");
+      container.innerHTML = "";
 
-      corpoTabella.innerHTML = "";
-      thead.innerHTML = "";
-      mobileDiv.innerHTML = "";
+      corpo.forEach(riga => {
+        const [pos, squadra, , vinte, pari, perse, gf, gs, dr, pt, ptTot] = riga;
+        const nome = squadra.trim();
+        const logo = `img/${nome}.png`;
 
-      // Intestazione tabella desktop
-      const headerRow = document.createElement("tr");
-      intestazione.forEach(col => {
-        const th = document.createElement("th");
-        th.textContent = col;
-        headerRow.appendChild(th);
-      });
-      thead.appendChild(headerRow);
+        const box = document.createElement("details");
+        const sum = document.createElement("summary");
 
-      // Righe dati
-      for (let i = 1; i < righe.length; i++) {
-        const colonne = pulisciRigaCSV(righe[i]);
-
-        // Versione desktop
-        const tr = document.createElement("tr");
-        colonne.forEach(val => {
-          const td = document.createElement("td");
-          td.textContent = formattaNumero(val);
-          tr.appendChild(td);
-        });
-        corpoTabella.appendChild(tr);
-
-        // Versione mobile (fisarmonica)
-        const details = document.createElement("details");
-        const summary = document.createElement("summary");
-        const nomeSquadra = colonne[1];
-        const posizione = colonne[0];
-        const punti = colonne[8];
-        const tot = colonne[9];
-
-        summary.innerHTML = `
+        sum.innerHTML = `
           <div class="team-info">
-            <img src="img/${nomeSquadra.toLowerCase().replaceAll(" ", "_")}.png" alt="${nomeSquadra}" />
-            ${nomeSquadra}
+            <img src="${logo}" alt="${nome}" />
+            ${nome}
           </div>
-          <span>#${posizione} - ${punti} pt. / ${tot}</span>
+          <span>#${pos} - ${pt} pt. / ${ptTot}</span>
         `;
 
-        const ul = document.createElement("ul");
-        ul.innerHTML = `
-          <li>Vinte: ${colonne[2]}</li>
-          <li>Perse: ${colonne[3]}</li>
-          <li>Pari: ${colonne[4]}</li>
+        const lista = document.createElement("ul");
+        lista.innerHTML = `
+          <li>Vinte: ${vinte}</li>
+          <li>Perse: ${perse}</li>
+          <li>Pari: ${pari}</li>
         `;
 
-        details.appendChild(summary);
-        details.appendChild(ul);
-        mobileDiv.appendChild(details);
-      }
-    })
-    .catch(err => {
-      console.error("Errore nel caricamento della classifica:", err);
+        box.appendChild(sum);
+        box.appendChild(lista);
+        container.appendChild(box);
+      });
     });
 }
 
-window.onload = () => caricaClassifica("Conference");
+window.onload = () => {
+  if (window.innerWidth < 768) {
+    creaFisarmonica("Conference");
+  }
+};
+</script>
+
