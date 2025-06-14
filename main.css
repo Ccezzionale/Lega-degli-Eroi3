@@ -167,5 +167,48 @@ input {
   max-width: 150px;
   margin: 0 5px;
 }
+/* === NAVBAR FISSA === */
+nav {
+  background-color: #004080;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.navbar {
+  display: flex;
+  justify-content: center;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  gap: 1rem;
+  padding: 1rem 0;
+  flex-wrap: wrap;
+}
+
+.navbar li a {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.navbar li a:hover {
+  text-decoration: underline;
+  color: #ffcc00;
+}
+
+/* Evidenzia la pagina attiva */
+.navbar li a.active {
+  text-decoration: underline;
+  color: #ffcc00;
+}
+
+/* === MAIN CON SPAZIO SOTTO LA NAV === */
+main {
+  margin-top: 100px;
+  padding: 0 1rem;
+}
 
   
