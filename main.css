@@ -1,3 +1,4 @@
+
 /* --------- STILE GENERALE --------- */
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -11,37 +12,48 @@ body {
 /* --------- NAVBAR --------- */
 nav {
   background-color: #004080;
-  padding: 1em;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
 }
 
 nav ul.navbar {
   list-style: none;
   display: flex;
-  justify-content: center;
-  padding: 0;
+  overflow-x: auto;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+  padding: 1rem;
+  gap: 1rem;
   margin: 0;
+  justify-content: flex-start;
+}
+
+nav ul.navbar::-webkit-scrollbar {
+  display: none;
 }
 
 nav ul.navbar li {
-  margin: 0 15px;
+  flex: 0 0 auto;
 }
 
 nav ul.navbar li a {
   color: white;
   text-decoration: none;
   font-weight: bold;
+  font-size: 1.1rem;
 }
-@media (max-width: 768px) {
-  .navbar {
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 1rem 0.5rem;
-  }
 
-  .navbar li a {
-    font-size: 1rem;
-  }
+nav ul.navbar li a.active,
+nav ul.navbar li a:hover {
+  color: #ffcc00;
+  text-decoration: underline;
+}
+
+/* --------- MARGINE SOTTO LA NAVBAR --------- */
+main, h1, .container {
+  margin-top: 90px;
 }
 
 /* --------- TABELLA PICK (SINISTRA) --------- */
@@ -61,14 +73,15 @@ nav ul.navbar li a {
   color: white;
   border-radius: 10px;
   overflow: hidden;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 #tabella-pick th {
   background-color: #005299;
   color: white;
-  padding: 8px;
   text-transform: uppercase;
   font-size: 0.9em;
+  padding: 8px;
   border: 1px solid #ffffff33;
   text-align: center;
 }
@@ -91,45 +104,8 @@ nav ul.navbar li a {
   color: black;
   font-weight: bold;
 }
-#tabella-pick {
-  width: 100% !important;
-  border-collapse: collapse !important;
-  background-color: #004080 !important;
-  color: white !important;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
-  border-radius: 10px !important;
-  overflow: hidden !important;
-}
 
-#tabella-pick th {
-  background-color: #005299 !important;
-  color: white !important;
-  text-transform: uppercase !important;
-  font-size: 0.9em !important;
-  padding: 8px !important;
-  border: 1px solid #ffffff33 !important;
-  text-align: center !important;
-}
-
-#tabella-pick td {
-  background-color: #003366 !important;
-  color: white !important;
-  font-size: 0.9em !important;
-  padding: 8px !important;
-  border: 1px solid #ffffff33 !important;
-  text-align: center !important;
-}
-
-#tabella-pick tr:nth-child(even) {
-  background-color: #002b5c !important;
-}
-
-#tabella-pick tr.next-pick {
-  background-color: #ffe680 !important;
-  color: black !important;
-  font-weight: bold !important;
-}
-/* Rimuove inline style e centralizza tutto nel CSS */
+/* --------- STILE RIEPILOGO PICK --------- */
 .pick-completata {
   background-color: #003366 !important;
   font-weight: bold;
@@ -164,63 +140,19 @@ nav ul.navbar li a {
   }
 
   select,
-input {
-  font-size: 0.8em;
-  padding: 4px 6px;
-  max-width: 150px;
-  border-radius: 6px;
-}
-/* Ridimensionamento filtri */
-#filtroRuolo,
-#filtroSerieA,
-#searchGiocatore {
-  padding: 4px 8px;
-  font-size: 0.8em;
-  max-width: 150px;
-  margin: 0 5px;
-}
-/* === NAVBAR FISSA === */
-nav {
-  background-color: #004080;
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 1000;
-}
+  input {
+    font-size: 0.8em;
+    padding: 4px 6px;
+    max-width: 150px;
+    border-radius: 6px;
+  }
 
-.navbar {
-  display: flex;
-  justify-content: center;
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  gap: 1rem;
-  padding: 1rem 0;
-  flex-wrap: wrap;
+  #filtroRuolo,
+  #filtroSerieA,
+  #searchGiocatore {
+    padding: 4px 8px;
+    font-size: 0.8em;
+    max-width: 150px;
+    margin: 0 5px;
+  }
 }
-
-.navbar li a {
-  color: #ffffff;
-  text-decoration: none;
-  font-weight: bold;
-  font-size: 1.1rem;
-}
-
-.navbar li a:hover {
-  text-decoration: underline;
-  color: #ffcc00;
-}
-
-/* Evidenzia la pagina attiva */
-.navbar li a.active {
-  text-decoration: underline;
-  color: #ffcc00;
-}
-
-/* === MAIN CON SPAZIO SOTTO LA NAV === */
-main {
-  margin-top: 100px;
-  padding: 0 1rem;
-}
-
-  
