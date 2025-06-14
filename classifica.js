@@ -12,14 +12,8 @@ function formattaNumero(val) {
   return val;
 }
 
-function parseCSV(csv) {
-  const lines = csv.trim().split("\n");
-  return lines.map(line =>
-    line
-      .split(",")
-      .map(cell => cell.replace(/"/g, "").trim())
-      .filter(cell => cell !== "")
-  );
+function pulisciRigaCSV(riga) {
+  return riga.split(",").map(cell => cell.replace(/^"+|"+$/g, "").trim()).filter(cell => cell !== "");
 }
 
 function caricaClassifica(nomeFoglio) {
@@ -29,16 +23,14 @@ function caricaClassifica(nomeFoglio) {
   fetch(url)
     .then(response => response.text())
     .then(csv => {
-      console.log("✅ CSV caricato, parsing semplice in corso...");
-      const righe = parseCSV(csv);
-      console.log("📄 Righe:", righe);
-
-      const intestazione = righe[0];
+      const righe = csv.trim().split("\n");
+      const intestazione = pulisciRigaCSV(righe[0]);
       const corpoTabella = document.querySelector("#tabella-classifica tbody");
       const thead = document.querySelector("#tabella-classifica thead");
       corpoTabella.innerHTML = "";
       thead.innerHTML = "";
 
+      // Intestazioni
       const headerRow = document.createElement("tr");
       intestazione.forEach(col => {
         const th = document.createElement("th");
@@ -47,8 +39,9 @@ function caricaClassifica(nomeFoglio) {
       });
       thead.appendChild(headerRow);
 
+      // Righe
       for (let i = 1; i < righe.length; i++) {
-        const colonne = righe[i];
+        const colonne = pulisciRigaCSV(righe[i]);
         const tr = document.createElement("tr");
         colonne.forEach(val => {
           const td = document.createElement("td");
@@ -57,11 +50,9 @@ function caricaClassifica(nomeFoglio) {
         });
         corpoTabella.appendChild(tr);
       }
-
-      console.log("✅ Classifica caricata con parser leggero.");
     })
     .catch(err => {
-      console.error("❌ Errore nel caricamento della classifica:", err);
+      console.error("Errore nel caricamento della classifica:", err);
     });
 }
 
