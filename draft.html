@@ -231,13 +231,49 @@
 
 
 <style>
-  h1, .top-link {
+  nav {
+    background-color: #004080;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+  }
+  .navbar {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    margin: 0;
+    padding: 1rem 0;
+    gap: 1.5rem;
+  }
+  .navbar li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.1rem;
+  }
+  .navbar li a.active,
+  .navbar li a:hover {
+    color: #ffcc00;
+    text-decoration: underline;
+  }
+  h1 {
     margin-top: 110px;
   }
 </style>
 
 </head>
 <body>
+<nav>
+  <ul class="navbar">
+    <li><a href="rose.html">Rose</a></li>
+    <li><a href="classifica.html">Classifica</a></li>
+    <li><a href="draft.html" class="active">Draft</a></li>
+    <li><a href="svincolati.html">Svincolati</a></li>
+    <li><a href="chiamate.html">Chiamate</a></li>
+    <li><a href="albo.html">Albo d'Oro</a></li>
+  </ul>
+</nav>
 <h1>Draft Room - Lega degli Eroi</h1>
 <div class="top-link">
   <a href="statistiche.html" target="_blank">📊 Vai alle Statistiche del Draft</a>
