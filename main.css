@@ -279,3 +279,48 @@ main, h1, .container {
   margin: 20px auto;
   max-width: 600px;
 }
+
+
+/* --------- TABELLA CLASSIFICA --------- */
+#classifica-container {
+  margin: 0 auto;
+  width: 95%;
+  max-width: 1000px;
+  overflow-x: auto;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(0,0,0,0.3);
+  background-color: #004080;
+}
+
+#tabella-classifica {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #004080;
+  color: white;
+}
+
+#tabella-classifica th {
+  background-color: #005299;
+  padding: 10px;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  border: 1px solid #ffffff33;
+  text-align: center;
+}
+
+#tabella-classifica td {
+  background-color: #003366;
+  padding: 8px;
+  border: 1px solid #ffffff33;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+#tabella-classifica tr:nth-child(even) {
+  background-color: #002b5c;
+}
+
+#tabella-classifica tr:hover {
+  background-color: #336699;
+}
