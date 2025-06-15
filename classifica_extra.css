@@ -1,22 +1,25 @@
 /* Evidenziazione posizioni desktop */
-
-#tabella-classifica thead {
-  background-color: #003366 !important;
-  color: white;
-}
-
-#tabella-classifica tbody tr.top1 td {
-  background-color: #002c4c !important;
-  font-weight: bold;
-}
-
+#tabella-classifica tbody tr.top1 td,
 #tabella-classifica tbody tr.top4 td {
-  background-color: #002c4c !important;
+  background-color: #ffc800 !important;
+  color: #000;
+  font-weight: bold;
 }
 
 #tabella-classifica tbody tr.ultime4 td {
   background-color: #5c0000 !important;
-  color: #fff;
+  color: white;
+}
+
+/* Intestazione tabella desktop */
+#tabella-classifica thead tr {
+  background-color: #001f3f;
+}
+
+#tabella-classifica thead th {
+  color: white;
+  font-weight: bold;
+  padding: 8px;
 }
 
 /* Loghi */
@@ -35,12 +38,12 @@
 /* Layout compatto mobile */
 @media (max-width: 600px) {
   #tabella-classifica {
-    font-size: 0.68rem;
+    font-size: 0.78rem;
   }
 
   #tabella-classifica td,
   #tabella-classifica th {
-    padding: 2px 3px;
+    padding: 3px 4px;
   }
 
   #tabella-classifica td img {
@@ -51,46 +54,41 @@
 
 /* Colori mobile per fisarmonica */
 @media (max-width: 768px) {
-  /* Top 4 (solo nel foglio "Totale") */
-  .accordion-item.top4 .accordion-header {
-    background-color: #ffcc00 !important;
-    color: black;
+  .accordion-item.top1,
+  .accordion-item.top4 {
+    background-color: #ffc800 !important;
+    color: #000;
     font-weight: bold;
   }
 
+  .accordion-item.top1 .accordion-header span,
   .accordion-item.top4 .accordion-header span {
-    color: black !important;
+    color: #000 !important;
   }
 
-  /* Solo il primo per Conference/Championship */
-  .accordion-item.top1 .accordion-header {
-    background-color: #ffcc00 !important;
-    color: black;
-    font-weight: bold;
-  }
-
-  .accordion-item.top1 .accordion-header span {
-    color: black !important;
-  }
-
-  .accordion-item.ultime4 .accordion-header {
+  .accordion-item.ultime4 {
     background-color: #5c0000 !important;
     color: white;
   }
 
-  .accordion-item.ultime4 .accordion-body span {
+  .accordion-item.ultime4 .accordion-body p {
     color: white;
+  }
+
+  .accordion-body p {
+    display: inline-block;
+    margin: 4px 10px;
+    color: #eee;
   }
 
   .accordion-body {
     text-align: center;
   }
 
-  .accordion-body span {
-    display: inline-block;
-    margin: 4px 10px;
-    color: #eee;
+  .accordion-header span {
+    color: white;
   }
+}
 
   .accordion-header span {
     color: white;
