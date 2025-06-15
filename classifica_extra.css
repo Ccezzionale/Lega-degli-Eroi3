@@ -6,6 +6,20 @@
   color: white !important;
 }
 
+/* Giallo per Top 4 (Totale) */
+.accordion-item.top4 .accordion-header {
+  background-color: #ffcc00 !important;
+  color: black;
+  font-weight: bold;
+}
+
+/* Giallo per Top 1 (Conference/Championship) */
+.accordion-item.top1 .accordion-header {
+  background-color: #ffcc00 !important;
+  color: black;
+  font-weight: bold;
+}
+
 /* Intestazione tabella */
 #tabella-classifica thead tr {
   background-color: #003b66 !important;
