@@ -1,5 +1,4 @@
-
-/* Evidenziazione posizioni desktop */
+/* Evidenziazione posizioni DESKTOP */
 #tabella-classifica tbody tr.top1 td {
   background-color: #002c4c !important;
   font-weight: bold;
@@ -27,18 +26,7 @@
   display: none;
 }
 
-/* Layout compatto mobile tabella */
-@media (max-width: 600px) {
-  #tabella-classifica {
-    font-size: 0.78rem;
-  }
-
-  #tabella-classifica td,
-  #tabella-classifica th {
-    padding: 3px 4px;
-  }
-}
-
+/* Layout compatto per desktop su schermi piccoli */
 @media (max-width: 600px) {
   #tabella-classifica {
     font-size: 0.68rem;
@@ -55,20 +43,20 @@
   }
 }
 
-/* Colori mobile per fisarmonica */
+/* Colori anche per la versione MOBILE (override di sicurezza) */
 @media (max-width: 768px) {
-  .accordion-item.top1,
-  .accordion-item.top4 {
-    background-color: #002c4c !important;
+  .accordion-item.top4 .accordion-header {
+    background-color: #ffcc00 !important;
+    color: black;
     font-weight: bold;
   }
 
-  .accordion-item.ultime4 {
+  .accordion-item.ultime4 .accordion-header {
     background-color: #5c0000 !important;
     color: white;
   }
 
-  .accordion-item.ultime4 .accordion-body p {
+  .accordion-item.ultime4 .accordion-body span {
     color: white;
   }
 }
