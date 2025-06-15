@@ -129,6 +129,10 @@ function caricaClassifica(nomeFoglio = "Conference") {
         }
 
         header.addEventListener("click", () => {
+          // Chiude gli altri
+          document.querySelectorAll(".accordion-item").forEach(el => {
+            if (el !== item) el.classList.remove("active");
+          });
           item.classList.toggle("active");
         });
 
