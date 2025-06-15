@@ -57,9 +57,35 @@
   .accordion-item.top4 {
     background-color: #3399ff !important;
     color: #000;
-    font-weight:
+    font-weight: bold;
+  }
+
+  .accordion-item.top1 .accordion-header span,
+  .accordion-item.top4 .accordion-header span {
+    color: #000 !important;
+  }
+
+  .accordion-item.ultime4 {
+    background-color: #5c0000 !important;
+    color: white;
+  }
+
+  .accordion-item.ultime4 .accordion-body p {
+    color: white;
+  }
+
+  .accordion-body p {
+    display: inline-block;
+    margin: 4px 10px;
+    color: #eee;
+  }
+
+  .accordion-body {
+    text-align: center;
+  }
 
   .accordion-header span {
     color: white;
   }
 }
+
