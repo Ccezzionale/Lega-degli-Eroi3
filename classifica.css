@@ -34,6 +34,7 @@
     background-color: #005299;
     color: white;
     font-size: 0.95rem;
+    text-align: left;           /* ✅ Allineamento sinistro */
   }
 
   .accordion-header img {
@@ -46,15 +47,20 @@
     display: flex;
     flex-direction: column;
     line-height: 1.2;
+    width: 100%;                /* ✅ Forza larghezza uniforme */
   }
 
   .accordion-body {
-    display: flex;
+    display: none;
     flex-wrap: wrap;
     gap: 10px;
     padding: 12px 16px;
     background-color: #004080;
     font-size: 0.85rem;
+  }
+
+  .accordion-item.active .accordion-body {
+    display: flex;
   }
 
   .accordion-body span {
