@@ -1,4 +1,3 @@
-
 #tabella-classifica td .logo-nome {
   display: flex;
   align-items: center;
@@ -20,7 +19,6 @@
   }
 
   .accordion-item {
-    background-color: #003366;
     border: 1px solid #ffffff33;
     border-radius: 10px;
     overflow: hidden;
@@ -52,29 +50,29 @@
   .accordion-item.active .accordion-body {
     display: block;
   }
-}
 
-/* Nasconde la versione mobile su desktop */
-@media (min-width: 769px) {
-  #classifica-mobile {
-    display: none !important;
-  }
-}
-
-
-@media (max-width: 768px) {
-  .accordion-item.top1,
-  .accordion-item.top4 {
+  /* ✅ Colori coerenti con il desktop */
+  .accordion-item.top1 .accordion-header,
+  .accordion-item.top4 .accordion-header {
     background-color: #002c4c !important;
+    color: white;
     font-weight: bold;
   }
 
-  .accordion-item.ultime4 {
+  .accordion-item.ultime4 .accordion-header,
+  .accordion-item.ultime4 .accordion-body {
     background-color: #5c0000 !important;
     color: white;
   }
 
   .accordion-item.ultime4 .accordion-body p {
     color: white;
+  }
+}
+
+/* Nasconde la versione mobile su desktop */
+@media (min-width: 769px) {
+  #classifica-mobile {
+    display: none !important;
   }
 }
