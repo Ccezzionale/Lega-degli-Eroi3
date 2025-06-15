@@ -1,4 +1,3 @@
-
 const URL_MAP = {
   "Conference": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQmFvlkbYkEqaD6i9XsoNde2ls0fVSqXahKNuNQegtERRuG5N702OAu9mihLbolzCdiY_nVJTEvPJyM/pub?output=csv&gid=0",
   "Championship": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQmFvlkbYkEqaD6i9XsoNde2ls0fVSqXahKNuNQegtERRuG5N702OAu9mihLbolzCdiY_nVJTEvPJyM/pub?output=csv&gid=1102946509",
@@ -61,33 +60,28 @@ function caricaClassifica(nomeFoglio = "Conference") {
         colonne.forEach((val, idx) => {
           const td = document.createElement("td");
 
-if (idx === 1) {
-  const wrapper = document.createElement("div");
-  wrapper.className = "logo-nome";
+          if (idx === 1) {
+            const wrapper = document.createElement("div");
+            wrapper.className = "logo-nome";
 
-  const img = document.createElement("img");
-  const nomeFile = val + ".png";
-  img.src = `img/${nomeFile}`;
-  img.alt = val;
-  img.onerror = () => { img.style.display = "none"; };
+            const img = document.createElement("img");
+            const nomeFile = val + ".png";
+            img.src = `img/${nomeFile}`;
+            img.alt = val;
+            img.onerror = () => { img.style.display = "none"; };
 
-  const testo = document.createElement("span");
-  testo.textContent = val;
+            const testo = document.createElement("span");
+            testo.textContent = val;
 
-  wrapper.appendChild(img);
-  wrapper.appendChild(testo);
-  td.appendChild(wrapper);
-} else {
-  td.textContent = formattaNumero(val);
-}
+            wrapper.appendChild(img);
+            wrapper.appendChild(testo);
+            td.appendChild(wrapper);
+          } else {
+            td.textContent = formattaNumero(val);
+          }
 
-  const span = document.createElement("span");
-  span.textContent = val;
-
-  wrapper.appendChild(img);
-  wrapper.appendChild(span);
-  td.appendChild(wrapper);
-}
+          tr.appendChild(td);
+        });
 
         corpoTabella.appendChild(tr);
       }
