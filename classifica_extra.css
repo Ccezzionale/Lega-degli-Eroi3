@@ -1,3 +1,14 @@
+/* Intestazione tabella desktop: colore fisso */
+#tabella-classifica thead tr {
+  background-color: #001f3f !important;
+}
+
+#tabella-classifica thead th {
+  color: white !important;
+  font-weight: bold;
+  padding: 8px;
+}
+
 /* Evidenziazione posizioni desktop */
 #tabella-classifica tbody tr.top1 td,
 #tabella-classifica tbody tr.top4 td {
@@ -10,17 +21,6 @@
 #tabella-classifica tbody tr.ultime4 td {
   background-color: #5c0000 !important;
   color: white !important;
-}
-
-/* Intestazione tabella desktop */
-#tabella-classifica thead tr {
-  background-color: #001f3f !important;
-}
-
-#tabella-classifica thead th {
-  color: white !important;
-  font-weight: bold;
-  padding: 8px;
 }
 
 /* Loghi */
@@ -82,4 +82,12 @@
     color: #eee;
   }
 
-  .accordion-body
+  .accordion-body {
+    text-align: center;
+  }
+
+  .accordion-header span {
+    color: white;
+  }
+}
+
