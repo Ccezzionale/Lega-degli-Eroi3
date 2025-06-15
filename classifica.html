@@ -5,27 +5,70 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Classifica - Lega degli Eroi</title>
   <link rel="stylesheet" href="main.css" />
-  <link rel="stylesheet" href="classifica_extra.css" />
   <link rel="stylesheet" href="classifica.css" />
 </head>
 <body>
-  <main>
+  <div class="container">
     <h1>Classifica</h1>
-    <div class="switcher">
-      <button>Conference</button>
-      <button>Championship</button>
-      <button>Totale</button>
+    <div class="switch-container">
+      <button onclick="caricaClassifica('Conference')">Conference</button>
+      <button onclick="caricaClassifica('Championship')">Championship</button>
+      <button onclick="caricaClassifica('Totale')">Totale</button>
     </div>
-    <div id="classifica-container">
-      <table id="tabella-classifica">
-        <thead></thead>
-        <tbody></tbody>
-      </table>
+    <table id="tabella-classifica">
+      <thead></thead>
+      <tbody></tbody>
+    </table>
 
-      <!-- ✅ Blocco mobile -->
-      <div id="classifica-mobile"></div>
-    </div>
-  </main>
-  <script src="classifica.js"></script>
+    <!-- MOBILE VERSION -->
+    <div class="mobile-classifica" id="mobile-classifica"></div>
+  </div>
+
+  <script src="classifica.js" defer></script>
+  <script>
+    function creaMobileClassifica(data) {
+      const container = document.getElementById("mobile-classifica");
+      container.innerHTML = "";
+      data.forEach((team, index) => {
+        const block = document.createElement("div");
+        block.className = `mobile-row ${team.classe || ''}`;
+
+        const content = `
+          <div class="mobile-rank">
+            <img src="img/${team.logo}" alt="${team.nome}" />
+            <strong>${index + 1}. ${team.nome}</strong>
+          </div>
+          <div class="mobile-pts">
+            <span>Pt: ${team.pt}</span> / <span>Tot: ${team.pt_tot}</span>
+          </div>
+        `;
+
+        block.innerHTML = content;
+        container.appendChild(block);
+      });
+    }
+
+    // Hook nella funzione già esistente di caricamento classifica
+    const oldCaricaClassifica = window.caricaClassifica;
+    window.caricaClassifica = function(nome) {
+      oldCaricaClassifica(nome);
+      fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vQmFvlkbYkEqaD6i9XsoNde2ls0fVSqXahKNuNQegtERRuG5N702OAu9mihLbolzCdiY_nVJTEvPJyM/pub?output=csv')
+        .then(r => r.text())
+        .then(csv => {
+          const lines = csv.trim().split('\n').slice(1); // salta intestazione
+          const data = lines.map(row => {
+            const cols = row.split(',');
+            return {
+              nome: cols[1],
+              logo: `${cols[1]}.png`,
+              pt: cols[10],
+              pt_tot: cols[11],
+              classe: parseInt(cols[0]) === 1 ? "top1" : (parseInt(cols[0]) <= 4 ? "top4" : (parseInt(cols[0]) > lines.length - 4 ? "ultime4" : ""))
+            };
+          });
+          creaMobileClassifica(data);
+        });
+    };
+  </script>
 </body>
 </html>
