@@ -60,3 +60,21 @@
     display: none !important;
   }
 }
+
+
+@media (max-width: 768px) {
+  .accordion-item.top1,
+  .accordion-item.top4 {
+    background-color: #002c4c !important;
+    font-weight: bold;
+  }
+
+  .accordion-item.ultime4 {
+    background-color: #5c0000 !important;
+    color: white;
+  }
+
+  .accordion-item.ultime4 .accordion-body p {
+    color: white;
+  }
+}
