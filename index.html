@@ -1,25 +1,53 @@
-<!DOCTYPE html>
-<html lang="it">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Lega degli Eroi</title>
-  <link rel="stylesheet" href="main.css" />
-</head>
-<body>
-  <nav>
-    <ul class="navbar">
-      <li><a href="rose.html">Rose</a></li>
-      <li><a href="classifica.html">Classifica</a></li>
-      <li><a href="draft.html">Draft</a></li>
-      <li><a href="svincolati.html">Svincolati</a></li>
-      <li><a href="chiamate.html">Chiamate</a></li>
-      <li><a href="albo.html">Albo d'Oro</a></li>
-    </ul>
-  </nav>
-  <main>
-    <h1>Benvenuto nella Lega degli Eroi</h1>
-    <p>Seleziona una sezione dal menu.</p>
-  </main>
-</body>
-</html>
+/* --------- STILE GENERALE --------- */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #001f3f;
+  color: #ffffff;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+nav a {
+  color: #ffcc00;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+footer {
+  margin-top: 40px;
+  padding: 20px;
+  background-color: #001737;
+  color: #bbb;
+}
+
+/* --------- HERO SECTION --------- */
+.hero {
+  width: 100%;
+  height: 400px;
+  background-image: url('img/hero_desktop.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+@media (max-width: 768px) {
+  .hero {
+    background-image: url('img/hero_mobile.jpg');
+    height: 300px;
+  }
+}
