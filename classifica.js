@@ -1,6 +1,5 @@
 console.log("✅ Script caricato");
 
-
 const URL_MAP = {
   "Conference": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQmFvlkbYkEqaD6i9XsoNde2ls0fVSqXahKNuNQegtERRuG5N702OAu9mihLbolzCdiY_nVJTEvPJyM/pub?output=csv&gid=0",
   "Championship": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQmFvlkbYkEqaD6i9XsoNde2ls0fVSqXahKNuNQegtERRuG5N702OAu9mihLbolzCdiY_nVJTEvPJyM/pub?output=csv&gid=1102946509",
@@ -100,23 +99,24 @@ function caricaClassifica(nomeFoglio = "Conference") {
         }
 
         const header = document.createElement("div");
-        const header = document.createElement("div");
-header.className = "accordion-header";
-const nomeSquadra = colonne[1];
-const logo = document.createElement("img");
-logo.src = "img/" + nomeSquadra + ".png";
-logo.alt = nomeSquadra;
-logo.onerror = () => { logo.style.display = "none"; };
+        header.className = "accordion-header";
 
-const pos = colonne[0];
-const punti = formattaNumero(colonne[colonne.length - 2]);      // penultima colonna
-const puntiTot = formattaNumero(colonne[colonne.length - 1]);   // ultima colonna
+        const nomeSquadra = colonne[1];
+        const logo = document.createElement("img");
+        logo.src = "img/" + nomeSquadra + ".png";
+        logo.alt = nomeSquadra;
+        logo.onerror = () => { logo.style.display = "none"; };
 
-const testo = document.createElement("span");
-testo.textContent = `${pos}. ${nomeSquadra} (${punti} / ${puntiTot})`;
+        const pos = colonne[0];
+        const punti = formattaNumero(colonne[colonne.length - 2]);      // penultima colonna
+        const puntiTot = formattaNumero(colonne[colonne.length - 1]);   // ultima colonna
 
-header.appendChild(logo);
-header.appendChild(testo);
+        const testo = document.createElement("span");
+        testo.textContent = `${pos}. ${nomeSquadra} (${punti} / ${puntiTot})`;
+
+        header.appendChild(logo);
+        header.appendChild(testo);
+
         const body = document.createElement("div");
         body.className = "accordion-body";
 
