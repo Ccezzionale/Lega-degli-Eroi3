@@ -64,19 +64,26 @@
     text-align: center;
   }
 
-  /* Giallo per Top 4 (Totale) */
+/* Giallo per Top 4 (Totale) */
 .accordion-item.top4 .accordion-header {
   background-color: #ffcc00 !important;
-  color: black;
+  color: black !important;
   font-weight: bold;
+}
+.accordion-item.top4 .accordion-header span {
+  color: black !important;
 }
 
 /* Giallo per Top 1 (Conference/Championship) */
 .accordion-item.top1 .accordion-header {
   background-color: #ffcc00 !important;
-  color: black;
+  color: black !important;
   font-weight: bold;
 }
+.accordion-item.top1 .accordion-header span {
+  color: black !important;
+}
+
 
   .accordion-header span {
     color: white;
