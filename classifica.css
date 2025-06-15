@@ -8,7 +8,7 @@
 
 /* Accordion Mobile Classifica */
 @media (max-width: 768px) {
-  #classifica-container table {
+  #tabella-classifica {
     display: none;
   }
 
@@ -51,5 +51,12 @@
 
   .accordion-item.active .accordion-body {
     display: block;
+  }
+}
+
+/* Nasconde la versione mobile su desktop */
+@media (min-width: 769px) {
+  #classifica-mobile {
+    display: none !important;
   }
 }
