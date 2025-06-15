@@ -6,6 +6,7 @@
   font-weight: bold;
 }
 
+/* Ultime 4 in rosso desktop */
 #tabella-classifica tbody tr.ultime4 td {
   background-color: #5c0000 !important;
   color: white !important;
@@ -13,7 +14,7 @@
 
 /* Intestazione tabella desktop */
 #tabella-classifica thead tr {
-  background-color: #001f3f;
+  background-color: #001f3f !important;
 }
 
 #tabella-classifica thead th {
@@ -89,6 +90,7 @@
     color: white;
   }
 }
+
 
 
   .accordion-header span {
