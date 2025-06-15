@@ -324,3 +324,22 @@ main, h1, .container {
 #tabella-classifica tr:hover {
   background-color: #336699;
 }
+
+/* Sezione Hero - immagine home */
+.hero {
+  width: 100%;
+  height: 70vh;
+  background-image: url('img/hero_desktop.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Versione mobile */
+@media (max-width: 768px) {
+  .hero {
+    background-image: url('img/hero_mobile.jpg');
+    height: 60vh;
+  }
+}
+
