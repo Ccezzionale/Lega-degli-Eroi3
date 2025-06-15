@@ -1,6 +1,55 @@
+
 #tabella-classifica td .logo-nome {
   display: flex;
   align-items: center;
   justify-content: flex-start;
   gap: 8px;
+}
+
+/* Accordion Mobile Classifica */
+@media (max-width: 768px) {
+  #classifica-container table {
+    display: none;
+  }
+
+  #classifica-mobile {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+  }
+
+  .accordion-item {
+    background-color: #003366;
+    border: 1px solid #ffffff33;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .accordion-header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    padding: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    background-color: #005299;
+    color: white;
+  }
+
+  .accordion-header img {
+    height: 20px;
+  }
+
+  .accordion-body {
+    display: none;
+    padding: 10px;
+    background-color: #004080;
+    font-size: 0.9rem;
+  }
+
+  .accordion-item.active .accordion-body {
+    display: block;
+  }
 }

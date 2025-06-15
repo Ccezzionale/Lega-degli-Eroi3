@@ -24,8 +24,10 @@ function caricaClassifica(nomeFoglio = "Conference") {
 
       const corpoTabella = document.querySelector("#tabella-classifica tbody");
       const thead = document.querySelector("#tabella-classifica thead");
+      const accordionMobile = document.querySelector("#classifica-mobile");
       corpoTabella.innerHTML = "";
       thead.innerHTML = "";
+      accordionMobile.innerHTML = "";
 
       // Intestazione
       const headerRow = document.createElement("tr");
@@ -47,9 +49,8 @@ function caricaClassifica(nomeFoglio = "Conference") {
           colonne.splice(intestazione.length, 1);
         }
 
+        // --- Versione Desktop ---
         const tr = document.createElement("tr");
-
-        // Evidenziazione dinamica
         if (nomeFoglio === "Totale") {
           if (i <= 4) tr.classList.add("top4");
           if (i > numSquadre - 4) tr.classList.add("ultime4");
@@ -82,8 +83,40 @@ function caricaClassifica(nomeFoglio = "Conference") {
 
           tr.appendChild(td);
         });
-
         corpoTabella.appendChild(tr);
+
+        // --- Versione Mobile Accordion ---
+        const item = document.createElement("div");
+        item.className = "accordion-item";
+
+        const header = document.createElement("div");
+        header.className = "accordion-header";
+        const nomeSquadra = colonne[1];
+        const logo = document.createElement("img");
+        logo.src = "img/" + nomeSquadra + ".png";
+        logo.alt = nomeSquadra;
+        logo.onerror = () => { logo.style.display = "none"; };
+        header.appendChild(logo);
+        header.appendChild(document.createTextNode(`${colonne[0]}. ${nomeSquadra}`));
+
+        const body = document.createElement("div");
+        body.className = "accordion-body";
+
+        for (let j = 2; j < colonne.length; j++) {
+          const label = intestazione[j];
+          const value = formattaNumero(colonne[j]);
+          const p = document.createElement("p");
+          p.textContent = `${label}: ${value}`;
+          body.appendChild(p);
+        }
+
+        header.addEventListener("click", () => {
+          item.classList.toggle("active");
+        });
+
+        item.appendChild(header);
+        item.appendChild(body);
+        accordionMobile.appendChild(item);
       }
     })
     .catch(err => {
