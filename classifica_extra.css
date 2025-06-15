@@ -1,5 +1,5 @@
-/* Evidenziazione posizioni */
 
+/* Evidenziazione posizioni desktop */
 #tabella-classifica tbody tr.top1 td {
   background-color: #002c4c !important;
   font-weight: bold;
@@ -27,7 +27,7 @@
   display: none;
 }
 
-/* Layout compatto mobile */
+/* Layout compatto mobile tabella */
 @media (max-width: 600px) {
   #tabella-classifica {
     font-size: 0.78rem;
@@ -38,7 +38,6 @@
     padding: 3px 4px;
   }
 }
-
 
 @media (max-width: 600px) {
   #tabella-classifica {
@@ -53,5 +52,23 @@
   #tabella-classifica td img {
     height: 16px;
     margin-right: 5px;
+  }
+}
+
+/* Colori mobile per fisarmonica */
+@media (max-width: 768px) {
+  .accordion-item.top1,
+  .accordion-item.top4 {
+    background-color: #002c4c !important;
+    font-weight: bold;
+  }
+
+  .accordion-item.ultime4 {
+    background-color: #5c0000 !important;
+    color: white;
+  }
+
+  .accordion-item.ultime4 .accordion-body p {
+    color: white;
   }
 }

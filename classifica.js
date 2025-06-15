@@ -1,5 +1,12 @@
 console.log("✅ Script caricato");
 
+document.querySelector("#classifica-mobile").innerHTML = `
+  <div class="accordion-item" style="background: orange; padding: 10px; font-weight: bold;">
+    DEBUG MOBILE OK – Blocco generato dallo script ✅
+  </div>
+`;
+
+
 const URL_MAP = {
   "Conference": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQmFvlkbYkEqaD6i9XsoNde2ls0fVSqXahKNuNQegtERRuG5N702OAu9mihLbolzCdiY_nVJTEvPJyM/pub?output=csv&gid=0",
   "Championship": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQmFvlkbYkEqaD6i9XsoNde2ls0fVSqXahKNuNQegtERRuG5N702OAu9mihLbolzCdiY_nVJTEvPJyM/pub?output=csv&gid=1102946509",
