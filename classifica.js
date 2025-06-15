@@ -53,8 +53,16 @@ function caricaClassifica(nomeFoglio = "Conference") {
         // --- DESKTOP ---
         const tr = document.createElement("tr");
 
-        if (i <= 4) tr.classList.add("top4");
-        if (nomeFoglio === "Totale" && i > numSquadre - 4) tr.classList.add("ultime4");
+        if (
+          (nomeFoglio === "Totale" && i <= 4) ||
+          (nomeFoglio !== "Totale" && i === 1)
+        ) {
+          tr.classList.add("top4");
+        }
+
+        if (nomeFoglio === "Totale" && i > numSquadre - 4) {
+          tr.classList.add("ultime4");
+        }
 
         colonne.forEach((val, idx) => {
           const td = document.createElement("td");
@@ -88,8 +96,16 @@ function caricaClassifica(nomeFoglio = "Conference") {
         const item = document.createElement("div");
         item.className = "accordion-item";
 
-        if (i <= 4) item.classList.add("top4");
-        if (nomeFoglio === "Totale" && i > numSquadre - 4) item.classList.add("ultime4");
+        if (
+          (nomeFoglio === "Totale" && i <= 4) ||
+          (nomeFoglio !== "Totale" && i === 1)
+        ) {
+          item.classList.add("top4");
+        }
+
+        if (nomeFoglio === "Totale" && i > numSquadre - 4) {
+          item.classList.add("ultime4");
+        }
 
         const header = document.createElement("div");
         header.className = "accordion-header";
@@ -101,8 +117,8 @@ function caricaClassifica(nomeFoglio = "Conference") {
         logo.onerror = () => { logo.style.display = "none"; };
 
         const pos = colonne[0];
-        const punti = formattaNumero(colonne[colonne.length - 2]);      // penultima colonna
-        const puntiTot = formattaNumero(colonne[colonne.length - 1]);   // ultima colonna
+        const punti = formattaNumero(colonne[colonne.length - 2]);
+        const puntiTot = formattaNumero(colonne[colonne.length - 1]);
 
         const testo = document.createElement("span");
         testo.innerHTML = `<strong>${pos}. ${nomeSquadra}</strong><br><span style="font-weight:normal">PT. ${punti} / MP. ${puntiTot}</span>`;
