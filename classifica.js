@@ -100,7 +100,6 @@ function caricaClassifica(nomeFoglio = "Conference") {
 
         const header = document.createElement("div");
         header.className = "accordion-header";
-
         const nomeSquadra = colonne[1];
         const logo = document.createElement("img");
         logo.src = "img/" + nomeSquadra + ".png";
@@ -108,11 +107,11 @@ function caricaClassifica(nomeFoglio = "Conference") {
         logo.onerror = () => { logo.style.display = "none"; };
 
         const pos = colonne[0];
-        const punti = formattaNumero(colonne[colonne.length - 2]);      // penultima colonna
-        const puntiTot = formattaNumero(colonne[colonne.length - 1]);   // ultima colonna
+        const punti = formattaNumero(colonne[colonne.length - 2]);      // PT.
+        const puntiTot = formattaNumero(colonne[colonne.length - 1]);   // MP.
 
         const testo = document.createElement("span");
-        testo.textContent = `${pos}. ${nomeSquadra} (${punti} / ${puntiTot})`;
+        testo.textContent = `${pos}. ${nomeSquadra} (PT. ${punti} / MP. ${puntiTot})`;
 
         header.appendChild(logo);
         header.appendChild(testo);
@@ -123,9 +122,13 @@ function caricaClassifica(nomeFoglio = "Conference") {
         for (let j = 2; j < colonne.length; j++) {
           const label = intestazione[j];
           const value = formattaNumero(colonne[j]);
-          const p = document.createElement("p");
-          p.textContent = `${label}: ${value}`;
-          body.appendChild(p);
+
+          const span = document.createElement("span");
+          span.style.marginRight = "16px";
+          span.style.display = "inline-block";
+          span.style.whiteSpace = "nowrap";
+          span.textContent = `${label}: ${value}`;
+          body.appendChild(span);
         }
 
         header.addEventListener("click", () => {
