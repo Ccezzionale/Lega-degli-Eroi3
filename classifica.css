@@ -1,3 +1,4 @@
+/* Logo + nome */
 #tabella-classifica td .logo-nome {
   display: flex;
   align-items: center;
@@ -5,7 +6,7 @@
   gap: 8px;
 }
 
-/* Accordion Mobile Classifica */
+/* Accordion Mobile */
 @media (max-width: 768px) {
   #tabella-classifica {
     display: none;
@@ -19,7 +20,6 @@
   }
 
   .accordion-item {
-    border: 1px solid #ffffff33;
     border-radius: 10px;
     overflow: hidden;
   }
@@ -28,49 +28,62 @@
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    gap: 10px;
-    padding: 10px;
+    gap: 12px;
+    padding: 12px 16px;
     font-weight: bold;
-    cursor: pointer;
     background-color: #005299;
     color: white;
+    font-size: 0.95rem;
   }
 
   .accordion-header img {
-    height: 20px;
+    height: 24px;
+    width: 24px;
+    object-fit: contain;
+  }
+
+  .accordion-header span {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
   }
 
   .accordion-body {
-    display: none;
-    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 12px 16px;
     background-color: #004080;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
   }
 
-  .accordion-item.active .accordion-body {
-    display: block;
-  }
-
-  /* ✅ Colori coerenti con il desktop */
-  .accordion-item.top1 .accordion-header,
-  .accordion-item.top4 .accordion-header {
-    background-color: #002c4c !important;
+  .accordion-body span {
+    flex: 1 1 45%;
+    white-space: nowrap;
     color: white;
+  }
+
+  .accordion-item:nth-child(even) .accordion-header {
+    background-color: #004472;
+  }
+
+  .accordion-item.top1,
+  .accordion-item.top4 {
+    background-color: #002c4c !important;
     font-weight: bold;
   }
 
-  .accordion-item.ultime4 .accordion-header,
-  .accordion-item.ultime4 .accordion-body {
+  .accordion-item.ultime4 {
     background-color: #5c0000 !important;
     color: white;
   }
 
-  .accordion-item.ultime4 .accordion-body p {
+  .accordion-item.ultime4 .accordion-body span {
     color: white;
   }
 }
 
-/* Nasconde la versione mobile su desktop */
+/* Nascondi mobile su desktop */
 @media (min-width: 769px) {
   #classifica-mobile {
     display: none !important;
