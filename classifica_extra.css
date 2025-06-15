@@ -2,13 +2,13 @@
 #tabella-classifica tbody tr.top1 td,
 #tabella-classifica tbody tr.top4 td {
   background-color: #ffc800 !important;
-  color: #000;
+  color: #000 !important;
   font-weight: bold;
 }
 
 #tabella-classifica tbody tr.ultime4 td {
   background-color: #5c0000 !important;
-  color: white;
+  color: white !important;
 }
 
 /* Intestazione tabella desktop */
@@ -57,7 +57,7 @@
   .accordion-item.top1,
   .accordion-item.top4 {
     background-color: #ffc800 !important;
-    color: #000;
+    color: #000 !important;
     font-weight: bold;
   }
 
@@ -68,7 +68,7 @@
 
   .accordion-item.ultime4 {
     background-color: #5c0000 !important;
-    color: white;
+    color: white !important;
   }
 
   .accordion-item.ultime4 .accordion-body p {
@@ -89,6 +89,7 @@
     color: white;
   }
 }
+
 
   .accordion-header span {
     color: white;
