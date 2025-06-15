@@ -5,6 +5,12 @@
   justify-content: flex-start;
   gap: 8px;
 }
+/* 🔒 Nascondi fisarmonica su desktop */
+@media (min-width: 769px) {
+  #classifica-mobile {
+    display: none !important;
+  }
+}
 
 /* Accordion Mobile Classifica */
 @media (max-width: 768px) {
