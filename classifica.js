@@ -52,21 +52,12 @@ function caricaClassifica(nomeFoglio = "Conference") {
 
         // --- DESKTOP ---
         const tr = document.createElement("tr");
-
-        if (
-          (nomeFoglio === "Totale" && i <= 4) ||
-          (nomeFoglio !== "Totale" && i === 1)
-        ) {
-          tr.classList.add("top4");
-        }
-
         if (nomeFoglio === "Totale" && i > numSquadre - 4) {
           tr.classList.add("ultime4");
         }
 
         colonne.forEach((val, idx) => {
           const td = document.createElement("td");
-
           if (idx === 1) {
             const wrapper = document.createElement("div");
             wrapper.className = "logo-nome";
@@ -77,16 +68,24 @@ function caricaClassifica(nomeFoglio = "Conference") {
             img.alt = val;
             img.onerror = () => { img.style.display = "none"; };
 
-            const cleanName = val.replace(/[👑🎖️💀]/g, "").trim();
+            const cleanName = val.replace(/[\u{1F451}\u{1F396}\u{1F480}\u{1F947}\u{1F3C5}]/gu, "").trim();
             const testo = document.createElement("span");
-            testo.textContent = cleanName;
+
+            let displayName = cleanName;
+            if (nomeFoglio !== "Totale" && i === 1) {
+              displayName += " 🥇";
+            }
+            if (nomeFoglio === "Totale" && i <= 4) {
+              displayName += " 🏅";
+            }
+
+            testo.textContent = displayName;
             wrapper.appendChild(img);
             wrapper.appendChild(testo);
             td.appendChild(wrapper);
           } else {
             td.textContent = formattaNumero(val);
           }
-
           tr.appendChild(td);
         });
 
@@ -95,14 +94,6 @@ function caricaClassifica(nomeFoglio = "Conference") {
         // --- MOBILE ---
         const item = document.createElement("div");
         item.className = "accordion-item";
-
-        if (
-          (nomeFoglio === "Totale" && i <= 4) ||
-          (nomeFoglio !== "Totale" && i === 1)
-        ) {
-          item.classList.add("top4");
-        }
-
         if (nomeFoglio === "Totale" && i > numSquadre - 4) {
           item.classList.add("ultime4");
         }
