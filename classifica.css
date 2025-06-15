@@ -34,7 +34,7 @@
     background-color: #005299;
     color: white;
     font-size: 0.95rem;
-    text-align: left;           /* ✅ Allineamento sinistro */
+    text-align: left;
   }
 
   .accordion-header img {
@@ -47,7 +47,7 @@
     display: flex;
     flex-direction: column;
     line-height: 1.2;
-    width: 100%;                /* ✅ Forza larghezza uniforme */
+    width: 100%;
   }
 
   .accordion-body {
@@ -73,23 +73,28 @@
     background-color: #004472;
   }
 
-  .accordion-item.top1,
-  .accordion-item.top4 {
+  /* 🎯 EVIDENZIAZIONE POSIZIONI - CLASSIFICA TOTALE */
+
+  /* Primi 4: blu scuro */
+  .accordion-item.top4 .accordion-header {
     background-color: #002c4c !important;
     font-weight: bold;
+    color: white;
   }
 
-  .accordion-item.ultime4 {
+  /* Ultimi 4: rosso scuro */
+  .accordion-item.ultime4 .accordion-header {
     background-color: #5c0000 !important;
     color: white;
   }
 
+  /* Testo interno (body) degli ultimi 4 */
   .accordion-item.ultime4 .accordion-body span {
     color: white;
   }
 }
 
-/* Nascondi mobile su desktop */
+/* Nasconde mobile su desktop */
 @media (min-width: 769px) {
   #classifica-mobile {
     display: none !important;
