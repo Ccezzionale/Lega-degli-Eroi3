@@ -78,10 +78,12 @@ function caricaClassifica(nomeFoglio = "Conference") {
             if (nomeFoglio === "Totale" && i <= 4) cleanName = "🎖️ " + cleanName;
             if (nomeFoglio !== "Totale" && i === 1) cleanName = "🎖️ " + cleanName;
 
-            const testo = document.createElement("span");
-            testo.textContent = cleanName;
+           const testo = document.createElement("span");
+            const medaglia = (nomeFoglio === "Totale" && i <= 4) || (nomeFoglio !== "Totale" && i === 1) ? " 🎖️ " : "";
+            testo.textContent = medaglia + cleanName;
             wrapper.appendChild(img);
             wrapper.appendChild(testo);
+
             td.appendChild(wrapper);
           } else {
             td.textContent = formattaNumero(val);
