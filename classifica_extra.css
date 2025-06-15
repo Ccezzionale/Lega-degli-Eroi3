@@ -1,19 +1,16 @@
-/* Evidenziazione posizioni DESKTOP */
-#tabella-classifica tbody tr.top1 td {
-  background-color: #002c4c !important;
+/* Evidenziazione posizioni desktop */
+#tabella-classifica tbody tr.top1 td,
+#tabella-classifica tbody tr.top4 td {
+  background-color: #ffc800 !important;
   font-weight: bold;
 }
 
-#tabella-classifica tbody tr.top4 td {
-  background-color: #002c4c !important;
-}
-
 #tabella-classifica tbody tr.ultime4 td {
-  background-color: #5c0000 !important;
-  color: #fff;
+  background-color: #002f53 !important;
+  color: white;
 }
 
-/* Loghi */
+/* Loghi desktop */
 #tabella-classifica td img {
   vertical-align: middle;
   height: 20px;
@@ -21,42 +18,59 @@
   border-radius: 4px;
   background-color: white;
 }
-
 #tabella-classifica td img[alt]:not([src]) {
   display: none;
 }
 
-/* Layout compatto per desktop su schermi piccoli */
+/* Layout compatto mobile */
 @media (max-width: 600px) {
   #tabella-classifica {
     font-size: 0.68rem;
   }
-
   #tabella-classifica td,
   #tabella-classifica th {
     padding: 2px 3px;
   }
-
   #tabella-classifica td img {
     height: 16px;
     margin-right: 5px;
   }
 }
 
-/* Colori anche per la versione MOBILE (override di sicurezza) */
+/* Colori mobile */
 @media (max-width: 768px) {
-  .accordion-item.top4 .accordion-header {
-    background-color: #ffcc00 !important;
-    color: black;
+  .accordion-item.top4 {
+    background-color: #ffc800 !important;
     font-weight: bold;
   }
 
-  .accordion-item.ultime4 .accordion-header {
-    background-color: #5c0000 !important;
+  .accordion-item.ultime4 {
+    background-color: #002f53 !important;
     color: white;
   }
 
-  .accordion-item.ultime4 .accordion-body span {
+  .accordion-item.ultime4 .accordion-body p {
     color: white;
+  }
+
+  .accordion-body {
+    display: none;
+    padding: 10px;
+    background-color: #004080;
+    font-size: 0.9rem;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: space-between;
+    text-align: left;
+  }
+
+  .accordion-item.active .accordion-body {
+    display: flex;
+  }
+
+  .accordion-body p {
+    flex: 1 1 45%;
+    margin: 5px 0;
+    color: #f0f0f0; /* nuovo colore leggibile */
   }
 }
