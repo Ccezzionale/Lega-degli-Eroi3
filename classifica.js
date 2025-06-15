@@ -50,14 +50,11 @@ function caricaClassifica(nomeFoglio = "Conference") {
           colonne.splice(intestazione.length, 1);
         }
 
-        // --- Desktop
+        // --- DESKTOP ---
         const tr = document.createElement("tr");
-        if (nomeFoglio === "Totale") {
-          if (i <= 4) tr.classList.add("top4");
-          if (i > numSquadre - 4) tr.classList.add("ultime4");
-        } else {
-          if (i === 1) tr.classList.add("top1");
-        }
+
+        if (i <= 4) tr.classList.add("top4");
+        if (nomeFoglio === "Totale" && i > numSquadre - 4) tr.classList.add("ultime4");
 
         colonne.forEach((val, idx) => {
           const td = document.createElement("td");
@@ -84,18 +81,15 @@ function caricaClassifica(nomeFoglio = "Conference") {
 
           tr.appendChild(td);
         });
+
         corpoTabella.appendChild(tr);
 
-        // --- Mobile
+        // --- MOBILE ---
         const item = document.createElement("div");
         item.className = "accordion-item";
 
-        if (nomeFoglio === "Totale") {
-          if (i <= 4) item.classList.add("top4");
-          if (i > numSquadre - 4) item.classList.add("ultime4");
-        } else {
-          if (i === 1) item.classList.add("top1");
-        }
+        if (i <= 4) item.classList.add("top4");
+        if (nomeFoglio === "Totale" && i > numSquadre - 4) item.classList.add("ultime4");
 
         const header = document.createElement("div");
         header.className = "accordion-header";
@@ -107,11 +101,11 @@ function caricaClassifica(nomeFoglio = "Conference") {
         logo.onerror = () => { logo.style.display = "none"; };
 
         const pos = colonne[0];
-        const punti = formattaNumero(colonne[colonne.length - 2]);
-        const puntiTot = formattaNumero(colonne[colonne.length - 1]);
+        const punti = formattaNumero(colonne[colonne.length - 2]);      // penultima colonna
+        const puntiTot = formattaNumero(colonne[colonne.length - 1]);   // ultima colonna
 
         const testo = document.createElement("span");
-        testo.innerHTML = `<strong>${pos}. ${nomeSquadra}</strong><small style="color:#ccc;">PT. ${punti} / MP. ${puntiTot}</small>`;
+        testo.innerHTML = `<strong>${pos}. ${nomeSquadra}</strong><br><span style="font-weight:normal">PT. ${punti} / MP. ${puntiTot}</span>`;
 
         header.appendChild(logo);
         header.appendChild(testo);
@@ -119,20 +113,22 @@ function caricaClassifica(nomeFoglio = "Conference") {
         const body = document.createElement("div");
         body.className = "accordion-body";
 
-        for (let j = 2; j < colonne.length; j++) {
+        for (let j = 2; j < colonne.length - 2; j++) {
           const label = intestazione[j];
           const value = formattaNumero(colonne[j]);
-
-          const span = document.createElement("span");
-          span.textContent = `${label}: ${value}`;
-          body.appendChild(span);
+          const p = document.createElement("p");
+          p.innerHTML = `<strong>${label}:</strong> ${value}`;
+          body.appendChild(p);
         }
 
+        const ptRow = document.createElement("p");
+        ptRow.innerHTML = `<strong>Pt.:</strong> ${punti}`;
+        const totRow = document.createElement("p");
+        totRow.innerHTML = `<strong>Pt. Totali:</strong> ${puntiTot}`;
+        body.appendChild(ptRow);
+        body.appendChild(totRow);
+
         header.addEventListener("click", () => {
-          // Chiude gli altri
-          document.querySelectorAll(".accordion-item").forEach(el => {
-            if (el !== item) el.classList.remove("active");
-          });
           item.classList.toggle("active");
         });
 
