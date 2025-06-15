@@ -54,6 +54,12 @@
   justify-content: flex-start;
   gap: 8px;
 }
+#tabella-classifica td .logo-nome {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+}
 
 /* Layout compatto mobile */
 @media (max-width: 600px) {
