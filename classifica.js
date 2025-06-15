@@ -71,6 +71,16 @@ if (idx === 1) {
   img.alt = val;
   img.onerror = () => { img.style.display = "none"; };
 
+  const testo = document.createElement("span");
+  testo.textContent = val;
+
+  wrapper.appendChild(img);
+  wrapper.appendChild(testo);
+  td.appendChild(wrapper);
+} else {
+  td.textContent = formattaNumero(val);
+}
+
   const span = document.createElement("span");
   span.textContent = val;
 
