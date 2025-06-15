@@ -339,6 +339,10 @@ main, h1, .container {
 @media (max-width: 768px) {
   .hero {
     background-image: url('img/hero_mobile.png');
+    background-size: cover;
+    background-position: center;
+    height: 45vh; /* occupa il 45% dell'altezza dello schermo */
+    aspect-ratio: auto;
   }
 }
 
