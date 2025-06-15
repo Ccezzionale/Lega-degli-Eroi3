@@ -338,8 +338,7 @@ main, h1, .container {
 /* Versione mobile */
 @media (max-width: 768px) {
   .hero {
-    background-image: url('img/hero_mobile.pndg');
-    height: 60vh;
+    background-image: url('img/hero_mobile.png');
   }
 }
 
