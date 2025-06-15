@@ -36,6 +36,11 @@
 #tabella-classifica td img[alt]:not([src]) {
   display: none;
 }
+/* Allinea i nomi delle squadre a sinistra */
+#tabella-classifica td:nth-child(2) {
+  text-align: left;
+}
+
 
 /* Layout compatto mobile */
 @media (max-width: 600px) {
