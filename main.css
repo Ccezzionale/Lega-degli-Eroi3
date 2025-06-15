@@ -328,11 +328,11 @@ main, h1, .container {
 /* Sezione Hero - immagine home */
 .hero {
   width: 100%;
-  height: 70vh;
-  background-image: url('img/hero_desktop.png');
-  background-size: cover;
-  background-position: center;
+  aspect-ratio: 16 / 9; /* mantiene proporzione 1920x1080 */
+  background-image: url('img/hero_desktop.jpg');
+  background-size: contain;
   background-repeat: no-repeat;
+  background-position: center;
 }
 
 /* Versione mobile */
