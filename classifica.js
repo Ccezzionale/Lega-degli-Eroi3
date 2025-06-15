@@ -100,15 +100,23 @@ function caricaClassifica(nomeFoglio = "Conference") {
         }
 
         const header = document.createElement("div");
-        header.className = "accordion-header";
-        const nomeSquadra = colonne[1];
-        const logo = document.createElement("img");
-        logo.src = "img/" + nomeSquadra + ".png";
-        logo.alt = nomeSquadra;
-        logo.onerror = () => { logo.style.display = "none"; };
-        header.appendChild(logo);
-        header.appendChild(document.createTextNode(`${colonne[0]}. ${nomeSquadra}`));
+        const header = document.createElement("div");
+header.className = "accordion-header";
+const nomeSquadra = colonne[1];
+const logo = document.createElement("img");
+logo.src = "img/" + nomeSquadra + ".png";
+logo.alt = nomeSquadra;
+logo.onerror = () => { logo.style.display = "none"; };
 
+const pos = colonne[0];
+const punti = formattaNumero(colonne[colonne.length - 2]);      // penultima colonna
+const puntiTot = formattaNumero(colonne[colonne.length - 1]);   // ultima colonna
+
+const testo = document.createElement("span");
+testo.textContent = `${pos}. ${nomeSquadra} (${punti} / ${puntiTot})`;
+
+header.appendChild(logo);
+header.appendChild(testo);
         const body = document.createElement("div");
         body.className = "accordion-body";
 
