@@ -1,9 +1,9 @@
 /* ------------------ STILE DESKTOP ------------------ */
 
-/* Giallo per Top 4 */
+/* Azzurro per Top 4 Totale e primo nelle Conference */
 #tabella-classifica tbody tr.top1 td,
 #tabella-classifica tbody tr.top4 td {
-  background-color: #ffc800 !important;
+  background-color: #3399ff !important;
   color: #000 !important;
   font-weight: bold;
 }
@@ -55,34 +55,9 @@
 @media (max-width: 768px) {
   .accordion-item.top1,
   .accordion-item.top4 {
-    background-color: #ffc800 !important;
+    background-color: #3399ff !important;
     color: #000;
-    font-weight: bold;
-  }
-
-  .accordion-item.top1 .accordion-header span,
-  .accordion-item.top4 .accordion-header span {
-    color: #000 !important;
-  }
-
-  .accordion-item.ultime4 {
-    background-color: #5c0000 !important;
-    color: white;
-  }
-
-  .accordion-item.ultime4 .accordion-body p {
-    color: white;
-  }
-
-  .accordion-body p {
-    display: inline-block;
-    margin: 4px 10px;
-    color: #eee;
-  }
-
-  .accordion-body {
-    text-align: center;
-  }
+    font-weight:
 
   .accordion-header span {
     color: white;
