@@ -74,8 +74,19 @@ function caricaClassifica(nomeFoglio = "Conference") {
             const testo = document.createElement("span");
             testo.textContent = val;
 
+            const badge = document.createElement("span");
+            badge.style.marginLeft = "6px";
+
+            if (nomeFoglio === "Totale") {
+              if (i <= 4) badge.textContent = "🎖️";
+              if (i > numSquadre - 4) badge.textContent = "💀";
+            } else {
+              if (i === 1) badge.textContent = "👑";
+            }
+
             wrapper.appendChild(img);
             wrapper.appendChild(testo);
+            wrapper.appendChild(badge);
             td.appendChild(wrapper);
           } else {
             td.textContent = formattaNumero(val);
