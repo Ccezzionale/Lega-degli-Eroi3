@@ -329,7 +329,7 @@ main, h1, .container {
 .hero {
   width: 100%;
   aspect-ratio: 16 / 9; /* mantiene proporzione 1920x1080 */
-  background-image: url('img/hero_desktop.jpg');
+  background-image: url('img/hero_desktop.png');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
