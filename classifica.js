@@ -61,20 +61,23 @@ function caricaClassifica(nomeFoglio = "Conference") {
         colonne.forEach((val, idx) => {
           const td = document.createElement("td");
 
-          if (idx === 1) {
-            const img = document.createElement("img");
-            const nomeFile = val + ".png";
-            img.src = `img/${nomeFile}`;
-            img.alt = val;
-            img.onerror = () => { img.style.display = "none"; };
-            td.appendChild(img);
-            td.appendChild(document.createTextNode(val));
-          } else {
-            td.textContent = formattaNumero(val);
-          }
+if (idx === 1) {
+  const wrapper = document.createElement("div");
+  wrapper.className = "logo-nome";
 
-          tr.appendChild(td);
-        });
+  const img = document.createElement("img");
+  const nomeFile = val + ".png";
+  img.src = `img/${nomeFile}`;
+  img.alt = val;
+  img.onerror = () => { img.style.display = "none"; };
+
+  const span = document.createElement("span");
+  span.textContent = val;
+
+  wrapper.appendChild(img);
+  wrapper.appendChild(span);
+  td.appendChild(wrapper);
+}
 
         corpoTabella.appendChild(tr);
       }
