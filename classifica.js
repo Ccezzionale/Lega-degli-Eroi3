@@ -71,8 +71,9 @@ function caricaClassifica(nomeFoglio = "Conference") {
             img.alt = val;
             img.onerror = () => { img.style.display = "none"; };
 
+            const cleanName = val.replace(/[👑🎖️💀]/g, "").trim();
             const testo = document.createElement("span");
-            testo.textContent = val;
+            testo.textContent = cleanName;
 
             const badge = document.createElement("span");
             badge.style.marginLeft = "6px";
