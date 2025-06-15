@@ -18,7 +18,7 @@
 }
 
 #tabella-classifica thead th {
-  color: white;
+  color: white !important;
   font-weight: bold;
   padding: 8px;
 }
@@ -82,18 +82,4 @@
     color: #eee;
   }
 
-  .accordion-body {
-    text-align: center;
-  }
-
-  .accordion-header span {
-    color: white;
-  }
-}
-
-
-
-  .accordion-header span {
-    color: white;
-  }
-}
+  .accordion-body
