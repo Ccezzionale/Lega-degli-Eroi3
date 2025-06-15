@@ -96,6 +96,13 @@ function caricaClassifica(nomeFoglio = "Conference") {
           if (i === 1) item.classList.add("top1");
         }
 
+        if (nomeFoglio === "Totale") {
+          if (i <= 4) item.classList.add("top4");
+          if (i > numSquadre - 4) item.classList.add("ultime4");
+        } else {
+          if (i === 1) item.classList.add("top1");
+        }
+
         const header = document.createElement("div");
         header.className = "accordion-header";
         const nomeSquadra = colonne[1];
