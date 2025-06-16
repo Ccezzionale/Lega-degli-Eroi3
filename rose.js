@@ -13,8 +13,8 @@ const squadre = [
   { col: 5, start: 126, end: 153, headerRow: 124 },
   { col: 0, start: 157, end: 184, headerRow: 155 },
   { col: 5, start: 157, end: 184, headerRow: 155 },
-  { col: 0, start: 189, end: 215, headerRow: 187 },
-  { col: 5, start: 189, end: 215, headerRow: 187 },
+  { col: 0, start: 188, end: 215, headerRow: 186 },
+  { col: 5, start: 188, end: 215, headerRow: 186 },
   { col: 0, start: 220, end: 246, headerRow: 218 },
   { col: 5, start: 220, end: 246, headerRow: 218 },
 ];
