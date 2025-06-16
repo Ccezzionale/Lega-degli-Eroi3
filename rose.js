@@ -30,12 +30,11 @@ function trovaLogo(nomeSquadra) {
   for (const base of varianti) {
     for (const ext of estensioni) {
       const path = `img/${base}${ext}`;
-      // In un ambiente reale dovremmo testare l'esistenza, ma qui lo assumiamo valido
       return path;
     }
   }
 
-  return "img/default.png"; // fallback
+  return "img/default.png";
 }
 
 async function caricaRose() {
@@ -45,7 +44,7 @@ async function caricaRose() {
 
   for (const s of squadre) {
     let nomeSquadra = rows[s.headerRow]?.[s.col]?.trim();
-    if (!nomeSquadra) continue;
+    if (!nomeSquadra || nomeSquadra.toLowerCase() === "ruolo") continue;
 
     const giocatori = [];
     for (let i = s.start; i <= s.end; i++) {
@@ -53,15 +52,17 @@ async function caricaRose() {
       const nome = rows[i]?.[s.col + 1] || "";
       const squadra = rows[i]?.[s.col + 2] || "";
       const quotazione = rows[i]?.[s.col + 3] || "";
-      if (nome.trim()) {
+      if (nome.trim() && nome.toLowerCase() !== "nome") {
         giocatori.push({ nome, ruolo, squadra, quotazione });
       }
     }
 
-    rose[nomeSquadra] = {
-      logo: trovaLogo(nomeSquadra),
-      giocatori
-    };
+    if (giocatori.length > 0) {
+      rose[nomeSquadra] = {
+        logo: trovaLogo(nomeSquadra),
+        giocatori
+      };
+    }
   }
 
   mostraRose();
