@@ -51,6 +51,7 @@ if (!response.ok) {
   return;
 }
     const text = await response.text();
+    console.log("📄 Preview CSV:", text.slice(0, 300));
     const rows = text
   .split("\n")
   .map(r => r.split(","))
