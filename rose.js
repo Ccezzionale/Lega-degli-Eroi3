@@ -13,11 +13,43 @@ const squadre = [
   { col: 5, start: 126, end: 153, headerRow: 124 },
   { col: 0, start: 157, end: 184, headerRow: 155 },
   { col: 5, start: 157, end: 184, headerRow: 155 },
-  { col: 0, start: 188, end: 215, headerRow: 186 },
-  { col: 5, start: 188, end: 215, headerRow: 186 },
-  { col: 0, start: 219, end: 246, headerRow: 217 },
-  { col: 5, start: 219, end: 246, headerRow: 217 },
+  { col: 0, start: 189, end: 215, headerRow: 187 },
+  { col: 5, start: 189, end: 215, headerRow: 187 },
+  { col: 0, start: 220, end: 246, headerRow: 218 },
+  { col: 5, start: 220, end: 246, headerRow: 218 },
 ];
+
+async function caricaRose() {
+  const response = await fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vSE8Q0l1pnU8NCtId51qCk8Pstat27g6JBQaU-3UKIY0ZCZicUJ1u1T-ElvuR9NK9pc2WYpunW-a4ld/pub?output=csv");
+  const text = await response.text();
+  const rows = text.split("\n").map(r => r.split(","));
+
+  for (const s of squadre) {
+    let nomeSquadra = rows[s.headerRow]?.[s.col]?.trim();
+    if (!nomeSquadra || nomeSquadra.toLowerCase() === "ruolo") continue;
+
+    const giocatori = [];
+    for (let i = s.start; i <= s.end; i++) {
+      const ruolo = rows[i]?.[s.col] || "";
+      const nome = rows[i]?.[s.col + 1] || "";
+      const squadra = rows[i]?.[s.col + 2] || "";
+      const quotazione = rows[i]?.[s.col + 3] || "";
+      if (nome.trim() && nome.toLowerCase() !== "nome") {
+        giocatori.push({ nome, ruolo, squadra, quotazione });
+      }
+    }
+
+    if (giocatori.length > 0) {
+      rose[nomeSquadra] = {
+        logo: trovaLogo(nomeSquadra),
+        giocatori
+      };
+    }
+  }
+
+  popolaFiltri();
+  mostraRose();
+}
 
 function trovaLogo(nomeSquadra) {
   const estensioni = [".png", ".jpg"];
@@ -34,55 +66,23 @@ function trovaLogo(nomeSquadra) {
   return "img/default.png";
 }
 
-async function caricaRose() {
-  const response = await fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vSE8Q0l1pnU8NCtId51qCk8Pstat27g6JBQaU-3UKIY0ZCZicUJ1u1T-ElvuR9NK9pc2WYpunW-a4ld/pub?output=csv");
-  const text = await response.text();
-  const rows = text.split("\n").map(r => r.split(","));
-
-  console.log("📦 CSV caricato, righe totali:", rows.length);
-
-  for (const s of squadre) {
-    let headerValue = rows[s.headerRow]?.[s.col];
-    console.log(`➡️ Blocco headerRow ${s.headerRow}, col ${s.col}:`, headerValue);
-
-    let nomeSquadra = headerValue?.trim();
-    if (!nomeSquadra || nomeSquadra.toLowerCase() === "ruolo") {
-      console.warn(`⛔ Nessuna squadra valida in headerRow ${s.headerRow}, col ${s.col}`);
-      continue;
-    }
-
-    const giocatori = [];
-    for (let i = s.start; i <= s.end; i++) {
-      const ruolo = rows[i]?.[s.col] || "";
-      const nome = rows[i]?.[s.col + 1] || "";
-      const squadra = rows[i]?.[s.col + 2] || "";
-      const quotazione = rows[i]?.[s.col + 3] || "";
-      if (nome.trim() && nome.toLowerCase() !== "nome") {
-        giocatori.push({ nome, ruolo, squadra, quotazione });
-      }
-    }
-
-    if (giocatori.length > 0) {
-      console.log(`✅ Squadra: ${nomeSquadra}, Giocatori: ${giocatori.length}`);
-      rose[nomeSquadra] = {
-        logo: trovaLogo(nomeSquadra),
-        giocatori
-      };
-    } else {
-      console.warn(`⚠️ Ignorata squadra '${nomeSquadra}' (nessun giocatore valido tra le righe ${s.start}-${s.end})`);
-    }
-  }
-
-  console.log("✅ Squadre caricate:", Object.keys(rose));
-  mostraRose();
-}
-
 function mostraRose() {
   const container = document.getElementById("contenitore-rose");
   if (!container) return;
   container.innerHTML = "";
 
+  const squadraFiltro = document.getElementById("filtro-squadra").value;
+  const nomeFiltro = document.getElementById("filtro-nome").value.toLowerCase();
+
   for (const [nome, data] of Object.entries(rose)) {
+    if (squadraFiltro && squadraFiltro !== nome) continue;
+
+    const giocatoriFiltrati = data.giocatori.filter(g =>
+      g.nome.toLowerCase().includes(nomeFiltro)
+    );
+
+    if (giocatoriFiltrati.length === 0) continue;
+
     const div = document.createElement("div");
     div.className = "box-rosa";
     div.innerHTML = `
@@ -90,7 +90,7 @@ function mostraRose() {
       <table>
         <thead><tr><th>Ruolo</th><th>Nome</th><th>Squadra</th><th>Q</th></tr></thead>
         <tbody>
-          ${data.giocatori.map(g => `
+          ${giocatoriFiltrati.map(g => `
             <tr>
               <td>${g.ruolo}</td>
               <td>${g.nome}</td>
@@ -102,6 +102,25 @@ function mostraRose() {
     `;
     container.appendChild(div);
   }
+}
+
+function popolaFiltri() {
+  const select = document.getElementById("filtro-squadra");
+  for (const nome of Object.keys(rose)) {
+    const opt = document.createElement("option");
+    opt.value = nome;
+    opt.textContent = nome;
+    select.appendChild(opt);
+  }
+
+  select.addEventListener("change", mostraRose);
+  document.getElementById("filtro-nome").addEventListener("input", mostraRose);
+}
+
+function resetFiltri() {
+  document.getElementById("filtro-squadra").value = "";
+  document.getElementById("filtro-nome").value = "";
+  mostraRose();
 }
 
 window.addEventListener("DOMContentLoaded", caricaRose);
