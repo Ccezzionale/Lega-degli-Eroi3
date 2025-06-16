@@ -360,8 +360,6 @@ main, h1, .container {
   object-fit: contain;
   vertical-align: middle;
   border-radius: 8px;
-  border: 2px solid white;
-  box-shadow: 0 0 5px #00000088;
 }
 
 .box-rosa table {
