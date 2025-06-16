@@ -85,13 +85,13 @@ async function caricaRose() {
 
     const giocatori = [];
     for (let i = s.start; i <= s.end; i++) {
-      const ruolo = rows[i]?.[s.col] || "";
-      const nome = rows[i]?.[s.col + 1] || "";
-      const squadra = rows[i]?.[s.col + 2] || "";
-      const quotazione = rows[i]?.[s.col + 3] || "";
-      const nomeClean = nome.trim().toLowerCase();
+      const ruolo = rows[i]?.[s.col]?.trim() || "";
+      const nome = rows[i]?.[s.col + 1]?.trim() || "";
+      const squadra = rows[i]?.[s.col + 2]?.trim() || "";
+      const quotazione = rows[i]?.[s.col + 3]?.trim() || "";
+      const nomeClean = nome.toLowerCase();
 
-      if (nomeClean && nome.toLowerCase() !== "nome") {
+      if (nome && nome.toLowerCase() !== "nome") {
         giocatori.push({
           nome,
           ruolo,
