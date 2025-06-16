@@ -13,10 +13,10 @@ const squadre = [
   { col: 5, start: 126, end: 153, headerRow: 124 },
   { col: 0, start: 157, end: 184, headerRow: 155 },
   { col: 5, start: 157, end: 184, headerRow: 155 },
-  { col: 0, start: 188, end: 215, headerRow: 187 },
-  { col: 5, start: 188, end: 215, headerRow: 187 },
-  { col: 0, start: 219, end: 246, headerRow: 218 },
-  { col: 5, start: 219, end: 246, headerRow: 218 },
+  { col: 0, start: 189, end: 215, headerRow: 187 },
+  { col: 5, start: 189, end: 215, headerRow: 187 },
+  { col: 0, start: 220, end: 246, headerRow: 218 },
+  { col: 5, start: 220, end: 246, headerRow: 218 },
 ];
 
 function trovaLogo(nomeSquadra) {
@@ -26,14 +26,11 @@ function trovaLogo(nomeSquadra) {
     nomeSquadra.toLowerCase(),
     nomeSquadra.replaceAll(" ", "_").toLowerCase()
   ];
-
   for (const base of varianti) {
     for (const ext of estensioni) {
-      const path = `img/${base}${ext}`;
-      return path;
+      return `img/${base}${ext}`;
     }
   }
-
   return "img/default.png";
 }
 
