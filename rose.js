@@ -39,9 +39,17 @@ async function caricaRose() {
   const text = await response.text();
   const rows = text.split("\n").map(r => r.split(","));
 
+  console.log("📦 CSV caricato, righe totali:", rows.length);
+
   for (const s of squadre) {
-    let nomeSquadra = rows[s.headerRow]?.[s.col]?.trim();
-    if (!nomeSquadra || nomeSquadra.toLowerCase() === "ruolo") continue;
+    let headerValue = rows[s.headerRow]?.[s.col];
+    console.log(`➡️ Blocco headerRow ${s.headerRow}, col ${s.col}:`, headerValue);
+
+    let nomeSquadra = headerValue?.trim();
+    if (!nomeSquadra || nomeSquadra.toLowerCase() === "ruolo") {
+      console.warn(`⛔ Nessuna squadra valida in headerRow ${s.headerRow}, col ${s.col}`);
+      continue;
+    }
 
     const giocatori = [];
     for (let i = s.start; i <= s.end; i++) {
