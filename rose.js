@@ -1,4 +1,27 @@
 
+const conferenceMap = {
+  "Conference League": [
+    "Team Bartowski",
+    "Desperados",
+    "Bayern Christiansen",
+    "Minnesode Timberland",
+    "Giulay",
+    "MinneSota Snakes",
+    "Ibla",
+    "Pandinicoccolosini",
+  ],
+  "Conference Championship": [
+    "Sharknado 04",
+    "Real Mimmo",
+    "Giody",
+    "Union Librino",
+    "RubinKebab",
+    "Rafa Casablanca",
+    "PokerMantra",
+    "wildboys78",
+  ],
+};
+
 const rose = {};
 const squadre = [
   { col: 0, start: 2, end: 29, headerRow: 0 },
@@ -13,10 +36,10 @@ const squadre = [
   { col: 5, start: 126, end: 153, headerRow: 124 },
   { col: 0, start: 157, end: 184, headerRow: 155 },
   { col: 5, start: 157, end: 184, headerRow: 155 },
-  { col: 0, start: 188, end: 215, headerRow: 186 },
-  { col: 5, start: 188, end: 215, headerRow: 186 },
-  { col: 0, start: 219, end: 246, headerRow: 217 },
-  { col: 5, start: 219, end: 246, headerRow: 217 },
+  { col: 0, start: 189, end: 215, headerRow: 187 },
+  { col: 5, start: 189, end: 215, headerRow: 187 },
+  { col: 0, start: 220, end: 246, headerRow: 218 },
+  { col: 5, start: 220, end: 246, headerRow: 218 },
 ];
 
 async function caricaRose() {
@@ -73,9 +96,14 @@ function mostraRose() {
 
   const squadraFiltro = document.getElementById("filtro-squadra").value;
   const nomeFiltro = document.getElementById("filtro-nome").value.toLowerCase();
+  const conferenceFiltro = document.getElementById("filtro-conference").value;
 
   for (const [nome, data] of Object.entries(rose)) {
     if (squadraFiltro && squadraFiltro !== nome) continue;
+    if (conferenceFiltro) {
+      const squadreInConference = conferenceMap[conferenceFiltro] || [];
+      if (!squadreInConference.includes(nome)) continue;
+    }
 
     const giocatoriFiltrati = data.giocatori.filter(g =>
       g.nome.toLowerCase().includes(nomeFiltro)
@@ -113,13 +141,23 @@ function popolaFiltri() {
     select.appendChild(opt);
   }
 
+  const confSelect = document.getElementById("filtro-conference");
+  for (const conf of Object.keys(conferenceMap)) {
+    const opt = document.createElement("option");
+    opt.value = conf;
+    opt.textContent = conf;
+    confSelect.appendChild(opt);
+  }
+
   select.addEventListener("change", mostraRose);
   document.getElementById("filtro-nome").addEventListener("input", mostraRose);
+  confSelect.addEventListener("change", mostraRose);
 }
 
 function resetFiltri() {
   document.getElementById("filtro-squadra").value = "";
   document.getElementById("filtro-nome").value = "";
+  document.getElementById("filtro-conference").value = "";
   mostraRose();
 }
 
