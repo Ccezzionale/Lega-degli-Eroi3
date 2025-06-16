@@ -1,7 +1,7 @@
 const rose = {};
 const giocatoriFP = new Set();
 const URL_ROSE = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSE8Q0l1pnU8NCtId51qCk8Pstat27g6JBQaU-3UKIY0ZCZicUJ1u1T-ElvuR9NK9pc2WYpunW-a4ld/pub?output=csv";
-const URL_QUOTAZIONI = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQb8mLh8lDTRQTfEZL7XSmg6dTQAGdKIKUs8AdZrVzt3Kt_lzSRbM6Q3hTi1T3IvTXp7znYXaBlmFLI/pub?gid=2087990274&single=true&output=csv";
+const URL_QUOTAZIONI = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSE8Q0l1pnU8NCtId51qCk8Pstat27g6JBQaU-3UKIY0ZCZicUJ1u1T-ElvuR9NK9pc2WYpunW-a4ld/pub?gid=2087990274&single=true&output=csv";
 
 const squadre = [
   { col: 0, start: 2, end: 29, headerRow: 0 },
