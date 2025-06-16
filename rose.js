@@ -61,7 +61,8 @@ async function caricaRose() {
       };
     }
   }
-
+console.log("✅ Squadre caricate:", Object.keys(rose));
+  
   mostraRose();
 }
 
