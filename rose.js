@@ -41,7 +41,7 @@ function trovaLogo(nomeSquadra) {
 
   return "img/default.png";
 }
-
+console.log("🔍 Avvio caricaGiocatoriFP");
 async function caricaGiocatoriFP() {
   try {
     const response = await fetch(URL_QUOTAZIONI);
