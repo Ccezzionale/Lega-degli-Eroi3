@@ -387,6 +387,15 @@ main, h1, .container {
   background-color: #002b5c;
 }
 
+h1 {
+  color: #ffcc00;
+}
+
+#filtro-squadra option[value=""] {
+  color: #ffcc00;
+  font-weight: bold;
+}
+
 /* --------- RESPONSIVE ROSE --------- */
 @media (max-width: 768px) {
   .box-rosa {
