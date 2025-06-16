@@ -132,7 +132,7 @@ function mostraRose() {
           ${data.giocatori.map(g => `
             <tr>
               <td>${g.ruolo}</td>
-              <td>${g.nome} ${g.fp ? '🔵' : ''}</td>
+              <td>${g.nome} ${g.fp ? '🅕' : ''}</td>
               <td>${g.squadra}</td>
               <td>${g.quotazione}</td>
             </tr>`).join("")}
