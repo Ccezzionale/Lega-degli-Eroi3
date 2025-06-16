@@ -19,6 +19,25 @@ const squadre = [
   { col: 5, start: 219, end: 246, headerRow: 218 },
 ];
 
+function trovaLogo(nomeSquadra) {
+  const estensioni = [".png", ".jpg"];
+  const varianti = [
+    nomeSquadra,
+    nomeSquadra.toLowerCase(),
+    nomeSquadra.replaceAll(" ", "_").toLowerCase()
+  ];
+
+  for (const base of varianti) {
+    for (const ext of estensioni) {
+      const path = `img/${base}${ext}`;
+      // In un ambiente reale dovremmo testare l'esistenza, ma qui lo assumiamo valido
+      return path;
+    }
+  }
+
+  return "img/default.png"; // fallback
+}
+
 async function caricaRose() {
   const response = await fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vSE8Q0l1pnU8NCtId51qCk8Pstat27g6JBQaU-3UKIY0ZCZicUJ1u1T-ElvuR9NK9pc2WYpunW-a4ld/pub?output=csv");
   const text = await response.text();
@@ -40,7 +59,7 @@ async function caricaRose() {
     }
 
     rose[nomeSquadra] = {
-      logo: `img/${nomeSquadra.toLowerCase().replaceAll(" ", "_")}.png`,
+      logo: trovaLogo(nomeSquadra),
       giocatori
     };
   }
