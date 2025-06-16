@@ -35,13 +35,16 @@
 <body>
   <h1>Rose delle Squadre</h1>
 
-  <div id="filtri-rose">
-    <select id="filtro-squadra">
-      <option value="">Tutte le squadre</option>
-    </select>
-    <input type="text" id="filtro-nome" placeholder="Cerca giocatore..." />
-    <button onclick="resetFiltri()">🔁 Reset</button>
-  </div>
+<div id="filtri-rose">
+  <select id="filtro-conference">
+    <option value="">Tutte le Conference</option>
+  </select>
+  <select id="filtro-squadra">
+    <option value="">Tutte le squadre</option>
+  </select>
+  <input type="text" id="filtro-nome" placeholder="Cerca giocatore..." />
+  <button onclick="resetFiltri()">🔁 Reset</button>
+</div>
 
   <div id="contenitore-rose">Caricamento rose...</div>
   <script src="rose.js?v=10"></script>
