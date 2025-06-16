@@ -43,42 +43,37 @@ function trovaLogo(nomeSquadra) {
 }
 console.log("🔍 Avvio caricaGiocatoriFP");
 async function caricaGiocatoriFP() {
+  console.log("🔍 Avvio caricaGiocatoriFP");
+
   try {
     const response = await fetch(URL_QUOTAZIONI);
     console.log("📦 Fetch fatto, status:", response.status);
-if (!response.ok) {
-  console.error("❌ Errore nel fetch delle Quotazioni:", response.status);
-  return;
-}
     const text = await response.text();
     console.log("📄 Preview CSV:", text.slice(0, 300));
-    const rows = text
-  .split("\n")
-  .map(r => r.split(","))
-  .filter(r => r.length > 5 && r[0].trim() && r[1].trim());
 
+    const rows = text.split("\n").map(r => r.split(","));
+    
     for (let i = 1; i < rows.length; i++) {
-      const [nome, ruolo, , , , , , , , , , qtAm] = rows[i];
-      const nomeClean = nome?.trim().toLowerCase();
-      const ruoloClean = ruolo?.trim().toUpperCase();
-      const quotazione = parseFloat(qtAm?.replace(",", "."));
+      const ruolo = rows[i][0]?.trim().toUpperCase();     // Colonna A
+      const nome = rows[i][2]?.trim().toLowerCase();      // Colonna C
+      const qtAm = parseFloat(rows[i][4]?.replace(",", ".")); // Colonna E
 
-      if (!nomeClean || isNaN(quotazione)) continue;
+      if (!nome || isNaN(qtAm)) continue;
 
       if (
-        (ruoloClean === "D" && quotazione <= 9) ||
-        (ruoloClean === "C" && quotazione <= 14) ||
-        (ruoloClean === "A" && quotazione <= 19)
+        (ruolo === "D" && qtAm <= 9) ||
+        (ruolo === "C" && qtAm <= 14) ||
+        (ruolo === "A" && qtAm <= 19)
       ) {
-        console.log("🔍 Avvio caricaGiocatoriFP");
-        giocatoriFP.add(nomeClean);
-        console.log("FP trovato:", nome, "ruolo:", ruolo, "qt:", qtAm);
+        giocatoriFP.add(nome);
+        console.log("🟡 FP trovato:", nome);
       }
     }
   } catch (e) {
-    console.error("Errore nel caricamento FP:", e);
+    console.error("❌ Errore nel caricamento FP:", e);
   }
 }
+
 
 async function caricaRose() {
   await caricaGiocatoriFP();
