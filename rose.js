@@ -1,27 +1,4 @@
 
-const conferenceMap = {
-  "Conference League": [
-    "Team Bartowski",
-    "Desperados",
-    "Bayern Christiansen",
-    "Minnesode Timberland",
-    "Giulay",
-    "MinneSota Snakes",
-    "Ibla",
-    "Pandinicoccolosini",
-  ],
-  "Conference Championship": [
-    "Sharknado 04",
-    "Real Mimmo",
-    "Giody",
-    "Union Librino",
-    "RubinKebab",
-    "Rafa Casablanca",
-    "PokerMantra",
-    "wildboys78",
-  ],
-};
-
 const rose = {};
 const squadre = [
   { col: 0, start: 2, end: 29, headerRow: 0 },
@@ -36,11 +13,32 @@ const squadre = [
   { col: 5, start: 126, end: 153, headerRow: 124 },
   { col: 0, start: 157, end: 184, headerRow: 155 },
   { col: 5, start: 157, end: 184, headerRow: 155 },
-  { col: 0, start: 188, end: 215, headerRow: 186 },
-  { col: 5, start: 188, end: 215, headerRow: 186 },
-  { col: 0, start: 219, end: 246, headerRow: 217 },
-  { col: 5, start: 219, end: 246, headerRow: 217 },
+  { col: 0, start: 188, end: 215, headerRow: 187 },
+  { col: 5, start: 188, end: 215, headerRow: 187 },
+  { col: 0, start: 219, end: 246, headerRow: 218 },
+  { col: 5, start: 219, end: 246, headerRow: 218 },
 ];
+
+function trovaLogo(nomeSquadra) {
+  const estensioni = [".png", ".jpg"];
+  const varianti = [
+    nomeSquadra,
+    nomeSquadra.toLowerCase(),
+    nomeSquadra.replaceAll(" ", "_").toLowerCase()
+  ];
+  for (const base of varianti) {
+    for (const ext of estensioni) {
+      return `img/${base}${ext}`;
+    }
+  }
+  return "img/default.png";
+}
+
+function isIdoneoFP(nome, squadra) {
+  nome = nome.trim().toLowerCase();
+  squadra = squadra.trim().toLowerCase();
+  return fp_idonei.some(g => g.Nome === nome && g.Squadra === squadra);
+}
 
 async function caricaRose() {
   const response = await fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vSE8Q0l1pnU8NCtId51qCk8Pstat27g6JBQaU-3UKIY0ZCZicUJ1u1T-ElvuR9NK9pc2WYpunW-a4ld/pub?output=csv");
@@ -70,23 +68,7 @@ async function caricaRose() {
     }
   }
 
-  popolaFiltri();
   mostraRose();
-}
-
-function trovaLogo(nomeSquadra) {
-  const estensioni = [".png", ".jpg"];
-  const varianti = [
-    nomeSquadra,
-    nomeSquadra.toLowerCase(),
-    nomeSquadra.replaceAll(" ", "_").toLowerCase()
-  ];
-  for (const base of varianti) {
-    for (const ext of estensioni) {
-      return `img/${base}${ext}`;
-    }
-  }
-  return "img/default.png";
 }
 
 function mostraRose() {
@@ -94,23 +76,7 @@ function mostraRose() {
   if (!container) return;
   container.innerHTML = "";
 
-  const squadraFiltro = document.getElementById("filtro-squadra").value;
-  const nomeFiltro = document.getElementById("filtro-nome").value.toLowerCase();
-  const conferenceFiltro = document.getElementById("filtro-conference").value;
-
   for (const [nome, data] of Object.entries(rose)) {
-    if (squadraFiltro && squadraFiltro !== nome) continue;
-    if (conferenceFiltro) {
-      const squadreInConference = conferenceMap[conferenceFiltro] || [];
-      if (!squadreInConference.includes(nome)) continue;
-    }
-
-    const giocatoriFiltrati = data.giocatori.filter(g =>
-      g.nome.toLowerCase().includes(nomeFiltro)
-    );
-
-    if (giocatoriFiltrati.length === 0) continue;
-
     const div = document.createElement("div");
     div.className = "box-rosa";
     div.innerHTML = `
@@ -118,47 +84,22 @@ function mostraRose() {
       <table>
         <thead><tr><th>Ruolo</th><th>Nome</th><th>Squadra</th><th>Q</th></tr></thead>
         <tbody>
-          ${giocatoriFiltrati.map(g => `
-            <tr>
+          ${data.giocatori.map(g => {
+            let simbolo = "";
+            if (g.tag === "fp") simbolo = "⭐";
+            else if (isIdoneoFP(g.nome, g.squadra)) simbolo = "🟡";
+            return `<tr>
               <td>${g.ruolo}</td>
-              <td>${g.nome}</td>
+              <td>${simbolo} ${g.nome}</td>
               <td>${g.squadra}</td>
               <td>${g.quotazione}</td>
-            </tr>`).join("")}
+            </tr>`;
+          }).join("")}
         </tbody>
       </table>
     `;
     container.appendChild(div);
   }
-}
-
-function popolaFiltri() {
-  const select = document.getElementById("filtro-squadra");
-  for (const nome of Object.keys(rose)) {
-    const opt = document.createElement("option");
-    opt.value = nome;
-    opt.textContent = nome;
-    select.appendChild(opt);
-  }
-
-  const confSelect = document.getElementById("filtro-conference");
-  for (const conf of Object.keys(conferenceMap)) {
-    const opt = document.createElement("option");
-    opt.value = conf;
-    opt.textContent = conf;
-    confSelect.appendChild(opt);
-  }
-
-  select.addEventListener("change", mostraRose);
-  document.getElementById("filtro-nome").addEventListener("input", mostraRose);
-  confSelect.addEventListener("change", mostraRose);
-}
-
-function resetFiltri() {
-  document.getElementById("filtro-squadra").value = "";
-  document.getElementById("filtro-nome").value = "";
-  document.getElementById("filtro-conference").value = "";
-  mostraRose();
 }
 
 window.addEventListener("DOMContentLoaded", caricaRose);
