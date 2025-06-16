@@ -1,5 +1,8 @@
-
 const rose = {};
+const giocatoriFP = new Set();
+const URL_ROSE = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSE8Q0l1pnU8NCtId51qCk8Pstat27g6JBQaU-3UKIY0ZCZicUJ1u1T-ElvuR9NK9pc2WYpunW-a4ld/pub?output=csv";
+const URL_QUOTAZIONI = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSE8Q0l1pnU8NCtId51qCk8Pstat27g6JBQaU-3UKIY0ZCZicUJ1u1T-ElvuR9NK9pc2WYpunW-a4ld/pub?gid=2087990274&single=true&output=csv";
+
 const squadre = [
   { col: 0, start: 2, end: 29, headerRow: 0 },
   { col: 5, start: 2, end: 29, headerRow: 0 },
@@ -26,22 +29,48 @@ function trovaLogo(nomeSquadra) {
     nomeSquadra.toLowerCase(),
     nomeSquadra.replaceAll(" ", "_").toLowerCase()
   ];
+
   for (const base of varianti) {
     for (const ext of estensioni) {
-      return `img/${base}${ext}`;
+      const path = `img/${base}${ext}`;
+      return path;
     }
   }
+
   return "img/default.png";
 }
 
-function isIdoneoFP(nome, squadra) {
-  nome = nome.trim().toLowerCase();
-  squadra = squadra.trim().toLowerCase();
-  return fp_idonei.some(g => g.Nome === nome && g.Squadra === squadra);
+async function caricaGiocatoriFP() {
+  try {
+    const response = await fetch(URL_QUOTAZIONI);
+    const text = await response.text();
+    const rows = text.split("\n").map(r => r.split(","));
+
+    for (let i = 1; i < rows.length; i++) {
+      const [nome, ruolo, , , , , , , , , , qtAm] = rows[i];
+      const nomeClean = nome?.trim().toLowerCase();
+      const ruoloClean = ruolo?.trim().toUpperCase();
+      const quotazione = parseFloat(qtAm?.replace(",", "."));
+
+      if (!nomeClean || isNaN(quotazione)) continue;
+
+      if (
+        (ruoloClean === "D" && quotazione <= 9) ||
+        (ruoloClean === "C" && quotazione <= 14) ||
+        (ruoloClean === "A" && quotazione <= 19)
+      ) {
+        giocatoriFP.add(nomeClean);
+      }
+    }
+  } catch (e) {
+    console.error("Errore nel caricamento FP:", e);
+  }
 }
 
 async function caricaRose() {
-  const response = await fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vSE8Q0l1pnU8NCtId51qCk8Pstat27g6JBQaU-3UKIY0ZCZicUJ1u1T-ElvuR9NK9pc2WYpunW-a4ld/pub?output=csv");
+  await caricaGiocatoriFP();
+
+  const response = await fetch(URL_ROSE);
   const text = await response.text();
   const rows = text.split("\n").map(r => r.split(","));
 
@@ -55,8 +84,16 @@ async function caricaRose() {
       const nome = rows[i]?.[s.col + 1] || "";
       const squadra = rows[i]?.[s.col + 2] || "";
       const quotazione = rows[i]?.[s.col + 3] || "";
-      if (nome.trim() && nome.toLowerCase() !== "nome") {
-        giocatori.push({ nome, ruolo, squadra, quotazione });
+      const nomeClean = nome.trim().toLowerCase();
+
+      if (nomeClean && nome.toLowerCase() !== "nome") {
+        giocatori.push({
+          nome,
+          ruolo,
+          squadra,
+          quotazione,
+          fp: giocatoriFP.has(nomeClean)
+        });
       }
     }
 
@@ -84,17 +121,13 @@ function mostraRose() {
       <table>
         <thead><tr><th>Ruolo</th><th>Nome</th><th>Squadra</th><th>Q</th></tr></thead>
         <tbody>
-          ${data.giocatori.map(g => {
-            let simbolo = "";
-            if (g.tag === "fp") simbolo = "⭐";
-            else if (isIdoneoFP(g.nome, g.squadra)) simbolo = "🟡";
-            return `<tr>
+          ${data.giocatori.map(g => `
+            <tr>
               <td>${g.ruolo}</td>
-              <td>${simbolo} ${g.nome}</td>
+              <td>${g.nome} ${g.fp ? '🔵' : ''}</td>
               <td>${g.squadra}</td>
               <td>${g.quotazione}</td>
-            </tr>`;
-          }).join("")}
+            </tr>`).join("")}
         </tbody>
       </table>
     `;
@@ -103,3 +136,4 @@ function mostraRose() {
 }
 
 window.addEventListener("DOMContentLoaded", caricaRose);
+
