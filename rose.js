@@ -46,7 +46,10 @@ async function caricaGiocatoriFP() {
   try {
     const response = await fetch(URL_QUOTAZIONI);
     const text = await response.text();
-    const rows = text.split("\n").map(r => r.split(","));
+    const rows = text
+  .split("\n")
+  .map(r => r.split(","))
+  .filter(r => r.length > 5 && r[0].trim() && r[1].trim());
 
     for (let i = 1; i < rows.length; i++) {
       const [nome, ruolo, , , , , , , , , , qtAm] = rows[i];
