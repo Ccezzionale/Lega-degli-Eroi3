@@ -1,1 +1,50 @@
-<!DOCTYPE html><html><head><title>Rose</title><link rel='stylesheet' href='main.css'></head><body><h2>Rose</h2><div id='contenitore-rose'></div><script src='rose.js'></script><script src='app.js'></script></body></html>
+
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rose - Lega degli Eroi</title>
+  <link rel="stylesheet" href="main.css" />
+  <style>
+    .box-rosa {
+      background: #ffffff;
+      color: #000;
+      border-radius: 12px;
+      padding: 16px;
+      margin: 16px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .box-rosa h2 {
+      font-size: 1.5em;
+      margin-bottom: 0.5em;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .logo-squadra {
+      width: 32px;
+      height: 32px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    th, td {
+      padding: 6px;
+      border: 1px solid #ccc;
+      text-align: left;
+    }
+    th {
+      background-color: #00509e;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <h1>Rose delle Squadre</h1>
+  <div id="contenitore-rose">Caricamento rose...</div>
+  <script src="rose.js"></script>
+</body>
+</html>
