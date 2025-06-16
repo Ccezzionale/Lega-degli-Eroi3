@@ -65,6 +65,7 @@ async function caricaGiocatoriFP() {
         (ruoloClean === "A" && quotazione <= 19)
       ) {
         giocatoriFP.add(nomeClean);
+        console.log("FP trovato:", nome, "ruolo:", ruolo, "qt:", qtAm);
       }
     }
   } catch (e) {
