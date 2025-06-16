@@ -45,6 +45,11 @@ console.log("🔍 Avvio caricaGiocatoriFP");
 async function caricaGiocatoriFP() {
   try {
     const response = await fetch(URL_QUOTAZIONI);
+    console.log("📦 Fetch fatto, status:", response.status);
+if (!response.ok) {
+  console.error("❌ Errore nel fetch delle Quotazioni:", response.status);
+  return;
+}
     const text = await response.text();
     const rows = text
   .split("\n")
