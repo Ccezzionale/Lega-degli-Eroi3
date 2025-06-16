@@ -1,22 +1,22 @@
 
 const rose = {};
 const squadre = [
-  { nome: "Team Bartowski", col: 0, start: 2, end: 29 },
-  { nome: "Rubin Kebab", col: 5, start: 2, end: 29 },
-  { nome: "Wildboys", col: 0, start: 33, end: 60 },
-  { nome: "Desperados", col: 5, start: 33, end: 60 },
-  { nome: "Rafa Casablanca", col: 0, start: 64, end: 91 },
-  { nome: "PokerMantra", col: 5, start: 64, end: 91 },
-  { nome: "Bayern Christiansen", col: 0, start: 95, end: 122 },
-  { nome: "Minnesode Timberland", col: 5, start: 95, end: 122 },
-  { nome: "Sharknado 04", col: 0, start: 126, end: 153 },
-  { nome: "Real Mimmo", col: 5, start: 126, end: 153 },
-  { nome: "Giody", col: 0, start: 157, end: 184 },
-  { nome: "Ibla", col: 5, start: 157, end: 184 },
-  { nome: "Pandinicoccolosini", col: 0, start: 188, end: 215 },
-  { nome: "Giulay", col: 5, start: 188, end: 215 },
-  { nome: "MinneSota Snakes", col: 0, start: 219, end: 246 },
-  { nome: "Union Librino", col: 5, start: 219, end: 246 },
+  { col: 0, start: 2, end: 29, headerRow: 0 },
+  { col: 5, start: 2, end: 29, headerRow: 0 },
+  { col: 0, start: 33, end: 60, headerRow: 31 },
+  { col: 5, start: 33, end: 60, headerRow: 31 },
+  { col: 0, start: 64, end: 91, headerRow: 62 },
+  { col: 5, start: 64, end: 91, headerRow: 62 },
+  { col: 0, start: 95, end: 122, headerRow: 93 },
+  { col: 5, start: 95, end: 122, headerRow: 93 },
+  { col: 0, start: 126, end: 153, headerRow: 124 },
+  { col: 5, start: 126, end: 153, headerRow: 124 },
+  { col: 0, start: 157, end: 184, headerRow: 155 },
+  { col: 5, start: 157, end: 184, headerRow: 155 },
+  { col: 0, start: 188, end: 215, headerRow: 187 },
+  { col: 5, start: 188, end: 215, headerRow: 187 },
+  { col: 0, start: 219, end: 246, headerRow: 218 },
+  { col: 5, start: 219, end: 246, headerRow: 218 },
 ];
 
 async function caricaRose() {
@@ -25,6 +25,9 @@ async function caricaRose() {
   const rows = text.split("\n").map(r => r.split(","));
 
   for (const s of squadre) {
+    let nomeSquadra = rows[s.headerRow]?.[s.col]?.trim();
+    if (!nomeSquadra) continue;
+
     const giocatori = [];
     for (let i = s.start; i <= s.end; i++) {
       const ruolo = rows[i]?.[s.col] || "";
@@ -35,8 +38,9 @@ async function caricaRose() {
         giocatori.push({ nome, ruolo, squadra, quotazione });
       }
     }
-    rose[s.nome] = {
-      logo: `img/${s.nome.toLowerCase().replaceAll(" ", "_")}.png`,
+
+    rose[nomeSquadra] = {
+      logo: `img/${nomeSquadra.toLowerCase().replaceAll(" ", "_")}.png`,
       giocatori
     };
   }
