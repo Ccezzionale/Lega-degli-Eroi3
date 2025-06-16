@@ -55,14 +55,17 @@ async function caricaRose() {
     }
 
     if (giocatori.length > 0) {
+      console.log(`✅ Squadra: ${nomeSquadra}, Giocatori: ${giocatori.length}`);
       rose[nomeSquadra] = {
         logo: trovaLogo(nomeSquadra),
         giocatori
       };
+    } else {
+      console.warn(`⚠️ Ignorata squadra '${nomeSquadra}' (nessun giocatore valido tra le righe ${s.start}-${s.end})`);
     }
   }
-console.log("✅ Squadre caricate:", Object.keys(rose));
-  
+
+  console.log("✅ Squadre caricate:", Object.keys(rose));
   mostraRose();
 }
 
