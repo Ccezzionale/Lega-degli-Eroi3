@@ -1,8 +1,13 @@
 
 function caricaChiamate(conference) {
-  const urls = {
-    league: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRK5ADcukTU83udU_Z9Zd9w66-2LGi8TlWJP_F5WfcaHQePIUpRBynnpbnxbkEGnrh44jMvvBo7Wzo3/pub?output=csv",
-    champ: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSGbT5qMBn_PHnAyGfR1IayL3BgrfBYENXZ1tMoBXjvoZxQAFVI5wRk7kY0M9sAXuJg0wVImKh0g_bB/pub?gid=1279168385&single=true&output=csv"
+
+const chiamateURLs = {
+  league15: "https://script.google.com/macros/s/AKfycbyFp5ILk_ipmbH1DUaw6fFGiKqHMKk9F1GysyEw7PV8qdqyHBVBsSWh7zpR_ALyXGBq/exec",
+  league16: "https://script.google.com/macros/s/AKfycbxrBDg3cKtDjCxipDeylmjVpqmVZtrdnEgiHOV0D31M64ND-hQePcLX2CffRS-GgfrGCw/exec",
+  champ15: "https://script.google.com/macros/s/AKfycbzweLTNlvrKlbpPpJ1a1aV5zYc00-TYnFcwF4lw2DdXUOTw6JvftWZtzD42s2mdNGxY/exec",
+  champ16: "https://script.google.com/macros/s/AKfycbx4Id2uQE-uVX96HPCHAkUATEEb232YfYjlA5uI1RhaiLaFlrMcOoQ8Mju5mWa9ZQGv/exec"
+};
+
   };
 
   const url = urls[conference];
