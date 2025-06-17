@@ -19,6 +19,7 @@ const giocatoriU21PerSquadra = {
   "Pandinicoccolosini": ["yildiz"]
 };
 
+
 const conferencePerSquadra = {
   "Team Bartowski": "Conference League",
   "Desperados": "Conference League",
@@ -166,16 +167,19 @@ async function caricaRose() {
   mostraRose();
 }
 
+
 function mostraRose() {
   const container = document.getElementById("contenitore-rose");
   if (!container) return;
   container.innerHTML = "";
 
   for (const [nome, data] of Object.entries(rose)) {
+    const conf = conferencePerSquadra[nome] || "N/A";
+
     const div = document.createElement("div");
     div.className = "box-rosa giocatore";
     div.setAttribute("data-squadra", nome);
-    div.setAttribute("data-conference", conferencePerSquadra[nome] || "N/A");
+    div.setAttribute("data-conference", conf);
 
     div.innerHTML = `
       <h2><img src="${data.logo}" class="logo-squadra"> ${nome}</h2>
@@ -194,18 +198,8 @@ function mostraRose() {
     `;
     container.appendChild(div);
   }
+  popolaFiltri();
 }
-
-window.addEventListener("DOMContentLoaded", caricaRose);
-
-// 🔍 Filtro per nome giocatore
-document.getElementById('filtro-nome').addEventListener('input', filtraGiocatori);
-// 🎯 Filtro per conference
-document.getElementById('filtro-conference').addEventListener('change', filtraGiocatori);
-// 🏟️ Filtro per squadra
-document.getElementById('filtro-squadra').addEventListener('change', filtraGiocatori);
-
-// 🔄 Reset filtri
 function resetFiltri() {
   document.getElementById('filtro-nome').value = '';
   document.getElementById('filtro-conference').value = 'Tutte';
@@ -233,5 +227,39 @@ function filtraGiocatori() {
     } else {
       row.style.display = 'none';
     }
+  });
+}
+
+
+
+
+function popolaFiltri() {
+  const selectSquadra = document.getElementById("filtro-squadra");
+  const selectConf = document.getElementById("filtro-conference");
+
+  if (!selectSquadra || !selectConf) return;
+
+  const squadreUniche = new Set();
+  const conferenceUniche = new Set();
+
+  document.querySelectorAll(".giocatore").forEach(div => {
+    squadreUniche.add(div.getAttribute("data-squadra"));
+    conferenceUniche.add(div.getAttribute("data-conference"));
+  });
+
+  selectSquadra.innerHTML = '<option value="Tutte">Tutte le squadre</option>';
+  squadreUniche.forEach(s => {
+    const opt = document.createElement("option");
+    opt.value = s;
+    opt.textContent = s;
+    selectSquadra.appendChild(opt);
+  });
+
+  selectConf.innerHTML = '<option value="Tutte">Tutte le Conference</option>';
+  conferenceUniche.forEach(c => {
+    const opt = document.createElement("option");
+    opt.value = c;
+    opt.textContent = c;
+    selectConf.appendChild(opt);
   });
 }
