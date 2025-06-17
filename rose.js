@@ -43,34 +43,46 @@ function trovaLogo(nomeSquadra) {
 }
 console.log("🔍 Avvio caricaGiocatoriFP");
 async function caricaGiocatoriFP() {
-  console.log("🔍 Avvio caricaGiocatoriFP");
-
   try {
     const response = await fetch(URL_QUOTAZIONI);
-    console.log("📦 Fetch fatto, status:", response.status);
     const text = await response.text();
-    console.log("📄 Preview CSV:", text.slice(0, 300));
-
     const rows = text.split("\n").map(r => r.split(","));
-    
+
+    const portieriPerSquadra = {}; // Per i blocchi portieri
+
     for (let i = 1; i < rows.length; i++) {
-      const ruolo = rows[i][0]?.trim().toUpperCase();     // Colonna A
-      const nome = rows[i][2]?.trim().toLowerCase();      // Colonna C
-      const qtAm = parseFloat(rows[i][4]?.replace(",", ".")); // Colonna E
+      const ruolo = rows[i][0]?.trim().toUpperCase();     // Ruolo
+      const nome = rows[i][2]?.trim();                     // Nome
+      const squadra = rows[i][3]?.trim();                  // Squadra
+      const quotazione = parseFloat(rows[i][4]?.replace(",", ".")); // Quotazione Mantra
 
-      if (!nome || isNaN(qtAm)) continue;
+      if (!nome || isNaN(quotazione)) continue;
 
-      if (
-        (ruolo === "D" && qtAm <= 9) ||
-        (ruolo === "C" && qtAm <= 14) ||
-        (ruolo === "A" && qtAm <= 19)
+      const nomeLower = nome.toLowerCase();
+
+      if (ruolo === "P") {
+        if (!portieriPerSquadra[squadra]) portieriPerSquadra[squadra] = [];
+        portieriPerSquadra[squadra].push({ nome: nomeLower, quotazione });
+      } else if (
+        (ruolo === "D" && quotazione <= 9) ||
+        (ruolo === "C" && quotazione <= 14) ||
+        (ruolo === "A" && quotazione <= 19)
       ) {
-        giocatoriFP.add(nome);
-        console.log("🟡 FP trovato:", nome);
+        giocatoriFP.add(nomeLower);
       }
     }
+
+    // Verifica dei blocchi portieri FP
+    for (const squadra in portieriPerSquadra) {
+      const blocco = portieriPerSquadra[squadra];
+      const maxQuota = Math.max(...blocco.map(p => p.quotazione));
+      if (maxQuota <= 12) {
+        blocco.forEach(p => giocatoriFP.add(p.nome));
+      }
+    }
+
   } catch (e) {
-    console.error("❌ Errore nel caricamento FP:", e);
+    console.error("Errore nel caricamento FP:", e);
   }
 }
 
