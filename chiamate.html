@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -23,14 +22,36 @@
   </div>
 
   <div class="switcher">
-    <button onclick="caricaChiamate('league')">Conference League</button>
-    <button onclick="caricaChiamate('champ')">Conference Championship</button>
+    <button onclick="caricaChiamate('league')">📋 Visualizza Conference League</button>
+    <button onclick="caricaChiamate('champ')">📋 Visualizza Conference Championship</button>
   </div>
 
   <div id="chiamate-container">
     <p>⏳ Seleziona una conference per visualizzare le chiamate.</p>
   </div>
 
-  <script src="chiamate.js"></script>
+  <script>
+    function caricaChiamate(conference) {
+      const container = document.getElementById('chiamate-container');
+      container.innerHTML = "<p>⏳ Caricamento in corso...</p>";
+
+      let url = "";
+      if (conference === "league") {
+        url = "https://script.google.com/macros/s/AKfycbxrBDg3cKtDjCxipDeylmjVpqmVZtrdnEgiHOV0D31M64ND-hQePcLX2CffRS-GgfrGCw/exec";
+      } else if (conference === "champ") {
+        url = "https://script.google.com/macros/s/AKfycbx4Id2uQE-uVX96HPCHAkUATEEb232YfYjlA5uI1RhaiLaFlrMcOoQ8Mju5mWa9ZQGv/exec";
+      }
+
+      fetch(url)
+        .then(response => response.text())
+        .then(data => {
+          container.innerHTML = `<pre>${data}</pre>`;
+        })
+        .catch(error => {
+          container.innerHTML = `<p>❌ Errore nel caricamento: ${error}</p>`;
+        });
+    }
+  </script>
 </body>
 </html>
+
