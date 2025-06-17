@@ -36,14 +36,21 @@
   <h1>Rose delle Squadre</h1>
 
 <div id="filtri-rose">
+  <input id="filtro-nome" type="text" placeholder="Cerca giocatore..." />
+  
   <select id="filtro-conference">
-  <option value="Tutte">Tutte le Conference</option>
-</select>
-<select id="filtro-squadra">
-  <option value="Tutte">Tutte le squadre</option>
-</select>
-  <input type="text" id="filtro-nome" placeholder="Cerca giocatore..." />
-  <button onclick="resetFiltri()">🔁 Reset</button>
+    <option value="Tutte">Tutte le Conference</option>
+    <option value="Conference League">Conference League</option>
+    <option value="Conference Championship">Conference Championship</option>
+  </select>
+  
+  <select id="filtro-squadra">
+    <option value="Tutte">Tutte le squadre</option>
+    <option value="Real Mimmo">Real Mimmo</option>
+    <option value="Giody">Giody</option>
+    <option value="Desperados">Desperados</option>
+    <!-- aggiungi tutte le squadre -->
+  </select>
 </div>
 
   <div id="contenitore-rose">Caricamento rose...</div>
