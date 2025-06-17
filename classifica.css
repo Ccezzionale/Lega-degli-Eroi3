@@ -10,6 +10,14 @@
   height: 48px;
   object-fit: contain;
 }
+#tabella-classifica td .logo-nome img {
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+}
+#tabella-classifica td .logo-nome img {
+  border-radius: 50%; /* oppure 10px per rettangolare con angoli stondati */
+}
 
 /* Accordion Mobile */
 @media (max-width: 768px) {
