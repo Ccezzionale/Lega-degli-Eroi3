@@ -19,6 +19,26 @@ const giocatoriU21PerSquadra = {
   "Pandinicoccolosini": ["yildiz"]
 };
 
+
+const conferencePerSquadra = {
+  "Team Bartowski": "Conference League",
+  "Desperados": "Conference League",
+  "Sharknado 04": "Conference Championship",
+  "Real Mimmo": "Conference Championship",
+  "Giody": "Conference Championship",
+  "Union Librino": "Conference Championship",
+  "RubinKebab": "Conference Championship",
+  "Rafa Casablanca": "Conference Championship",
+  "PokerMantra": "Conference Championship",
+  "wildboys78": "Conference Championship",
+  "Bayern Christiansen": "Conference League",
+  "Minnesode Timberland": "Conference League",
+  "Giulay": "Conference League",
+  "MinneSota Snakes": "Conference League",
+  "Ibla": "Conference League",
+  "Pandinicoccolosini": "Conference League",
+};
+
 const URL_ROSE = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSE8Q0l1pnU8NCtId51qCk8Pstat27g6JBQaU-3UKIY0ZCZicUJ1u1T-ElvuR9NK9pc2WYpunW-a4ld/pub?output=csv";
 
 const URL_QUOTAZIONI = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSE8Q0l1pnU8NCtId51qCk8Pstat27g6JBQaU-3UKIY0ZCZicUJ1u1T-ElvuR9NK9pc2WYpunW-a4ld/pub?gid=2087990274&single=true&output=csv";
@@ -147,25 +167,31 @@ async function caricaRose() {
   mostraRose();
 }
 
+
 function mostraRose() {
   const container = document.getElementById("contenitore-rose");
   if (!container) return;
   container.innerHTML = "";
 
   for (const [nome, data] of Object.entries(rose)) {
+    const conf = conferencePerSquadra[nome] || "N/A";
+
     const div = document.createElement("div");
-    div.className = "box-rosa";
+    div.className = "box-rosa giocatore";
+    div.setAttribute("data-squadra", nome);
+    div.setAttribute("data-conference", conf);
+
     div.innerHTML = `
-      <h2><img src="${data.logo}" class="logo-squadra"> ${nome}</h2>
+      <h2><img src="\${data.logo}" class="logo-squadra"> \${nome}</h2>
       <table>
         <thead><tr><th>Ruolo</th><th>Nome</th><th>Squadra</th><th>Q</th></tr></thead>
         <tbody>
-          ${data.giocatori.map(g => `
+          \${data.giocatori.map(g => `
             <tr>
-              <td>${g.ruolo}</td>
-              <td>${g.nome} ${g.fp ? '🅕' : ''} ${g.u21 ? '🅤21' : ''}</td>
-              <td>${g.squadra}</td>
-              <td>${g.quotazione}</td>
+              <td>\${g.ruolo}</td>
+              <td class="nome">\${g.nome} \${g.fp ? '🅕' : ''} \${g.u21 ? '🅤21' : ''}</td>
+              <td>\${g.squadra}</td>
+              <td>\${g.quotazione}</td>
             </tr>`).join("")}
         </tbody>
       </table>
@@ -173,17 +199,6 @@ function mostraRose() {
     container.appendChild(div);
   }
 }
-
-window.addEventListener("DOMContentLoaded", caricaRose);
-
-// 🔍 Filtro per nome giocatore
-document.getElementById('filtro-nome').addEventListener('input', filtraGiocatori);
-// 🎯 Filtro per conference
-document.getElementById('filtro-conference').addEventListener('change', filtraGiocatori);
-// 🏟️ Filtro per squadra
-document.getElementById('filtro-squadra').addEventListener('change', filtraGiocatori);
-
-// 🔄 Reset filtri
 function resetFiltri() {
   document.getElementById('filtro-nome').value = '';
   document.getElementById('filtro-conference').value = 'Tutte';
@@ -213,3 +228,4 @@ function filtraGiocatori() {
     }
   });
 }
+
