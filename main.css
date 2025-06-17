@@ -458,3 +458,39 @@ h1 {
   margin-top: 20px;
   box-shadow: 0 0 10px #00000033;
 }
+@media (max-width: 600px) {
+
+  h2 {
+    font-size: 1.4rem;
+  }
+
+  .riga-bottoni,
+  .switcher {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+    padding: 0 10px;
+  }
+
+  .bottone-chiamata,
+  .switcher button {
+    font-size: 0.95rem;
+    padding: 8px 12px;
+    text-align: center;
+  }
+
+  #chiamate-container table {
+    font-size: 0.85rem;
+  }
+
+  #chiamate-container th,
+  #chiamate-container td {
+    padding: 6px;
+  }
+
+  #chiamate-container .avviso {
+    font-size: 0.9rem;
+    padding: 12px;
+    text-align: center;
+  }
+}
