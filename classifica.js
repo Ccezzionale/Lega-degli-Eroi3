@@ -69,11 +69,11 @@ function caricaClassifica(nomeFoglio = "Conference") {
             wrapper.className = "logo-nome";
 
             const img = document.createElement("img");
-            const nomeFile = val + ".png";
             const fileBase = val.replaceAll(" ", "_").toLowerCase();
             img.src = `img/${fileBase}.png`;
             img.alt = val;
             img.onerror = () => { img.style.display = "none"; };
+
 
             let cleanName = val.replace(/[👑🎖️💀]/g, "").trim();
             if (nomeFoglio === "Totale" && i <= 4) cleanName = "🎖️ " + cleanName;
