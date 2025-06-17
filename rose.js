@@ -213,29 +213,36 @@ function filtraGiocatori() {
     }
   });
 }
+function popolaFiltri() {
+  const selectSquadra = document.getElementById("filtro-squadra");
+  const selectConf = document.getElementById("filtro-conference");
 
-// PATCH PER FILTRI
-const div = document.createElement("div");
-        div.className = "giocatore";
-        div.setAttribute("data-conference", squadra.conference);
-        div.setAttribute("data-squadra", squadra.nome);
+  if (!selectSquadra || !selectConf) return;
 
-        const titolo = document.createElement("h3");
-        titolo.textContent = squadra.nome;
-        div.appendChild(titolo);
+  const squadreUniche = new Set();
+  const conferenceUniche = new Set();
 
-        squadra.giocatori.forEach(g => {
-          const riga = document.createElement("div");
-          riga.className = "riga";
-          const nome = document.createElement("span");
-          nome.className = "nome";
-          nome.textContent = g.nome;
-          riga.appendChild(nome);
-          div.appendChild(riga);
-        });
+  document.querySelectorAll(".giocatore").forEach(div => {
+    squadreUniche.add(div.getAttribute("data-squadra"));
+    conferenceUniche.add(div.getAttribute("data-conference"));
+  });
 
-        document.getElementById("contenitore-rose").appendChild(div);
+  selectSquadra.innerHTML = '<option value="Tutte">Tutte le squadre</option>';
+  squadreUniche.forEach(s => {
+    const opt = document.createElement("option");
+    opt.value = s;
+    opt.textContent = s;
+    selectSquadra.appendChild(opt);
+  });
 
+  selectConf.innerHTML = '<option value="Tutte">Tutte le Conference</option>';
+  conferenceUniche.forEach(c => {
+    const opt = document.createElement("option");
+    opt.value = c;
+    opt.textContent = c;
+    selectConf.appendChild(opt);
+  });
+}
 
 if (document.readyState === "loading") {
   window.addEventListener("DOMContentLoaded", caricaRose);
