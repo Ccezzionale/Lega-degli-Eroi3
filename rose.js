@@ -213,3 +213,25 @@ function filtraGiocatori() {
     }
   });
 }
+
+// PATCH PER FILTRI
+const div = document.createElement("div");
+        div.className = "giocatore";
+        div.setAttribute("data-conference", squadra.conference);
+        div.setAttribute("data-squadra", squadra.nome);
+
+        const titolo = document.createElement("h3");
+        titolo.textContent = squadra.nome;
+        div.appendChild(titolo);
+
+        squadra.giocatori.forEach(g => {
+          const riga = document.createElement("div");
+          riga.className = "riga";
+          const nome = document.createElement("span");
+          nome.className = "nome";
+          nome.textContent = g.nome;
+          riga.appendChild(nome);
+          div.appendChild(riga);
+        });
+
+        document.getElementById("contenitore-rose").appendChild(div);
