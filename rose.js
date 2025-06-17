@@ -144,9 +144,8 @@ async function caricaRose() {
     }
   }
 
- mostraRose();
+  mostraRose();
 }
-
 
 function mostraRose() {
   const container = document.getElementById("contenitore-rose");
@@ -154,13 +153,8 @@ function mostraRose() {
   container.innerHTML = "";
 
   for (const [nome, data] of Object.entries(rose)) {
-    const conf = conferencePerSquadra[nome] || "N/A";
-
     const div = document.createElement("div");
-    div.className = "box-rosa giocatore";
-    div.setAttribute("data-conference", conf);
-    div.setAttribute("data-squadra", nome);
-
+    div.className = "box-rosa";
     div.innerHTML = `
       <h2><img src="${data.logo}" class="logo-squadra"> ${nome}</h2>
       <table>
@@ -169,7 +163,7 @@ function mostraRose() {
           ${data.giocatori.map(g => `
             <tr>
               <td>${g.ruolo}</td>
-              <td class="nome">${g.nome} ${g.fp ? '🅕' : ''} ${g.u21 ? '🅤21' : ''}</td>
+              <td>${g.nome} ${g.fp ? '🅕' : ''} ${g.u21 ? '🅤21' : ''}</td>
               <td>${g.squadra}</td>
               <td>${g.quotazione}</td>
             </tr>`).join("")}
@@ -179,6 +173,17 @@ function mostraRose() {
     container.appendChild(div);
   }
 }
+
+window.addEventListener("DOMContentLoaded", caricaRose);
+
+// 🔍 Filtro per nome giocatore
+document.getElementById('filtro-nome').addEventListener('input', filtraGiocatori);
+// 🎯 Filtro per conference
+document.getElementById('filtro-conference').addEventListener('change', filtraGiocatori);
+// 🏟️ Filtro per squadra
+document.getElementById('filtro-squadra').addEventListener('change', filtraGiocatori);
+
+// 🔄 Reset filtri
 function resetFiltri() {
   document.getElementById('filtro-nome').value = '';
   document.getElementById('filtro-conference').value = 'Tutte';
@@ -208,3 +213,25 @@ function filtraGiocatori() {
     }
   });
 }
+
+// PATCH PER FILTRI
+const div = document.createElement("div");
+        div.className = "giocatore";
+        div.setAttribute("data-conference", squadra.conference);
+        div.setAttribute("data-squadra", squadra.nome);
+
+        const titolo = document.createElement("h3");
+        titolo.textContent = squadra.nome;
+        div.appendChild(titolo);
+
+        squadra.giocatori.forEach(g => {
+          const riga = document.createElement("div");
+          riga.className = "riga";
+          const nome = document.createElement("span");
+          nome.className = "nome";
+          nome.textContent = g.nome;
+          riga.appendChild(nome);
+          div.appendChild(riga);
+        });
+
+        document.getElementById("contenitore-rose").appendChild(div);
