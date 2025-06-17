@@ -70,7 +70,7 @@ function caricaClassifica(nomeFoglio = "Conference") {
 
             const img = document.createElement("img");
             const nomeFile = val + ".png";
-            const fileBase = val.replaceAll(" ", "_").toLowerCase();
+            const fileBase = val.replaceAll(" ", "_");
             img.src = `img/${fileBase}.png`;
             img.alt = val;
             img.onerror = () => { img.style.display = "none"; };
