@@ -7,46 +7,16 @@
   <title>Rose - Lega degli Eroi</title>
   <link rel="stylesheet" href="main.css" />
   <style>
-    #filtri-rose {
-      padding: 20px;
-      text-align: center;
-      background-color: #001f3f;
+    .logo-squadra {
+      width: 48px;
+      max-height: 48px;
+      object-fit: contain;
     }
-    #filtri-rose select,
-    #filtri-rose input {
-      padding: 8px;
-      margin: 5px;
-      border-radius: 6px;
-      border: none;
-      font-size: 1rem;
-    }
-    #filtri-rose button {
-      padding: 8px 12px;
-      margin-left: 10px;
-      background-color: #ffcc00;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
   </style>
 </head>
 <body>
   <h1>Rose delle Squadre</h1>
-
-<div id="filtri-rose">
-  <select id="filtro-conference">
-  <option value="Tutte">Tutte le Conference</option>
-</select>
-<select id="filtro-squadra">
-  <option value="Tutte">Tutte le squadre</option>
-</select>
-  <input type="text" id="filtro-nome" placeholder="Cerca giocatore..." />
-  <button onclick="resetFiltri()">🔁 Reset</button>
-</div>
-
   <div id="contenitore-rose">Caricamento rose...</div>
-  <script src="rose.js?v=11"></script>
+  <script src="rose.js?v=999"></script>
 </body>
 </html>
