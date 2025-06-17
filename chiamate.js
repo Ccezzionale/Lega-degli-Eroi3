@@ -1,46 +1,42 @@
-function caricaChiamate(conference) {
-  const chiamateURLs = {
-    league15: "https://script.google.com/macros/s/AKfycbyFp5ILk_ipmbH1DUaw6fFGiKqHMKk9F1GysyEw7PV8qdqyHBVBsSWh7zpR_ALyXGBq/exec",
-    league16: "https://script.google.com/macros/s/AKfycbxrBDg3cKtDjCxipDeylmjVpqmVZtrdnEgiHOV0D31M64ND-hQePcLX2CffRS-GgfrGCw/exec",
-    champ15: "https://script.google.com/macros/s/AKfycbzweLTNlvrKlbpPpJ1a1aV5zYc00-TYnFcwF4lw2DdXUOTw6JvftWZtzD42s2mdNGxY/exec",
-    champ16: "https://script.google.com/macros/s/AKfycbx4Id2uQE-uVX96HPCHAkUATEEb232YfYjlA5uI1RhaiLaFlrMcOoQ8Mju5mWa9ZQGv/exec"
-  };
 
-  const url = chiamateURLs[conference];
+const chiamateCSV = {
+  league15: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSzoMOkxFPR54NEbGhx_uZ7vTAYdcYv7uH8VJ9v8i1uV3hJth-82pmIEOenFpsJpA/pub?gid=492764886&single=true&output=csv",
+  league16: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRkZyBpgHLlY5-uBy_vI5G7iJdCVpm3ik_-PMok8nT7HVr9L2hxFlVfWxNCO3_LzA/pub?gid=0&single=true&output=csv",
+  champ15: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ71C45uRCpp_cDOmFfZUKguTldYYnp1tVRSfB8o3eI8VWzEoz4BuYXmTzM9tkB-A/pub?gid=1279168385&single=true&output=csv",
+  champ16: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRQKxJzjcn7G2HiMnKtnc2MLG3MVY-YKnOvGlGyfBdsDbkXRHL1vV2d0rMrAn3-zg/pub?gid=0&single=true&output=csv"
+};
+
+function caricaChiamate(conference) {
+  const container = document.getElementById("chiamate-container");
+  container.innerHTML = "<p>⏳ Caricamento in corso...</p>";
+  const url = chiamateCSV[conference];
   if (!url) return;
 
   fetch(url)
     .then(response => response.text())
     .then(csv => {
-      const righe = csv.split('\\n').map(r => r.split(','));
+      const righe = csv.split("\n").map(r => r.split(","));
       const intestazioni = righe[0];
       const dati = righe.slice(1);
 
       if (dati.length === 1 && dati[0][0].startsWith("🔒")) {
-        document.getElementById('chiamate-container').innerHTML =
-          '<div class="avviso">' + dati[0][0] + '</div>';
+        container.innerHTML = '<div class="avviso">' + dati[0][0] + '</div>';
         return;
       }
 
       let html = '<table><thead><tr>';
-      for (let i = 0; i < intestazioni.length; i++) {
-        html += '<th>' + intestazioni[i] + '</th>';
-      }
+      intestazioni.forEach(t => html += '<th>' + t + '</th>');
       html += '</tr></thead><tbody>';
-
-      dati.forEach(riga => {
-        if (riga.length >= 2 && riga[1].trim() !== '') {
-          html += '<tr>';
-          riga.forEach(val => html += '<td>' + val + '</td>');
-          html += '</tr>';
+      dati.forEach(r => {
+        if (r.length > 1 && r[1].trim() !== '') {
+          html += '<tr>' + r.map(v => '<td>' + v + '</td>').join('') + '</tr>';
         }
       });
-
       html += '</tbody></table>';
-      document.getElementById('chiamate-container').innerHTML = html;
+      container.innerHTML = html;
     })
     .catch(err => {
-      console.error('Errore nel caricamento CSV:', err);
-      document.getElementById('chiamate-container').innerHTML = '❌ Errore nel caricamento delle chiamate.';
+      container.innerHTML = '<p style="color:red;">❌ Errore nel caricamento.</p>';
+      console.error(err);
     });
 }
