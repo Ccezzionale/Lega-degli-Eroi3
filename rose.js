@@ -125,13 +125,14 @@ async function caricaRose() {
       const nomeClean = nome.toLowerCase();
 
       if (nome && nome.toLowerCase() !== "nome") {
-        giocatori.push({
-          nome,
-          ruolo,
-          squadra,
-          quotazione,
-          fp: giocatoriFP.has(nomeClean)
-        });
+       giocatori.push({
+  nome,
+  ruolo,
+  squadra,
+  quotazione,
+  fp: giocatoriFP.has(nomeClean),
+  u21: giocatoriU21PerSquadra[nomeSquadra]?.includes(nomeClean) || false
+});
       }
     }
 
@@ -162,7 +163,7 @@ function mostraRose() {
           ${data.giocatori.map(g => `
             <tr>
               <td>${g.ruolo}</td>
-              <td>${g.nome} ${g.fp ? '🅕' : ''}</td>
+              <td>${g.nome} ${g.fp ? '🅕' : ''} ${g.u21 ? '🅤21' : ''}</td>
               <td>${g.squadra}</td>
               <td>${g.quotazione}</td>
             </tr>`).join("")}
