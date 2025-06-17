@@ -1,29 +1,68 @@
+
 <!DOCTYPE html>
 <html lang="it">
 <head>
   <meta charset="UTF-8" />
   <title>Chiamate Settimanali</title>
   <link rel="stylesheet" href="main.css" />
+  <style>
+    .moduli-container, .switcher {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 20px;
+      justify-content: center;
+    }
+
+    .bottone-chiamata, .switcher button {
+      background-color: #ffcc00;
+      color: #000;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 15px;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
+      transition: 0.2s;
+    }
+
+    .bottone-chiamata:hover, .switcher button:hover {
+      background-color: #e6b800;
+    }
+
+    #chiamate-container {
+      margin: 20px;
+      text-align: center;
+      color: white;
+    }
+  </style>
 </head>
 <body>
-  <h2>Chiamate Settimanali</h2>
+  <h2 style="text-align:center;">Chiamate Settimanali</h2>
 
   <div class="moduli-container">
-    <a class="bottone-chiamata"
-       href="https://docs.google.com/forms/d/e/1FAIpQLScNaxnbpVmIW_t23uvRqLkRy6sDrzyEvQQ-mpLDkk67DVDLag/viewform?usp=dialog"
-       target="_blank">
-       ➕ Compila una chiamata (Conference League)
+    <!-- League -->
+    <a class="bottone-chiamata" href="https://docs.google.com/forms/d/e/1FAIpQLSdxOpFrvWkhi6TrhryrIVJUeMISAxo-CatGtw8TuNApRyU8Yg/viewform?usp=dialog" target="_blank">
+      ➕ Compila chiamata 15:00 (Conference League)
     </a>
-    <a class="bottone-chiamata"
-       href="https://docs.google.com/forms/d/e/1FAIpQLSdxOpFrvWkhi6TrhryrIVJUeMISAxo-CatGtw8TuNApRyU8Yg/viewform?usp=dialog"
-       target="_blank">
-       ➕ Compila una chiamata (Conference Championship)
+    <a class="bottone-chiamata" href="https://docs.google.com/forms/d/e/1FAIpQLScR411PT9pvIZ9SxoFeiKKwbI_Mk0r5USa-rk6Egv0ZyOnSSQ/viewform?usp=dialog" target="_blank">
+      ➕ Compila chiamata 16:00 (Conference League)
+    </a>
+
+    <!-- Championship -->
+    <a class="bottone-chiamata" href="https://docs.google.com/forms/d/e/1FAIpQLScNaxnbpVmIW_t23uvRqLkRy6sDrzyEvQQ-mpLDkk67DVDLag/viewform?usp=dialog" target="_blank">
+      ➕ Compila chiamata 15:00 (Conference Championship)
+    </a>
+    <a class="bottone-chiamata" href="https://docs.google.com/forms/d/e/1FAIpQLSfwpZkHssyd3GVJodKLwGJjNttEe-qvMqqCRE50LiTp6bH2jA/viewform?usp=dialog" target="_blank">
+      ➕ Compila chiamata 16:00 (Conference Championship)
     </a>
   </div>
 
   <div class="switcher">
-    <button onclick="caricaChiamate('league')">📋 Visualizza Conference League</button>
-    <button onclick="caricaChiamate('champ')">📋 Visualizza Conference Championship</button>
+    <button onclick="caricaChiamate('league15')">📋 Visualizza Conference League (15:00)</button>
+    <button onclick="caricaChiamate('league16')">📋 Visualizza Conference League (16:00)</button>
+    <button onclick="caricaChiamate('champ15')">📋 Visualizza Conference Championship (15:00)</button>
+    <button onclick="caricaChiamate('champ16')">📋 Visualizza Conference Championship (16:00)</button>
   </div>
 
   <div id="chiamate-container">
@@ -35,23 +74,25 @@
       const container = document.getElementById('chiamate-container');
       container.innerHTML = "<p>⏳ Caricamento in corso...</p>";
 
-      let url = "";
-      if (conference === "league") {
-        url = "https://script.google.com/macros/s/AKfycbxrBDg3cKtDjCxipDeylmjVpqmVZtrdnEgiHOV0D31M64ND-hQePcLX2CffRS-GgfrGCw/exec";
-      } else if (conference === "champ") {
-        url = "https://script.google.com/macros/s/AKfycbx4Id2uQE-uVX96HPCHAkUATEEb232YfYjlA5uI1RhaiLaFlrMcOoQ8Mju5mWa9ZQGv/exec";
-      }
+      const urls = {
+        league15: "https://script.google.com/macros/s/AKfycbyFp5ILk_ipmbH1DUaw6fFGiKqHMKk9F1GysyEw7PV8qdqyHBVBsSWh7zpR_ALyXGBq/exec",
+        league16: "https://script.google.com/macros/s/AKfycbxrBDg3cKtDjCxipDeylmjVpqmVZtrdnEgiHOV0D31M64ND-hQePcLX2CffRS-GgfrGCw/exec",
+        champ15: "https://script.google.com/macros/s/AKfycbzweLTNlvrKlbpPpJ1a1aV5zYc00-TYnFcwF4lw2DdXUOTw6JvftWZtzD42s2mdNGxY/exec",
+        champ16: "https://script.google.com/macros/s/AKfycbx4Id2uQE-uVX96HPCHAkUATEEb232YfYjlA5uI1RhaiLaFlrMcOoQ8Mju5mWa9ZQGv/exec"
+      };
 
-      fetch(url)
-        .then(response => response.text())
+      fetch(urls[conference])
+        .then(response => {
+          if (!response.ok) throw new Error("HTTP " + response.status);
+          return response.text();
+        })
         .then(data => {
           container.innerHTML = `<pre>${data}</pre>`;
         })
         .catch(error => {
-          container.innerHTML = `<p>❌ Errore nel caricamento: ${error}</p>`;
+          container.innerHTML = `<p style="color:red;">❌ Errore nel caricamento: ${error}</p>`;
         });
     }
   </script>
 </body>
 </html>
-
