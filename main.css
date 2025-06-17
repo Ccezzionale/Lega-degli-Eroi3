@@ -1,72 +1,453 @@
-
-/* --------- STILE CHIAMATE DESKTOP --------- */
-h2 {
-  font-size: 1.8rem;
-  margin-bottom: 12px;
-}
-
-.moduli-container {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-bottom: 16px;
-}
-
-.riga-bottoni {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-}
-
-.bottone-chiamata {
-  background-color: #0057a3;
-  color: white;
-  padding: 10px 16px;
-  border-radius: 8px;
-  text-decoration: none;
-  font-weight: bold;
-  transition: background-color 0.3s;
-}
-
-.bottone-chiamata:hover {
-  background-color: #003f75;
-}
-
-.switcher {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  margin-bottom: 20px;
-}
-
-.switcher button {
-  padding: 10px 16px;
-  font-weight: bold;
-  border: none;
-  background-color: #eee;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-.switcher button:hover {
-  background-color: #ddd;
-}
-
-#chiamate-container {
+/* --------- STILE GENERALE --------- */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #001f3f;
+  color: #ffffff;
+  margin: 0;
+  padding: 0;
   text-align: center;
 }
 
-#chiamate-container table {
-  margin: 0 auto;
+/* --------- NAVBAR DESKTOP --------- */
+nav {
+  background-color: #004080;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+nav ul.navbar {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  padding: 1rem 0;
+  margin: 0;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+nav ul.navbar li a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+nav ul.navbar li a.active,
+nav ul.navbar li a:hover {
+  color: #ffcc00;
+  text-decoration: underline;
+}
+
+/* --------- MARGINE SOTTO LA NAVBAR --------- */
+main, h1, .container {
+  margin-top: 90px;
+}
+
+/* --------- TABELLA PICK --------- */
+#tabella-pick-container {
+  background-color: #004080;
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 0;
+  margin-bottom: 20px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+
+#tabella-pick {
+  width: 100%;
   border-collapse: collapse;
+  background-color: #004080;
+  color: white;
+  border-radius: 10px;
+  overflow: hidden;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-#chiamate-container th,
+#tabella-pick th {
+  background-color: #005299;
+  color: white;
+  text-transform: uppercase;
+  font-size: 0.9em;
+  padding: 8px;
+  border: 1px solid #ffffff33;
+  text-align: center;
+}
+
+#tabella-pick td {
+  background-color: #003366;
+  color: white;
+  font-size: 0.9em;
+  padding: 8px;
+  border: 1px solid #ffffff33;
+  text-align: center;
+}
+
+#tabella-pick tr:nth-child(even) {
+  background-color: #002b5c;
+}
+
+#tabella-pick tr.next-pick {
+  background-color: #ffe680 !important;
+  color: black;
+  font-weight: bold;
+}
+
+.pick-completata {
+  background-color: #003366 !important;
+  font-weight: bold;
+  color: white !important;
+}
+
+/* --------- RESPONSIVE PER MOBILE --------- */
+@media (max-width: 768px) {
+  nav ul.navbar {
+    overflow-x: auto;
+    white-space: nowrap;
+    justify-content: flex-start;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  nav ul.navbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  nav ul.navbar li {
+    flex: 0 0 auto;
+  }
+
+  nav ul.navbar li a {
+    font-size: 1rem;
+  }
+
+  .container {
+    flex-direction: column;
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .tabella-container,
+  .lista-container {
+    width: 100%;
+    min-width: unset;
+  }
+
+  table {
+    font-size: 0.8em;
+  }
+
+  th, td {
+    padding: 4px;
+  }
+
+  #lista-giocatori-table-container,
+  #tabella-pick-container {
+    max-height: 300px;
+  }
+
+  select,
+  input {
+    font-size: 0.8em;
+    padding: 4px 6px;
+    max-width: 150px;
+    border-radius: 6px;
+  }
+
+  #filtroRuolo,
+  #filtroSerieA,
+  #searchGiocatore {
+    padding: 4px 8px;
+    font-size: 0.8em;
+    max-width: 150px;
+    margin: 0 5px;
+  }
+}
+
+/* --------- TABELLA CHIAMATE --------- */
+#chiamate-container table {
+  width: 90%;
+  margin: 20px auto;
+  border-collapse: collapse;
+  background-color: #004080;
+  color: white;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+
+#chiamate-container th {
+  background-color: #005299;
+  padding: 10px;
+  font-weight: bold;
+  text-transform: uppercase;
+  border: 1px solid #ffffff33;
+}
+
 #chiamate-container td {
-  border: 1px solid #ccc;
-  padding: 8px 12px;
+  background-color: #003366;
+  padding: 10px;
+  border: 1px solid #ffffff33;
 }
 
+#chiamate-container tr:nth-child(even) {
+  background-color: #002b5c;
+}
+
+#chiamate-container tr:hover {
+  background-color: #336699;
+}
+
+/* --------- BOTTONE CHIAMATE --------- */
+.bottone-chiamata {
+  display: inline-block;
+  background-color: #ffcc00;
+  color: #001f3f;
+  padding: 10px 20px;
+  margin: 15px 10px;
+  border-radius: 8px;
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 1rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.bottone-chiamata:hover {
+  background-color: #ffd633;
+  color: #000;
+}
+
+/* --------- SWITCHER CONFERENCE --------- */
+.switcher {
+  margin: 20px;
+}
+.switcher button {
+  background-color: #004080;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin: 0 10px;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.switcher button:hover {
+  background-color: #0059b3;
+}
+
+/* --------- AVVISO CHIAMATE BLOCCATE --------- */
+.avviso {
+  background-color: #0059b3;
+  padding: 15px;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin: 20px auto;
+  max-width: 600px;
+}
+
+/* --------- SWITCHER CONFERENCE --------- */
+.switcher {
+  margin: 20px;
+}
+.switcher button {
+  background-color: #004080;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin: 0 10px;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.switcher button:hover {
+  background-color: #0059b3;
+}
+
+/* --------- AVVISO CHIAMATE BLOCCATE --------- */
+.avviso {
+  background-color: #0059b3;
+  padding: 15px;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin: 20px auto;
+  max-width: 600px;
+}
+
+
+/* --------- TABELLA CLASSIFICA --------- */
+#classifica-container {
+  margin: 0 auto;
+  width: 95%;
+  max-width: 1000px;
+  overflow-x: auto;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(0,0,0,0.3);
+  background-color: #004080;
+}
+
+#tabella-classifica {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #004080;
+  color: white;
+}
+
+#tabella-classifica th {
+  background-color: #ffcc00; color: #001f3f;
+  padding: 10px;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  border: 1px solid #ffffff33;
+  text-align: center;
+}
+
+#tabella-classifica td {
+  background-color: #003366;
+  padding: 8px;
+  border: 1px solid #ffffff33;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+#tabella-classifica tr:nth-child(even) {
+  background-color: #002b5c;
+}
+
+#tabella-classifica tr:hover {
+  background-color: #336699;
+}
+/* --------- ROSE SQUADRE --------- */
+#contenitore-rose {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+.box-rosa {
+  background-color: #004080;
+  color: white;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(0,0,0,0.4);
+  padding: 20px;
+  width: 400px;
+  max-width: 90%;
+  text-align: center;
+}
+
+.box-rosa h2 {
+  font-size: 1.3rem;
+  margin-bottom: 15px;
+  color: #ffcc00;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.logo-squadra {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  vertical-align: middle;
+  border-radius: 8px;
+}
+
+.box-rosa table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  font-size: 0.9rem;
+}
+
+.box-rosa th {
+  background-color: #005299;
+  padding: 8px;
+  border: 1px solid #ffffff33;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+}
+
+.box-rosa td {
+  background-color: #003366;
+  padding: 6px;
+  border: 1px solid #ffffff33;
+}
+
+.box-rosa tr:nth-child(even) {
+  background-color: #002b5c;
+}
+
+h1 {
+  color: #ffcc00;
+}
+
+#filtro-squadra option[value=""] {
+  color: #ffcc00;
+  font-weight: bold;
+}
+
+/* --------- RESPONSIVE ROSE --------- */
+@media (max-width: 768px) {
+  .box-rosa {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .box-rosa table {
+    font-size: 0.8rem;
+  }
+}
+
+/* Contenitore per righe di bottoni */
+.riga-bottoni {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 10px 0;
+}
+
+/* Tabella chiamate */
+#chiamate-container table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background-color: #ffffff10;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+#chiamate-container th {
+  background-color: #003366;
+  color: #ffcc00;
+  padding: 10px;
+  text-align: left;
+}
+
+#chiamate-container td {
+  padding: 10px;
+  border-bottom: 1px solid #ffffff22;
+}
+
+#chiamate-container tr:nth-child(even) {
+  background-color: #001d3d;
+}
+
+#chiamate-container tr:hover {
+  background-color: #004080;
+}
+
+/* Messaggio "🔒 Le chiamate saranno visibili" */
 #chiamate-container .avviso {
   background-color: #0057a3;
   padding: 15px;
@@ -78,45 +459,84 @@ h2 {
   box-shadow: 0 0 10px #00000033;
 }
 
-/* --------- STILE MOBILE --------- */
-@media (max-width: 600px) {
+
+  h2 {
+    font-size: 1.2rem;
+    margin-bottom: 6px;
+  }
+
+  .riga-bottoni,
+  .switcher {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 4px;
+    padding: 0 6px;
+    margin-bottom: 8px;
+  }
+
+  .bottone-chiamata,
+  .switcher button {
+    font-size: 0.85rem;
+    padding: 6px 10px;
+    text-align: center;
+  }
+
+  #chiamate-container table {
+    font-size: 0.78rem;
+  }
+
+  #chiamate-container th,
+  #chiamate-container td {
+    padding: 4px 6px;
+  }
+
+  #chiamate-container .avviso {
+    font-size: 0.85rem;
+    padding: 10px;
+    text-align: center;
+  }
+}
+
+
+  body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  main, #chiamate-container {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px;
+  }
+
   h2 {
     font-size: 1.2rem;
     margin-bottom: 6px;
     text-align: center;
   }
 
-  .moduli-container {
-    padding: 0 10px;
-  }
-
-  .riga-bottoni {
-    flex-direction: column;
-    gap: 6px;
-    align-items: stretch;
-  }
-
-  .bottone-chiamata {
-    font-size: 0.85rem;
-    padding: 8px 12px;
-    text-align: center;
-  }
-
+  .riga-bottoni,
   .switcher {
     flex-direction: column;
+    align-items: stretch;
     gap: 6px;
     padding: 0 10px;
     margin-bottom: 10px;
   }
 
+  .bottone-chiamata,
   .switcher button {
     font-size: 0.85rem;
-    padding: 8px 12px;
+    padding: 7px 10px;
+    text-align: center;
   }
 
   #chiamate-container table {
-    font-size: 0.78rem;
-    width: 100%;
+    font-size: 0.82rem;
   }
 
   #chiamate-container th,
@@ -125,8 +545,65 @@ h2 {
   }
 
   #chiamate-container .avviso {
-    font-size: 0.85rem;
-    padding: 10px;
+    font-size: 0.9rem;
+    padding: 10px 14px;
     text-align: center;
+    margin-top: 15px;
+  }
+}
+
+@media (max-width: 600px) {
+
+  body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  main, #chiamate-container {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px;
+  }
+
+  h2 {
+    font-size: 1.2rem;
+    margin-bottom: 6px;
+    text-align: center;
+  }
+
+  .riga-bottoni,
+  .switcher {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+    padding: 0 10px;
+    margin-bottom: 10px;
+  }
+
+  .bottone-chiamata,
+  .switcher button {
+    font-size: 0.85rem;
+    padding: 7px 10px;
+    text-align: center;
+  }
+
+  #chiamate-container table {
+    font-size: 0.8rem;
+  }
+
+  #chiamate-container th,
+  #chiamate-container td {
+    padding: 6px;
+  }
+
+  #chiamate-container .avviso {
+    font-size: 0.9rem;
+    padding: 10px 14px;
+    text-align: center;
+    margin-top: 15px;
   }
 }
