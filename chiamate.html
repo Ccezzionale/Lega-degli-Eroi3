@@ -1,50 +1,37 @@
-
 <!DOCTYPE html>
 <html lang="it">
 <head>
   <meta charset="UTF-8" />
   <title>Chiamate Settimanali</title>
   <link rel="stylesheet" href="main.css" />
-  <style>
-    .moduli-container, .switcher {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin: 20px;
-      justify-content: center;
-    }
-    .bottone-chiamata, .switcher button {
-      background-color: #ffcc00;
-      color: #000;
-      border: none;
-      border-radius: 8px;
-      padding: 10px 15px;
-      font-weight: bold;
-      cursor: pointer;
-      text-decoration: none;
-      transition: 0.2s;
-    }
-    .bottone-chiamata:hover, .switcher button:hover {
-      background-color: #e6b800;
-    }
-    #chiamate-container {
-      margin: 20px;
-      text-align: center;
-      color: white;
-    }
-    .csv-row {
-      padding: 6px 0;
-      border-bottom: 1px solid #ccc;
-      color: white;
-    }
-  </style>
 </head>
 <body>
-  <h2 style="text-align:center;">Chiamate Settimanali</h2>
+  <h2>Chiamate Settimanali</h2>
 
   <div class="moduli-container">
-    <a class="bottone-chiamata" href="https://docs.google.com/forms/d/e/1FAIpQLSdxOpFrvWkhi6TrhryrIVJUeMISAxo-CatGtw8TuNApRyU8Yg/viewform?usp=dialog" target="_blank">➕ Compila una chiamata (Conference League)</a>
-    <a class="bottone-chiamata" href="https://docs.google.com/forms/d/e/1FAIpQLScNaxnbpVmIW_t23uvRqLkRy6sDrzyEvQQ-mpLDkk67DVDLag/viewform?usp=dialog" target="_blank">➕ Compila una chiamata (Conference Championship)</a>
+    <!-- League -->
+    <a class="bottone-chiamata"
+       href="https://docs.google.com/forms/d/e/1FAIpQLSdxOpFrvWkhi6TrhryrIVJUeMISAxo-CatGtw8TuNApRyU8Yg/viewform?usp=dialog"
+       target="_blank">
+       ➕ Compila chiamata 15:00 (Conference League)
+    </a>
+    <a class="bottone-chiamata"
+       href="https://docs.google.com/forms/d/e/1FAIpQLScR411PT9pvIZ9SxoFeiKKwbI_Mk0r5USa-rk6Egv0ZyOnSSQ/viewform?usp=dialog"
+       target="_blank">
+       ➕ Compila chiamata 16:00 (Conference League)
+    </a>
+
+    <!-- Championship -->
+    <a class="bottone-chiamata"
+       href="https://docs.google.com/forms/d/e/1FAIpQLScNaxnbpVmIW_t23uvRqLkRy6sDrzyEvQQ-mpLDkk67DVDLag/viewform?usp=dialog"
+       target="_blank">
+       ➕ Compila chiamata 15:00 (Conference Championship)
+    </a>
+    <a class="bottone-chiamata"
+       href="https://docs.google.com/forms/d/e/1FAIpQLSfwpZkHssyd3GVJodKLwGJjNttEe-qvMqqCRE50LiTp6bH2jA/viewform?usp=dialog"
+       target="_blank">
+       ➕ Compila chiamata 16:00 (Conference Championship)
+    </a>
   </div>
 
   <div class="switcher">
@@ -58,29 +45,10 @@
     <p>⏳ Seleziona una conference per visualizzare le chiamate.</p>
   </div>
 
-  <script>
-    const linksCSV = {
-      league15: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSzoMOkxFPR54NEbGhx_uZ7vTAYdcYv7uH8VJ9v8i1uV3hJth-82pmIEOenFpsJpA/pub?gid=492764886&single=true&output=csv",
-      league16: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRkZyBpgHLlY5-uBy_vI5G7iJdCVpm3ik_-PMok8nT7HVr9L2hxFlVfWxNCO3_LzA/pub?gid=0&single=true&output=csv",
-      champ15:  "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ71C45uRCpp_cDOmFfZUKguTldYYnp1tVRSfB8o3eI8VWzEoz4BuYXmTzM9tkB-A/pub?gid=1279168385&single=true&output=csv",
-      champ16:  "https://docs.google.com/spreadsheets/d/e/2PACX-1vRQKxJzjcn7G2HiMnKtnc2MLG3MVY-YKnOvGlGyfBdsDbkXRHL1vV2d0rMrAn3-zg/pub?gid=0&single=true&output=csv"
-    };
+  <script src="chiamate.js"></script>
+</body>
+</html>
 
-    function caricaChiamate(conference) {
-      const container = document.getElementById("chiamate-container");
-      container.innerHTML = "<p>⏳ Caricamento in corso...</p>";
-      const url = linksCSV[conference];
-
-      fetch(url)
-        .then(r => r.text())
-        .then(csv => {
-          const righe = csv.trim().split("\n").map(r => r.split(","));
-          container.innerHTML = righe.map(r => `<div class="csv-row">${r.join(" - ")}</div>`).join("");
-        })
-        .catch(error => {
-          container.innerHTML = `<p style="color:red;">❌ Errore nel caricamento: ${error}</p>`;
-        });
-    }
   </script>
 </body>
 </html>
