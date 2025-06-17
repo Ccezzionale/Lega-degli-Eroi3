@@ -181,7 +181,7 @@ function mostraRose() {
     div.setAttribute("data-conference", conf);
     div.setAttribute("data-squadra", nome);
 
-    div.innerHTML = \`
+    div.innerHTML = `
       <h2><img src="\${data.logo}" class="logo-squadra"> \${nome}</h2>
       <table>
         <thead><tr><th>Ruolo</th><th>Nome</th><th>Squadra</th><th>Q</th></tr></thead>
