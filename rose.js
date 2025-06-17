@@ -1,5 +1,23 @@
 const rose = {};
 const giocatoriFP = new Set();
+const giocatoriU21PerSquadra = {
+  "Team Bartowski": ["Baldanzi"],
+  "Desperados": [],
+  "Sharknado 04": [],
+  "Real Mimmo": [],
+  "Giody": [],
+  "Union Librino": [],
+  "RubinKebab": [],
+  "Rafa Casablanca": [],
+  "PokerMantra": [],
+  "wildboys78": [],
+  "Bayern Christiansen": [],
+  "Minnesode Timberland": [],
+  "Giulay": [],
+  "MinneSota Snakes": [],
+  "Ibla": [],
+  "Pandinicoccolosini": []
+};
 
 const URL_ROSE = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSE8Q0l1pnU8NCtId51qCk8Pstat27g6JBQaU-3UKIY0ZCZicUJ1u1T-ElvuR9NK9pc2WYpunW-a4ld/pub?output=csv";
 
