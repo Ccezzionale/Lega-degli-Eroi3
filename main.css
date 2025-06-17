@@ -459,7 +459,6 @@ h1 {
   box-shadow: 0 0 10px #00000033;
 }
 
-@media (max-width: 600px) {
 
   h2 {
     font-size: 1.2rem;
@@ -495,6 +494,61 @@ h1 {
     font-size: 0.85rem;
     padding: 10px;
     text-align: center;
+  }
+}
+
+
+  body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  main, #chiamate-container {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px;
+  }
+
+  h2 {
+    font-size: 1.2rem;
+    margin-bottom: 6px;
+    text-align: center;
+  }
+
+  .riga-bottoni,
+  .switcher {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+    padding: 0 10px;
+    margin-bottom: 10px;
+  }
+
+  .bottone-chiamata,
+  .switcher button {
+    font-size: 0.85rem;
+    padding: 7px 10px;
+    text-align: center;
+  }
+
+  #chiamate-container table {
+    font-size: 0.82rem;
+  }
+
+  #chiamate-container th,
+  #chiamate-container td {
+    padding: 6px;
+  }
+
+  #chiamate-container .avviso {
+    font-size: 0.9rem;
+    padding: 10px 14px;
+    text-align: center;
+    margin-top: 15px;
   }
 }
 
@@ -538,7 +592,7 @@ h1 {
   }
 
   #chiamate-container table {
-    font-size: 0.82rem;
+    font-size: 0.8rem;
   }
 
   #chiamate-container th,
