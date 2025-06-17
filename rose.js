@@ -7,7 +7,7 @@ const conferencePerSquadra = {
   "Real Mimmo": "Conference Championship",
   "Giody": "Conference Championship",
   "Union Librino": "Conference Championship",
-  "RubinKebab": "Conference Championship",
+  "Rubinkebab": "Conference Championship",
   "Rafa Casablanca": "Conference Championship",
   "PokerMantra": "Conference Championship",
   "wildboys78": "Conference Championship",
@@ -26,7 +26,7 @@ const giocatoriU21PerSquadra = {
   "Real Mimmo": ["bonny"],
   "Giody": ["goglichidze"],
   "Union Librino": [],
-  "RubinKebab": [],
+  "Rubinkebab": [],
   "Rafa Casablanca": [],
   "PokerMantra": ["yildiz"],
   "wildboys78": ["tchaouna"],
@@ -164,6 +164,7 @@ async function caricaRose() {
   }
 
   mostraRose();
+  popolaFiltri();
 }
 
 function mostraRose() {
@@ -211,6 +212,40 @@ function resetFiltri() {
   document.getElementById('filtro-conference').value = 'Tutte';
   document.getElementById('filtro-squadra').value = 'Tutte';
   filtraGiocatori();
+}
+function popolaFiltri() {
+  const selectSquadra = document.getElementById("filtro-squadra");
+  const selectConference = document.getElementById("filtro-conference");
+
+  // Evita duplicati
+  const squadreSet = new Set();
+  const conferenceSet = new Set();
+
+  for (const squadra in rose) {
+    squadreSet.add(squadra);
+    const conf = conferencePerSquadra[squadra] || "N/A";
+    conferenceSet.add(conf);
+  }
+
+  // Ordina alfabeticamente
+  const squadreOrdinate = Array.from(squadreSet).sort();
+  const conferenceOrdinate = Array.from(conferenceSet).sort();
+
+  // Popola filtro squadre
+  squadreOrdinate.forEach(sq => {
+    const option = document.createElement("option");
+    option.value = sq;
+    option.textContent = sq;
+    selectSquadra.appendChild(option);
+  });
+
+  // Popola filtro conference
+  conferenceOrdinate.forEach(conf => {
+    const option = document.createElement("option");
+    option.value = conf;
+    option.textContent = conf;
+    selectConference.appendChild(option);
+  });
 }
 
 // 🔎 Funzione di filtro
