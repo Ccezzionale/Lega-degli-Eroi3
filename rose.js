@@ -233,6 +233,9 @@ function filtraGiocatori() {
   });
 }
 
+
+
+
 function popolaFiltri() {
   const selectSquadra = document.getElementById("filtro-squadra");
   const selectConf = document.getElementById("filtro-conference");
