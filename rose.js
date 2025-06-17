@@ -181,42 +181,21 @@ function mostraRose() {
     div.setAttribute("data-conference", conf);
     div.setAttribute("data-squadra", nome);
 
-    const tabella = document.createElement("table");
-    const thead = document.createElement("thead");
-    thead.innerHTML = "<tr><th>Ruolo</th><th>Nome</th><th>Squadra</th><th>Q</th></tr>";
-    tabella.appendChild(thead);
-
-    const tbody = document.createElement("tbody");
-
-    data.giocatori.forEach(g => {
-      const tr = document.createElement("tr");
-
-      const tdRuolo = document.createElement("td");
-      tdRuolo.textContent = g.ruolo;
-      tr.appendChild(tdRuolo);
-
-      const tdNome = document.createElement("td");
-      tdNome.className = "nome";
-      tdNome.textContent = g.nome + (g.fp ? " 🅕" : "") + (g.u21 ? " 🅤21" : "");
-      tr.appendChild(tdNome);
-
-      const tdSquadra = document.createElement("td");
-      tdSquadra.textContent = g.squadra;
-      tr.appendChild(tdSquadra);
-
-      const tdQ = document.createElement("td");
-      tdQ.textContent = g.quotazione;
-      tr.appendChild(tdQ);
-
-      tbody.appendChild(tr);
-    });
-
-    tabella.appendChild(tbody);
-
-    const header = document.createElement("h2");
-    header.innerHTML = `<img src="${data.logo}" class="logo-squadra"> ${nome}`;
-    div.appendChild(header);
-    div.appendChild(tabella);
+    div.innerHTML = `
+      <h2><img src="${data.logo}" class="logo-squadra"> ${nome}</h2>
+      <table>
+        <thead><tr><th>Ruolo</th><th>Nome</th><th>Squadra</th><th>Q</th></tr></thead>
+        <tbody>
+          ${data.giocatori.map(g => `
+            <tr>
+              <td>${g.ruolo}</td>
+              <td class="nome">${g.nome} ${g.fp ? '🅕' : ''} ${g.u21 ? '🅤21' : ''}</td>
+              <td>${g.squadra}</td>
+              <td>${g.quotazione}</td>
+            </tr>`).join("")}
+        </tbody>
+      </table>
+    `;
     container.appendChild(div);
   }
 }
