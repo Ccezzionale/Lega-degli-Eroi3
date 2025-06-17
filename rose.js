@@ -19,6 +19,26 @@ const giocatoriU21PerSquadra = {
   "Pandinicoccolosini": ["yildiz"]
 };
 
+
+const conferencePerSquadra = {
+  "Team Bartowski": "Conference League",
+  "Desperados": "Conference League",
+  "Sharknado 04": "Conference Championship",
+  "Real Mimmo": "Conference Championship",
+  "Giody": "Conference Championship",
+  "Union Librino": "Conference Championship",
+  "RubinKebab": "Conference Championship",
+  "Rafa Casablanca": "Conference Championship",
+  "PokerMantra": "Conference Championship",
+  "wildboys78": "Conference Championship",
+  "Bayern Christiansen": "Conference League",
+  "Minnesode Timberland": "Conference League",
+  "Giulay": "Conference League",
+  "MinneSota Snakes": "Conference League",
+  "Ibla": "Conference League",
+  "Pandinicoccolosini": "Conference League",
+};
+
 const URL_ROSE = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSE8Q0l1pnU8NCtId51qCk8Pstat27g6JBQaU-3UKIY0ZCZicUJ1u1T-ElvuR9NK9pc2WYpunW-a4ld/pub?output=csv";
 
 const URL_QUOTAZIONI = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSE8Q0l1pnU8NCtId51qCk8Pstat27g6JBQaU-3UKIY0ZCZicUJ1u1T-ElvuR9NK9pc2WYpunW-a4ld/pub?gid=2087990274&single=true&output=csv";
@@ -147,43 +167,43 @@ async function caricaRose() {
   mostraRose();
 }
 
+
 function mostraRose() {
   const container = document.getElementById("contenitore-rose");
   if (!container) return;
   container.innerHTML = "";
 
   for (const [nome, data] of Object.entries(rose)) {
+    const conf = conferencePerSquadra[nome] || "N/A";
+
     const div = document.createElement("div");
-    div.className = "box-rosa";
-    div.innerHTML = `
-      <h2><img src="${data.logo}" class="logo-squadra"> ${nome}</h2>
-      <table>
-        <thead><tr><th>Ruolo</th><th>Nome</th><th>Squadra</th><th>Q</th></tr></thead>
-        <tbody>
-          ${data.giocatori.map(g => `
-            <tr>
-              <td>${g.ruolo}</td>
-              <td>${g.nome} ${g.fp ? '🅕' : ''} ${g.u21 ? '🅤21' : ''}</td>
-              <td>${g.squadra}</td>
-              <td>${g.quotazione}</td>
-            </tr>`).join("")}
-        </tbody>
-      </table>
-    `;
+    div.className = "giocatore";
+    div.setAttribute("data-conference", conf);
+    div.setAttribute("data-squadra", nome);
+
+    const titolo = document.createElement("h2");
+    titolo.innerHTML = `<img src="${data.logo}" class="logo-squadra"> ${nome}`;
+    div.appendChild(titolo);
+
+    data.giocatori.forEach(g => {
+      const riga = document.createElement("div");
+      riga.className = "riga";
+      const nomeSpan = document.createElement("span");
+      nomeSpan.className = "nome";
+      nomeSpan.textContent = g.nome;
+      riga.appendChild(document.createTextNode(`${g.ruolo} | `));
+      riga.appendChild(nomeSpan);
+      riga.appendChild(document.createTextNode(` | ${g.squadra} | ${g.quotazione}`));
+      if (g.fp) riga.appendChild(document.createTextNode(" 🅕"));
+      if (g.u21) riga.appendChild(document.createTextNode(" 🅤21"));
+      div.appendChild(riga);
+    });
+
     container.appendChild(div);
   }
+
+  popolaFiltri();
 }
-
-window.addEventListener("DOMContentLoaded", caricaRose);
-
-// 🔍 Filtro per nome giocatore
-document.getElementById('filtro-nome').addEventListener('input', filtraGiocatori);
-// 🎯 Filtro per conference
-document.getElementById('filtro-conference').addEventListener('change', filtraGiocatori);
-// 🏟️ Filtro per squadra
-document.getElementById('filtro-squadra').addEventListener('change', filtraGiocatori);
-
-// 🔄 Reset filtri
 function resetFiltri() {
   document.getElementById('filtro-nome').value = '';
   document.getElementById('filtro-conference').value = 'Tutte';
@@ -235,3 +255,33 @@ const div = document.createElement("div");
         });
 
         document.getElementById("contenitore-rose").appendChild(div);
+
+
+function popolaFiltri() {
+  const selectSquadra = document.getElementById("filtro-squadra");
+  const selectConf = document.getElementById("filtro-conference");
+
+  const squadreUniche = new Set();
+  const conferenceUniche = new Set();
+
+  document.querySelectorAll(".giocatore").forEach(div => {
+    squadreUniche.add(div.getAttribute("data-squadra"));
+    conferenceUniche.add(div.getAttribute("data-conference"));
+  });
+
+  selectSquadra.innerHTML = '<option value="Tutte">Tutte le squadre</option>';
+  squadreUniche.forEach(s => {
+    const opt = document.createElement("option");
+    opt.value = s;
+    opt.textContent = s;
+    selectSquadra.appendChild(opt);
+  });
+
+  selectConf.innerHTML = '<option value="Tutte">Tutte le Conference</option>';
+  conferenceUniche.forEach(c => {
+    const opt = document.createElement("option");
+    opt.value = c;
+    opt.textContent = c;
+    selectConf.appendChild(opt);
+  });
+}
