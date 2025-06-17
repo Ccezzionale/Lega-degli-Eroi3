@@ -263,4 +263,5 @@ function popolaFiltri() {
     opt.textContent = c;
     selectConf.appendChild(opt);
   });
+  window.addEventListener("DOMContentLoaded", caricaRose);
 }
