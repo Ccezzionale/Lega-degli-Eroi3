@@ -1,7 +1,7 @@
 const rose = {};
 const giocatoriFP = new Set();
 const giocatoriU21PerSquadra = {
-  "Team Bartowski": ["Baldanzi"],
+  "Team Bartowski": ["baldanzi"],
   "Desperados": [],
   "Sharknado 04": [],
   "Real Mimmo": [],
