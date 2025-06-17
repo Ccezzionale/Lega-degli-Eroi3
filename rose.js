@@ -173,8 +173,10 @@ function mostraRose() {
 
   for (const [nome, data] of Object.entries(rose)) {
     const div = document.createElement("div");
-    div.className = "box-rosa";
-    div.innerHTML = `
+div.className = "box-rosa giocatore";
+div.setAttribute("data-squadra", nome);
+div.setAttribute("data-conference", conferencePerSquadra[nome] || "N/A");
+div.innerHTML = `...`
       <h2><img src="${data.logo}" class="logo-squadra"> ${nome}</h2>
       <table>
         <thead><tr><th>Ruolo</th><th>Nome</th><th>Squadra</th><th>Q</th></tr></thead>
