@@ -5,6 +5,11 @@
   justify-content: flex-start;
   gap: 8px;
 }
+#tabella-classifica td .logo-nome img {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+}
 
 /* Accordion Mobile */
 @media (max-width: 768px) {
