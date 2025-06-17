@@ -6,7 +6,7 @@ const conferencePerSquadra = {
   "Real Mimmo": "Conference Championship",
   "Giody": "Conference Championship",
   "Union Librino": "Conference Championship",
-  "RubinKebab": "Conference Championship",
+  "Rubinkebab": "Conference Championship",
   "Rafa Casablanca": "Conference Championship",
   "PokerMantra": "Conference Championship",
   "wildboys78": "Conference Championship",
@@ -18,7 +18,24 @@ const conferencePerSquadra = {
   "Pandinicoccolosini": "Conference League"
 };
 
-
+const conferencePerSquadra = {
+  "Team Bartowski": "Conference League",
+  "Desperados": "Conference League",
+  "Sharknado 04": "Conference Championship",
+  "Real Mimmo": "Conference Championship",
+  "Giody": "Conference Championship",
+  "Union Librino": "Conference Championship",
+  "Rubinkebab": "Conference Championship",
+  "Rafa Casablanca": "Conference Championship",
+  "PokerMantra": "Conference Championship",
+  "wildboys78": "Conference Championship",
+  "Bayern Christiansen": "Conference League",
+  "Minnesode Timberland": "Conference League",
+  "Giulay": "Conference League",
+  "MinneSota Snakes": "Conference League",
+  "Ibla": "Conference League",
+  "Pandinicoccolosini": "Conference League"
+};
 
 function popolaFiltri() {
   const selectSquadra = document.getElementById("filtro-squadra");
