@@ -1,23 +1,4 @@
 const rose = {};
-const giocatoriFP = new Set();
-const giocatoriU21PerSquadra = {
-  "Team Bartowski": ["baldanzi"],
-  "Desperados": ["fazzini"],
-  "Sharknado 04": [],
-  "Real Mimmo": ["bonny"],
-  "Giody": ["goglichidze"],
-  "Union Librino": [],
-  "RubinKebab": [],
-  "Rafa Casablanca": [],
-  "PokerMantra": ["yildiz"],
-  "wildboys78": ["tchaouna"],
-  "Bayern Christiansen": ["castro s."],
-  "Minnesode Timberland": ["scalvini"],
-  "Giulay": ["goglichidze"],
-  "MinneSota Snakes": ["fabbian"],
-  "Ibla": ["soule'"],
-  "Pandinicoccolosini": ["yildiz"]
-};
 
 const conferencePerSquadra = {
   "Team Bartowski": "Conference League",
@@ -36,6 +17,25 @@ const conferencePerSquadra = {
   "MinneSota Snakes": "Conference League",
   "Ibla": "Conference League",
   "Pandinicoccolosini": "Conference League"
+};
+const giocatoriFP = new Set();
+const giocatoriU21PerSquadra = {
+  "Team Bartowski": ["baldanzi"],
+  "Desperados": ["fazzini"],
+  "Sharknado 04": [],
+  "Real Mimmo": ["bonny"],
+  "Giody": ["goglichidze"],
+  "Union Librino": [],
+  "RubinKebab": [],
+  "Rafa Casablanca": [],
+  "PokerMantra": ["yildiz"],
+  "wildboys78": ["tchaouna"],
+  "Bayern Christiansen": ["castro s."],
+  "Minnesode Timberland": ["scalvini"],
+  "Giulay": ["goglichidze"],
+  "MinneSota Snakes": ["fabbian"],
+  "Ibla": ["soule'"],
+  "Pandinicoccolosini": ["yildiz"]
 };
 
 const URL_ROSE = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSE8Q0l1pnU8NCtId51qCk8Pstat27g6JBQaU-3UKIY0ZCZicUJ1u1T-ElvuR9NK9pc2WYpunW-a4ld/pub?output=csv";
@@ -220,11 +220,11 @@ function filtraGiocatori() {
   const squadra = document.getElementById('filtro-squadra').value;
 
   document.querySelectorAll('.giocatore').forEach(row => {
-    const nomiGiocatori = [...row.querySelectorAll('.nome')].map(e => e.textContent.toLowerCase());
+    const nomeGiocatore = row.querySelector('.nome').textContent.toLowerCase();
     const conf = row.getAttribute('data-conference');
     const team = row.getAttribute('data-squadra');
 
-    const matchNome = nomiGiocatori.some(n => n.includes(nome));
+    const matchNome = nomeGiocatore.includes(nome);
     const matchConf = (conference === 'Tutte' || conf === conference);
     const matchTeam = (squadra === 'Tutte' || team === squadra);
 
@@ -236,3 +236,24 @@ function filtraGiocatori() {
   });
 }
 
+// PATCH PER FILTRI
+const div = document.createElement("div");
+        div.className = "giocatore";
+        div.setAttribute("data-conference", squadra.conference);
+        div.setAttribute("data-squadra", squadra.nome);
+
+        const titolo = document.createElement("h3");
+        titolo.textContent = squadra.nome;
+        div.appendChild(titolo);
+
+        squadra.giocatori.forEach(g => {
+          const riga = document.createElement("div");
+          riga.className = "riga";
+          const nome = document.createElement("span");
+          nome.className = "nome";
+          nome.textContent = g.nome;
+          riga.appendChild(nome);
+          div.appendChild(riga);
+        });
+
+        document.getElementById("contenitore-rose").appendChild(div);
