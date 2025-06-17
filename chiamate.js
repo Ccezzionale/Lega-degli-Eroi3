@@ -1,9 +1,9 @@
 
 const chiamateCSV = {
-  league15: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSzoMOkxFPR54NEbGhx_uZ7vTAYdcYv7uH8VJ9v8i1uV3hJth-82pmIEOenFpsJpA/pub?gid=492764886&single=true&output=csv",
-  league16: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRkZyBpgHLlY5-uBy_vI5G7iJdCVpm3ik_-PMok8nT7HVr9L2hxFlVfWxNCO3_LzA/pub?gid=0&single=true&output=csv",
-  champ15: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ71C45uRCpp_cDOmFfZUKguTldYYnp1tVRSfB8o3eI8VWzEoz4BuYXmTzM9tkB-A/pub?gid=1279168385&single=true&output=csv",
-  champ16: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRQKxJzjcn7G2HiMnKtnc2MLG3MVY-YKnOvGlGyfBdsDbkXRHL1vV2d0rMrAn3-zg/pub?gid=0&single=true&output=csv"
+  league15: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRK5ADcukTU83udU_Z9Zd9w66-2LGi8TlWJP_F5WfcaHQePIUpRBynnpbnxbkEGnrh44jMvvBo7Wzo3/pub?output=csv",
+  league16: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSGGStnik70Y1y4xg1BuQNxGiTsmzuYRcPENJ_vZvHGI3XqUhkTHQ_TQc6a6Ufoz29rIvf65cTfmJyC/pub?output=csv",
+  champ15:  "https://docs.google.com/spreadsheets/d/e/2PACX-1vSGbT5qMBn_PHnAyGfR1IayL3BgrfBYENXZ1tMoBXjvoZxQAFVI5wRk7kY0M9sAXuJg0wVImKh0g_bB/pub?output=csv",
+  champ16:  "https://docs.google.com/spreadsheets/d/e/2PACX-1vRVk3BAULnfGd_CcqlPTwHRLCERbwAkhKJRSd_bNCgH9E9lCoaNfiafroJcRa_m9zs1eGoioU9YOy34/pub?output=csv"
 };
 
 function caricaChiamate(conference) {
