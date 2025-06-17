@@ -65,23 +65,23 @@ function caricaClassifica(nomeFoglio = "Conference") {
           const td = document.createElement("td");
 
           if (idx === 1) {
-            const wrapper = document.createElement("div");
+           const wrapper = document.createElement("div");
 wrapper.className = "logo-nome";
 
 const img = document.createElement("img");
 
-// Pulisci il nome per caricare l'immagine: niente emoji, niente lower
-const cleanForImage = val.replace(/[👑🎖️💀]/g, "").trim();
-const fileBase = cleanForImage.replaceAll(" ", "_");
-img.src = `img/${fileBase}.png`;
-img.alt = cleanForImage;
+// Pulisce il nome rimuovendo emoji ma lasciando spazi e maiuscole per il file immagine
+const nomeLogo = val.replace(/[👑🎖️💀]/g, "").trim();
+img.src = `img/${nomeLogo}.png`;
+img.alt = nomeLogo;
 img.onerror = () => { img.style.display = "none"; };
 
-// Prepara il nome con emoji per il testo
-let displayName = cleanForImage;
+// Aggiunge le emoji giuste al testo visualizzato
+let displayName = nomeLogo;
+if (val.includes("💀")) displayName = "💀 " + displayName;
+if (val.includes("👑")) displayName = "👑 " + displayName;
 if (nomeFoglio === "Totale" && i <= 4) displayName = "🎖️ " + displayName;
 if (nomeFoglio !== "Totale" && i === 1) displayName = "🎖️ " + displayName;
-if (val.includes("💀")) displayName = "💀 " + displayName;
 
 const testo = document.createElement("span");
 testo.textContent = displayName;
@@ -89,6 +89,7 @@ testo.textContent = displayName;
 wrapper.appendChild(img);
 wrapper.appendChild(testo);
 td.appendChild(wrapper);
+
           } else {
             td.textContent = formattaNumero(val);
           }
