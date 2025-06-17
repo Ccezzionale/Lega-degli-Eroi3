@@ -37,11 +37,11 @@
     color: white;
   }
 
-  .accordion-header img {
-    height: 24px;
-    width: 24px;
-    object-fit: contain;
-  }
+.accordion-header img {
+  height: 48px;
+  width: 48px;
+  object-fit: contain;
+}
 
   .accordion-header span {
     display: flex;
