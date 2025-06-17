@@ -165,6 +165,7 @@ async function caricaRose() {
   }
 
   mostraRose();
+  popolaFiltri();
 }
 
 
@@ -198,7 +199,7 @@ function mostraRose() {
     `;
     container.appendChild(div);
   }
-  popolaFiltri();
+  
 }
 function resetFiltri() {
   document.getElementById('filtro-nome').value = '';
