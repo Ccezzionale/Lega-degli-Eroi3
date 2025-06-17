@@ -7,7 +7,7 @@ const giocatoriU21PerSquadra = {
   "Real Mimmo": ["bonny"],
   "Giody": ["goglichidze"],
   "Union Librino": [],
-  "Rubinkebab": [],
+  "RubinKebab": [],
   "Rafa Casablanca": [],
   "PokerMantra": ["yildiz"],
   "wildboys78": ["tchaouna"],
@@ -17,25 +17,6 @@ const giocatoriU21PerSquadra = {
   "MinneSota Snakes": ["fabbian"],
   "Ibla": ["soule'"],
   "Pandinicoccolosini": ["yildiz"]
-};
-
-const conferencePerSquadra = {
-  "Team Bartowski": "Conference League",
-  "Desperados": "Conference League",
-  "Sharknado 04": "Conference Championship",
-  "Real Mimmo": "Conference Championship",
-  "Giody": "Conference Championship",
-  "Union Librino": "Conference Championship",
-  "Rubinkebab": "Conference Championship",
-  "Rafa Casablanca": "Conference Championship",
-  "PokerMantra": "Conference Championship",
-  "wildboys78": "Conference Championship",
-  "Bayern Christiansen": "Conference League",
-  "Minnesode Timberland": "Conference League",
-  "Giulay": "Conference League",
-  "MinneSota Snakes": "Conference League",
-  "Ibla": "Conference League",
-  "Pandinicoccolosini": "Conference League"
 };
 
 const URL_ROSE = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSE8Q0l1pnU8NCtId51qCk8Pstat27g6JBQaU-3UKIY0ZCZicUJ1u1T-ElvuR9NK9pc2WYpunW-a4ld/pub?output=csv";
@@ -194,7 +175,6 @@ function mostraRose() {
     `;
     container.appendChild(div);
   }
-  popolaFiltri();
 }
 
 window.addEventListener("DOMContentLoaded", caricaRose);
@@ -221,11 +201,11 @@ function filtraGiocatori() {
   const squadra = document.getElementById('filtro-squadra').value;
 
   document.querySelectorAll('.giocatore').forEach(row => {
-    const nomeGiocatore = row.querySelector('.nome').textContent.toLowerCase();
+    const nomiGiocatori = [...row.querySelectorAll('.nome')].map(e => e.textContent.toLowerCase());
     const conf = row.getAttribute('data-conference');
     const team = row.getAttribute('data-squadra');
 
-    const matchNome = nomeGiocatore.includes(nome);
+    const matchNome = nomiGiocatori.some(n => n.includes(nome));
     const matchConf = (conference === 'Tutte' || conf === conference);
     const matchTeam = (squadra === 'Tutte' || team === squadra);
 
