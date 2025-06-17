@@ -176,3 +176,40 @@ function mostraRose() {
 
 window.addEventListener("DOMContentLoaded", caricaRose);
 
+// 🔍 Filtro per nome giocatore
+document.getElementById('filtro-nome').addEventListener('input', filtraGiocatori);
+// 🎯 Filtro per conference
+document.getElementById('filtro-conference').addEventListener('change', filtraGiocatori);
+// 🏟️ Filtro per squadra
+document.getElementById('filtro-squadra').addEventListener('change', filtraGiocatori);
+
+// 🔄 Reset filtri
+function resetFiltri() {
+  document.getElementById('filtro-nome').value = '';
+  document.getElementById('filtro-conference').value = 'Tutte';
+  document.getElementById('filtro-squadra').value = 'Tutte';
+  filtraGiocatori();
+}
+
+// 🔎 Funzione di filtro
+function filtraGiocatori() {
+  const nome = document.getElementById('filtro-nome').value.toLowerCase();
+  const conference = document.getElementById('filtro-conference').value;
+  const squadra = document.getElementById('filtro-squadra').value;
+
+  document.querySelectorAll('.giocatore').forEach(row => {
+    const nomeGiocatore = row.querySelector('.nome').textContent.toLowerCase();
+    const conf = row.getAttribute('data-conference');
+    const team = row.getAttribute('data-squadra');
+
+    const matchNome = nomeGiocatore.includes(nome);
+    const matchConf = (conference === 'Tutte' || conf === conference);
+    const matchTeam = (squadra === 'Tutte' || team === squadra);
+
+    if (matchNome && matchConf && matchTeam) {
+      row.style.display = '';
+    } else {
+      row.style.display = 'none';
+    }
+  });
+}
