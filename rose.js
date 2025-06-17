@@ -154,7 +154,10 @@ function mostraRose() {
 
   for (const [nome, data] of Object.entries(rose)) {
     const div = document.createElement("div");
-    div.className = "box-rosa";
+    div.className = "box-rosa giocatore";
+    div.setAttribute("data-squadra", nome);
+    div.setAttribute("data-conference", conferencePerSquadra[nome] || "N/A");
+
     div.innerHTML = `
       <h2><img src="${data.logo}" class="logo-squadra"> ${nome}</h2>
       <table>
@@ -163,7 +166,7 @@ function mostraRose() {
           ${data.giocatori.map(g => `
             <tr>
               <td>${g.ruolo}</td>
-              <td>${g.nome} ${g.fp ? '🅕' : ''} ${g.u21 ? '🅤21' : ''}</td>
+              <td class="nome">${g.nome} ${g.fp ? '🅕' : ''} ${g.u21 ? '🅤21' : ''}</td>
               <td>${g.squadra}</td>
               <td>${g.quotazione}</td>
             </tr>`).join("")}
@@ -172,6 +175,7 @@ function mostraRose() {
     `;
     container.appendChild(div);
   }
+  popolaFiltri();
 }
 
 window.addEventListener("DOMContentLoaded", caricaRose);
@@ -213,39 +217,4 @@ function filtraGiocatori() {
     }
   });
 }
-function popolaFiltri() {
-  const selectSquadra = document.getElementById("filtro-squadra");
-  const selectConf = document.getElementById("filtro-conference");
 
-  if (!selectSquadra || !selectConf) return;
-
-  const squadreUniche = new Set();
-  const conferenceUniche = new Set();
-
-  document.querySelectorAll(".giocatore").forEach(div => {
-    squadreUniche.add(div.getAttribute("data-squadra"));
-    conferenceUniche.add(div.getAttribute("data-conference"));
-  });
-
-  selectSquadra.innerHTML = '<option value="Tutte">Tutte le squadre</option>';
-  squadreUniche.forEach(s => {
-    const opt = document.createElement("option");
-    opt.value = s;
-    opt.textContent = s;
-    selectSquadra.appendChild(opt);
-  });
-
-  selectConf.innerHTML = '<option value="Tutte">Tutte le Conference</option>';
-  conferenceUniche.forEach(c => {
-    const opt = document.createElement("option");
-    opt.value = c;
-    opt.textContent = c;
-    selectConf.appendChild(opt);
-  });
-}
-
-if (document.readyState === "loading") {
-  window.addEventListener("DOMContentLoaded", caricaRose);
-} else {
-  caricaRose();
-}
