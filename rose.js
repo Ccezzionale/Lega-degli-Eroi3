@@ -182,16 +182,16 @@ function mostraRose() {
     div.setAttribute("data-conference", conf);
 
     div.innerHTML = `
-      <h2><img src="\${data.logo}" class="logo-squadra"> \${nome}</h2>
+      <h2><img src="${data.logo}" class="logo-squadra"> ${nome}</h2>
       <table>
         <thead><tr><th>Ruolo</th><th>Nome</th><th>Squadra</th><th>Q</th></tr></thead>
         <tbody>
-          \${data.giocatori.map(g => `
+          ${data.giocatori.map(g => `
             <tr>
-              <td>\${g.ruolo}</td>
-              <td class="nome">\${g.nome} \${g.fp ? '🅕' : ''} \${g.u21 ? '🅤21' : ''}</td>
-              <td>\${g.squadra}</td>
-              <td>\${g.quotazione}</td>
+              <td>${g.ruolo}</td>
+              <td class="nome">${g.nome} ${g.fp ? '🅕' : ''} ${g.u21 ? '🅤21' : ''}</td>
+              <td>${g.squadra}</td>
+              <td>${g.quotazione}</td>
             </tr>`).join("")}
         </tbody>
       </table>
