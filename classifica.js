@@ -69,11 +69,10 @@ function caricaClassifica(nomeFoglio = "Conference") {
             wrapper.className = "logo-nome";
 
             const img = document.createElement("img");
-           img.src = `img/${nomeFile}`;
-            logo.src = "img/" + nomeSquadra + ".png";
+            const nomeFile = val + ".png";
+            img.src = img/${nomeFile};
             img.alt = val;
             img.onerror = () => { img.style.display = "none"; };
-
 
             let cleanName = val.replace(/[👑🎖️💀]/g, "").trim();
             if (nomeFoglio === "Totale" && i <= 4) cleanName = "🎖️ " + cleanName;
@@ -124,7 +123,7 @@ function caricaClassifica(nomeFoglio = "Conference") {
         const puntiTot = formattaNumero(colonne[colonne.length - 1]);
 
         const testo = document.createElement("span");
-        testo.innerHTML = `<strong>${pos}. ${nomeSquadra}</strong><br><span style="font-weight:normal">PT. ${punti} / MP. ${puntiTot}</span>`;
+        testo.innerHTML = <strong>${pos}. ${nomeSquadra}</strong><br><span style="font-weight:normal">PT. ${punti} / MP. ${puntiTot}</span>;
 
         header.appendChild(logo);
         header.appendChild(testo);
@@ -136,14 +135,14 @@ function caricaClassifica(nomeFoglio = "Conference") {
           const label = intestazione[j];
           const value = formattaNumero(colonne[j]);
           const p = document.createElement("p");
-          p.innerHTML = `<strong>${label}:</strong> ${value}`;
+          p.innerHTML = <strong>${label}:</strong> ${value};
           body.appendChild(p);
         }
 
         const ptRow = document.createElement("p");
-        ptRow.innerHTML = `<strong>Pt.:</strong> ${punti}`;
+        ptRow.innerHTML = <strong>Pt.:</strong> ${punti};
         const totRow = document.createElement("p");
-        totRow.innerHTML = `<strong>Pt. Totali:</strong> ${puntiTot}`;
+        totRow.innerHTML = <strong>Pt. Totali:</strong> ${puntiTot};
         body.appendChild(ptRow);
         body.appendChild(totRow);
 
