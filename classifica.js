@@ -66,25 +66,29 @@ function caricaClassifica(nomeFoglio = "Conference") {
 
           if (idx === 1) {
             const wrapper = document.createElement("div");
-            wrapper.className = "logo-nome";
+wrapper.className = "logo-nome";
 
-            const img = document.createElement("img");
-            const nomeFile = val + ".png";
-            const fileBase = val.replaceAll(" ", "_");
-            img.src = `img/${fileBase}.png`;
-            img.alt = val;
-            img.onerror = () => { img.style.display = "none"; };
+const img = document.createElement("img");
 
-            let cleanName = val.replace(/[👑🎖️💀]/g, "").trim();
-            if (nomeFoglio === "Totale" && i <= 4) cleanName = "🎖️ " + cleanName;
-            if (nomeFoglio !== "Totale" && i === 1) cleanName = "🎖️ " + cleanName;
+// Pulisci il nome per caricare l'immagine: niente emoji, niente lower
+const cleanForImage = val.replace(/[👑🎖️💀]/g, "").trim();
+const fileBase = cleanForImage.replaceAll(" ", "_");
+img.src = `img/${fileBase}.png`;
+img.alt = cleanForImage;
+img.onerror = () => { img.style.display = "none"; };
 
-           const testo = document.createElement("span");
-          testo.textContent = cleanName;
-          wrapper.appendChild(img);
-          wrapper.appendChild(testo);
+// Prepara il nome con emoji per il testo
+let displayName = cleanForImage;
+if (nomeFoglio === "Totale" && i <= 4) displayName = "🎖️ " + displayName;
+if (nomeFoglio !== "Totale" && i === 1) displayName = "🎖️ " + displayName;
+if (val.includes("💀")) displayName = "💀 " + displayName;
 
-            td.appendChild(wrapper);
+const testo = document.createElement("span");
+testo.textContent = displayName;
+
+wrapper.appendChild(img);
+wrapper.appendChild(testo);
+td.appendChild(wrapper);
           } else {
             td.textContent = formattaNumero(val);
           }
