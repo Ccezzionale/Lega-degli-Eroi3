@@ -217,7 +217,10 @@ function popolaFiltri() {
   const selectSquadra = document.getElementById("filtro-squadra");
   const selectConference = document.getElementById("filtro-conference");
 
-  // Evita duplicati
+  // ✅ Prima svuoto i menu per evitare duplicati
+  selectSquadra.innerHTML = '<option value="Tutte">Tutte le squadre</option>';
+  selectConference.innerHTML = '<option value="Tutte">Tutte le Conference</option>';
+
   const squadreSet = new Set();
   const conferenceSet = new Set();
 
@@ -255,13 +258,13 @@ function filtraGiocatori() {
   const squadra = document.getElementById('filtro-squadra').value;
 
   document.querySelectorAll('.giocatore').forEach(row => {
-    const nomeGiocatore = row.querySelector('.nome').textContent.toLowerCase();
-    const conf = row.getAttribute('data-conference');
-    const team = row.getAttribute('data-squadra');
+    const nomiGiocatori = [...row.querySelectorAll('.nome')].map(e => e.textContent.toLowerCase());
+const conf = row.getAttribute('data-conference');
+const team = row.getAttribute('data-squadra');
 
-    const matchNome = nomeGiocatore.includes(nome);
-    const matchConf = (conference === 'Tutte' || conf === conference);
-    const matchTeam = (squadra === 'Tutte' || team === squadra);
+const matchNome = nomiGiocatori.some(n => n.includes(nome));
+const matchConf = (conference === 'Tutte' || conf === conference);
+const matchTeam = (squadra === 'Tutte' || team === squadra);
 
     if (matchNome && matchConf && matchTeam) {
       row.style.display = '';
