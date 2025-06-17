@@ -19,6 +19,25 @@ const giocatoriU21PerSquadra = {
   "Pandinicoccolosini": ["yildiz"]
 };
 
+const conferencePerSquadra = {
+  "Team Bartowski": "Conference League",
+  "Desperados": "Conference League",
+  "Sharknado 04": "Conference Championship",
+  "Real Mimmo": "Conference Championship",
+  "Giody": "Conference Championship",
+  "Union Librino": "Conference Championship",
+  "RubinKebab": "Conference Championship",
+  "Rafa Casablanca": "Conference Championship",
+  "PokerMantra": "Conference Championship",
+  "wildboys78": "Conference Championship",
+  "Bayern Christiansen": "Conference League",
+  "Minnesode Timberland": "Conference League",
+  "Giulay": "Conference League",
+  "MinneSota Snakes": "Conference League",
+  "Ibla": "Conference League",
+  "Pandinicoccolosini": "Conference League"
+};
+
 const URL_ROSE = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSE8Q0l1pnU8NCtId51qCk8Pstat27g6JBQaU-3UKIY0ZCZicUJ1u1T-ElvuR9NK9pc2WYpunW-a4ld/pub?output=csv";
 
 const URL_QUOTAZIONI = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSE8Q0l1pnU8NCtId51qCk8Pstat27g6JBQaU-3UKIY0ZCZicUJ1u1T-ElvuR9NK9pc2WYpunW-a4ld/pub?gid=2087990274&single=true&output=csv";
@@ -145,7 +164,6 @@ async function caricaRose() {
   }
 
   mostraRose();
-  popolaFiltri();
 }
 
 function mostraRose() {
@@ -218,35 +236,3 @@ function filtraGiocatori() {
   });
 }
 
-
-
-function popolaFiltri() {
-  const selectSquadra = document.getElementById("filtro-squadra");
-  const selectConf = document.getElementById("filtro-conference");
-
-  if (!selectSquadra || !selectConf) return;
-
-  const squadreUniche = new Set();
-  const conferenceUniche = new Set();
-
-  document.querySelectorAll(".giocatore").forEach(div => {
-    squadreUniche.add(div.getAttribute("data-squadra"));
-    conferenceUniche.add(div.getAttribute("data-conference"));
-  });
-
-  selectSquadra.innerHTML = '<option value="Tutte">Tutte le squadre</option>';
-  squadreUniche.forEach(s => {
-    const opt = document.createElement("option");
-    opt.value = s;
-    opt.textContent = s;
-    selectSquadra.appendChild(opt);
-  });
-
-  selectConf.innerHTML = '<option value="Tutte">Tutte le Conference</option>';
-  conferenceUniche.forEach(c => {
-    const opt = document.createElement("option");
-    opt.value = c;
-    opt.textContent = c;
-    selectConf.appendChild(opt);
-  });
-}
