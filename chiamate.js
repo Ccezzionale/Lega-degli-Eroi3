@@ -1,22 +1,18 @@
-
 function caricaChiamate(conference) {
-
-const chiamateURLs = {
-  league15: "https://script.google.com/macros/s/AKfycbyFp5ILk_ipmbH1DUaw6fFGiKqHMKk9F1GysyEw7PV8qdqyHBVBsSWh7zpR_ALyXGBq/exec",
-  league16: "https://script.google.com/macros/s/AKfycbxrBDg3cKtDjCxipDeylmjVpqmVZtrdnEgiHOV0D31M64ND-hQePcLX2CffRS-GgfrGCw/exec",
-  champ15: "https://script.google.com/macros/s/AKfycbzweLTNlvrKlbpPpJ1a1aV5zYc00-TYnFcwF4lw2DdXUOTw6JvftWZtzD42s2mdNGxY/exec",
-  champ16: "https://script.google.com/macros/s/AKfycbx4Id2uQE-uVX96HPCHAkUATEEb232YfYjlA5uI1RhaiLaFlrMcOoQ8Mju5mWa9ZQGv/exec"
-};
-
+  const chiamateURLs = {
+    league15: "https://script.google.com/macros/s/AKfycbyFp5ILk_ipmbH1DUaw6fFGiKqHMKk9F1GysyEw7PV8qdqyHBVBsSWh7zpR_ALyXGBq/exec",
+    league16: "https://script.google.com/macros/s/AKfycbxrBDg3cKtDjCxipDeylmjVpqmVZtrdnEgiHOV0D31M64ND-hQePcLX2CffRS-GgfrGCw/exec",
+    champ15: "https://script.google.com/macros/s/AKfycbzweLTNlvrKlbpPpJ1a1aV5zYc00-TYnFcwF4lw2DdXUOTw6JvftWZtzD42s2mdNGxY/exec",
+    champ16: "https://script.google.com/macros/s/AKfycbx4Id2uQE-uVX96HPCHAkUATEEb232YfYjlA5uI1RhaiLaFlrMcOoQ8Mju5mWa9ZQGv/exec"
   };
 
-  const url = urls[conference];
+  const url = chiamateURLs[conference];
   if (!url) return;
 
   fetch(url)
     .then(response => response.text())
     .then(csv => {
-      const righe = csv.split('\n').map(r => r.split(','));
+      const righe = csv.split('\\n').map(r => r.split(','));
       const intestazioni = righe[0];
       const dati = righe.slice(1);
 
