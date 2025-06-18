@@ -343,17 +343,34 @@
 <script src="draft_script_unificato.js"></script>
 
 <script>
-  document.getElementById('menu-draft').addEventListener('click', function (e) {
-    e.preventDefault();
-    document.getElementById('submenu-draft').classList.toggle('hidden');
+  
+    // Disattiva vecchio sottomenu se c'è
+    const submenu = document.getElementById('submenu-draft');
+    if (submenu) {
+      submenu.classList.toggle('hidden');
+    }
+
+    // 👇 ATTIVA LA NUOVA BARRA SOTTO
+    const subBar = document.getElementById('subdraft-bar');
+    if (subBar) {
+      subBar.classList.toggle('hidden');
+    }
   });
 
   document.addEventListener('click', function (e) {
-    if (!document.querySelector('.dropdown').contains(e.target)) {
-      document.getElementById('submenu-draft').classList.add('hidden');
+    const isClickInside = document.getElementById('menu-draft').contains(e.target) || 
+                          (document.getElementById('subdraft-bar') && document.getElementById('subdraft-bar').contains(e.target));
+
+    if (!isClickInside) {
+      const submenu = document.getElementById('submenu-draft');
+      if (submenu) submenu.classList.add('hidden');
+
+      const subBar = document.getElementById('subdraft-bar');
+      if (subBar) subBar.classList.add('hidden');
     }
   });
 </script>
+
 
 </body>
 </html>
