@@ -12,7 +12,7 @@
     <span id="hamburger" class="hamburger">☰</span>
     <a href="index.html" class="home-icon">🏠</a>
   </div>
-  <ul class="navbar hidden-on-mobile" id="mobileMenu">
+  <ul class="navbar" id="mobileMenu">
     <li><a href="rose.html">Rose</a></li>
     <li><a href="classifica.html">Classifica</a></li>
     <li class="dropdown">
@@ -39,16 +39,14 @@
     const hamburger = document.getElementById("hamburger");
     const mobileMenu = document.getElementById("mobileMenu");
 
-    hamburger.addEventListener("click", () => {
-      mobileMenu.classList.toggle("hidden-on-mobile");
+    hamburger.addEventListener("click", function () {
+      mobileMenu.classList.toggle("show");
     });
 
-    // Chiude il menu mobile dopo un click su qualsiasi link
-    document.querySelectorAll(".navbar li a").forEach(link => {
-      link.addEventListener("click", () => {
-        if (!mobileMenu.classList.contains("hidden-on-mobile")) {
-          mobileMenu.classList.add("hidden-on-mobile");
-        }
+    // Chiude il menu se clicchi su un link
+    document.querySelectorAll("#mobileMenu a").forEach(link => {
+      link.addEventListener("click", function () {
+        mobileMenu.classList.remove("show");
       });
     });
   });
