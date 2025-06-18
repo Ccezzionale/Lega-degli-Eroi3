@@ -207,13 +207,14 @@ tbody tr:hover {
     padding-left: 18px;
   }
 
-  .scelta-draft {
-    flex-direction: column;
-    gap: 20px;
-    align-items: center;
-    margin-top: 80px;
-    padding: 0 20px;
-  }
+.scelta-draft {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  margin-top: 80px;
+  padding: 0 20px;
+}
 
   .scelta-draft a {
     width: 100%;
