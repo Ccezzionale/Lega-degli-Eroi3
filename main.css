@@ -502,19 +502,27 @@ h1 {
   .submenu {
     margin-left: 16px;
   }
+}
 
-  .hidden-on-mobile {
-    display: none;
-  }
+/* MENU MOBILE - Chiuso e aperto */
+#mobileMenu {
+  display: none;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 10px 20px;
+  gap: 8px;
+}
+
+#mobileMenu.show {
+  display: flex;
+}
+
+/* --------- MOBILE (max-width: 768px) --------- */
+@media (max-width: 768px) {
+  ...
 }
 
 /* --------- DESKTOP (min-width: 769px) --------- */
 @media (min-width: 769px) {
-  .hidden-on-mobile {
-    display: flex !important;
-  }
-
-  .mobile-nav {
-    display: none;
-  }
+  ...
 }
