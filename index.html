@@ -57,48 +57,37 @@
   <p>Seleziona una sezione dal menu.</p>
 </main>
 
-<!-- SCRIPT -->
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     const hamburger = document.getElementById("hamburger");
     const mobileMenu = document.getElementById("mobileMenu");
     const draftToggle = document.getElementById("toggle-draft");
     const draftSubmenu = document.getElementById("submenu-draft");
-    const desktopToggle = document.getElementById("desktop-toggle-draft");
-    const desktopSubmenu = document.getElementById("desktop-submenu-draft");
 
-    // DEBUG
     console.log("✅ Script caricato");
     console.log("hamburger:", hamburger);
     console.log("mobileMenu:", mobileMenu);
 
-    // Toggle menu mobile
     hamburger.addEventListener("click", function () {
-  mobileMenu.classList.toggle("show");
-  });
+      console.log("👉 clic su hamburger");
+      mobileMenu.classList.toggle("show");
+    });
 
-    // Chiudi menu mobile se clic su link (escluso Draft)
+    draftToggle.addEventListener("click", function (e) {
+      e.preventDefault();
+      draftSubmenu.classList.toggle("hidden");
+    });
+
     document.querySelectorAll("#mobileMenu a").forEach(link => {
-      link.addEventListener("click", function (e) {
+      link.addEventListener("click", function () {
         if (link.id !== "toggle-draft") {
-          mobileMenu.classList.add("hidden");
+          mobileMenu.classList.remove("show");
           draftSubmenu.classList.add("hidden");
         }
       });
     });
-
-    // Toggle sottomenù Draft (mobile)
-    draftToggle?.addEventListener("click", function (e) {
-      e.preventDefault();
-      draftSubmenu?.classList.toggle("hidden");
-    });
-
-    // Toggle sottomenù Draft (desktop)
-    desktopToggle?.addEventListener("click", function (e) {
-      e.preventDefault();
-      desktopSubmenu?.classList.toggle("hidden");
-    });
   });
 </script>
+
 </body>
 </html>
