@@ -68,34 +68,41 @@
     const desktopToggle = document.getElementById("desktop-toggle-draft");
     const desktopSubmenu = document.getElementById("desktop-submenu-draft");
 
-    // Toggle mobile menu
-    hamburger.addEventListener("click", function () {
-      mobileMenu.classList.toggle("hidden");
-    });
+    // Toggle menu mobile
+    if (hamburger && mobileMenu) {
+      hamburger.addEventListener("click", function () {
+        mobileMenu.classList.toggle("hidden");
+      });
+    }
 
     // Chiudi menu mobile al clic su un link (eccetto il toggle Draft)
-    document.querySelectorAll("#mobileMenu a").forEach(link => {
-      link.addEventListener("click", function (e) {
-        if (link.id !== "toggle-draft") {
-          mobileMenu.classList.add("hidden");
-          draftSubmenu.classList.add("hidden"); // chiudi anche il sotto menu
-        }
+    if (mobileMenu) {
+      mobileMenu.querySelectorAll("a").forEach(link => {
+        link.addEventListener("click", function (e) {
+          if (link.id !== "toggle-draft") {
+            mobileMenu.classList.add("hidden");
+            if (draftSubmenu) draftSubmenu.classList.add("hidden");
+          }
+        });
       });
-    });
+    }
 
     // Toggle submenu mobile Draft
-    draftToggle.addEventListener("click", function (e) {
-      e.preventDefault();
-      draftSubmenu.classList.toggle("hidden");
-    });
+    if (draftToggle && draftSubmenu) {
+      draftToggle.addEventListener("click", function (e) {
+        e.preventDefault();
+        draftSubmenu.classList.toggle("hidden");
+      });
+    }
 
     // Toggle submenu desktop Draft
-    desktopToggle.addEventListener("click", function (e) {
-      e.preventDefault();
-      desktopSubmenu.classList.toggle("hidden");
-    });
+    if (desktopToggle && desktopSubmenu) {
+      desktopToggle.addEventListener("click", function (e) {
+        e.preventDefault();
+        desktopSubmenu.classList.toggle("hidden");
+      });
+    }
   });
 </script>
-
 </body>
 </html>
