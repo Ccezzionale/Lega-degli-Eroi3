@@ -415,6 +415,20 @@ h1 {
 
 /* --------- CHIAMATE LAYOUT --------- */
 @media (max-width: 768px) {
+  body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 20px;
+  }
+
+  h2 {
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+  }
+
   .moduli-container {
     display: flex;
     flex-direction: column;
