@@ -206,5 +206,28 @@ tbody tr:hover {
   .riepilogo-pick .squadra ol {
     padding-left: 18px;
   }
+    
+.subdraft-bar {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  background-color: #003366;
+  padding: 8px 0;
+  font-weight: bold;
+  border-bottom: 2px solid #001f3f;
+}
 
+.subdraft-bar a {
+  color: white;
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+.subdraft-bar a:hover {
+  color: #ffcc00;
+  text-decoration: underline;
+}
+
+.hidden {
+  display: none;
 }
