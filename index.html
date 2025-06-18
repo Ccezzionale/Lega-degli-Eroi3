@@ -17,7 +17,7 @@
   </div>
 
   <!-- MENU MOBILE -->
-  <ul class="navbar mobile-only" id="mobileMenu">
+  <ul class="navbar mobile-only hidden" id="mobileMenu">
     <li><a href="rose.html">Rose</a></li>
     <li><a href="classifica.html">Classifica</a></li>
     <li class="dropdown">
@@ -50,7 +50,7 @@
   </ul>
 </nav>
 
-<!-- CONTENUTO PRINCIPALE -->
+<!-- CONTENUTO -->
 <main>
   <div class="hero"></div>
   <h1>Benvenuto nella Lega degli Eroi</h1>
@@ -68,27 +68,28 @@
     const desktopToggle = document.getElementById("desktop-toggle-draft");
     const desktopSubmenu = document.getElementById("desktop-submenu-draft");
 
-    // Toggle menu mobile
+    // Toggle mobile menu
     hamburger.addEventListener("click", function () {
-      mobileMenu.classList.toggle("show");
+      mobileMenu.classList.toggle("hidden");
     });
 
-    // Chiude menu mobile se clicco link (ma NON se clicco Draft)
+    // Chiudi menu mobile al clic su un link (eccetto il toggle Draft)
     document.querySelectorAll("#mobileMenu a").forEach(link => {
       link.addEventListener("click", function (e) {
         if (link.id !== "toggle-draft") {
-          mobileMenu.classList.remove("show");
+          mobileMenu.classList.add("hidden");
+          draftSubmenu.classList.add("hidden"); // chiudi anche il sotto menu
         }
       });
     });
 
-    // Toggle submenu Draft mobile
+    // Toggle submenu mobile Draft
     draftToggle.addEventListener("click", function (e) {
       e.preventDefault();
       draftSubmenu.classList.toggle("hidden");
     });
 
-    // Toggle submenu Draft desktop
+    // Toggle submenu desktop Draft
     desktopToggle.addEventListener("click", function (e) {
       e.preventDefault();
       desktopSubmenu.classList.toggle("hidden");
