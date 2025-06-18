@@ -180,4 +180,20 @@ tbody tr:hover {
   .riepilogo-pick .squadra ol {
     padding-left: 18px;
   }
+  @media (max-width: 768px) {
+  h2 {
+    margin-bottom: 4px !important;
+    padding-bottom: 0 !important;
+  }
+
+  #currentPick {
+    margin-top: 0 !important;
+    margin-bottom: 6px !important;
+    padding: 0 !important;
+    font-size: 14px;
+  }
+
+  .tabella-pick {
+    margin-top: 0 !important;
+  }
 }
