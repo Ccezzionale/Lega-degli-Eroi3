@@ -70,15 +70,25 @@
 </head>
 <body>
   <nav>
-    <ul class="navbar">
-      <li><a href="rose.html">Rose</a></li>
-      <li><a href="classifica.html">Classifica</a></li>
-      <li><a href="draft.html" class="active">Draft</a></li>
-      <li><a href="svincolati.html">Svincolati</a></li>
-      <li><a href="chiamate.html">Chiamate</a></li>
-      <li><a href="albo.html">Albo d'Oro</a></li>
-    </ul>
-  </nav>
+  <div class="mobile-nav">
+    <span id="hamburger" class="hamburger">☰</span>
+    <a href="index.html" class="home-icon">🏠</a>
+  </div>
+  <ul class="navbar hidden-on-mobile" id="mobileMenu">
+    <li><a href="rose.html">Rose</a></li>
+    <li><a href="classifica.html">Classifica</a></li>
+    <li class="dropdown">
+      <a href="#" id="toggle-draft">Draft ▾</a>
+      <ul class="submenu hidden" id="submenu-draft">
+        <li><a href="draft_championship.html?tab=Draft Championship">🟦 Conf.Championship</a></li>
+        <li><a href="draft_conference.html?tab=Draft Conference">🟨 Conf.League</a></li>
+      </ul>
+    </li>
+    <li><a href="svincolati.html">Svincolati</a></li>
+    <li><a href="chiamate.html">Chiamate</a></li>
+    <li><a href="albo.html">Albo d'Oro</a></li>
+  </ul>
+</nav>
 
   <h1 style="margin-top: 120px; color: #ffcc00;">🎯 Scegli la tua Conference</h1>
 
