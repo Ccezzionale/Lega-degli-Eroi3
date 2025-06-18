@@ -33,7 +33,51 @@
   </style>
 </head>
 <body>
-  <h1>Rose delle Squadre</h1>
+
+<!-- NAVBAR -->
+<nav>
+  <!-- NAV MOBILE -->
+  <div class="mobile-nav">
+    <span id="hamburger" class="hamburger">☰</span>
+    <a href="index.html" class="home-icon">🏠</a>
+  </div>
+
+  <!-- MENU MOBILE -->
+  <ul class="navbar mobile-only hidden" id="mobileMenu">
+    <li><a href="rose.html">Rose</a></li>
+    <li><a href="classifica.html">Classifica</a></li>
+    <li class="dropdown">
+      <a href="#" id="toggle-draft">Draft ▾</a>
+      <ul class="submenu hidden" id="submenu-draft">
+        <li><a href="draft_championship.html?tab=Draft Championship">🟦 Conf.Championship</a></li>
+        <li><a href="draft_conference.html?tab=Draft Conference">🟨 Conf.League</a></li>
+      </ul>
+    </li>
+    <li><a href="svincolati.html">Svincolati</a></li>
+    <li><a href="chiamate.html">Chiamate</a></li>
+    <li><a href="albo.html">Albo d'Oro</a></li>
+  </ul>
+
+  <!-- MENU DESKTOP -->
+  <ul class="navbar desktop-only">
+    <li><a href="index.html">🏠</a></li>
+    <li><a href="rose.html">Rose</a></li>
+    <li><a href="classifica.html">Classifica</a></li>
+    <li class="dropdown">
+      <a href="#" id="desktop-toggle-draft">Draft ▾</a>
+      <ul class="submenu hidden" id="desktop-submenu-draft">
+        <li><a href="draft_championship.html?tab=Draft Championship">🟦 Conf.Championship</a></li>
+        <li><a href="draft_conference.html?tab=Draft Conference">🟨 Conf.League</a></li>
+      </ul>
+    </li>
+    <li><a href="svincolati.html">Svincolati</a></li>
+    <li><a href="chiamate.html">Chiamate</a></li>
+    <li><a href="albo.html">Albo d'Oro</a></li>
+  </ul>
+</nav>
+
+<!-- CONTENUTO -->
+<h1>Rose delle Squadre</h1>
 
 <div id="filtri-rose">
   <input id="filtro-nome" type="text" placeholder="Cerca giocatore..." />
@@ -53,7 +97,49 @@
   </select>
 </div>
 
-  <div id="contenitore-rose">Caricamento rose...</div>
-  <script src="rose.js?v=11"></script>
+<div id="contenitore-rose">Caricamento rose...</div>
+
+<script src="rose.js?v=11"></script>
+
+<!-- SCRIPT NAVBAR -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const hamburger = document.getElementById("hamburger");
+    const mobileMenu = document.getElementById("mobileMenu");
+    const draftToggle = document.getElementById("toggle-draft");
+    const draftSubmenu = document.getElementById("submenu-draft");
+
+    const desktopToggle = document.getElementById("desktop-toggle-draft");
+    const desktopSubmenu = document.getElementById("desktop-submenu-draft");
+
+    // Toggle mobile menu
+    hamburger?.addEventListener("click", function () {
+      mobileMenu.classList.toggle("show");
+    });
+
+    // Chiude mobile al clic (eccetto toggle draft)
+    document.querySelectorAll("#mobileMenu a").forEach(link => {
+      link.addEventListener("click", function (e) {
+        if (link.id !== "toggle-draft") {
+          mobileMenu.classList.remove("show");
+          draftSubmenu?.classList.add("hidden");
+        }
+      });
+    });
+
+    // Mobile: Draft submenu toggle
+    draftToggle?.addEventListener("click", function (e) {
+      e.preventDefault();
+      draftSubmenu.classList.toggle("hidden");
+    });
+
+    // Desktop: Draft submenu toggle
+    desktopToggle?.addEventListener("click", function (e) {
+      e.preventDefault();
+      desktopSubmenu.classList.toggle("hidden");
+    });
+  });
+</script>
+
 </body>
 </html>
