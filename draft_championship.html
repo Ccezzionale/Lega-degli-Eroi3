@@ -1,0 +1,101 @@
+
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Draft Room - Draft Championship</title>
+  <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="draft.css">
+</head>
+<body>
+<nav>
+  <ul class="navbar">
+    <li><a href="rose.html">Rose</a></li>
+    <li><a href="classifica.html">Classifica</a></li>
+    <li class="dropdown">
+      <a href="#" id="menu-draft">Draft ▾</a>
+      <ul id="submenu-draft" class="submenu hidden">
+        <li><a href="draft_championship.html?tab=Draft Championship">📘 Draft Championship</a></li>
+        <li><a href="draft_conference.html?tab=Draft Conference">🟡 Draft Conference</a></li>
+      </ul>
+    </li>
+    <li><a href="svincolati.html">Svincolati</a></li>
+    <li><a href="chiamate.html">Chiamate</a></li>
+    <li><a href="albo.html">Albo d'Oro</a></li>
+  </ul>
+</nav>
+
+<h1 style="margin-top: 110px; text-align:center; color:#ffcc00;">Draft Championship</h1>
+<div class="top-link" style="text-align:center; margin-bottom:10px;">
+  <a href="statistiche.html" target="_blank" style="color:#00ffff; text-decoration:none; font-size:1.2em;">
+    📊 Vai alle Statistiche del Draft
+  </a>
+</div>
+<div id="turno-attuale" style="text-align:center; font-weight:bold; color:#ffcc00; margin-bottom:20px;">
+  ⏳ Caricamento turno in corso...
+</div>
+
+<div class="container">
+  <div class="tabella-container">
+    <div id="tabella-pick-container">
+      <table id="tabella-pick">
+        <thead>
+          <tr>
+            <th onclick="ordinaPick(0)">Pick</th>
+            <th onclick="ordinaPick(1)">Squadra</th>
+            <th onclick="ordinaPick(2)">Giocatore</th>
+            <th onclick="ordinaPick(3)">Ruolo</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+  <div class="lista-container">
+    <label for="filtroSerieA">Filtra per Squadra Serie A:</label>
+    <select id="filtroSerieA"><option value="">-- Tutte --</option></select>
+    <label for="filtroRuolo">Filtra per Ruolo:</label>
+    <input type="text" id="cercaRuolo" placeholder="Cerca ruolo (es. DD, E...)" style="margin-bottom: 6px; padding: 6px; font-size: 0.9em;" />
+    <select id="filtroRuolo"><option value="">-- Tutti i Ruoli --</option></select>
+    <label for="searchGiocatore">Cerca Giocatore:</label>
+    <input id="searchGiocatore" placeholder="Digita un nome..." type="text"/>
+    <div id="lista-giocatori-table-container">
+      <table id="lista-giocatori-table">
+        <thead>
+          <tr>
+            <th onclick="ordinaLista(0)">Giocatore</th>
+            <th onclick="ordinaLista(1)">Ruolo</th>
+            <th onclick="ordinaLista(2)">Squadra</th>
+            <th onclick="ordinaLista(3, true)">Quotazione</th>
+          </tr>
+        </thead>
+        <tbody id="lista-giocatori"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<h2 style="text-align:center; color:#ffcc00;">📋 Riepilogo Pick per Squadra</h2>
+<button onclick="aggiornaChiamatePerSquadra()">🔄 Ricarica Riepilogo</button>
+<div id="riepilogo-squadre" style="display: flex; flex-wrap: wrap; gap: 20px; padding: 20px;"></div>
+
+<script>
+  document.getElementById('menu-draft').addEventListener('click', function (e) {
+    e.preventDefault();
+    document.getElementById('submenu-draft').classList.toggle('hidden');
+  });
+  document.addEventListener('click', function (e) {
+    if (!document.querySelector('.dropdown').contains(e.target)) {
+      document.getElementById('submenu-draft').classList.add('hidden');
+    }
+  });
+</script>
+<script>
+  const urlParams = new URLSearchParams(window.location.search);
+  const tab = urlParams.get("tab") || "Draft Room";
+  const endpoint = `https://script.google.com/macros/s/AKfycby8hk9db1JtLsi6UyuKCBrDntO7JAATwuI3lEHJmqx1VXKrPmlOnFGv3k6Ie3UKQspyPA/exec?tab=${encodeURIComponent(tab)}`;
+</script>
+<script src="draft_script_unificato.js"></script>
+</body>
+</html>
