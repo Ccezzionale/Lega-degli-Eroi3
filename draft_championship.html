@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -15,6 +14,7 @@
       margin: 0;
       padding: 0;
     }
+
     h1 {
       text-align: center;
       color: #ffcc00;
@@ -22,21 +22,25 @@
       margin: 20px 0 10px;
       text-transform: uppercase;
     }
+
     .top-link {
       text-align: center;
       margin-bottom: 10px;
     }
+
     .top-link a {
       color: #00ffff;
       text-decoration: none;
       font-size: 1.2em;
     }
+
     #turno-attuale {
       text-align: center;
       font-weight: bold;
       color: #ffcc00;
       margin-bottom: 20px;
     }
+
     .container {
       display: flex;
       justify-content: space-between;
@@ -47,40 +51,62 @@
       box-sizing: border-box;
       overflow-x: auto;
     }
+
     .tabella-container,
     .lista-container {
       flex: 0 0 auto;
       width: 700px;
       min-width: 700px;
     }
+
     #tabella-pick-container {
-      max-height: 420px;
-      overflow-y: auto;
+      background-color: #004080;
       border-radius: 10px;
+      overflow: hidden;
+      padding: 0;
       margin-bottom: 20px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
     }
-    table {
+
+    #tabella-pick {
       width: 100%;
       border-collapse: collapse;
-      background: #ffffff;
-      color: #000;
-      border-radius: 10px;
-    }
-    th, td {
-      border: 1px solid #003366;
-      padding: 8px;
-      text-align: center;
-      font-size: 0.9em;
-    }
-    th {
-      background-color: #0074D9;
+      background-color: #004080;
       color: white;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    #tabella-pick th {
+      background-color: #005299;
+      color: white;
+      padding: 8px;
       text-transform: uppercase;
+      font-size: 0.9em;
+      border: 1px solid #ffffff33;
+      text-align: center;
     }
-    .next-pick {
+
+    #tabella-pick td {
+      background-color: #003366;
+      color: white;
+      font-size: 0.9em;
+      padding: 8px;
+      border: 1px solid #ffffff33;
+      text-align: center;
+    }
+
+    #tabella-pick tr:nth-child(even) {
+      background-color: #002b5c;
+    }
+
+    #tabella-pick tr.next-pick {
       background-color: #ffe680 !important;
+      color: black;
+      font-weight: bold;
     }
+
     select, input {
       width: 100%;
       padding: 8px;
@@ -89,11 +115,13 @@
       border: none;
       font-size: 1em;
     }
+
     #lista-giocatori-table {
       width: 100%;
       border-collapse: collapse;
       margin-top: 10px;
     }
+
     #lista-giocatori-table th, #lista-giocatori-table td {
       border: 1px solid #ffffff33;
       padding: 8px;
@@ -101,10 +129,12 @@
       color: white;
       background-color: #004080;
     }
+
     #lista-giocatori-table th {
       background-color: #005299;
       cursor: pointer;
     }
+
     #lista-giocatori-table-container {
       max-height: 420px;
       overflow-y: auto;
@@ -112,173 +142,142 @@
       box-shadow: 0 0 10px rgba(0,0,0,0.2);
       margin-top: 10px;
     }
-    <style>
-  #tabella-pick-container {
-    background-color: #004080;
-    border-radius: 10px;
-    overflow: hidden;
-    padding: 0;
-    margin-bottom: 20px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.3);
-  }
 
-  #tabella-pick {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: #004080;
-    color: white;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    border-radius: 10px;
-    overflow: hidden;
-  }
+    nav {
+      background-color: #004080;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+    }
 
-  #tabella-pick th {
-    background-color: #005299;
-    color: white;
-    padding: 8px;
-    text-transform: uppercase;
-    font-size: 0.9em;
-    border: 1px solid #ffffff33;
-    text-align: center;
-  }
+    .navbar {
+      display: flex;
+      justify-content: center;
+      list-style: none;
+      margin: 0;
+      padding: 1rem 0;
+      gap: 1.5rem;
+    }
 
-  #tabella-pick td {
-    background-color: #003366;
-    color: white;
-    font-size: 0.9em;
-    padding: 8px;
-    border: 1px solid #ffffff33;
-    text-align: center;
-  }
+    .navbar li a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
 
-  #tabella-pick tr:nth-child(even) {
-    background-color: #002b5c;
-  }
+    .navbar li a.active,
+    .navbar li a:hover {
+      color: #ffcc00;
+      text-decoration: underline;
+    }
 
-  #tabella-pick tr.next-pick {
-    background-color: #ffe680 !important;
-    color: black;
-    font-weight: bold;
-  }
-</style>
+    h1 {
+      margin-top: 110px;
+    }
 
-<style>
-@media (max-width: 768px) {
+    @media (max-width: 768px) {
+      body {
+        font-size: 13px;
+        padding: 8px;
+      }
 
-  body {
-    font-size: 13px;
-    padding: 8px;
-  }
+      h1 {
+        font-size: 1.6em;
+        margin: 10px 0;
+      }
 
-  h1 {
-    font-size: 1.6em;
-    margin: 10px 0;
-  }
+      #turno-attuale {
+        margin-top: 0;
+        margin-bottom: 4px !important;
+        font-size: 13px !important;
+      }
 
-@media (max-width: 768px) {
-  #turno-attuale {
-    margin-top: 0;
-    margin-bottom: 4px !important;
-    font-size: 13px !important;
-  }
+      .tabella-pick {
+        margin-top: 0 !important;
+      }
 
-  .tabella-pick {
-    margin-top: 0 !important;
-  }
+      .container {
+        flex-direction: column;
+        gap: 10px;
+        padding: 10px;
+      }
 
-  .container {
-    flex-direction: column;
-    gap: 10px;
-    padding: 10px;
-  }
+      .tabella-container, .lista-container {
+        width: 100%;
+        min-width: 100%;
+      }
 
-  .tabella-container, .lista-container {
-    width: 100%;
-    min-width: 100%;
-  }
+      #tabella-pick-container {
+        max-height: 200px;
+        overflow-y: auto;
+      }
 
-  #tabella-pick-container {
-    max-height: 200px;
-    overflow-y: auto;
-  }
+      #tabella-pick {
+        font-size: 12px;
+      }
 
-  #tabella-pick {
-    font-size: 12px;
-  }
+      #tabella-pick th, #tabella-pick td {
+        padding: 4px;
+      }
 
-  #tabella-pick th, #tabella-pick td {
-    padding: 4px;
-  }
+      #lista-giocatori-table {
+        font-size: 12px;
+      }
 
-  #lista-giocatori-table {
-    font-size: 12px;
-  }
+      #lista-giocatori-table th, #lista-giocatori-table td {
+        padding: 4px;
+      }
 
-  #lista-giocatori-table th, #lista-giocatori-table td {
-    padding: 4px;
-  }
+      #lista-giocatori-table-container {
+        max-height: 200px;
+        overflow-x: auto;
+      }
 
-  #lista-giocatori-table-container {
-    max-height: 200px;
-    overflow-x: auto;
-  }
+      #riepilogo-squadre {
+        flex-direction: column;
+        padding: 10px;
+      }
 
-  #riepilogo-squadre {
-    flex-direction: column;
-    padding: 10px;
-  }
-
-  select, input {
-    font-size: 13px;
-    padding: 4px;
-  }
-}
-</style>
-
-
-<style>
-  nav {
-    background-color: #004080;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 1000;
-  }
-  .navbar {
-    display: flex;
-    justify-content: center;
-    list-style: none;
-    margin: 0;
-    padding: 1rem 0;
-    gap: 1.5rem;
-  }
-  .navbar li a {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 1.1rem;
-  }
-  .navbar li a.active,
-  .navbar li a:hover {
-    color: #ffcc00;
-    text-decoration: underline;
-  }
-  h1 {
-    margin-top: 110px;
-  }
-</style>
-
+      select, input {
+        font-size: 13px;
+        padding: 4px;
+      }
+    }
+  </style>
 </head>
 <body>
+
+<!-- NAVBAR MOBILE + DESKTOP -->
 <nav>
-  <ul class="navbar">
+  <div class="mobile-nav">
+    <span id="hamburger" class="hamburger">☰</span>
+    <a href="index.html" class="home-icon">🏠</a>
+  </div>
+  <ul class="navbar mobile-only hidden" id="mobileMenu">
     <li><a href="rose.html">Rose</a></li>
     <li><a href="classifica.html">Classifica</a></li>
     <li class="dropdown">
-      <a href="#" id="menu-draft" class="active">Draft ▾</a>
-      <ul id="submenu-draft" class="submenu hidden">
-        <li><a href="draft_championship.html?tab=Draft Championship">🟦 Conference Championship</a></li>
-        <li><a href="draft_conference.html?tab=Draft Conference">🟨 Conference League</a></li>
+      <a href="#" id="toggle-draft">Draft ▾</a>
+      <ul class="submenu hidden" id="submenu-draft">
+        <li><a href="draft_championship.html?tab=Draft Championship">🟦 Conf.Championship</a></li>
+        <li><a href="draft_conference.html?tab=Draft Conference">🟨 Conf.League</a></li>
+      </ul>
+    </li>
+    <li><a href="svincolati.html">Svincolati</a></li>
+    <li><a href="chiamate.html">Chiamate</a></li>
+    <li><a href="albo.html">Albo d'Oro</a></li>
+  </ul>
+  <ul class="navbar desktop-only">
+    <li><a href="index.html">🏠</a></li>
+    <li><a href="rose.html">Rose</a></li>
+    <li><a href="classifica.html">Classifica</a></li>
+    <li class="dropdown">
+      <a href="#" id="desktop-toggle-draft">Draft ▾</a>
+      <ul class="submenu hidden" id="desktop-submenu-draft">
+        <li><a href="draft_championship.html?tab=Draft Championship">🟦 Conf.Championship</a></li>
+        <li><a href="draft_conference.html?tab=Draft Conference">🟨 Conf.League</a></li>
       </ul>
     </li>
     <li><a href="svincolati.html">Svincolati</a></li>
@@ -286,26 +285,26 @@
     <li><a href="albo.html">Albo d'Oro</a></li>
   </ul>
 </nav>
+
 <h1>🟦 Draft Room - Conference Championship</h1>
 <div class="top-link">
   <a href="statistiche.html" target="_blank">📊 Vai alle Statistiche del Draft</a>
 </div>
 <div id="turno-attuale">⏳ Caricamento turno in corso...</div>
-
 <div class="container">
   <div class="tabella-container">
     <div id="tabella-pick-container">
-<table id="tabella-pick">
-  <thead>
-    <tr>
-      <th onclick="ordinaPick(0)">Pick</th>
-      <th onclick="ordinaPick(1)">Squadra</th>
-      <th onclick="ordinaPick(2)">Giocatore</th>
-      <th onclick="ordinaPick(3)">Ruolo</th>
-      </tr>
-  </thead>
-  <tbody></tbody>
-</table>
+      <table id="tabella-pick">
+        <thead>
+          <tr>
+            <th onclick="ordinaPick(0)">Pick</th>
+            <th onclick="ordinaPick(1)">Squadra</th>
+            <th onclick="ordinaPick(2)">Giocatore</th>
+            <th onclick="ordinaPick(3)">Ruolo</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
     </div>
   </div>
   <div class="lista-container">
@@ -331,25 +330,42 @@
     </div>
   </div>
 </div>
-
 <h2 style="text-align:center; color:#ffcc00;">📋 Riepilogo Pick per Squadra</h2>
 <button onclick="aggiornaChiamatePerSquadra()">🔄 Ricarica Riepilogo</button>
 <div id="riepilogo-squadre" style="display: flex; flex-wrap: wrap; gap: 20px; padding: 20px;"></div>
-
 <script src="draft_script_unificato.js"></script>
-
 <script>
-  document.getElementById('menu-draft').addEventListener('click', function (e) {
-    e.preventDefault();
-    document.getElementById('submenu-draft').classList.toggle('hidden');
-  });
+  document.addEventListener("DOMContentLoaded", function () {
+    const hamburger = document.getElementById("hamburger");
+    const mobileMenu = document.getElementById("mobileMenu");
+    const draftToggle = document.getElementById("toggle-draft");
+    const draftSubmenu = document.getElementById("submenu-draft");
+    const desktopToggle = document.getElementById("desktop-toggle-draft");
+    const desktopSubmenu = document.getElementById("desktop-submenu-draft");
 
-  document.addEventListener('click', function (e) {
-    if (!document.querySelector('.dropdown').contains(e.target)) {
-      document.getElementById('submenu-draft').classList.add('hidden');
-    }
+    hamburger?.addEventListener("click", function () {
+      mobileMenu.classList.toggle("hidden");
+    });
+
+    document.querySelectorAll("#mobileMenu a").forEach(link => {
+      link.addEventListener("click", function () {
+        if (link.id !== "toggle-draft") {
+          mobileMenu.classList.add("hidden");
+          draftSubmenu.classList.add("hidden");
+        }
+      });
+    });
+
+    draftToggle?.addEventListener("click", function (e) {
+      e.preventDefault();
+      draftSubmenu.classList.toggle("hidden");
+    });
+
+    desktopToggle?.addEventListener("click", function (e) {
+      e.preventDefault();
+      desktopSubmenu.classList.toggle("hidden");
+    });
   });
 </script>
-
 </body>
 </html>
