@@ -102,10 +102,15 @@ tbody tr:hover {
     margin: 10px 0;
   }
 
-  #currentPick {
-    font-size: 14px;
-    padding: 4px 0;
-  }
+#currentPick {
+  font-size: 13px;
+  padding: 2px 0;
+  margin-bottom: 5px;
+}
+
+.tabella-pick {
+  margin-top: 0;
+}
 
   /* BLOCCO TABELLA PICK COMPATTA */
   .tabella-pick {
