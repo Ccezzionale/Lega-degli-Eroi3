@@ -4,9 +4,270 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Draft Room - Draft Conference</title>
+  <title>Draft Room - Lega degli Eroi</title>
   <link rel="stylesheet" href="main.css">
   <link rel="stylesheet" href="draft.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #001f3f;
+      color: #ffffff;
+      margin: 0;
+      padding: 0;
+    }
+    h1 {
+      text-align: center;
+      color: #ffcc00;
+      font-size: 2.4em;
+      margin: 20px 0 10px;
+      text-transform: uppercase;
+    }
+    .top-link {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .top-link a {
+      color: #00ffff;
+      text-decoration: none;
+      font-size: 1.2em;
+    }
+    #turno-attuale {
+      text-align: center;
+      font-weight: bold;
+      color: #ffcc00;
+      margin-bottom: 20px;
+    }
+    .container {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: nowrap;
+      gap: 20px;
+      padding: 0 20px 40px;
+      max-width: 100%;
+      box-sizing: border-box;
+      overflow-x: auto;
+    }
+    .tabella-container,
+    .lista-container {
+      flex: 0 0 auto;
+      width: 700px;
+      min-width: 700px;
+    }
+    #tabella-pick-container {
+      max-height: 420px;
+      overflow-y: auto;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #ffffff;
+      color: #000;
+      border-radius: 10px;
+    }
+    th, td {
+      border: 1px solid #003366;
+      padding: 8px;
+      text-align: center;
+      font-size: 0.9em;
+    }
+    th {
+      background-color: #0074D9;
+      color: white;
+      text-transform: uppercase;
+    }
+    .next-pick {
+      background-color: #ffe680 !important;
+    }
+    select, input {
+      width: 100%;
+      padding: 8px;
+      margin: 8px 0;
+      border-radius: 5px;
+      border: none;
+      font-size: 1em;
+    }
+    #lista-giocatori-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    #lista-giocatori-table th, #lista-giocatori-table td {
+      border: 1px solid #ffffff33;
+      padding: 8px;
+      text-align: center;
+      color: white;
+      background-color: #004080;
+    }
+    #lista-giocatori-table th {
+      background-color: #005299;
+      cursor: pointer;
+    }
+    #lista-giocatori-table-container {
+      max-height: 420px;
+      overflow-y: auto;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      margin-top: 10px;
+    }
+    <style>
+  #tabella-pick-container {
+    background-color: #004080;
+    border-radius: 10px;
+    overflow: hidden;
+    padding: 0;
+    margin-bottom: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  }
+
+  #tabella-pick {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #004080;
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  #tabella-pick th {
+    background-color: #005299;
+    color: white;
+    padding: 8px;
+    text-transform: uppercase;
+    font-size: 0.9em;
+    border: 1px solid #ffffff33;
+    text-align: center;
+  }
+
+  #tabella-pick td {
+    background-color: #003366;
+    color: white;
+    font-size: 0.9em;
+    padding: 8px;
+    border: 1px solid #ffffff33;
+    text-align: center;
+  }
+
+  #tabella-pick tr:nth-child(even) {
+    background-color: #002b5c;
+  }
+
+  #tabella-pick tr.next-pick {
+    background-color: #ffe680 !important;
+    color: black;
+    font-weight: bold;
+  }
+</style>
+
+<style>
+@media (max-width: 768px) {
+
+  body {
+    font-size: 13px;
+    padding: 8px;
+  }
+
+  h1 {
+    font-size: 1.6em;
+    margin: 10px 0;
+  }
+
+@media (max-width: 768px) {
+  #turno-attuale {
+    margin-top: 0;
+    margin-bottom: 4px !important;
+    font-size: 13px !important;
+  }
+
+  .tabella-pick {
+    margin-top: 0 !important;
+  }
+
+  .container {
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+  }
+
+  .tabella-container, .lista-container {
+    width: 100%;
+    min-width: 100%;
+  }
+
+  #tabella-pick-container {
+    max-height: 200px;
+    overflow-y: auto;
+  }
+
+  #tabella-pick {
+    font-size: 12px;
+  }
+
+  #tabella-pick th, #tabella-pick td {
+    padding: 4px;
+  }
+
+  #lista-giocatori-table {
+    font-size: 12px;
+  }
+
+  #lista-giocatori-table th, #lista-giocatori-table td {
+    padding: 4px;
+  }
+
+  #lista-giocatori-table-container {
+    max-height: 200px;
+    overflow-x: auto;
+  }
+
+  #riepilogo-squadre {
+    flex-direction: column;
+    padding: 10px;
+  }
+
+  select, input {
+    font-size: 13px;
+    padding: 4px;
+  }
+}
+</style>
+
+
+<style>
+  nav {
+    background-color: #004080;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+  }
+  .navbar {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    margin: 0;
+    padding: 1rem 0;
+    gap: 1.5rem;
+  }
+  .navbar li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.1rem;
+  }
+  .navbar li a.active,
+  .navbar li a:hover {
+    color: #ffcc00;
+    text-decoration: underline;
+  }
+  h1 {
+    margin-top: 110px;
+  }
+</style>
+
 </head>
 <body>
 <nav>
@@ -14,7 +275,7 @@
     <li><a href="rose.html">Rose</a></li>
     <li><a href="classifica.html">Classifica</a></li>
     <li class="dropdown">
-      <a href="#" id="menu-draft">Draft ▾</a>
+      <a href="#" id="menu-draft" class="active">Draft ▾</a>
       <ul id="submenu-draft" class="submenu hidden">
         <li><a href="draft_championship.html?tab=Draft Championship">📘 Draft Championship</a></li>
         <li><a href="draft_conference.html?tab=Draft Conference">🟡 Draft Conference</a></li>
@@ -25,31 +286,26 @@
     <li><a href="albo.html">Albo d'Oro</a></li>
   </ul>
 </nav>
-
-<h1 style="margin-top: 110px; text-align:center; color:#ffcc00;">Draft Conference</h1>
-<div class="top-link" style="text-align:center; margin-bottom:10px;">
-  <a href="statistiche.html" target="_blank" style="color:#00ffff; text-decoration:none; font-size:1.2em;">
-    📊 Vai alle Statistiche del Draft
-  </a>
+<h1>Draft Room - Lega degli Eroi</h1>
+<div class="top-link">
+  <a href="statistiche.html" target="_blank">📊 Vai alle Statistiche del Draft</a>
 </div>
-<div id="turno-attuale" style="text-align:center; font-weight:bold; color:#ffcc00; margin-bottom:20px;">
-  ⏳ Caricamento turno in corso...
-</div>
+<div id="turno-attuale">⏳ Caricamento turno in corso...</div>
 
 <div class="container">
   <div class="tabella-container">
     <div id="tabella-pick-container">
-      <table id="tabella-pick">
-        <thead>
-          <tr>
-            <th onclick="ordinaPick(0)">Pick</th>
-            <th onclick="ordinaPick(1)">Squadra</th>
-            <th onclick="ordinaPick(2)">Giocatore</th>
-            <th onclick="ordinaPick(3)">Ruolo</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
+<table id="tabella-pick">
+  <thead>
+    <tr>
+      <th onclick="ordinaPick(0)">Pick</th>
+      <th onclick="ordinaPick(1)">Squadra</th>
+      <th onclick="ordinaPick(2)">Giocatore</th>
+      <th onclick="ordinaPick(3)">Ruolo</th>
+      </tr>
+  </thead>
+  <tbody></tbody>
+</table>
     </div>
   </div>
   <div class="lista-container">
@@ -80,11 +336,14 @@
 <button onclick="aggiornaChiamatePerSquadra()">🔄 Ricarica Riepilogo</button>
 <div id="riepilogo-squadre" style="display: flex; flex-wrap: wrap; gap: 20px; padding: 20px;"></div>
 
+<script src="draft_script_unificato.js"></script>
+
 <script>
   document.getElementById('menu-draft').addEventListener('click', function (e) {
     e.preventDefault();
     document.getElementById('submenu-draft').classList.toggle('hidden');
   });
+
   document.addEventListener('click', function (e) {
     if (!document.querySelector('.dropdown').contains(e.target)) {
       document.getElementById('submenu-draft').classList.add('hidden');
@@ -92,6 +351,5 @@
   });
 </script>
 
-<script src="draft_script_unificato.js"></script>
 </body>
 </html>
