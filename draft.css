@@ -92,6 +92,36 @@ tbody tr:hover {
   font-size: 1.1rem;
   color: #ffffff;
 }
+.dropdown {
+  position: relative;
+}
+
+.submenu {
+  position: absolute;
+  background-color: #004080;
+  border-radius: 0 0 6px 6px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  z-index: 999;
+}
+
+.submenu li a {
+  display: block;
+  padding: 10px 20px;
+  color: white;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.submenu li a:hover {
+  background-color: #00509e;
+}
+
+.hidden {
+  display: none;
+}
+
 
 /* === MOBILE === */
 @media (max-width: 768px) {
