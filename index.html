@@ -48,10 +48,12 @@
 
     // Chiude menu mobile quando clicchi su un link
     document.querySelectorAll("#mobileMenu a").forEach(link => {
-      link.addEventListener("click", function () {
-        mobileMenu.classList.remove("show");
-      });
-    });
+  link.addEventListener("click", function (e) {
+    if (link.id !== "toggle-draft") {
+      mobileMenu.classList.remove("show");
+    }
+  });
+});
 
     // Mostra/nasconde submenu Draft
     draftToggle.addEventListener("click", function (e) {
