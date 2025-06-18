@@ -146,6 +146,11 @@ tbody tr:hover {
     justify-content: center;
     margin-bottom: 10px;
   }
+  
+  @media (max-width: 768px) {
+  .container {
+    margin-top: -10px;
+  }
 
   .filtro-container select,
   .filtro-container input {
