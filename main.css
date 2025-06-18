@@ -564,25 +564,26 @@ h1 {
     color: white;
   }
 
-  .submenu {
-    margin-left: 16px;
-  }
-
-.submenu.hidden {
-  display: none;
-}
-
-.submenu.show {
-  display: block;
-}
-
-  .navbar .dropdown .submenu {
+/* Stile base sottomenu */
+.submenu {
+  margin-left: 16px;
   background-color: #002f5f;
   border-radius: 6px;
   padding: 6px 10px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.3);
 }
 
+/* Nascondi submenu */
+.submenu.hidden {
+  display: none;
+}
+
+/* Mostra submenu (opzionale: se usi classList.add("show")) */
+.submenu.show {
+  display: block;
+}
+
+/* Stile elementi del submenu */
 .navbar .dropdown .submenu li {
   margin: 8px 0;
 }
@@ -602,7 +603,7 @@ h1 {
   color: #ffcc00;
 }
 
-/* MENU MOBILE - Chiuso e aperto */
+/* MENU MOBILE - chiuso */
 #mobileMenu {
   display: none;
   flex-direction: column;
@@ -611,18 +612,9 @@ h1 {
   gap: 8px;
 }
 
+/* MENU MOBILE - aperto */
 #mobileMenu.show {
   display: flex !important;
-}
-
-.submenu.hidden {
-  display: none;
-}
-.submenu {
-  background-color: #002f5f;
-  border-radius: 6px;
-  padding: 6px 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
 }
 
 /* --------- DESKTOP (min-width: 769px) --------- */
