@@ -102,21 +102,25 @@ tbody tr:hover {
     margin: 10px 0;
   }
 
-#currentPick {
-  font-size: 13px;
-  padding: 2px 0;
-  margin-bottom: 5px;
-}
+  h2, h3, p {
+    margin-top: 0;
+    margin-bottom: 6px;
+    text-align: center;
+  }
 
-.tabella-pick {
-  margin-top: 0;
-}
+  #currentPick {
+    font-size: 13px;
+    padding: 2px 0;
+    margin-top: 0;
+    margin-bottom: 6px;
+  }
 
   /* BLOCCO TABELLA PICK COMPATTA */
   .tabella-pick {
     max-height: 180px;
     overflow-y: scroll;
     display: block;
+    margin-top: 0;
     margin-bottom: 10px;
     border: 1px solid #fff;
     border-radius: 6px;
@@ -176,5 +180,4 @@ tbody tr:hover {
   .riepilogo-pick .squadra ol {
     padding-left: 18px;
   }
-
 }
