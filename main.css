@@ -45,6 +45,36 @@ nav ul.navbar li a:hover {
   text-decoration: underline;
 }
 
+/* --------- HOME ICONA DESKTOP --------- */
+@media (min-width: 769px) {
+  .mobile-nav {
+    display: none;
+  }
+
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #004080;
+    padding: 0 20px;
+  }
+
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px 20px;
+    gap: 8px;
+  }
+
+  .home-icon {
+    display: inline-block;
+    font-size: 1.2em;
+    margin-left: 12px;
+    text-decoration: none;
+    color: white;
+  }
+}
+
 /* --------- MARGINE SOTTO LA NAVBAR --------- */
 main, h1, .container {
   margin-top: 90px;
@@ -478,13 +508,6 @@ h1 {
   .home-icon {
     font-size: 1.4em;
     text-decoration: none;
-  }
-
-  .navbar {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 10px 20px;
-    gap: 8px;
   }
 
   .navbar li {
