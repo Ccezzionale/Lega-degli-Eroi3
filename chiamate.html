@@ -2,21 +2,72 @@
 <html lang="it">
 <head>
   <meta charset="UTF-8" />
-  <title>Chiamate Settimanali</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chiamate Settimanali</title>
   <link rel="stylesheet" href="main.css" />
+  <style>
+    @media (max-width: 768px) {
+      body {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 20px;
+        text-align: center;
+      }
+
+      h2 {
+        margin-bottom: 15px;
+        font-size: 1.4rem;
+      }
+
+      .moduli-container {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        width: 90%;
+        max-width: 500px;
+        margin-bottom: 20px;
+      }
+
+      .switcher {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 90%;
+        max-width: 500px;
+        margin-bottom: 20px;
+      }
+
+      .switcher button,
+      .bottone-chiamata {
+        width: 100%;
+        font-size: 0.9rem;
+        padding: 10px;
+      }
+
+      #chiamate-container {
+        width: 90%;
+        max-width: 700px;
+        font-size: 0.9rem;
+      }
+    }
+  </style>
 </head>
-<body style="min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding: 20px; text-align: center;">
+<body>
+  <h2>Chiamate Settimanali</h2>
 
-  <h2 style="margin-bottom: 15px; font-size: 1.4rem;">Chiamate Settimanali</h2>
-
-  <div class="moduli-container" style="display: flex; flex-direction: column; gap: 12px; width: 90%; max-width: 500px; margin-bottom: 20px;">
+  <div class="moduli-container">
+    <!-- Moduli League -->
     <a class="bottone-chiamata" href="https://docs.google.com/forms/d/e/1FAIpQLSdxOpFrvWkhi6TrhryrIVJUeMISAxo-CatGtw8TuNApRyU8Yg/viewform?usp=dialog" target="_blank">
       ➕ Compila chiamata 15:00 (Conference League)
     </a>
     <a class="bottone-chiamata" href="https://docs.google.com/forms/d/e/1FAIpQLScR411PT9pvIZ9SxoFeiKKwbI_Mk0r5USa-rk6Egv0ZyOnSSQ/viewform?usp=dialog" target="_blank">
       ➕ Compila chiamata 16:00 (Conference League)
     </a>
+
+    <!-- Moduli Championship -->
     <a class="bottone-chiamata" href="https://docs.google.com/forms/d/e/1FAIpQLScNaxnbpVmIW_t23uvRqLkRy6sDrzyEvQQ-mpLDkk67DVDLag/viewform?usp=dialog" target="_blank">
       ➕ Compila chiamata 15:00 (Conference Championship)
     </a>
@@ -25,14 +76,14 @@
     </a>
   </div>
 
-  <div class="switcher" style="display: flex; flex-direction: column; gap: 10px; width: 90%; max-width: 500px; margin-bottom: 20px;">
+  <div class="switcher">
     <button onclick="caricaChiamate('league15')">📋 Visualizza Conference League (15:00)</button>
     <button onclick="caricaChiamate('league16')">📋 Visualizza Conference League (16:00)</button>
     <button onclick="caricaChiamate('champ15')">📋 Visualizza Conference Championship (15:00)</button>
     <button onclick="caricaChiamate('champ16')">📋 Visualizza Conference Championship (16:00)</button>
   </div>
 
-  <div id="chiamate-container" style="width: 90%; max-width: 700px;">
+  <div id="chiamate-container">
     <p>⏳ Seleziona una conference per visualizzare le chiamate.</p>
   </div>
 
