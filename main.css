@@ -403,7 +403,6 @@ h1 {
 
 /* --------- RESPONSIVE ROSE --------- */
 /* --------- MOBILE (max-width: 768px) --------- */
-@media (max-width: 768px) {
   .box-rosa {
     width: 100%;
     padding: 10px;
@@ -502,6 +501,30 @@ h1 {
   .submenu {
     margin-left: 16px;
   }
+  .navbar .dropdown .submenu {
+  background-color: #002f5f;
+  border-radius: 6px;
+  padding: 6px 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.navbar .dropdown .submenu li {
+  margin: 8px 0;
+}
+
+.navbar .dropdown .submenu li a {
+  display: block;
+  padding: 8px;
+  background-color: #003f7f;
+  border-radius: 4px;
+  color: white;
+  text-decoration: none;
+  text-align: left;
+}
+
+.navbar .dropdown .submenu li a:hover {
+  background-color: #004f9f;
+  color: #ffcc00;
 }
 
 /* MENU MOBILE - Chiuso e aperto */
@@ -517,12 +540,13 @@ h1 {
   display: flex;
 }
 
-/* --------- MOBILE (max-width: 768px) --------- */
-@media (max-width: 768px) {
-  ...
-}
-
 /* --------- DESKTOP (min-width: 769px) --------- */
 @media (min-width: 769px) {
-  ...
+  .hidden-on-mobile {
+    display: flex !important;
+  }
+
+  .mobile-nav {
+    display: none;
+  }
 }
