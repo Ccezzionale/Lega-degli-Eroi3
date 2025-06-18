@@ -1,24 +1,22 @@
-
 <!DOCTYPE html>
 <html lang="it">
 <head>
   <meta charset="UTF-8" />
   <title>Chiamate Settimanali</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="main.css" />
 </head>
-<body style="min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding-top: 20px;">
-  <h2>Chiamate Settimanali</h2>
+<body style="min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding: 20px; text-align: center;">
 
-  <div class="moduli-container">
-    <!-- Moduli League -->
+  <h2 style="margin-bottom: 15px; font-size: 1.4rem;">Chiamate Settimanali</h2>
+
+  <div class="moduli-container" style="display: flex; flex-direction: column; gap: 12px; width: 90%; max-width: 500px; margin-bottom: 20px;">
     <a class="bottone-chiamata" href="https://docs.google.com/forms/d/e/1FAIpQLSdxOpFrvWkhi6TrhryrIVJUeMISAxo-CatGtw8TuNApRyU8Yg/viewform?usp=dialog" target="_blank">
       ➕ Compila chiamata 15:00 (Conference League)
     </a>
     <a class="bottone-chiamata" href="https://docs.google.com/forms/d/e/1FAIpQLScR411PT9pvIZ9SxoFeiKKwbI_Mk0r5USa-rk6Egv0ZyOnSSQ/viewform?usp=dialog" target="_blank">
       ➕ Compila chiamata 16:00 (Conference League)
     </a>
-
-    <!-- Moduli Championship -->
     <a class="bottone-chiamata" href="https://docs.google.com/forms/d/e/1FAIpQLScNaxnbpVmIW_t23uvRqLkRy6sDrzyEvQQ-mpLDkk67DVDLag/viewform?usp=dialog" target="_blank">
       ➕ Compila chiamata 15:00 (Conference Championship)
     </a>
@@ -27,14 +25,14 @@
     </a>
   </div>
 
-  <div class="switcher">
+  <div class="switcher" style="display: flex; flex-direction: column; gap: 10px; width: 90%; max-width: 500px; margin-bottom: 20px;">
     <button onclick="caricaChiamate('league15')">📋 Visualizza Conference League (15:00)</button>
     <button onclick="caricaChiamate('league16')">📋 Visualizza Conference League (16:00)</button>
     <button onclick="caricaChiamate('champ15')">📋 Visualizza Conference Championship (15:00)</button>
     <button onclick="caricaChiamate('champ16')">📋 Visualizza Conference Championship (16:00)</button>
   </div>
 
-  <div id="chiamate-container">
+  <div id="chiamate-container" style="width: 90%; max-width: 700px;">
     <p>⏳ Seleziona una conference per visualizzare le chiamate.</p>
   </div>
 
