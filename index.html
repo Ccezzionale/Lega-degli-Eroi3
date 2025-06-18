@@ -15,13 +15,13 @@
   <ul class="navbar" id="mobileMenu">
     <li><a href="rose.html">Rose</a></li>
     <li><a href="classifica.html">Classifica</a></li>
-    <li class="dropdown">
+ <li class="dropdown">
   <a href="#" id="toggle-draft">Draft ▾</a>
   <ul class="submenu hidden" id="submenu-draft">
     <li><a href="draft_championship.html?tab=Draft Championship">🟦 Conf.Championship</a></li>
-        <li><a href="draft_conference.html?tab=Draft Conference">🟨 Conf.League</a></li>
-      </ul>
-    </li>
+    <li><a href="draft_conference.html?tab=Draft Conference">🟨 Conf.League</a></li>
+  </ul>
+</li>
     <li><a href="svincolati.html">Svincolati</a></li>
     <li><a href="chiamate.html">Chiamate</a></li>
     <li><a href="albo.html">Albo d'Oro</a></li>
@@ -38,28 +38,26 @@
   document.addEventListener("DOMContentLoaded", function () {
     const hamburger = document.getElementById("hamburger");
     const mobileMenu = document.getElementById("mobileMenu");
+    const draftToggle = document.getElementById("toggle-draft");
+    const draftSubmenu = document.getElementById("submenu-draft");
 
+    // Mostra/nasconde il menu mobile
     hamburger.addEventListener("click", function () {
       mobileMenu.classList.toggle("show");
     });
 
-    // Chiude il menu se clicchi su un link
+    // Chiude menu mobile quando clicchi su un link
     document.querySelectorAll("#mobileMenu a").forEach(link => {
       link.addEventListener("click", function () {
         mobileMenu.classList.remove("show");
       });
     });
 
-    // ➕ Toggle del submenu "Draft"
-    const toggleDraft = document.getElementById("toggle-draft");
-    const submenuDraft = document.getElementById("submenu-draft");
-
-    if (toggleDraft && submenuDraft) {
-      toggleDraft.addEventListener("click", function (e) {
-        e.preventDefault(); // evita che segua il link "#"
-        submenuDraft.classList.toggle("hidden");
-      });
-    }
+    // Mostra/nasconde submenu Draft
+    draftToggle.addEventListener("click", function (e) {
+      e.preventDefault(); // Previene il salto alla home
+      draftSubmenu.classList.toggle("hidden");
+    });
   });
 </script>
 </body>
