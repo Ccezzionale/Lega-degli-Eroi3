@@ -63,22 +63,20 @@
     const draftToggle = document.getElementById("toggle-draft");
     const draftSubmenu = document.getElementById("submenu-draft");
 
-    console.log("✅ Script caricato");
-    console.log("hamburger:", hamburger);
-    console.log("mobileMenu:", mobileMenu);
-
-    hamburger.addEventListener("click", function () {
-      console.log("👉 clic su hamburger");
+    // Toggle apertura menu mobile
+    hamburger.addEventListener("click", () => {
       mobileMenu.classList.toggle("show");
     });
 
-    draftToggle.addEventListener("click", function (e) {
+    // Toggle submenu draft mobile
+    draftToggle?.addEventListener("click", function (e) {
       e.preventDefault();
       draftSubmenu.classList.toggle("hidden");
     });
 
+    // Chiude tutto se clicchi un link normale
     document.querySelectorAll("#mobileMenu a").forEach(link => {
-      link.addEventListener("click", function () {
+      link.addEventListener("click", function (e) {
         if (link.id !== "toggle-draft") {
           mobileMenu.classList.remove("show");
           draftSubmenu.classList.add("hidden");
@@ -87,6 +85,5 @@
     });
   });
 </script>
-
 </body>
 </html>
