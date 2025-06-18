@@ -222,7 +222,9 @@ tbody tr:hover {
     width: 100%;
     max-width: 320px;
     font-size: 1em;
-    text-align: center;
+    text-align: left;
+    padding: 12px 24px;
+    box-sizing: border-box;
   }
 
   h1 {
