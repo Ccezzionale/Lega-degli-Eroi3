@@ -411,9 +411,9 @@ h1 {
   .box-rosa table {
     font-size: 0.8rem;
   }
+}
 
 /* --------- CHIAMATE LAYOUT --------- */
-
 @media (max-width: 768px) {
   .moduli-container {
     display: flex;
@@ -449,4 +449,3 @@ h1 {
     font-size: 0.9rem;
   }
 }
-
