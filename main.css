@@ -46,9 +46,9 @@ nav ul.navbar li a:hover {
 }
 
 /* --------- HOME ICONA DESKTOP --------- */
-@media (min-width: 769px) {
-  .mobile-nav {
-    display: none;
+@media (max-width: 768px) {
+  .desktop-only {
+    display: none !important;
   }
 
   nav {
