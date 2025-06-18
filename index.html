@@ -35,12 +35,23 @@
 </main>
 
 <script>
-  function toggleMenu() {
-    document.getElementById("mobileMenu").classList.toggle("hidden-on-mobile");
-  }
-</script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const hamburger = document.getElementById("hamburger");
+    const mobileMenu = document.getElementById("mobileMenu");
 
+    hamburger.addEventListener("click", () => {
+      mobileMenu.classList.toggle("hidden-on-mobile");
+    });
+
+    // Chiude il menu mobile dopo un click su qualsiasi link
+    document.querySelectorAll(".navbar li a").forEach(link => {
+      link.addEventListener("click", () => {
+        if (!mobileMenu.classList.contains("hidden-on-mobile")) {
+          mobileMenu.classList.add("hidden-on-mobile");
+        }
+      });
+    });
+  });
+</script>
 </body>
 </html>
-
-
