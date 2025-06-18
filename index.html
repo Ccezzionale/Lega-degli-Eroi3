@@ -7,21 +7,17 @@
   <link rel="stylesheet" href="main.css" />
 </head>
 <body>
+
+<!-- NAVBAR -->
 <nav>
-<nav>
+  <!-- NAV MOBILE -->
   <div class="mobile-nav">
     <span id="hamburger" class="hamburger">☰</span>
     <a href="index.html" class="home-icon">🏠</a>
   </div>
 
-  <nav>
-  <div class="mobile-nav">
-    <span id="hamburger" class="hamburger">☰</span>
-    <a href="index.html" class="home-icon">🏠</a>
-  </div>
-
-  <!-- NAVBAR MOBILE -->
-  <ul class="navbar" id="mobileMenu">
+  <!-- MENU MOBILE -->
+  <ul class="navbar mobile-only" id="mobileMenu">
     <li><a href="rose.html">Rose</a></li>
     <li><a href="classifica.html">Classifica</a></li>
     <li class="dropdown">
@@ -36,13 +32,13 @@
     <li><a href="albo.html">Albo d'Oro</a></li>
   </ul>
 
-  <!-- NAVBAR DESKTOP -->
-  <ul class="navbar hidden-on-mobile">
+  <!-- MENU DESKTOP -->
+  <ul class="navbar desktop-only">
     <li><a href="rose.html">Rose</a></li>
     <li><a href="classifica.html">Classifica</a></li>
     <li class="dropdown">
-      <a href="#" id="desktop-toggle-draft">Draft ▾</a>
-      <ul class="submenu hidden" id="desktop-submenu-draft">
+      <a href="#">Draft ▾</a>
+      <ul class="submenu">
         <li><a href="draft_championship.html?tab=Draft Championship">🟦 Conf.Championship</a></li>
         <li><a href="draft_conference.html?tab=Draft Conference">🟨 Conf.League</a></li>
       </ul>
@@ -53,12 +49,14 @@
   </ul>
 </nav>
 
- <main>
+<!-- CONTENUTO PRINCIPALE -->
+<main>
   <div class="hero"></div>
   <h1>Benvenuto nella Lega degli Eroi</h1>
   <p>Seleziona una sezione dal menu.</p>
 </main>
 
+<!-- SCRIPT -->
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     const hamburger = document.getElementById("hamburger");
@@ -66,15 +64,12 @@
     const draftToggle = document.getElementById("toggle-draft");
     const draftSubmenu = document.getElementById("submenu-draft");
 
-    const desktopToggle = document.getElementById("desktop-toggle-draft");
-    const desktopSubmenu = document.getElementById("desktop-submenu-draft");
-
     // Mostra/nasconde il menu mobile
     hamburger.addEventListener("click", function () {
       mobileMenu.classList.toggle("show");
     });
 
-    // Chiude menu mobile quando clicchi su un link (escluso il toggle Draft)
+    // Chiude il mobile menu quando si clicca su link (escluso Draft)
     document.querySelectorAll("#mobileMenu a").forEach(link => {
       link.addEventListener("click", function (e) {
         if (link.id !== "toggle-draft") {
@@ -83,18 +78,13 @@
       });
     });
 
-    // Mobile: Mostra/nasconde submenu Draft
+    // Mobile: toggle submenu Draft
     draftToggle.addEventListener("click", function (e) {
       e.preventDefault();
       draftSubmenu.classList.toggle("hidden");
     });
-
-    // Desktop: Mostra/nasconde submenu Draft
-    desktopToggle.addEventListener("click", function (e) {
-      e.preventDefault();
-      desktopSubmenu.classList.toggle("hidden");
-    });
   });
 </script>
+
 </body>
 </html>
