@@ -477,6 +477,10 @@ h1 {
     padding: 10px;
   }
 
+.hidden {
+  display: none !important;
+}
+
   .box-rosa table {
     font-size: 0.8rem;
   }
