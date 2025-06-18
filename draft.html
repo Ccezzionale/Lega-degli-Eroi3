@@ -337,5 +337,19 @@
 <div id="riepilogo-squadre" style="display: flex; flex-wrap: wrap; gap: 20px; padding: 20px;"></div>
 
 <script src="draft_script_unificato.js"></script>
+
+<script>
+  document.getElementById('menu-draft').addEventListener('click', function (e) {
+    e.preventDefault();
+    document.getElementById('submenu-draft').classList.toggle('hidden');
+  });
+
+  document.addEventListener('click', function (e) {
+    if (!document.querySelector('.dropdown').contains(e.target)) {
+      document.getElementById('submenu-draft').classList.add('hidden');
+    }
+  });
+</script>
+
 </body>
 </html>
