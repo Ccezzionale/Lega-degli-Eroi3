@@ -402,6 +402,7 @@ h1 {
 }
 
 /* --------- RESPONSIVE ROSE --------- */
+/* --------- MOBILE (max-width: 768px) --------- */
 @media (max-width: 768px) {
   .box-rosa {
     width: 100%;
@@ -411,10 +412,7 @@ h1 {
   .box-rosa table {
     font-size: 0.8rem;
   }
-}
 
-/* --------- CHIAMATE LAYOUT --------- */
-@media (max-width: 768px) {
   body {
     min-height: 100vh;
     display: flex;
@@ -461,5 +459,62 @@ h1 {
   #chiamate-container {
     padding: 10px;
     font-size: 0.9rem;
+  }
+
+  .mobile-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 16px;
+    height: 48px;
+    background-color: #004080;
+  }
+
+  .hamburger {
+    font-size: 1.6em;
+    cursor: pointer;
+    color: white;
+  }
+
+  .home-icon {
+    font-size: 1.4em;
+    text-decoration: none;
+  }
+
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px 20px;
+    gap: 8px;
+  }
+
+  .navbar li {
+    width: 100%;
+  }
+
+  .navbar li a {
+    display: block;
+    width: 100%;
+    padding: 6px 0;
+    color: white;
+  }
+
+  .submenu {
+    margin-left: 16px;
+  }
+
+  .hidden-on-mobile {
+    display: none;
+  }
+}
+
+/* --------- DESKTOP (min-width: 769px) --------- */
+@media (min-width: 769px) {
+  .hidden-on-mobile {
+    display: flex !important;
+  }
+
+  .mobile-nav {
+    display: none;
   }
 }
