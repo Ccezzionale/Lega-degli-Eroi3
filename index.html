@@ -73,10 +73,9 @@
     console.log("mobileMenu:", mobileMenu);
 
     // Toggle menu mobile
-    hamburger?.addEventListener("click", function () {
-      console.log("➡️ click su hamburger");
-      mobileMenu?.classList.toggle("hidden");
-    });
+    hamburger.addEventListener("click", function () {
+  mobileMenu.classList.toggle("show");
+  });
 
     // Chiudi menu mobile se clic su link (escluso Draft)
     document.querySelectorAll("#mobileMenu a").forEach(link => {
