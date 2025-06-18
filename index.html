@@ -49,6 +49,17 @@
         mobileMenu.classList.remove("show");
       });
     });
+
+    // ➕ Toggle del submenu "Draft"
+    const toggleDraft = document.getElementById("toggle-draft");
+    const submenuDraft = document.getElementById("submenu-draft");
+
+    if (toggleDraft && submenuDraft) {
+      toggleDraft.addEventListener("click", function (e) {
+        e.preventDefault(); // evita che segua il link "#"
+        submenuDraft.classList.toggle("hidden");
+      });
+    }
   });
 </script>
 </body>
