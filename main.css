@@ -524,6 +524,15 @@ h1 {
   .submenu {
     margin-left: 16px;
   }
+
+.submenu.hidden {
+  display: none;
+}
+
+.submenu.show {
+  display: block;
+}
+
   .navbar .dropdown .submenu {
   background-color: #002f5f;
   border-radius: 6px;
