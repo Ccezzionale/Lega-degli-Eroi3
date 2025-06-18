@@ -10,6 +10,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-start;
 }
 
 /* --------- NAVBAR DESKTOP --------- */
@@ -413,21 +414,7 @@ h1 {
 
 /* --------- CHIAMATE LAYOUT --------- */
 
- @media (max-width: 768px) {
-  body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    min-height: 100vh;
-    padding-top: 80px;
-  }
-
-  h2 {
-    font-size: 1.4rem;
-    margin-bottom: 10px;
-  }
-
+@media (max-width: 768px) {
   .moduli-container {
     display: flex;
     flex-direction: column;
