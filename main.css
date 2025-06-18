@@ -615,6 +615,16 @@ h1 {
   display: flex !important;
 }
 
+.submenu.hidden {
+  display: none;
+}
+.submenu {
+  background-color: #002f5f;
+  border-radius: 6px;
+  padding: 6px 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
 /* --------- DESKTOP (min-width: 769px) --------- */
 @media (min-width: 769px) {
   .hidden-on-mobile {
