@@ -69,19 +69,17 @@
     const desktopSubmenu = document.getElementById("desktop-submenu-draft");
 
     // Toggle mobile menu (mostra/nasconde)
-    hamburger.addEventListener("click", function () {
-      mobileMenu.classList.toggle("hidden");
-    });
+  hamburger.addEventListener("click", function () {
+  mobileMenu.classList.toggle("show");
+});
 
-    // Chiude menu mobile al clic su un link (eccetto Draft)
-    document.querySelectorAll("#mobileMenu a").forEach(link => {
-      link.addEventListener("click", function (e) {
-        if (link.id !== "toggle-draft") {
-          mobileMenu.classList.add("hidden");
-          draftSubmenu.classList.add("hidden"); // chiude anche submenu
-        }
-      });
-    });
+document.querySelectorAll("#mobileMenu a").forEach(link => {
+  link.addEventListener("click", function (e) {
+    if (link.id !== "toggle-draft") {
+      mobileMenu.classList.remove("show");
+    }
+  });
+});
 
     // Mobile: toggle submenu Draft
     draftToggle?.addEventListener("click", function (e) {
