@@ -6,6 +6,10 @@ body {
   margin: 0;
   padding: 0;
   text-align: center;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* --------- NAVBAR DESKTOP --------- */
@@ -406,4 +410,56 @@ h1 {
   .box-rosa table {
     font-size: 0.8rem;
   }
+
+/* --------- CHIAMATE LAYOUT --------- */
+
+ @media (max-width: 768px) {
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+    padding-top: 80px;
+  }
+
+  h2 {
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+  }
+
+  .moduli-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    width: 90%;
+    margin-bottom: 20px;
+  }
+
+  .bottone-chiamata {
+    width: 100%;
+    font-size: 0.9rem;
+    padding: 10px;
+  }
+
+  .switcher {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+    width: 90%;
+  }
+
+  .switcher button {
+    width: 100%;
+    font-size: 0.9rem;
+    padding: 10px;
+  }
+
+  #chiamate-container {
+    padding: 10px;
+    font-size: 0.9rem;
+  }
 }
+
