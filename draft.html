@@ -342,8 +342,13 @@
 
 <script src="draft_script_unificato.js"></script>
 
+<script src="draft_script_unificato.js"></script>
+
 <script>
-  
+  // 👇 MENU A TENDINA CLASSICO (lo puoi anche rimuovere se non usi più il dropdown)
+  document.getElementById('menu-draft').addEventListener('click', function (e) {
+    e.preventDefault();
+
     // Disattiva vecchio sottomenu se c'è
     const submenu = document.getElementById('submenu-draft');
     if (submenu) {
@@ -355,6 +360,7 @@
     if (subBar) {
       subBar.classList.toggle('hidden');
     }
+  });
 
   document.addEventListener('click', function (e) {
     const isClickInside = document.getElementById('menu-draft').contains(e.target) || 
@@ -369,7 +375,6 @@
     }
   });
 </script>
-
 
 </body>
 </html>
