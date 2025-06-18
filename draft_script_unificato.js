@@ -48,8 +48,12 @@ function caricaGiocatori() {
     });
 }
 
+const urlParams = new URLSearchParams(window.location.search);
+const tab = urlParams.get("tab") || "Draft Room";
+const endpoint = `https://script.google.com/macros/s/AKfycby8hk9db1JtLsi6UyuKCBrDntO7JAATwuI3lEHJmqx1VXKrPmlOnFGv3k6Ie3UKQspyPA/exec?tab=${encodeURIComponent(tab)}`;
+
 function caricaPick() {
-  return fetch("https://script.google.com/macros/s/AKfycby8hk9db1JtLsi6UyuKCBrDntO7JAATwuI3lEHJmqx1VXKrPmlOnFGv3k6Ie3UKQspyPA/exec")
+  return fetch(endpoint)
     .then(res => res.json())
     .then(dati => {
       let prossima = null;
