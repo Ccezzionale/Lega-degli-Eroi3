@@ -75,6 +75,45 @@ nav ul.navbar li a:hover {
   }
 }
 
+/* 👇 INCOLLA QUI SOTTO IL BLOCCO CSS PER IL MENU A TENDINA */
+@media (min-width: 769px) {
+  .navbar .dropdown:hover .submenu {
+    display: block !important;
+  }
+
+  .submenu {
+    display: none;
+    position: absolute;
+    background-color: #002f5f;
+    border-radius: 6px;
+    padding: 6px 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  }
+
+  .dropdown {
+    position: relative;
+  }
+
+  .dropdown .submenu li {
+    margin: 8px 0;
+  }
+
+  .dropdown .submenu li a {
+    display: block;
+    padding: 8px;
+    background-color: #003f7f;
+    border-radius: 4px;
+    color: white;
+    text-decoration: none;
+    text-align: left;
+  }
+
+  .dropdown .submenu li a:hover {
+    background-color: #004f9f;
+    color: #ffcc00;
+  }
+}
+
 /* --------- MARGINE SOTTO LA NAVBAR --------- */
 main, h1, .container {
   margin-top: 90px;
