@@ -107,7 +107,7 @@ td.appendChild(wrapper);
           item.classList.add("top4");
         }
 
-        iif (pos === "1") {
+        if (pos === "1") {
         item.classList.add("top1");    
         }
 
