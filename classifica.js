@@ -24,12 +24,11 @@ function caricaClassifica(nomeFoglio = "Conference") {
     .then(response => response.text())
     .then(csv => {
       const righe = csv.trim().split("\n");
-      window.righeDebug = righe; // 👈 così puoi accedere da console!
 
       let startRow = 1;
       if (nomeFoglio === "Conference") startRow = 4;
       if (nomeFoglio === "Championship") startRow = 4;
-      if (nomeFoglio === "Round Robin") startRow = 23;
+      if (nomeFoglio === "Round Robin") startRow = 24;
 
       let intestazione = righe[startRow - 1].split(",").map(cell => cell.replace(/"/g, "").trim());
       const hasBlankColumn = intestazione[2] === "";
