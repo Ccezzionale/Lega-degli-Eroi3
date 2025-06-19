@@ -156,8 +156,9 @@ if (pos === "1") {
   item.classList.add("top1");
 }
 
-        const punti = formattaNumero(colonne[9]);
-        const puntiTot = formattaNumero(colonne[10]);
+        const doppioValore = colonne[9].split(",");
+        const punti = formattaNumero(doppioValore[0]);
+        const puntiTot = formattaNumero(doppioValore[1]);
 
         const testo = document.createElement("span");
         testo.innerHTML = `<strong>${pos}. ${nomeSquadra}</strong><br><span style="font-weight:normal">PT. ${punti} / MP. ${puntiTot}</span>`;
