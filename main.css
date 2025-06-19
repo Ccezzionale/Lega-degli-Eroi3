@@ -641,7 +641,7 @@ h1 {
 
 /* --------- FIX MARGINE MOBILE --------- */
 @media (max-width: 768px) {
-  body {
+  body.pagina-chiamate {
     margin-top: 70px;
   }
 }
