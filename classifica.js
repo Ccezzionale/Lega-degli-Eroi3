@@ -159,10 +159,10 @@ if (pos === "1") {
 let punti, puntiTot;
 
 if (nomeFoglio === "Round Robin") {
-  punti = formattaNumero(colonne[11]); // PT
+  punti = formattaNumero(colonne[12]); // PT
 
   // MP = seconda parte della stringa "60,2208"
-  const split = colonne[12].split(",");
+  const split = colonne[13].split(",");
   puntiTot = split.length > 1 ? split[1] : split[0]; 
 } else {
   punti = formattaNumero(colonne[9]);  // PT
