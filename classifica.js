@@ -114,7 +114,7 @@ td.appendChild(wrapper);
         const header = document.createElement("div");
         header.className = "accordion-header";
 
-        cconst nomeSquadra = colonne[1];
+        const nomeSquadra = colonne[1];
 const pos = colonne[0]; // ✅ ora pos è già disponibile qui sotto
 
 const logo = document.createElement("img");
