@@ -20,7 +20,13 @@ function caricaClassifica(nomeFoglio = "Conference") {
     .then(response => response.text())
     .then(csv => {
       const righe = csv.trim().split("\n");
-      let intestazione = righe[0].split(",").map(cell => cell.replace(/"/g, "").trim());
+
+      let startRow = 1;
+      if (nomeFoglio === "Conference") startRow = 4;
+      if (nomeFoglio === "Championship") startRow = 4;
+      if (nomeFoglio === "Round Robin") startRow = 23;
+
+      let intestazione = righe[startRow - 1].split(",").map(cell => cell.replace(/"/g, "").trim());
       const hasBlankColumn = intestazione[2] === "";
       if (hasBlankColumn) intestazione.splice(2, 1);
 
@@ -42,7 +48,7 @@ function caricaClassifica(nomeFoglio = "Conference") {
 
       const numSquadre = righe.length - 1;
 
-      for (let i = 4; i < righe.length; i++) {
+      for (let i = startRow; i < righe.length; i++) {
         let colonne = righe[i].split(",").map(cell => cell.replace(/"/g, "").trim());
         if (hasBlankColumn && colonne[2] === "") colonne.splice(2, 1);
         while (colonne.length > intestazione.length) {
