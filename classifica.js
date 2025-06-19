@@ -107,10 +107,6 @@ td.appendChild(wrapper);
           item.classList.add("top4");
         }
 
-        if (pos === "1") {
-        item.classList.add("top1");    
-        }
-
         if (nomeFoglio === "Totale" && i > numSquadre - 4) {
           item.classList.add("ultime4");
         }
@@ -119,10 +115,16 @@ td.appendChild(wrapper);
         header.className = "accordion-header";
 
         const nomeSquadra = colonne[1];
-        const logo = document.createElement("img");
-        logo.src = "img/" + nomeSquadra + ".png";
-        logo.alt = nomeSquadra;
-        logo.onerror = () => { logo.style.display = "none"; };
+const pos = colonne[0]; // 👈 Sposta qui prima dell'uso!
+
+const logo = document.createElement("img");
+logo.src = "img/" + nomeSquadra + ".png";
+logo.alt = nomeSquadra;
+logo.onerror = () => { logo.style.display = "none"; };
+
+if (pos === "1") {
+  item.classList.add("top1");
+}
 
         const pos = colonne[0];
         const punti = formattaNumero(colonne[9]);
