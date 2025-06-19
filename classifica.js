@@ -107,8 +107,8 @@ td.appendChild(wrapper);
           item.classList.add("top4");
         }
 
-        if (nomeFoglio !== "Totale" && i === 0) {
-          item.classList.add("top1");
+        iif (pos === "1") {
+        item.classList.add("top1");    
         }
 
         if (nomeFoglio === "Totale" && i > numSquadre - 4) {
