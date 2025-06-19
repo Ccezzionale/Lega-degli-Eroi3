@@ -24,6 +24,7 @@ function caricaClassifica(nomeFoglio = "Conference") {
     .then(response => response.text())
     .then(csv => {
       const righe = csv.trim().split("\n");
+      window.righeDebug = righe; // 👈 così puoi accedere da console!
 
       let startRow = 1;
       if (nomeFoglio === "Conference") startRow = 4;
