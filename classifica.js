@@ -125,8 +125,8 @@ td.appendChild(wrapper);
         logo.onerror = () => { logo.style.display = "none"; };
 
         const pos = colonne[0];
-        const punti = formattaNumero(colonne[colonne.length - 2]);
-        const puntiTot = formattaNumero(colonne[colonne.length - 1]);
+        const punti = formattaNumero(colonne[colonne.length - 12]);
+        const puntiTot = formattaNumero(colonne[colonne.length - 11]);
 
         const testo = document.createElement("span");
         testo.innerHTML = `<strong>${pos}. ${nomeSquadra}</strong><br><span style="font-weight:normal">PT. ${punti} / MP. ${puntiTot}</span>`;
