@@ -179,7 +179,9 @@ if (nomeFoglio === "Round Robin") {
         const body = document.createElement("div");
         body.className = "accordion-body";
 
-        for (let j = 2; j < colonne.length - 2; j++) {
+        const startDetailColumnIndex = nomeFoglio === "Totale" ? 3 : 2;
+
+          for (let j = startDetailColumnIndex; j < colonne.length; j++) {
           const label = intestazione[j];
           const value = formattaNumero(colonne[j]);
           const p = document.createElement("p");
