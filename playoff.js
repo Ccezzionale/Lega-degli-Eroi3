@@ -34,8 +34,13 @@ fetch(URL_CLASSIFICA_TOTALE)
         spans[0].textContent = `${posizioni[idx][0] + 1}° ${squadre[posizioni[idx][0]].nome}`;
         spans[2].textContent = `${posizioni[idx][1] + 1}° ${squadre[posizioni[idx][1]].nome}`;
       } else if (idx < 8) {
-        spans[0].textContent = `${posizioni[idx - 4][0] + 1}° ${squadre[posizioni[idx - 4][0]].nome}`;
-        spans[2].textContent = posizioni[idx - 4][1];
+  // Quarti: teste di serie (prime 4)
+  const testaSerieIndex = idx - 4;
+  const squadra = squadre[testaSerieIndex];
+  const descrizioneVincente = posizioni[testaSerieIndex][1];
+
+  spans[0].textContent = `${testaSerieIndex + 1}° ${squadra.nome}`;
+  spans[2].textContent = descrizioneVincente;
       }
     });
   })
