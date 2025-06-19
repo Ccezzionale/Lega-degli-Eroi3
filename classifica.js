@@ -126,7 +126,6 @@ if (pos === "1") {
   item.classList.add("top1");
 }
 
-        const pos = colonne[0];
         const punti = formattaNumero(colonne[9]);
         const puntiTot = formattaNumero(colonne[10]);
 
