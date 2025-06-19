@@ -31,14 +31,21 @@ fetch(URL_CLASSIFICA_TOTALE)
       const spans = match.querySelectorAll("span");
 
       if (idx < 4) {
-        spans[0].textContent = `${posizioni[idx][0] + 1}° ${squadre[posizioni[idx][0]].nome}`;
-        spans[2].textContent = `${posizioni[idx][1] + 1}° ${squadre[posizioni[idx][1]].nome}`;
-      } else if (idx < 8) {
+  // Wild Card: mostra nome completo vs nome completo
+  const i1 = posizioni[idx][0];
+  const i2 = posizioni[idx][1];
+  const nomeA = squadre[i1] ? squadre[i1].nome : "";
+  const nomeB = squadre[i2] ? squadre[i2].nome : "";
+
+  spans[0].textContent = `${i1 + 1}° ${nomeA}`;
+  spans[2].textContent = `${i2 + 1}° ${nomeB}`;
+
+} else if (idx < 8) {
+  // Quarti: mostra testa di serie vs "Vincente X/Y"
   const testaSerieIndex = idx - 4;
   const squadra = squadre[testaSerieIndex];
   spans[0].textContent = `${testaSerieIndex + 1}° ${squadra.nome}`;
 
-  // Ordine corretto dei quarti nel bracket
   const mapping = [
     [7, 8],   // 1° vs Vincente 8°-9°
     [4, 11],  // 4° vs Vincente 5°-12°
