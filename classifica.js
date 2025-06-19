@@ -107,7 +107,7 @@ td.appendChild(wrapper);
           item.classList.add("top4");
         }
 
-        if (nomeFoglio !== "Totale" && i === 1) {
+        if (nomeFoglio !== "Totale" && i === 0) {
           item.classList.add("top1");
         }
 
