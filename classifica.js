@@ -141,8 +141,6 @@ header.appendChild(logo); // ✅ sempre aggiunto
 
 const pos = colonne[0]; // 👈 spostalo qui prima dell’uso
 
-const logo = document.createElement("img");
-
 if (!nomeSquadra || nomeSquadra === "undefined") {
   logo.style.display = "none";
 } else {
