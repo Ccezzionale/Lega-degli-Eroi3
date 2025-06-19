@@ -121,12 +121,13 @@ td.appendChild(wrapper);
         header.className = "accordion-header";
 
         const nomeSquadra = colonne[1];
-const pos = colonne[0]; // ✅ ora pos è già disponibile qui sotto
-
-const logo = document.createElement("img");
-logo.src = "img/" + nomeSquadra + ".png";
-logo.alt = nomeSquadra;
-logo.onerror = () => { logo.style.display = "none"; };
+if (!nomeSquadra || nomeSquadra === "undefined") {
+  logo.style.display = "none";
+} else {
+  logo.src = `img/${nomeSquadra}.png`;
+  logo.alt = nomeSquadra;
+  logo.onerror = () => { logo.style.display = "none"; };
+}
 
 if (pos === "1") {
   item.classList.add("top1");
