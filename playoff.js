@@ -34,14 +34,24 @@ fetch(URL_CLASSIFICA_TOTALE)
         spans[0].textContent = `${posizioni[idx][0] + 1}° ${squadre[posizioni[idx][0]].nome}`;
         spans[2].textContent = `${posizioni[idx][1] + 1}° ${squadre[posizioni[idx][1]].nome}`;
       } else if (idx < 8) {
-  // Quarti: teste di serie (prime 4)
   const testaSerieIndex = idx - 4;
   const squadra = squadre[testaSerieIndex];
-  const descrizioneVincente = posizioni[testaSerieIndex][1];
-
   spans[0].textContent = `${testaSerieIndex + 1}° ${squadra.nome}`;
-  spans[2].textContent = descrizioneVincente;
-      }
+
+  // Ordine corretto dei quarti nel bracket
+  const mapping = [
+    [7, 8],   // 1° vs Vincente 8°-9°
+    [4, 11],  // 4° vs Vincente 5°-12°
+    [5, 10],  // 3° vs Vincente 6°-11°
+    [6, 9]    // 2° vs Vincente 7°-10°
+  ];
+
+  const [a, b] = mapping[testaSerieIndex];
+  const nomeA = squadre[a] ? `${a + 1}° ${squadre[a].nome}` : `${a + 1}°`;
+  const nomeB = squadre[b] ? `${b + 1}° ${squadre[b].nome}` : `${b + 1}°`;
+
+  spans[2].textContent = `Vincente ${nomeA} / ${nomeB}`;
+}
     });
   })
   .catch(err => {
