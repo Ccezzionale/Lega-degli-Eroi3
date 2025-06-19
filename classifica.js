@@ -28,7 +28,7 @@ function caricaClassifica(nomeFoglio = "Conference") {
       let startRow = 1;
       if (nomeFoglio === "Conference") startRow = 4;
       if (nomeFoglio === "Championship") startRow = 4;
-      if (nomeFoglio === "Round Robin") startRow = 24;
+      if (nomeFoglio === "Round Robin") startRow = 2;
 
       let intestazione = righe[startRow - 1].split(",").map(cell => cell.replace(/"/g, "").trim());
       const hasBlankColumn = intestazione[2] === "";
