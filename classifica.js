@@ -160,7 +160,8 @@ if (pos === "1") {
 
 if (nomeFoglio === "Round Robin") {
   punti = formattaNumero(colonne[9]); // PT
-  puntiTot = Number(colonne[10]).toLocaleString("it-IT"); // MP formattato con separatore migliaia
+  puntiTot = colonne[10].replace(",", ".");
+puntiTot = parseFloat(puntiTot).toLocaleString("it-IT");
 } else {
   punti = formattaNumero(colonne[9]);      // PT
   puntiTot = formattaNumero(colonne[10]);  // MP
