@@ -183,6 +183,10 @@ main, h1, .container {
     gap: 1rem;
     padding: 1rem;
   }
+  
+  main {
+    margin-top: 70px;
+  }
 
   nav ul.navbar::-webkit-scrollbar {
     display: none;
