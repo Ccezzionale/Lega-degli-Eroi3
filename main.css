@@ -638,3 +638,10 @@ h1 {
     display: none;
   }
 }
+
+/* --------- FIX MARGINE MOBILE --------- */
+@media (max-width: 768px) {
+  body {
+    margin-top: 70px;
+  }
+}
