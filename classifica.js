@@ -156,9 +156,15 @@ if (pos === "1") {
   item.classList.add("top1");
 }
 
-        const doppioValore = colonne[9].split(",");
-        const punti = formattaNumero(doppioValore[0]);
-        const puntiTot = formattaNumero(doppioValore[1]);
+        let punti, puntiTot;
+
+if (nomeFoglio === "Round Robin") {
+  punti = formattaNumero(colonne[10]);     // PT
+  puntiTot = formattaNumero(colonne[11]);  // MP
+} else {
+  punti = formattaNumero(colonne[9]);      // PT
+  puntiTot = formattaNumero(colonne[10]);  // MP
+}
 
         const testo = document.createElement("span");
         testo.innerHTML = `<strong>${pos}. ${nomeSquadra}</strong><br><span style="font-weight:normal">PT. ${punti} / MP. ${puntiTot}</span>`;
