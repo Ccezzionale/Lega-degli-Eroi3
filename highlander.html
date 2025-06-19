@@ -7,58 +7,59 @@
   <link rel="stylesheet" href="main.css" />
   <style>
     body {
-      background-color: #0b0c10;
-      color: #ffffff;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 0;
-      padding: 0;
+      background-color: #0b0c10;
+      color: #fff;
+      font-family: 'Georgia', serif;
+      text-align: center;
     }
 
     h1 {
-      text-align: center;
+      margin-top: 30px;
       color: #ffcc00;
       font-size: 2.2em;
-      margin-top: 30px;
-      margin-bottom: 20px;
       text-transform: uppercase;
     }
 
-    .svg-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 40px 20px;
-    }
-
-    .svg-container object {
+    .lapide-wrapper {
+      position: relative;
       width: 100%;
-      max-width: 500px;
-      border: 2px solid #333;
-      border-radius: 16px;
-      box-shadow: 0 0 30px rgba(255, 0, 0, 0.2);
-      background-color: #1a1a1a;
+      max-width: 600px;
+      margin: 40px auto;
     }
 
-    .lapide-container {
+    .lapide-wrapper img {
+      width: 100%;
+      border-radius: 10px;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .overlay-nomi {
+      position: absolute;
+      top: 110px;
+      left: 0;
+      width: 100%;
+      padding: 0 40px;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
-      padding: 60px 20px;
     }
 
-    .lapide-img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 12px;
-      box-shadow: 0 0 30px rgba(255, 0, 0, 0.3);
-      border: 2px solid #222;
+    .overlay-nomi .nome {
+      font-size: 1.1em;
+      margin: 6px 0;
+      color: #ccc;
     }
 
-    hr {
-      margin: 60px auto;
-      width: 80%;
-      border: none;
-      border-top: 2px dashed #444;
+    .overlay-nomi .eliminata {
+      color: #ff4d4d;
+      text-decoration: line-through;
+    }
+
+    .overlay-nomi .vincitore {
+      color: gold;
+      font-weight: bold;
+      text-shadow: 0 0 5px gold;
     }
   </style>
 </head>
@@ -66,16 +67,26 @@
 
   <h1>Highlander Cup 2024</h1>
 
-  <!-- 🔄 SEZIONE SVG INTERATTIVA -->
-  <div class="svg-container">
-    <object data="img/highlander2024_interactive.svg" type="image/svg+xml"></object>
-  </div>
-
-  <hr />
-
-  <!-- 🪦 LAPIDE FINALE -->
-  <div class="lapide-container">
-    <img src="img/highlander2024.png" alt="Lapide Highlander Cup 2024" class="lapide-img" />
+  <div class="lapide-wrapper">
+    <img src="img/lapide_base_vuota.png" alt="Lapide Highlander" />
+    <div class="overlay-nomi">
+      <div class="nome">Santos Ubriachi</div>
+      <div class="nome eliminata">Real Capra</div>
+      <div class="nome eliminata">Dinamo Sbronzi</div>
+      <div class="nome">Spartak Torino</div>
+      <div class="nome eliminata">FC Bombazza</div>
+      <div class="nome eliminata">Atletico Brufoli</div>
+      <div class="nome eliminata">Longobarda</div>
+      <div class="nome">Real Trambusto</div>
+      <div class="nome eliminata">FC Marmotte</div>
+      <div class="nome">Tana delle Tigri</div>
+      <div class="nome eliminata">Ajax Scars</div>
+      <div class="nome">Chievo Baggiano</div>
+      <div class="nome eliminata">Pippo United</div>
+      <div class="nome eliminata">FC Panettone</div>
+      <div class="nome">U.C. Braciolona</div>
+      <div class="nome vincitore">Team Bartowski 👑</div>
+    </div>
   </div>
 
 </body>
