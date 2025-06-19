@@ -48,12 +48,21 @@ function caricaGiocatori() {
     });
 }
 
+// 📦 Estrae il parametro "tab" dall'URL o decide quale usare in base al nome del file
 const urlParams = new URLSearchParams(window.location.search);
 const tab = urlParams.get("tab") || (
-  window.location.href.includes("conference") 
-    ? "Draft Conference" 
+  window.location.href.includes("conference")
+    ? "Draft Conference"
     : "Draft Championship"
 );
+
+// 🌐 Imposta l'endpoint corretto con il tab scelto
+const endpoint = `https://script.google.com/macros/s/AKfycbwGlBiarvPyDSGBIQfOp-nUXzwF9gIdP1K6TKY-jy_VGKyCGtji5pe46BCED5prESvytg/exec?tab=${encodeURIComponent(tab)}`;
+
+// 🧪 Debug
+console.log("🧪 Tab scelto:", tab);
+console.log("📡 Endpoint:", endpoint);
+
 
 function caricaPick() {
   return fetch(endpoint)
