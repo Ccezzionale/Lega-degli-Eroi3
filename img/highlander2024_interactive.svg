@@ -1,0 +1,32 @@
+<?xml version="1.0" ?>
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="900">
+  <rect x="50" y="20" width="400" height="860" rx="30" ry="30" fill="#333333" stroke="#222" stroke_width="4"/>
+  <text x="250" y="60" fill="gold" font_size="24" text_anchor="middle" font_family="Georgia">HIGHLANDER CUP 2024</text>
+  <text x="250" y="110" font_size="18" text_anchor="middle" font_family="Georgia" fill="#cccccc">SANTOS UBRIACHI</text>
+  <text x="250" y="152" font_size="18" text_anchor="middle" font_family="Georgia" fill="#ff4d4d" text-decoration="line-through">REAL CAPRA</text>
+  <text x="460" y="147" fill="red" font_size="18" font_family="Georgia">💀</text>
+  <text x="250" y="194" font_size="18" text_anchor="middle" font_family="Georgia" fill="#ff4d4d" text-decoration="line-through">DINAMO SBRONZI</text>
+  <text x="460" y="189" fill="red" font_size="18" font_family="Georgia">💀</text>
+  <text x="250" y="236" font_size="18" text_anchor="middle" font_family="Georgia" fill="#cccccc">SPARTAK TORINO</text>
+  <text x="250" y="278" font_size="18" text_anchor="middle" font_family="Georgia" fill="#ff4d4d" text-decoration="line-through">FC BOMBAZZA</text>
+  <text x="460" y="273" fill="red" font_size="18" font_family="Georgia">💀</text>
+  <text x="250" y="320" font_size="18" text_anchor="middle" font_family="Georgia" fill="#ff4d4d" text-decoration="line-through">ATLETICO BRUFOLI</text>
+  <text x="460" y="315" fill="red" font_size="18" font_family="Georgia">💀</text>
+  <text x="250" y="362" font_size="18" text_anchor="middle" font_family="Georgia" fill="#ff4d4d" text-decoration="line-through">LONGOBARDA</text>
+  <text x="460" y="357" fill="red" font_size="18" font_family="Georgia">💀</text>
+  <text x="250" y="404" font_size="18" text_anchor="middle" font_family="Georgia" fill="#cccccc">REAL TRAMBUSTO</text>
+  <text x="250" y="446" font_size="18" text_anchor="middle" font_family="Georgia" fill="#ff4d4d" text-decoration="line-through">FC MARMOTTE</text>
+  <text x="460" y="441" fill="red" font_size="18" font_family="Georgia">💀</text>
+  <text x="250" y="488" font_size="18" text_anchor="middle" font_family="Georgia" fill="#cccccc">TANA DELLE TIGRI</text>
+  <text x="250" y="530" font_size="18" text_anchor="middle" font_family="Georgia" fill="#ff4d4d" text-decoration="line-through">AJAX SCARS</text>
+  <text x="460" y="525" fill="red" font_size="18" font_family="Georgia">💀</text>
+  <text x="250" y="572" font_size="18" text_anchor="middle" font_family="Georgia" fill="#ff4d4d" text-decoration="line-through">CHIEVO BAGGIANO</text>
+  <text x="460" y="567" fill="red" font_size="18" font_family="Georgia">💀</text>
+  <text x="250" y="614" font_size="18" text_anchor="middle" font_family="Georgia" fill="#ff4d4d" text-decoration="line-through">PIPPO UNITED</text>
+  <text x="460" y="609" fill="red" font_size="18" font_family="Georgia">💀</text>
+  <text x="250" y="656" font_size="18" text_anchor="middle" font_family="Georgia" fill="#ff4d4d" text-decoration="line-through">FC PANETTONE</text>
+  <text x="460" y="651" fill="red" font_size="18" font_family="Georgia">💀</text>
+  <text x="250" y="698" font_size="18" text_anchor="middle" font_family="Georgia" fill="#ff4d4d" text-decoration="line-through">U.C. BRACIOLONA</text>
+  <text x="460" y="693" fill="red" font_size="18" font_family="Georgia">💀</text>
+  <text x="250" y="740" font_size="18" text_anchor="middle" font_family="Georgia" fill="gold" font-weight="bold">TEAM BARTOWSKI</text>
+</svg>
