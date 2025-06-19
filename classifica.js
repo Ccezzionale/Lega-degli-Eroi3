@@ -139,7 +139,6 @@ if (!nomeSquadra || nomeSquadra === "undefined") {
 
 header.appendChild(logo); // ✅ sempre aggiunto
 
-const nomeSquadra = colonne[1];
 const pos = colonne[0]; // 👈 spostalo qui prima dell’uso
 
 const logo = document.createElement("img");
