@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Highlander Cup</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #001f3f;
+      color: #ffffff;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      text-align: center;
+      color: #ffcc00;
+      margin: 20px 0;
+      font-size: 2em;
+      text-transform: uppercase;
+    }
+
+    .elenco-turni {
+      padding: 10px 20px;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .turno {
+      background-color: #00264d;
+      border: 1px solid #004080;
+      border-radius: 12px;
+      margin-bottom: 16px;
+      padding: 15px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    }
+
+    .turno h2 {
+      color: #ffffff;
+      font-size: 1.2em;
+      margin-bottom: 10px;
+    }
+
+    .turno ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .turno li {
+      padding: 8px 12px;
+      border-radius: 6px;
+      margin-bottom: 5px;
+      font-size: 1em;
+      background-color: #003366;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .salvo {
+      color: #00ffcc;
+    }
+
+    .eliminato {
+      color: #ff4d4d;
+      font-weight: bold;
+    }
+
+    .eliminato::after {
+      content: " 💀";
+    }
+
+    .salvo::after {
+      content: " ✅";
+    }
+  </style>
+</head>
+<body>
+  <h1>Highlander Cup</h1>
+
+  <div class="elenco-turni">
+
+    <div class="turno">
+      <h2>Turno 1 – Giornata 3</h2>
+      <ul>
+        <li class="salvo">Spartak Torino – 75.0</li>
+        <li class="salvo">FC Bombazza – 68.5</li>
+        <li class="eliminato">Real Capra – 61.0</li>
+      </ul>
+    </div>
+
+    <div class="turno">
+      <h2>Turno 2 – Giornata 4</h2>
+      <ul>
+        <li class="salvo">Longobarda – 70.0</li>
+        <li class="salvo">Santos Ubriachi – 66.5</li>
+        <li class="eliminato">Dinamo Sbronzi – 59.5</li>
+      </ul>
+    </div>
+
+    <div class="turno">
+      <h2>Turno 3 – Giornata 5</h2>
+      <ul>
+        <li class="salvo">Atletico Brufoli – 72.0</li>
+        <li class="salvo">FC Marmotte – 67.0</li>
+        <li class="eliminato">Real Trambusto – 60.0</li>
+      </ul>
+    </div>
+
+  </div>
+</body>
+</html>
