@@ -156,16 +156,19 @@ if (pos === "1") {
   item.classList.add("top1");
 }
 
-        let punti, puntiTot;
+let punti, puntiTot;
 
 if (nomeFoglio === "Round Robin") {
-  punti = formattaNumero(colonne[9]); // PT
-  puntiTot = colonne[10].replace(",", ".");
-puntiTot = parseFloat(puntiTot).toLocaleString("it-IT");
+  punti = formattaNumero(colonne[10]); // PT
+
+  // MP = seconda parte della stringa "60,2208"
+  const split = colonne[11].split(",");
+  puntiTot = split.length > 1 ? split[1] : split[0]; 
 } else {
-  punti = formattaNumero(colonne[9]);      // PT
-  puntiTot = formattaNumero(colonne[10]);  // MP
+  punti = formattaNumero(colonne[9]);  // PT
+  puntiTot = formattaNumero(colonne[10]); // MP
 }
+
 
         const testo = document.createElement("span");
         testo.innerHTML = `<strong>${pos}. ${nomeSquadra}</strong><br><span style="font-weight:normal">PT. ${punti} / MP. ${puntiTot}</span>`;
