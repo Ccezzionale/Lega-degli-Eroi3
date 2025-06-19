@@ -54,39 +54,52 @@ const endpoint = `https://script.google.com/macros/s/AKfycby8hk9db1JtLsi6UyuKCBr
 
 function caricaPick() {
   return fetch(endpoint)
-    .then(res => res.json())
-    .then(dati => {
-      let prossima = null;
-      dati.forEach(riga => {
-        const tr = document.createElement("tr");
-        const nome = riga["Giocatore"]?.trim() || "";
-        const fantaTeam = riga["Fanta Team"];
-        const ruolo = riga["Ruolo"];
-        const pick = riga["Pick"];
+    .then(res => res.text()) // Legge la risposta come testo grezzo
+    .then(txt => {
+      try {
+        const dati = JSON.parse(txt); // Tenta di fare il parse del JSON
+        let prossima = null;
+        const corpoTabella = document.querySelector("#tabella-pick tbody");
+        corpoTabella.innerHTML = ""; // Pulisce la tabella prima di riempirla
 
-        giocatoriScelti.add(normalize(nome));
+        dati.forEach(riga => {
+          const tr = document.createElement("tr");
+          const nome = riga["Giocatore"]?.trim() || "";
+          const fantaTeam = riga["Fanta Team"];
+          const ruolo = riga["Ruolo"];
+          const pick = riga["Pick"];
 
-        tr.innerHTML = `
-          <td>${pick}</td>
-          <td>${fantaTeam}</td>
-          <td>${nome}</td>
-          <td>${ruolo}</td>`;
+          giocatoriScelti.add(normalize(nome));
 
-        if (!nome && !prossima) {
-          prossima = { fantaTeam, pick };
-          tr.classList.add("next-pick");
-        } else {
-          tr.style.backgroundColor = "#d4edda";
-          tr.style.fontWeight = "bold";
-        }
+          tr.innerHTML = `
+            <td>${pick}</td>
+            <td>${fantaTeam}</td>
+            <td>${nome}</td>
+            <td>${ruolo}</td>`;
 
-        tabella.appendChild(tr);
-      });
+          if (!nome && !prossima) {
+            prossima = { fantaTeam, pick };
+            tr.classList.add("next-pick");
+          } else {
+            tr.style.backgroundColor = "#d4edda";
+            tr.style.fontWeight = "bold";
+          }
 
-      document.getElementById("turno-attuale").textContent =
-        prossima
-          ? `🎯 È il turno di: ${prossima.fantaTeam} (Pick ${prossima.pick})`
-          : "✅ Draft completato!";
+          corpoTabella.appendChild(tr);
+        });
+
+        // Aggiorna il messaggio del turno attuale
+        document.getElementById("turno-attuale").textContent =
+          prossima
+            ? `🎯 È il turno di: ${prossima.fantaTeam} (Pick ${prossima.pick})`
+            : "✅ Draft completato!";
+      } catch (err) {
+        console.error("❌ Errore parsing JSON:", err);
+        console.error("❌ Risposta ricevuta:", txt);
+      }
+    })
+    .catch(err => {
+      console.error("❌ Errore nella richiesta fetch:", err);
     });
 }
 
