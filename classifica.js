@@ -31,7 +31,7 @@ function caricaClassifica(nomeFoglio = "Conference") {
       if (nomeFoglio === "Round Robin") startRow = 2;
 
       let intestazione = righe[startRow - 1].split(",").map(cell => cell.replace(/"/g, "").trim());
-      const hasBlankColumn = intestazione[2] === "";
+      const hasBlankColumn = intestazione[2] === "" || nomeFoglio !== "Totale";
       if (hasBlankColumn) intestazione.splice(2, 1);
 
       const corpoTabella = document.querySelector("#tabella-classifica tbody");
