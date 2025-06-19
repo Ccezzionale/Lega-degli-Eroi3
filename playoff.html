@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Playoff - Lega degli Eroi</title>
+  <link rel="stylesheet" href="main.css" />
+  <style>
+    body {
+      background-color: #001f3f;
+      color: white;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #ffcc00;
+      text-transform: uppercase;
+    }
+
+    .bracket {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 40px;
+    }
+
+    .round {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      min-width: 180px;
+    }
+
+    .match {
+      background-color: #003366;
+      padding: 10px;
+      border-radius: 8px;
+      text-align: center;
+      border: 2px solid #ffcc00;
+    }
+
+    .match span {
+      display: block;
+      margin: 5px 0;
+    }
+
+    .round-title {
+      text-align: center;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #00ffff;
+    }
+  </style>
+</head>
+<body>
+  <h1>Playoff 2025</h1>
+  <div class="bracket">
+    <!-- Wild Card -->
+    <div class="round">
+      <div class="round-title">Wild Card</div>
+      <div class="match"><span>5°</span><span>vs</span><span>12°</span></div>
+      <div class="match"><span>6°</span><span>vs</span><span>11°</span></div>
+      <div class="match"><span>7°</span><span>vs</span><span>10°</span></div>
+      <div class="match"><span>8°</span><span>vs</span><span>9°</span></div>
+    </div>
+
+    <!-- Quarti -->
+    <div class="round">
+      <div class="round-title">Quarti</div>
+      <div class="match"><span>1°</span><span>vs</span><span>Vincente 8/9</span></div>
+      <div class="match"><span>2°</span><span>vs</span><span>Vincente 7/10</span></div>
+      <div class="match"><span>3°</span><span>vs</span><span>Vincente 6/11</span></div>
+      <div class="match"><span>4°</span><span>vs</span><span>Vincente 5/12</span></div>
+    </div>
+
+    <!-- Semifinali -->
+    <div class="round">
+      <div class="round-title">Semifinali (andata/ritorno)</div>
+      <div class="match"><span>Vincente 1/8-9</span><span>vs</span><span>Vincente 4/5-12</span></div>
+      <div class="match"><span>Vincente 2/7-10</span><span>vs</span><span>Vincente 3/6-11</span></div>
+    </div>
+
+    <!-- Finale -->
+    <div class="round">
+      <div class="round-title">Finale</div>
+      <div class="match"><span>Vincente Semi 1</span><span>vs</span><span>Vincente Semi 2</span></div>
+    </div>
+  </div>
+</body>
+</html>
