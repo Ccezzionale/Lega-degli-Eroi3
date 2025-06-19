@@ -189,13 +189,6 @@ if (nomeFoglio === "Round Robin") {
           body.appendChild(p);
         }
 
-        const ptRow = document.createElement("p");
-        ptRow.innerHTML = `<strong>Pt.:</strong> ${punti}`;
-        const totRow = document.createElement("p");
-        totRow.innerHTML = `<strong>Pt. Totali:</strong> ${puntiTot}`;
-        body.appendChild(ptRow);
-        body.appendChild(totRow);
-
         header.addEventListener("click", () => {
           item.classList.toggle("active");
         });
