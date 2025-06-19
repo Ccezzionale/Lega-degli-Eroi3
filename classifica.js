@@ -15,6 +15,10 @@ function formattaNumero(val) {
 
 function caricaClassifica(nomeFoglio = "Conference") {
   const url = URL_MAP[nomeFoglio];
+  if (!url) {
+  console.error("❌ Nome foglio non valido o URL mancante:", nomeFoglio);
+  return;
+}
 
   fetch(url)
     .then(response => response.text())
@@ -120,14 +124,20 @@ td.appendChild(wrapper);
         const header = document.createElement("div");
         header.className = "accordion-header";
 
-        const nomeSquadra = colonne[1];
+const nomeSquadra = colonne[1];
+const logo = document.createElement("img"); // ✅ CREATO SEMPRE
+
 if (!nomeSquadra || nomeSquadra === "undefined") {
   logo.style.display = "none";
 } else {
-  logo.src = `img/${nomeSquadra}.png`;
+  logo.src = "img/" + nomeSquadra + ".png";
   logo.alt = nomeSquadra;
-  logo.onerror = () => { logo.style.display = "none"; };
+  logo.onerror = () => {
+    logo.style.display = "none";
+  };
 }
+
+header.appendChild(logo); // ✅ sempre aggiunto
 
 if (pos === "1") {
   item.classList.add("top1");
