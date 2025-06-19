@@ -49,7 +49,7 @@ function caricaGiocatori() {
 }
 
 const urlParams = new URLSearchParams(window.location.search);
-const tab = urlParams.get("tab") || "Draft Room";
+const tab = urlParams.get("tab") || "Draft Championship"; // o "Draft Conference"
 const endpoint = `https://script.google.com/macros/s/AKfycbwGlBiarvPyDSGBIQfOp-nUXzwF9gIdP1K6TKY-jy_VGKyCGtji5pe46BCED5prESvytg/exec?tab=${encodeURIComponent(tab)}`;
 
 function caricaPick() {
