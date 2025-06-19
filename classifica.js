@@ -139,6 +139,22 @@ if (!nomeSquadra || nomeSquadra === "undefined") {
 
 header.appendChild(logo); // ✅ sempre aggiunto
 
+const nomeSquadra = colonne[1];
+const pos = colonne[0]; // 👈 spostalo qui prima dell’uso
+
+const logo = document.createElement("img");
+
+if (!nomeSquadra || nomeSquadra === "undefined") {
+  logo.style.display = "none";
+} else {
+  logo.src = "img/" + nomeSquadra + ".png";
+  logo.alt = nomeSquadra;
+  logo.onerror = () => {
+    logo.style.display = "none";
+  };
+}
+
+header.appendChild(logo); // sempre
 if (pos === "1") {
   item.classList.add("top1");
 }
