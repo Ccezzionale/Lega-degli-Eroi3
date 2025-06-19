@@ -42,7 +42,7 @@ function caricaClassifica(nomeFoglio = "Conference") {
 
       const numSquadre = righe.length - 1;
 
-      for (let i = 1; i < righe.length; i++) {
+      for (let i = 5; i < righe.length; i++) {
         let colonne = righe[i].split(",").map(cell => cell.replace(/"/g, "").trim());
         if (hasBlankColumn && colonne[2] === "") colonne.splice(2, 1);
         while (colonne.length > intestazione.length) {
