@@ -109,7 +109,7 @@ function aggiornaCardMobile() {
   if (!window.risultati) return;
 
   window.risultati.forEach(partita => {
-    const { partita: codice, squadra1, squadra2 } = partita;
+    const { partita: codice, squadraA, squadraB } = partita;
 
     const matchCard = document.querySelector(`.match-card[data-partita="${codice}"]`);
     if (matchCard) {
