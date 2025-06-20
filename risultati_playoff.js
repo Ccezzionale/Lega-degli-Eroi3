@@ -20,7 +20,9 @@ fetch(URL_PLAYOFF)
       if (!match) continue;
 
       const spans = match.querySelectorAll("span");
-      console.log("🎯 Modifica:", turno, partita, squadraA, squadraB, golA, golB, vincente);
+      console.log("🎯 Modifica:", turno, partita, squadraA, squadraB, golA, golB, vincente);console.log(`Modifica: ${turno} ${partita} ${squadraA} ${squadraB} ${golA} ${golB} ${vincente}`);
+      console.log(match);
+
 
       if (golA && golB) {
   spans[0].textContent = squadraA;
