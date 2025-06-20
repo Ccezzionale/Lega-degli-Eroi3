@@ -56,38 +56,40 @@ if (idx < 4) {
     }
 }
 
-    } else if (idx < 8) {
-      const ordineTesteDiSerie = [0, 3, 2, 1];
-      const testaSerieIndex = idx - 4;
-      const teamTop4Index = ordineTesteDiSerie[testaSerieIndex];
-      const squadraTop = squadre[teamTop4Index];
-      const team1 = match.querySelector(".team1");
-const team2 = match.querySelector(".team2");
+} else if (idx < 8) {
+  const ordineTesteDiSerie = [0, 3, 2, 1];
+  const testaSerieIndex = idx - 4;
+  const teamTop4Index = ordineTesteDiSerie[testaSerieIndex];
+  const squadraTop = squadre[teamTop4Index];
 
-// assegna al primo team il top seed
-team1.textContent = `${teamTop4Index + 1}° ${squadraTop.nome}`;
+  const team1 = match.querySelector(".team1");
+  const team2 = match.querySelector(".team2");
+  const vs = match.querySelector(".vs");
+  const spans = match.querySelectorAll("span"); // ✅ AGGIUNGI QUESTA RIGA
 
-      const mapping = [
-        [4, 2], [7, 3], [6, 0], [5, 1]
-      ];
+  team1.textContent = `${teamTop4Index + 1}° ${squadraTop.nome}`;
 
-      const [idxPosA, idxPosB] = mapping[testaSerieIndex];
-      const squadraAIndex = posizioni[idxPosA][0];
-      const squadraBIndex = posizioni[idxPosB][1];
+  const mapping = [
+    [4, 2], [7, 3], [6, 0], [5, 1]
+  ];
 
-      const nomeA = `${squadraAIndex + 1}° ${squadre[squadraAIndex]?.nome || "?"}`;
-      const nomeB = `${squadraBIndex + 1}° ${squadre[squadraBIndex]?.nome || "?"}`;
+  const [idxPosA, idxPosB] = mapping[testaSerieIndex];
+  const squadraAIndex = posizioni[idxPosA][0];
+  const squadraBIndex = posizioni[idxPosB][1];
 
-      const matchId = `Q${testaSerieIndex + 1}`;
-      const risultato = window.risultati?.find(r => r.partita === matchId);
+  const nomeA = `${squadraAIndex + 1}° ${squadre[squadraAIndex]?.nome || "?"}`;
+  const nomeB = `${squadraBIndex + 1}° ${squadre[squadraBIndex]?.nome || "?"}`;
 
-      if (risultato?.squadraA && risultato?.squadraB) {
-  spans[0].textContent = risultato.squadraA;
-  spans[2].textContent = risultato.squadraB;
-} else {
-  spans[2].textContent = `Vincente ${nomeA} / ${nomeB}`;
+  const matchId = `Q${testaSerieIndex + 1}`;
+  const risultato = window.risultati?.find(r => r.partita === matchId);
+
+  if (risultato?.squadraA && risultato?.squadraB) {
+    spans[0].textContent = risultato.squadraA;
+    spans[2].textContent = risultato.squadraB;
+  } else {
+    spans[2].textContent = `Vincente ${nomeA} / ${nomeB}`;
+  }
 }
-    }
   });
 }
 
