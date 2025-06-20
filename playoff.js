@@ -1,5 +1,20 @@
 const URL_CLASSIFICA_TOTALE = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTduESMbJiPuCDLaAFdOHjep9GW-notjraILSyyjo6SA0xKSR0H0fgMLPNNYSwXgnGGJUyv14kjFRqv/pub?gid=691152130&single=true&output=csv";
 
+// 🔧 Funzione per creare HTML squadra con logo
+function creaHTMLSquadra(nome, posizione = "") {
+  const fileLogo = `img/${formattaNomePerLogo(nome)}.png`;
+  return `
+    <div class="squadra">
+      <img src="${fileLogo}" alt="${nome}" onerror="this.style.display='none'">
+      <span>${posizione} ${nome}</span>
+    </div>`;
+}
+
+// 🏆 Funzione principale che aggiorna il tabellone
+function aggiornaPlayoff() {
+  // tutto il tuo codice...
+}
+
 function aggiornaPlayoff() {
   const posizioni = [
     [5, 10],
