@@ -14,7 +14,7 @@ function aggiornaPlayoff() {
     [7, 8], [6, 9], [5, 10], [4, 11]  // Quarti (idx 4-7)
   ];
 
-  const matchDivs = document.querySelectorAll(".match");
+  const matchDivs = document.querySelectorAll(".match-card");
   console.log("🎯 Match trovati:", matchDivs.length);
 
   matchDivs.forEach((match, idx) => {
