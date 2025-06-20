@@ -16,10 +16,7 @@ fetch(URL_PLAYOFF)
   const golB = colonne[5];
   const vincente = colonne[6];
 
-  // 🔁 Normalizza il numero della partita
-  const partitaId = partita.replace(/[A-Z]/gi, "");
-
-  const match = document.querySelector(`.match[data-turno="${turno}"][data-partita="${partitaId}"]`);
+  const match = document.querySelector(`.match[data-turno="${turno}"][data-partita="${partita}"]`);
   if (!match) continue;
 
   const spans = match.querySelectorAll("span");
