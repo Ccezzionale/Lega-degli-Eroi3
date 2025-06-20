@@ -18,6 +18,10 @@ function aggiornaPlayoff() {
     if (!posizioni[idx] || posizioni[idx].length < 2) return;
     const spans = match.querySelectorAll("span");
 
+    if (typeof aggiornaCardMobile === "function") {
+  aggiornaCardMobile();
+}
+
 if (idx < 4) {
   const mappingWC = [
     [7, 8],  // 8° vs 9°
@@ -99,3 +103,22 @@ fetch(URL_CLASSIFICA_TOTALE)
     
   })
   .catch(err => console.error("❌ Errore nel caricamento classifica Totale:", err));
+
+function aggiornaCardMobile() {
+  if (!window.risultati) return;
+
+  window.risultati.forEach(partita => {
+    const { partita: codice, squadra1, squadra2 } = partita;
+
+    const matchCard = document.querySelector(`.match-card[data-partita="${codice}"]`);
+    if (matchCard) {
+      const team1 = matchCard.querySelector(".team1");
+      const team2 = matchCard.querySelector(".team2");
+      if (team1 && team2) {
+        team1.textContent = squadra1 || "";
+        team2.textContent = squadra2 || "";
+      }
+    }
+  });
+}
+
