@@ -34,13 +34,13 @@ fetch(URL_CLASSIFICA_TOTALE)
   if (!posizioni[idx] || posizioni[idx].length < 2) return;
       const spans = match.querySelectorAll("span");
 
-      if (idx < 4) {
+  if (idx < 4) {
   // Wild Card
   const i1 = posizioni[idx][0];
   const i2 = posizioni[idx][1];
   spans[0].textContent = `${i1 + 1}° ${squadre[i1].nome}`;
   spans[2].textContent = `${i2 + 1}° ${squadre[i2].nome}`;
-else if (idx < 8) {
+} else if (idx < 8) {
   // Quarti
   const testaSerieIndex = idx - 4;
   const teamTop4Index = testaSerieIndex;
