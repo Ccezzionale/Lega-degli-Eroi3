@@ -18,24 +18,24 @@ const match = document.querySelector(`.match-card[data-partita="${matchId}"]`);
 if (!match) return;
 
 const risultato = window.risultati?.find(r => r.partita === matchId);
-if (!risultato) return;
+if (risultato) {
+  const { squadraA, squadraB, golA, golB, vincente } = risultato;
 
-const { squadraA, squadraB, golA, golB, vincente } = risultato;
+  const team1 = match.querySelector(".team1");
+  const team2 = match.querySelector(".team2");
+  const vs = match.querySelector(".vs");
 
-const team1 = match.querySelector(".team1");
-const team2 = match.querySelector(".team2");
-const vs = match.querySelector(".vs");
+  if (golA && golB) {
+    team1.textContent = squadraA;
+    vs.textContent = `${golA} - ${golB}`;
+    team2.textContent = squadraB;
+  } else {
+    team1.textContent = squadraA || "";
+    team2.textContent = squadraB || "";
+  }
 
-if (golA && golB) {
-  team1.textContent = squadraA;
-  vs.textContent = `${golA} - ${golB}`;
-  team2.textContent = squadraB;
-} else {
-  team1.textContent = squadraA || "";
-  team2.textContent = squadraB || "";
-}
-
-if (vincente) {
-  match.classList.add("conclusa");
-  match.classList.add(vincente === squadraA ? "vittoria-a" : "vittoria-b");
+  if (vincente) {
+    match.classList.add("conclusa");
+    match.classList.add(vincente === squadraA ? "vittoria-a" : "vittoria-b");
+  }
 }
