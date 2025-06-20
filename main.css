@@ -673,7 +673,71 @@ h1 {
   font-size: 1.1em;
   text-shadow: 0 0 6px #ffff00;
 }
+/* Titolo principale */
+h1 {
+  font-size: 3em;
+  font-weight: 900;
+  text-align: center;
+  color: #ffcc00;
+  text-shadow: 0 0 10px #ffcc00, 0 0 20px #ff9900, 0 0 30px #ff6600;
+  margin-bottom: 40px;
+  letter-spacing: 2px;
+}
 
+/* Titoli round (Wild Card, Quarti, ecc.) */
+.round-title {
+  font-size: 1.4em;
+  font-weight: bold;
+  color: #00ffff;
+  text-shadow: 0 0 8px #00ffff, 0 0 12px #00cccc;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+/* Match Card - glowing arcade style */
+.match {
+  background: #002244;
+  border: 2px solid #ffcc00;
+  border-radius: 12px;
+  padding: 18px 12px;
+  box-shadow: 0 0 12px #ffcc00, inset 0 0 5px #002244;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover effetto glow */
+.match:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 18px #00ffff, 0 0 25px #00ffff, inset 0 0 8px #001f3f;
+}
+
+/* Squadre */
+.match span {
+  display: block;
+  margin: 5px 0;
+  font-size: 1.1em;
+}
+
+/* Squadra vincente A */
+.match.vittoria-a span:first-child {
+  color: #00ff00;
+  font-weight: bold;
+  text-shadow: 0 0 8px #00ff00;
+}
+
+/* Squadra vincente B */
+.match.vittoria-b span:last-child {
+  color: #ff3300;
+  font-weight: bold;
+  text-shadow: 0 0 8px #ff3300;
+}
+
+/* Punteggio */
+.match .vs {
+  color: #ffff00;
+  font-weight: bold;
+  font-size: 1.2em;
+  text-shadow: 0 0 6px #ffff00, 0 0 10px #ffaa00;
+}
 
 /* MENU MOBILE - chiuso */
 #mobileMenu {
