@@ -56,17 +56,19 @@ if (idx < 4) {
       }
 
       const nomeA = `${squadraAIndex + 1}° ${squadre[squadraAIndex].nome}`;
-      const nomeB = `${squadraBIndex + 1}° ${squadre[squadraBIndex].nome}`;
+const nomeB = `${squadraBIndex + 1}° ${squadre[squadraBIndex].nome}`;
 
-      const matchId = `Q${testaSerieIndex + 1}`;
-      const vincitore = window.risultati?.find(r => r.partita === matchId)?.vincente;
-      if (vincitore) {
-        spans[2].textContent = vincitore;
-        return;
-      }
+const matchId = `Q${testaSerieIndex + 1}`;
+const risultato = window.risultati?.find(r => r.partita === matchId);
 
-      spans[2].textContent = `Vincente ${nomeA} / ${nomeB}`;
-    }
+// ✅ Se ci sono risultati, mostra il vincitore
+if (risultato && (risultato.golA || risultato.golB)) {
+  spans[2].textContent = risultato.vincente;
+} else {
+  // ❗ Altrimenti mostra i nomi "Vincente A / B"
+  spans[2].textContent = `Vincente ${nomeA} / ${nomeB}`;
+}
+  
   });
 }
 
