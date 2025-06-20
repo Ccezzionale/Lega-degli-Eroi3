@@ -739,6 +739,78 @@ h1 {
   text-shadow: 0 0 6px #ffff00, 0 0 10px #ffaa00;
 }
 
+.match {
+  background: linear-gradient(135deg, #002244 0%, #001933 100%);
+  border: 2px solid #ffcc00;
+  border-radius: 16px;
+  padding: 20px 14px;
+  box-shadow:
+    0 0 12px rgba(255, 204, 0, 0.4),
+    inset 0 0 12px rgba(255, 204, 0, 0.2);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Glow animato sul bordo */
+.match::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border-radius: 16px;
+  background: linear-gradient(45deg, #ffcc00, #00ffff, #ff00cc, #ffcc00);
+  background-size: 300% 300%;
+  animation: glow-border 6s ease infinite;
+  z-index: 0;
+  opacity: 0.1;
+}
+
+@keyframes glow-border {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.match span {
+  position: relative;
+  z-index: 1;
+  display: block;
+  margin: 6px 0;
+  font-size: 1.15em;
+  letter-spacing: 0.5px;
+  font-weight: 500;
+}
+
+.match:hover {
+  transform: scale(1.04);
+  box-shadow: 0 0 20px #ffcc00, inset 0 0 10px #002244;
+}
+
+/* Highlight vincitori */
+.match.vittoria-a span:first-child {
+  color: #00ff88;
+  font-weight: bold;
+  text-shadow: 0 0 10px #00ff88;
+}
+
+.match.vittoria-b span:last-child {
+  color: #ff5555;
+  font-weight: bold;
+  text-shadow: 0 0 10px #ff5555;
+}
+
+/* Punteggio */
+.match .vs {
+  font-size: 1.4em;
+  color: #ffff00;
+  font-weight: bold;
+  text-shadow: 0 0 8px #ffaa00;
+}
+
+
 /* MENU MOBILE - chiuso */
 #mobileMenu {
   display: none;
