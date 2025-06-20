@@ -61,7 +61,11 @@ if (idx < 4) {
       const testaSerieIndex = idx - 4;
       const teamTop4Index = ordineTesteDiSerie[testaSerieIndex];
       const squadraTop = squadre[teamTop4Index];
-      spans[0].textContent = `${teamTop4Index + 1}° ${squadraTop.nome}`;
+      const team1 = match.querySelector(".team1");
+const team2 = match.querySelector(".team2");
+
+// assegna al primo team il top seed
+team1.textContent = `${teamTop4Index + 1}° ${squadraTop.nome}`;
 
       const mapping = [
         [4, 2], [7, 3], [6, 0], [5, 1]
