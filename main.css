@@ -636,6 +636,45 @@ h1 {
   text-shadow: 0 0 5px #ffff00;
 }
 
+.match {
+  background: #003366;
+  border: 2px solid #ffcc00;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 0 8px #ffcc00;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Quando la partita è conclusa */
+.match.conclusa {
+  border-color: #00ffcc;
+  background: linear-gradient(to bottom, #001f3f, #004466);
+  box-shadow: 0 0 15px #00ffcc;
+}
+
+/* Vittoria squadra A */
+.match.vittoria-a span:first-child {
+  color: #00ff00;
+  font-weight: bold;
+  text-shadow: 0 0 6px #00ff00;
+}
+
+/* Vittoria squadra B */
+.match.vittoria-b span:last-child {
+  color: #ff3300;
+  font-weight: bold;
+  text-shadow: 0 0 6px #ff3300;
+}
+
+/* Punteggio al centro */
+.match .vs {
+  color: #ffff00;
+  font-weight: bold;
+  font-size: 1.1em;
+  text-shadow: 0 0 6px #ffff00;
+}
+
+
 /* MENU MOBILE - chiuso */
 #mobileMenu {
   display: none;
@@ -650,6 +689,12 @@ h1 {
   gap: 8px;
   z-index: 9999;
   text-align: left;
+}
+
+.match:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 15px #00ffff;
+  cursor: pointer;
 }
 
 /* MENU MOBILE - aperto */
