@@ -32,11 +32,6 @@ fetch(URL_PLAYOFF)
     window.risultati = risultati;
     console.log("📄 Risultati playoff:", risultati.map(r => `${r.partita}: ${r.squadraA} vs ${r.squadraB}`));
 
-    // ✅ Chiama aggiornaPlayoff solo se le squadre sono già pronte
-    if (typeof aggiornaPlayoff === "function") {
-  aggiornaPlayoff(); // ✅ sempre
-}
-  })
   .catch(err => {
     console.error("❌ Errore nel caricamento dei risultati playoff:", err);
   });
