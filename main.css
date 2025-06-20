@@ -931,6 +931,16 @@ h1 {
   cursor: pointer;
 }
 
+html, body {
+  width: 100%;
+  overflow-x: auto;
+}
+
+body {
+  min-width: 100vw;
+}
+
+
 /* MENU MOBILE - aperto */
 #mobileMenu.show {
   display: flex !important;
