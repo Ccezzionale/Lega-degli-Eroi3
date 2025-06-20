@@ -31,7 +31,7 @@ fetch(URL_CLASSIFICA_TOTALE)
       const spans = match.querySelectorAll("span");
 
       if (idx < 4) {
-  // Wild Card: mostra nome completo vs nome completo
+  // Wild Card
   const i1 = posizioni[idx][0];
   const i2 = posizioni[idx][1];
   const nomeA = squadre[i1] ? squadre[i1].nome : "";
@@ -41,7 +41,7 @@ fetch(URL_CLASSIFICA_TOTALE)
   spans[2].textContent = `${i2 + 1}° ${nomeB}`;
 
 } else if (idx < 8) {
-  // Quarti: mostra testa di serie vs "Vincente X/Y"
+  // Quarti
   const testaSerieIndex = idx - 4;
   const squadra = squadre[testaSerieIndex];
   spans[0].textContent = `${testaSerieIndex + 1}° ${squadra.nome}`;
@@ -54,11 +54,15 @@ fetch(URL_CLASSIFICA_TOTALE)
   ];
 
   const [a, b] = mapping[testaSerieIndex];
-  const nomeA = squadre[a] ? `${a + 1}° ${squadre[a].nome}` : `${a + 1}°`;
-  const nomeB = squadre[b] ? `${b + 1}° ${squadre[b].nome}` : `${b + 1}°`;
+  const idxA = posizioni[a]?.[0];  // es: 8° è posizioni[7][0]
+  const idxB = posizioni[b]?.[1];  // es: 9° è posizioni[7][1]
+
+  const nomeA = squadre[idxA] ? `${idxA + 1}° ${squadre[idxA].nome}` : `${idxA + 1}°`;
+  const nomeB = squadre[idxB] ? `${idxB + 1}° ${squadre[idxB].nome}` : `${idxB + 1}°`;
 
   spans[2].textContent = `Vincente ${nomeA} / ${nomeB}`;
 }
+
     });
   })
   .catch(err => {
