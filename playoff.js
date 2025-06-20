@@ -62,37 +62,23 @@ function aggiornaPlayoff() {
   });
 }
 
-// 🟢 Caricamento classifica Totale da Google Sheet
 fetch(URL_CLASSIFICA_TOTALE)
   .then(res => res.text())
   .then(csv => {
-    const righe = csv.trim().split("\n");
-    const startRow = 1;
-    const squadreProvvisorie = [];
-
-    for (let i = startRow; i < righe.length; i++) {
-      const colonne = righe[i].split(",").map(c => c.replace(/\"/g, "").trim());
-      const nome = colonne[1];
-      const punti = parseInt(colonne[10]) || 0;
-      const mp = parseFloat(colonne[11].replace(",", ".")) || 0;
-      if (!nome || isNaN(punti)) continue;
-      squadreProvvisorie.push({ nome, punti, mp });
-      if (squadreProvvisorie.length === 12) break;
-    }
-
-    squadreProvvisorie.sort((a, b) => {
-      if (b.punti !== a.punti) return b.punti - a.punti;
-      return b.mp - a.mp;
+    const righe = csv.trim().split("\n").slice(1); // salta intestazione
+    const classifica = righe.map(r => {
+      const c = r.split(",");
+      return {
+        squadra: c[0],
+        punti: parseInt(c[1]),
+        mp: parseInt(c[10]) || 0
+      };
     });
 
-    window.squadre = squadreProvvisorie;
-    console.log("📊 Squadre caricate:", squadreProvvisorie.map(s => s.nome));
-
-    if (typeof aggiornaPlayoff === "function") {
-      aggiornaPlayoff();
-    }
+    // Salva in window
+    window.classificaTotale = classifica;
+    aggiornaPlayoff(); // qui si aggiorna il bracket
   })
-.catch(err => {
-  console.error("❌ Errore nel caricamento dei risultati playoff:", err);
-});
-
+  .catch(err => {
+    console.error("❌ Errore nel caricamento classifica Totale:", err);
+  });
