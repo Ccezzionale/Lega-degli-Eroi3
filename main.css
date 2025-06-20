@@ -607,6 +607,35 @@ h1 {
   color: #ffcc00;
 }
 
+/* Stato partita conclusa */
+.match.conclusa {
+  border: 2px solid #00ffcc;
+  background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
+  box-shadow: 0 0 15px #00ffcc;
+}
+
+/* Vittoria squadra A */
+.match.vittoria-a span:first-child {
+  color: #00ff00;
+  font-weight: bold;
+  text-shadow: 0 0 5px #00ff00;
+}
+
+/* Vittoria squadra B */
+.match.vittoria-b span:last-child {
+  color: #ff3333;
+  font-weight: bold;
+  text-shadow: 0 0 5px #ff3333;
+}
+
+/* Highlight punteggio */
+.match .vs {
+  color: #ffff00;
+  font-size: 1.2em;
+  font-weight: bold;
+  text-shadow: 0 0 5px #ffff00;
+}
+
 /* MENU MOBILE - chiuso */
 #mobileMenu {
   display: none;
