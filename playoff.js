@@ -97,9 +97,6 @@ fetch(URL_CLASSIFICA_TOTALE)
 
     window.squadre = squadreProvvisorie;
 
-    // ✅ Aggiorna playoff se i risultati sono già pronti
-    if (typeof aggiornaPlayoff === "function" && window.risultati) {
-      aggiornaPlayoff();
     }
   })
   .catch(err => console.error("❌ Errore nel caricamento classifica Totale:", err));
