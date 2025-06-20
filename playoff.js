@@ -18,12 +18,15 @@ fetch(URL_CLASSIFICA_TOTALE)
     squadre.sort((a, b) => b.punti - a.punti);
 
     const posizioni = [
-      [4, 11], [5, 10], [6, 9], [7, 8], // Wild Card
-      [0, "Vincente 8/9"],
-      [1, "Vincente 7/10"],
-      [2, "Vincente 6/11"],
-      [3, "Vincente 5/12"]
-    ];
+  [5, 10], // posizione 0
+  [6, 9],  // 1
+  [7, 8],  // 2
+  [4, 11], // 3
+  [7, 8],  // 4 → Vincente 8°-9°
+  [6, 9],  // 5 → Vincente 7°-10°
+  [5, 10], // 6 → Vincente 6°-11°
+  [4, 11]  // 7 → Vincente 5°-12°
+];
 
     const matchDivs = document.querySelectorAll(".match");
 
