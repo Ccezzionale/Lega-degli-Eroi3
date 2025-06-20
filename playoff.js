@@ -87,8 +87,12 @@ fetch(URL_CLASSIFICA_TOTALE)
   };
 });
 
-window.classificaTotale = classifica;
-window.squadre = classifica; // ✅ serve per aggiornaPlayoff()
+window.classificaTotale = classifica
+  .sort((a, b) => b.punti - a.punti || b.mp - a.mp); // ✅ ordina correttamente
+window.squadre = window.classificaTotale;
+
+console.log("✅ Squadre ordinate:", window.squadre.map((s, i) => `${i+1}° ${s.nome} (${s.punti}pt / ${s.mp}mp)`));
+
 aggiornaPlayoff(); // chiama la funzione che disegna il bracket
   })
   .catch(err => {
