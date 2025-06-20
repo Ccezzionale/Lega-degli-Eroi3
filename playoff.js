@@ -21,7 +21,6 @@ for (let i = startRow; i < righe.length; i++) {
 
     squadre.sort((a, b) => b.punti - a.punti);
 
-    const posizioni = [
   const posizioni = [
   [7, 8],   // 8° vs 9°
   [6, 9],   // 7° vs 10°
