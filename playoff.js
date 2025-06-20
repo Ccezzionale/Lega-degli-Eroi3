@@ -1,14 +1,5 @@
 const URL_CLASSIFICA_TOTALE = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTduESMbJiPuCDLaAFdOHjep9GW-notjraILSyyjo6SA0xKSR0H0fgMLPNNYSwXgnGGJUyv14kjFRqv/pub?gid=691152130&single=true&output=csv";
 
-function formattaNomePerLogo(nome) {
-  return nome
-    .toLowerCase()
-    .replace(/[°]/g, '')     // rimuove simbolo °
-    .replace(/[^\w\s]/g, '') // rimuove simboli strani
-    .replace(/\s+/g, '_')    // spazi → underscore
-    .normalize("NFD").replace(/[\u0300-\u036f]/g, ""); // rimuove accenti
-}
-
 function aggiornaPlayoff() {
   const posizioni = [
     [5, 10],
@@ -41,28 +32,16 @@ if (idx < 4) {
   const risultato = window.risultati?.find(r => r.partita === matchId);
 
   if (!risultato || (!risultato.golA && !risultato.golB)) {
-    spans[0].innerHTML = `
-  <div class="squadra">
-    <img src="img/${formattaNomePerLogo(squadre[i1].nome)}.png" alt="${squadre[i1].nome}">
-    <span>${i1 + 1}° ${squadre[i1].nome}</span>
-  </div>`;
-spans[2].innerHTML = `
-  <div class="squadra">
-    <img src="img/${formattaNomePerLogo(squadre[i2].nome)}.png" alt="${squadre[i2].nome}">
-    <span>${i2 + 1}° ${squadre[i2].nome}</span>
-  </div>`;
-    
-  }
+    spans[0].textContent = `${i1 + 1}° ${squadre[i1].nome}`;
+    spans[2].textContent = `${i2 + 1}° ${squadre[i2].nome}`;
+    }
+
     } else if (idx < 8) {
   const ordineTesteDiSerie = [0, 3, 2, 1]; // 1°, 4°, 3°, 2°
   const testaSerieIndex = idx - 4;
   const teamTop4Index = ordineTesteDiSerie[testaSerieIndex];
   const squadraTop = squadre[teamTop4Index];
-  spans[0].innerHTML = `
-  <div class="squadra">
-    <img src="img/${formattaNomePerLogo(squadraTop.nome)}.png" alt="${squadraTop.nome}">
-    <span>${teamTop4Index + 1}° ${squadraTop.nome}</span>
-  </div>`;
+  spans[0].textContent = `${teamTop4Index + 1}° ${squadraTop.nome}`;
 
   const mapping = [
     [4, 2],   // 1° vs 8–9
@@ -86,11 +65,11 @@ console.log(`🧠 Quarto ${matchId} → ${nomeA} vs ${nomeB} | Vincente: ${risul
   if (risultato?.vincente) {
     spans[2].textContent = risultato.vincente;
   } else {
-    spans[2].innerHTML = `
-  <div class="squadra">
-    <span>Vincente ${nomeA} / ${nomeB}</span>
-  </div>`;
+    spans[2].textContent = `Vincente ${nomeA} / ${nomeB}`;
   }
+}
+  
+  });
 }
 
 // 🟢 Caricamento classifica
