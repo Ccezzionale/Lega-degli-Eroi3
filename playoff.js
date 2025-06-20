@@ -46,18 +46,18 @@ for (let i = startRow; i < righe.length; i++) {
   spans[2].textContent = `${i2 + 1}° ${squadre[i2].nome}`;
 } else if (idx < 8) {
   // Quarti
- const ordineTesteDiSerie = [0, 3, 2, 1];
- const testaSerieIndex = idx - 4;   
-const teamTop4Index = ordineTesteDiSerie[idx - 4];
-const squadra = squadre[teamTop4Index];
-spans[0].textContent = `${teamTop4Index + 1}° ${squadra.nome}`;
+  const ordineTesteDiSerie = [0, 3, 2, 1]; // 1°, 4°, 3°, 2°
+  const testaSerieIndex = idx - 4;
+  const teamTop4Index = ordineTesteDiSerie[testaSerieIndex];
+  const squadra = squadre[teamTop4Index];
+  spans[0].textContent = `${teamTop4Index + 1}° ${squadra.nome}`;
 
   // Mapping degli accoppiamenti: [indice in posizioni]
   const mapping = [
     [4, 2],   // 1° vs Vincente 8°-9°
-    [5, 1],   // 2° vs Vincente 7°-10°
+    [7, 3],   // 4° vs Vincente 5°-12°
     [6, 0],   // 3° vs Vincente 6°-11°
-    [7, 3]    // 4° vs Vincente 5°-12°
+    [5, 1]    // 2° vs Vincente 7°-10°
   ];
 
   const [idxPosA, idxPosB] = mapping[testaSerieIndex];
@@ -72,7 +72,6 @@ spans[0].textContent = `${teamTop4Index + 1}° ${squadra.nome}`;
 
   const nomeA = `${squadraAIndex + 1}° ${squadre[squadraAIndex].nome}`;
   const nomeB = `${squadraBIndex + 1}° ${squadre[squadraBIndex].nome}`;
-
   spans[2].textContent = `Vincente ${nomeA} / ${nomeB}`;
 }
 
