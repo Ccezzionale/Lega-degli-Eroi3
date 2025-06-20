@@ -117,8 +117,8 @@ function aggiornaCardMobile() {
       const team2 = matchCard.querySelector(".team2");
 
       if (team1 && team2) {
-        team1.textContent = squadra1 || "";
-        team2.textContent = squadra2 || "";
+        team1.textContent = squadraA || "";
+        team2.textContent = squadraB || "";
       }
     }
   });
