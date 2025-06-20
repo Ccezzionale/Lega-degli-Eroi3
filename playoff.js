@@ -18,21 +18,24 @@ function aggiornaPlayoff() {
     if (!posizioni[idx] || posizioni[idx].length < 2) return;
     const spans = match.querySelectorAll("span");
 
-    if (idx < 4) {
-      const mappingWC = [
-        [7, 8], [4, 11], [5, 10], [6, 9]
-      ];
-      const [i1, i2] = mappingWC[idx];
-      spans[0].textContent = `${i1 + 1}° ${squadre[i1].nome}`;
+if (idx < 4) {
+  const mappingWC = [
+    [7, 8],  // 8° vs 9°
+    [4, 11], // 5° vs 12°
+    [5, 10], // 6° vs 11°
+    [6, 9]   // 7° vs 10°
+  ];
 
-      const matchId = `WC${idx + 1}`;
-      const vincitore = window.risultati?.find(r => r.partita === matchId)?.vincente;
-      if (vincitore) {
-        spans[2].textContent = vincitore;
-        return;
-      }
+  const [i1, i2] = mappingWC[idx];
 
-      spans[2].textContent = `${i2 + 1}° ${squadre[i2].nome}`;
+  const matchId = `WC${idx + 1}`;
+  const risultato = window.risultati?.find(r => r.partita === matchId);
+
+  if (!risultato || (!risultato.golA && !risultato.golB)) {
+    spans[0].textContent = `${i1 + 1}° ${squadre[i1].nome}`;
+    spans[2].textContent = `${i2 + 1}° ${squadre[i2].nome}`;
+    }
+
     } else if (idx < 8) {
       const ordineTesteDiSerie = [0, 3, 2, 1];
       const testaSerieIndex = idx - 4;
