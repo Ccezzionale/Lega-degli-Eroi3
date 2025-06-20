@@ -58,33 +58,34 @@ window.squadre = squadreProvvisorie;
         spans[0].textContent = `${i1 + 1}° ${squadre[i1].nome}`;
         spans[2].textContent = `${i2 + 1}° ${squadre[i2].nome}`;
       } else if (idx < 8) {
-        // Quarti
-        const ordineTesteDiSerie = [0, 3, 2, 1];
-        const testaSerieIndex = idx - 4;
-        const teamTop4Index = ordineTesteDiSerie[testaSerieIndex];
-        const squadra = squadre[teamTop4Index];
-        spans[0].textContent = `${teamTop4Index + 1}° ${squadra.nome}`;
+  // Quarti
+  const ordineTesteDiSerie = [0, 3, 2, 1]; // 1°, 4°, 3°, 2°
+  const testaSerieIndex = idx - 4;
+  const teamTop4Index = ordineTesteDiSerie[testaSerieIndex];
+  const squadra = squadre[teamTop4Index];
+  spans[0].textContent = `${teamTop4Index + 1}° ${squadra.nome}`;
 
-        const mapping = [
-          [4, 2],
-          [5, 1],
-          [6, 0],
-          [7, 3]
-        ];
+  // Mapping corretto:
+  const mapping = [
+    [4, 2],   // 1° vs vincente 8‑9
+    [7, 3],   // 4° vs vincente 5‑12
+    [6, 0],   // 3° vs vincente 6‑11
+    [5, 1]    // 2° vs vincente 7‑10
+  ];
 
-        const [idxPosA, idxPosB] = mapping[testaSerieIndex];
-        const squadraAIndex = posizioni[idxPosA][0];
-        const squadraBIndex = posizioni[idxPosB][1];
+  const [idxPosA, idxPosB] = mapping[testaSerieIndex];
+  const squadraAIndex = posizioni[idxPosA][0];
+  const squadraBIndex = posizioni[idxPosB][1];
 
-        if (!squadre[squadraAIndex] || !squadre[squadraBIndex]) {
-          spans[2].textContent = `Vincente ${squadraAIndex + 1} / ${squadraBIndex + 1}`;
-          return;
-        }
+  if (!squadre[squadraAIndex] || !squadre[squadraBIndex]) {
+    spans[2].textContent = `Vincente ${squadraAIndex + 1} / ${squadraBIndex + 1}`;
+    return;
+  }
 
-        const nomeA = `${squadraAIndex + 1}° ${squadre[squadraAIndex].nome}`;
-        const nomeB = `${squadraBIndex + 1}° ${squadre[squadraBIndex].nome}`;
-        spans[2].textContent = `Vincente ${nomeA} / ${nomeB}`;
-      }
+  const nomeA = `${squadraAIndex + 1}° ${squadre[squadraAIndex].nome}`;
+  const nomeB = `${squadraBIndex + 1}° ${squadre[squadraBIndex].nome}`;
+  spans[2].textContent = `Vincente ${nomeA} / ${nomeB}`;
+}
     });
   })
   .catch(err => {
