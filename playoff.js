@@ -37,36 +37,36 @@ if (idx < 4) {
     }
 
     } else if (idx < 8) {
-      const ordineTesteDiSerie = [0, 3, 2, 1];
-      const testaSerieIndex = idx - 4;
-      const teamTop4Index = ordineTesteDiSerie[testaSerieIndex];
-      const squadra = squadre[teamTop4Index];
-      spans[0].textContent = `${teamTop4Index + 1}° ${squadra.nome}`;
+  const ordineTesteDiSerie = [0, 3, 2, 1];
+  const testaSerieIndex = idx - 4;
+  const teamTop4Index = ordineTesteDiSerie[testaSerieIndex];
+  const squadraTop = squadre[teamTop4Index];
+  spans[0].textContent = `${teamTop4Index + 1}° ${squadraTop.nome}`;
 
-      const mapping = [
-        [4, 2], [7, 3], [6, 0], [5, 1]
-      ];
-      const [idxPosA, idxPosB] = mapping[testaSerieIndex];
-      const squadraAIndex = posizioni[idxPosA][0];
-      const squadraBIndex = posizioni[idxPosB][1];
+  const mapping = [
+    [4, 2],   // 1° vs 8-9
+    [7, 3],   // 4° vs 5-12
+    [6, 0],   // 3° vs 6-11
+    [5, 1]    // 2° vs 7-10
+  ];
 
-      if (!squadre[squadraAIndex] || !squadre[squadraBIndex]) {
-        spans[2].textContent = `Vincente ${squadraAIndex + 1} / ${squadraBIndex + 1}`;
-        return;
-      }
+  const [idxA, idxB] = mapping[testaSerieIndex];
+  const squadraAIndex = posizioni[idxA][0];
+  const squadraBIndex = posizioni[idxB][1];
 
-      const nomeA = `${squadraAIndex + 1}° ${squadre[squadraAIndex].nome}`;
-const nomeB = `${squadraBIndex + 1}° ${squadre[squadraBIndex].nome}`;
+  const nomeA = squadre[squadraAIndex]?.nome;
+  const nomeB = squadre[squadraBIndex]?.nome;
 
-const matchId = `Q${testaSerieIndex + 1}`;
-const risultato = window.risultati?.find(r => r.partita === matchId);
+  const matchId = `Q${testaSerieIndex + 1}`;
+  const risultato = window.risultati?.find(r => r.partita === matchId);
 
-// ✅ Se ci sono risultati, mostra il vincitore
-if (risultato && (risultato.golA || risultato.golB)) {
-  spans[2].textContent = risultato.vincente;
-} else {
-  // ❗ Altrimenti mostra i nomi "Vincente A / B"
-  spans[2].textContent = `Vincente ${nomeA} / ${nomeB}`;
+  if (risultato && (risultato.golA || risultato.golB)) {
+    spans[2].textContent = risultato.vincente;
+  } else if (nomeA && nomeB) {
+    spans[2].textContent = `Vincente ${squadraAIndex + 1}° ${nomeA} / ${squadraBIndex + 1}° ${nomeB}`;
+  } else {
+    spans[2].textContent = `Vincente ${squadraAIndex + 1} / ${squadraBIndex + 1}`;
+  }
 }
   
   });
