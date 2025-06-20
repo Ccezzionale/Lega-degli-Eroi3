@@ -58,39 +58,42 @@
 </head>
 <body>
   <h1>Playoff 2025</h1>
-  <div class="bracket">
-    <!-- Wild Card -->
-    <div class="round">
-      <div class="round-title">Wild Card</div>
-      <div class="match"><span>5°</span><span>vs</span><span>12°</span></div>
-      <div class="match"><span>6°</span><span>vs</span><span>11°</span></div>
-      <div class="match"><span>7°</span><span>vs</span><span>10°</span></div>
-      <div class="match"><span>8°</span><span>vs</span><span>9°</span></div>
-    </div>
+<div class="bracket">
 
-    <!-- Quarti -->
-    <div class="round">
-      <div class="round-title">Quarti</div>
-      <div class="match"><span>1°</span><span>vs</span><span>Vincente 8/9</span></div>
-      <div class="match"><span>2°</span><span>vs</span><span>Vincente 7/10</span></div>
-      <div class="match"><span>3°</span><span>vs</span><span>Vincente 6/11</span></div>
-      <div class="match"><span>4°</span><span>vs</span><span>Vincente 5/12</span></div>
-    </div>
-
-    <!-- Semifinali -->
-    <div class="round">
-      <div class="round-title">Semifinali (andata/ritorno)</div>
-      <div class="match"><span>Vincente 1/8-9</span><span>vs</span><span>Vincente 4/5-12</span></div>
-      <div class="match"><span>Vincente 2/7-10</span><span>vs</span><span>Vincente 3/6-11</span></div>
-    </div>
-
-    <!-- Finale -->
-    <div class="round">
-      <div class="round-title">Finale</div>
-      <div class="match"><span>Vincente Semi 1</span><span>vs</span><span>Vincente Semi 2</span></div>
-    </div>
+  <!-- Wild Card -->
+  <div class="round">
+    <div class="round-title">Wild Card</div>
+    <div class="match" data-turno="Wild Card" data-partita="1"><span></span><span>vs</span><span></span></div>
+    <div class="match" data-turno="Wild Card" data-partita="2"><span></span><span>vs</span><span></span></div>
+    <div class="match" data-turno="Wild Card" data-partita="3"><span></span><span>vs</span><span></span></div>
+    <div class="match" data-turno="Wild Card" data-partita="4"><span></span><span>vs</span><span></span></div>
   </div>
-  <script src="playoff.js"></script>
-  <script src="risultati_playoff.js"></script>
+
+  <!-- Quarti -->
+  <div class="round">
+    <div class="round-title">Quarti</div>
+    <div class="match" data-turno="Quarti" data-partita="1"><span></span><span>vs</span><span></span></div>
+    <div class="match" data-turno="Quarti" data-partita="2"><span></span><span>vs</span><span></span></div>
+    <div class="match" data-turno="Quarti" data-partita="3"><span></span><span>vs</span><span></span></div>
+    <div class="match" data-turno="Quarti" data-partita="4"><span></span><span>vs</span><span></span></div>
+  </div>
+
+  <!-- Semifinali -->
+  <div class="round">
+    <div class="round-title">Semifinali (andata/ritorno)</div>
+    <div class="match" data-turno="Semifinali" data-partita="1"><span></span><span>vs</span><span></span></div>
+    <div class="match" data-turno="Semifinali" data-partita="2"><span></span><span>vs</span><span></span></div>
+  </div>
+
+  <!-- Finale -->
+  <div class="round">
+    <div class="round-title">Finale</div>
+    <div class="match" data-turno="Finale" data-partita="1"><span></span><span>vs</span><span></span></div>
+  </div>
+</div>
+
+<script src="playoff.js"></script>
+<script src="risultati_playoff.js"></script>
+  
 </body>
 </html>
