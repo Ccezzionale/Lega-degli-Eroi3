@@ -34,31 +34,29 @@ fetch(URL_CLASSIFICA_TOTALE)
   // Wild Card
   const i1 = posizioni[idx][0];
   const i2 = posizioni[idx][1];
-  const nomeA = squadre[i1] ? squadre[i1].nome : "";
-  const nomeB = squadre[i2] ? squadre[i2].nome : "";
-
-  spans[0].textContent = `${i1 + 1}° ${nomeA}`;
-  spans[2].textContent = `${i2 + 1}° ${nomeB}`;
-
+  spans[0].textContent = `${i1 + 1}° ${squadre[i1].nome}`;
+  spans[2].textContent = `${i2 + 1}° ${squadre[i2].nome}`;
 } else if (idx < 8) {
   // Quarti
   const testaSerieIndex = idx - 4;
-  const squadra = squadre[testaSerieIndex];
-  spans[0].textContent = `${testaSerieIndex + 1}° ${squadra.nome}`;
+  const teamTop4Index = testaSerieIndex; // 0 = 1°, 1 = 2° ecc.
+  const squadra = squadre[teamTop4Index];
+  spans[0].textContent = `${teamTop4Index + 1}° ${squadra.nome}`;
 
+  // Mapping degli accoppiamenti: [indice in posizioni]
   const mapping = [
     [7, 8],   // 1° vs Vincente 8°-9°
-    [4, 11],  // 4° vs Vincente 5°-12°
+    [6, 9],   // 2° vs Vincente 7°-10°
     [5, 10],  // 3° vs Vincente 6°-11°
-    [6, 9]    // 2° vs Vincente 7°-10°
+    [4, 11]   // 4° vs Vincente 5°-12°
   ];
 
-  const [a, b] = mapping[testaSerieIndex];
-  const idxA = posizioni[a]?.[0];  // es: 8° è posizioni[7][0]
-  const idxB = posizioni[b]?.[1];  // es: 9° è posizioni[7][1]
+  const [idxPosA, idxPosB] = mapping[testaSerieIndex];
+  const squadraAIndex = posizioni[idxPosA][0];
+  const squadraBIndex = posizioni[idxPosB][1];
 
-  const nomeA = squadre[idxA] ? `${idxA + 1}° ${squadre[idxA].nome}` : `${idxA + 1}°`;
-  const nomeB = squadre[idxB] ? `${idxB + 1}° ${squadre[idxB].nome}` : `${idxB + 1}°`;
+  const nomeA = squadraAIndex !== undefined ? `${squadraAIndex + 1}° ${squadre[squadraAIndex].nome}` : `${squadraAIndex + 1}°`;
+  const nomeB = squadraBIndex !== undefined ? `${squadraBIndex + 1}° ${squadre[squadraBIndex].nome}` : `${squadraBIndex + 1}°`;
 
   spans[2].textContent = `Vincente ${nomeA} / ${nomeB}`;
 }
