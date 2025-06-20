@@ -19,25 +19,44 @@ function aggiornaPlayoff() {
 
   matchDivs.forEach((match, idx) => {
     if (!posizioni[idx] || posizioni[idx].length < 2) return;
-    const spans = match.querySelectorAll("span");
-    
-     console.log("✅ Squadre:", window.squadre);
-  console.log("📊 Classifica Totale:", window.classificaTotale);
-  console.log("📄 Risultati Playoff:", window.risultati);
 
-    if (idx < 4) {
-      const mappingWC = [
-        [7, 8], [4, 11], [5, 10], [6, 9]
-      ];
+const team1 = match.querySelector(".team1");
+const team2 = match.querySelector(".team2");
+const vs = match.querySelector(".vs");
 
-      const [i1, i2] = mappingWC[idx];
-      const matchId = `WC${idx + 1}`;
-      const risultato = window.risultati?.find(r => r.partita === matchId);
+console.log("✅ Squadre:", window.squadre);
+console.log("📊 Classifica Totale:", window.classificaTotale);
+console.log("📄 Risultati Playoff:", window.risultati);
 
-      if (!risultato || (!risultato.golA && !risultato.golB)) {
-        spans[0].textContent = `${i1 + 1}° ${squadre[i1].nome}`;
-        spans[2].textContent = `${i2 + 1}° ${squadre[i2].nome}`;
-      }
+if (idx < 4) {
+  const mappingWC = [
+    [7, 8], [4, 11], [5, 10], [6, 9]
+  ];
+
+  const [i1, i2] = mappingWC[idx];
+  const matchId = `WC${idx + 1}`;
+  const risultato = window.risultati?.find(r => r.partita === matchId);
+
+  if (risultato) {
+    const { squadraA, squadraB, golA, golB, vincente } = risultato;
+
+    if (golA && golB) {
+      team1.textContent = squadraA;
+      vs.textContent = `${golA} - ${golB}`;
+      team2.textContent = squadraB;
+    } else {
+      team1.textContent = squadraA || "";
+      vs.textContent = "vs";
+      team2.textContent = squadraB || "";
+    }
+
+    if (vincente) {
+      match.classList.add("conclusa");
+      match.classList.add(vincente === squadraA ? "vittoria-a" : "vittoria-b");
+    }
+  }
+}
+
     } else if (idx < 8) {
       const ordineTesteDiSerie = [0, 3, 2, 1];
       const testaSerieIndex = idx - 4;
