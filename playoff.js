@@ -5,14 +5,14 @@ fetch(URL_CLASSIFICA_TOTALE)
   .then(csv => {
     const righe = csv.trim().split("\n");
     const startRow = 1;
-    const squadre = [];
+    window.squadre = [];
 
     for (let i = startRow; i < righe.length && squadre.length < 12; i++) {
       const colonne = righe[i].split(",").map(c => c.replace(/"/g, "").trim());
       const nome = colonne[1];
       const punti = parseInt(colonne[9]) || 0;
-
-      squadre.push({ nome, punti });
+      window.squadre.push({ nome, punti });
+    
     }
 
     squadre.sort((a, b) => b.punti - a.punti);
