@@ -65,8 +65,9 @@ function aggiornaPlayoff() {
     }
   });
 
-  if (typeof aggiornaCardMobile === "function") {
-    aggiornaCardMobile();
+  // Se la classifica è già pronta, aggiorna ora i playoff
+if (typeof aggiornaPlayoff === "function" && window.squadre) {
+  aggiornaPlayoff();
   }
 }
 
