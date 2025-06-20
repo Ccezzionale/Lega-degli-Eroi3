@@ -7,13 +7,17 @@ fetch(URL_CLASSIFICA_TOTALE)
     const startRow = 1;
     window.squadre = [];
 
-    for (let i = startRow; i < righe.length && squadre.length < 12; i++) {
-      const colonne = righe[i].split(",").map(c => c.replace(/"/g, "").trim());
-      const nome = colonne[1];
-      const punti = parseInt(colonne[9]) || 0;
-      window.squadre.push({ nome, punti });
-    
-    }
+for (let i = startRow; i < righe.length; i++) {
+  const colonne = righe[i].split(",").map(c => c.replace(/"/g, "").trim());
+  const nome = colonne[1];
+  const punti = parseInt(colonne[9]);
+
+  if (!nome || isNaN(punti)) continue; // 🔍 salta righe con problemi
+
+  window.squadre.push({ nome, punti });
+
+  if (window.squadre.length === 12) break; // ✅ fermati a 12 valide
+}
 
     squadre.sort((a, b) => b.punti - a.punti);
 
