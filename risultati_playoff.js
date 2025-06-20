@@ -31,7 +31,6 @@ fetch(URL_PLAYOFF)
     // ✅ Salva i risultati una volta sola
     window.risultati = risultati;
     console.log("📄 Risultati playoff:", risultati.map(r => `${r.partita}: ${r.squadraA} vs ${r.squadraB}`));
-
-  .catch(err => {
+.catch(err => {
   console.error("❌ Errore nel caricamento dei risultati playoff:", err);
 });
