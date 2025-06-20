@@ -46,18 +46,28 @@ fetch(URL_CLASSIFICA_TOTALE)
       if (!posizioni[idx] || posizioni[idx].length < 2) return;
       const spans = match.querySelectorAll("span");
 
-      if (idx < 4) {
-        // Wild Card → ordine personalizzato
-        const mappingWC = [
-          [7, 8],  // 8° vs 9°
-          [4, 11], // 5° vs 12°
-          [5, 10], // 6° vs 11°
-          [6, 9]   // 7° vs 10°
-        ];
+if (idx < 4) {
+  // Wild Card → ordine personalizzato
+  const mappingWC = [
+    [7, 8],  // 8° vs 9°
+    [4, 11], // 5° vs 12°
+    [5, 10], // 6° vs 11°
+    [6, 9]   // 7° vs 10°
+  ];
 
-        const [i1, i2] = mappingWC[idx];
-        spans[0].textContent = `${i1 + 1}° ${squadre[i1].nome}`;
-        spans[2].textContent = `${i2 + 1}° ${squadre[i2].nome}`;
+  const [i1, i2] = mappingWC[idx];
+  spans[0].textContent = `${i1 + 1}° ${squadre[i1].nome}`;
+
+  // 🏆 Cerca il vincitore della Wild Card
+  const matchId = `WC${idx + 1}`;
+  const vincitore = window.risultati?.find(r => r.partita === matchId)?.vincente;
+  if (vincitore) {
+    spans[2].textContent = vincitore;
+    return;
+  }
+
+  spans[2].textContent = `${i2 + 1}° ${squadre[i2].nome}`;
+}
 
       } else if (idx < 8) {
         // Quarti
@@ -85,8 +95,18 @@ fetch(URL_CLASSIFICA_TOTALE)
         }
 
         const nomeA = `${squadraAIndex + 1}° ${squadre[squadraAIndex].nome}`;
-        const nomeB = `${squadraBIndex + 1}° ${squadre[squadraBIndex].nome}`;
-        spans[2].textContent = `Vincente ${nomeA} / ${nomeB}`;
+const nomeB = `${squadraBIndex + 1}° ${squadre[squadraBIndex].nome}`;
+
+// 🏆 Se disponibile, mostra direttamente il vincitore
+const matchId = `Q${testaSerieIndex + 1}`;
+const vincitore = window.risultati?.find(r => r.partita === matchId)?.vincente;
+if (vincitore) {
+  spans[2].textContent = vincitore;
+  return;
+}
+
+spans[2].textContent = `Vincente ${nomeA} / ${nomeB}`;
+
       }
     });
   })
