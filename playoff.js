@@ -69,32 +69,29 @@ function aggiornaPlayoff() {
   });
 }
 
-fetch(URL_CLASSIFICA_TOTALE)
-  .then(res => res.text())
-  .then(csv => {
-    console.log("📥 CSV ricevuto:", csv);
-    const righe = csv.trim().split("\n").slice(1); // salta intestazione
-    const classifica = righe.map(r => {
-  const c = r.split(",");
-  const nome = c[1];
-  const punti = parseInt(c[10]) || 0;
-  const mp = parseFloat(c[11]?.replace(",", ".") || "0");
+document.addEventListener("DOMContentLoaded", () => {
+  fetch(URL_CLASSIFICA_TOTALE)
+    .then(res => res.text())
+    .then(csv => {
+      console.log("📥 CSV ricevuto:", csv);
+      const righe = csv.trim().split("\n").slice(1);
+      const classifica = righe.map(r => {
+        const c = r.split(",");
+        const nome = c[1];
+        const punti = parseInt(c[10]) || 0;
+        const mp = parseFloat(c[11]?.replace(",", ".") || "0");
+        return { nome, punti, mp };
+      });
 
-  return {
-    nome,
-    punti,
-    mp
-  };
+      window.classificaTotale = classifica
+        .sort((a, b) => b.punti - a.punti || b.mp - a.mp);
+      window.squadre = window.classificaTotale;
+
+      console.log("✅ Squadre ordinate:", window.squadre.map((s, i) => `${i+1}° ${s.nome} (${s.punti}pt / ${s.mp}mp)`));
+
+      aggiornaPlayoff(); // 🔥 ORA funzionerà
+    })
+    .catch(err => {
+      console.error("❌ Errore nel caricamento classifica Totale:", err);
+    });
 });
-
-window.classificaTotale = classifica
-  .sort((a, b) => b.punti - a.punti || b.mp - a.mp); // ✅ ordina correttamente
-window.squadre = window.classificaTotale;
-
-console.log("✅ Squadre ordinate:", window.squadre.map((s, i) => `${i+1}° ${s.nome} (${s.punti}pt / ${s.mp}mp)`));
-
-aggiornaPlayoff(); // chiama la funzione che disegna il bracket
-  })
-  .catch(err => {
-    console.error("❌ Errore nel caricamento classifica Totale:", err);
-  });
