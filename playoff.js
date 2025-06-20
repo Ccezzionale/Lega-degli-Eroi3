@@ -54,7 +54,6 @@ if (idx < 4) {
       match.classList.add("conclusa");
       match.classList.add(vincente === squadraA ? "vittoria-a" : "vittoria-b");
     }
-  }
 }
 
     } else if (idx < 8) {
