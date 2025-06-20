@@ -28,7 +28,7 @@ function aggiornaPlayoff() {
 
       const [i1, i2] = mappingWC[idx];
       const matchId = `WC${idx + 1}`;
-      cconst risultato = window.risultati?.find(r => r.partita === matchId);
+      const risultato = window.risultati?.find(r => r.partita === matchId);
 
 // ✅ Solo se NON ci sono risultati validi, mostra i nomi delle squadre da classifica
 if (!window.risultati || !risultato || (!risultato.squadraA && !risultato.squadraB)) {
