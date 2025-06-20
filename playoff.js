@@ -7,74 +7,74 @@ fetch(URL_CLASSIFICA_TOTALE)
     const startRow = 1;
     window.squadre = [];
 
-for (let i = startRow; i < righe.length; i++) {
-  const colonne = righe[i].split(",").map(c => c.replace(/"/g, "").trim());
-  const nome = colonne[1];
-  const punti = parseInt(colonne[9]);
+    for (let i = startRow; i < righe.length; i++) {
+      const colonne = righe[i].split(",").map(c => c.replace(/"/g, "").trim());
+      const nome = colonne[1];
+      const punti = parseInt(colonne[9]) || 0;
+      const mp = parseFloat(colonne[10].replace(",", ".")) || 0;
 
-  if (!nome || isNaN(punti)) continue; // 🔍 salta righe con problemi
+      if (!nome || isNaN(punti)) continue;
 
-  window.squadre.push({ nome, punti });
+      window.squadre.push({ nome, punti, mp });
+      if (window.squadre.length === 12) break;
+    }
 
-  if (window.squadre.length === 12) break; // ✅ fermati a 12 valide
-}
+    squadre.sort((a, b) => {
+      if (b.punti !== a.punti) return b.punti - a.punti;
+      return b.mp - a.mp;
+    });
 
-    squadre.sort((a, b) => b.punti - a.punti);
-
-  const posizioni = [
-  [7, 8],   // 8° vs 9°
-  [6, 9],   // 7° vs 10°
-  [5, 10],  // 6° vs 11°
-  [4, 11],  // 5° vs 12°
-  [7, 8],  // 4 → Vincente 8°-9°
-  [6, 9],  // 5 → Vincente 7°-10°
-  [5, 10], // 6 → Vincente 6°-11°
-  [4, 11]  // 7 → Vincente 5°-12°
-];
+    const posizioni = [
+      [5, 10],
+      [6, 9],
+      [7, 8],
+      [4, 11],
+      [7, 8],
+      [6, 9],
+      [5, 10],
+      [4, 11]
+    ];
 
     const matchDivs = document.querySelectorAll(".match");
 
     matchDivs.forEach((match, idx) => {
-  if (!posizioni[idx] || posizioni[idx].length < 2) return;
+      if (!posizioni[idx] || posizioni[idx].length < 2) return;
       const spans = match.querySelectorAll("span");
 
-  if (idx < 4) {
-  // Wild Card
-  const i1 = posizioni[idx][0];
-  const i2 = posizioni[idx][1];
-  spans[0].textContent = `${i1 + 1}° ${squadre[i1].nome}`;
-  spans[2].textContent = `${i2 + 1}° ${squadre[i2].nome}`;
-} else if (idx < 8) {
-  // Quarti
-  const ordineTesteDiSerie = [0, 3, 2, 1]; // 1°, 4°, 3°, 2°
-  const testaSerieIndex = idx - 4;
-  const teamTop4Index = ordineTesteDiSerie[testaSerieIndex];
-  const squadra = squadre[teamTop4Index];
-  spans[0].textContent = `${teamTop4Index + 1}° ${squadra.nome}`;
+      if (idx < 4) {
+        // Wild Card
+        const i1 = posizioni[idx][0];
+        const i2 = posizioni[idx][1];
+        spans[0].textContent = `${i1 + 1}° ${squadre[i1].nome}`;
+        spans[2].textContent = `${i2 + 1}° ${squadre[i2].nome}`;
+      } else if (idx < 8) {
+        // Quarti
+        const ordineTesteDiSerie = [0, 3, 2, 1];
+        const testaSerieIndex = idx - 4;
+        const teamTop4Index = ordineTesteDiSerie[testaSerieIndex];
+        const squadra = squadre[teamTop4Index];
+        spans[0].textContent = `${teamTop4Index + 1}° ${squadra.nome}`;
 
-  // Mapping degli accoppiamenti: [indice in posizioni]
-  const mapping = [
-    [4, 2],   // 1° vs Vincente 8°-9°
-    [7, 3],   // 4° vs Vincente 5°-12°
-    [6, 0],   // 3° vs Vincente 6°-11°
-    [5, 1]    // 2° vs Vincente 7°-10°
-  ];
+        const mapping = [
+          [4, 2],
+          [5, 1],
+          [6, 0],
+          [7, 3]
+        ];
 
-  const [idxPosA, idxPosB] = mapping[testaSerieIndex];
-  const squadraAIndex = posizioni[idxPosA][0];
-  const squadraBIndex = posizioni[idxPosB][1];
+        const [idxPosA, idxPosB] = mapping[testaSerieIndex];
+        const squadraAIndex = posizioni[idxPosA][0];
+        const squadraBIndex = posizioni[idxPosB][1];
 
-  // ✅ PROTEZIONE contro undefined
-  if (!squadre[squadraAIndex] || !squadre[squadraBIndex]) {
-    spans[2].textContent = `Vincente ${squadraAIndex + 1} / ${squadraBIndex + 1}`;
-    return;
-  }
+        if (!squadre[squadraAIndex] || !squadre[squadraBIndex]) {
+          spans[2].textContent = `Vincente ${squadraAIndex + 1} / ${squadraBIndex + 1}`;
+          return;
+        }
 
-  const nomeA = `${squadraAIndex + 1}° ${squadre[squadraAIndex].nome}`;
-  const nomeB = `${squadraBIndex + 1}° ${squadre[squadraBIndex].nome}`;
-  spans[2].textContent = `Vincente ${nomeA} / ${nomeB}`;
-}
-
+        const nomeA = `${squadraAIndex + 1}° ${squadre[squadraAIndex].nome}`;
+        const nomeB = `${squadraBIndex + 1}° ${squadre[squadraBIndex].nome}`;
+        spans[2].textContent = `Vincente ${nomeA} / ${nomeB}`;
+      }
     });
   })
   .catch(err => {
