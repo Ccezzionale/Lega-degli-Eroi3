@@ -37,35 +37,35 @@ if (idx < 4) {
     }
 
     } else if (idx < 8) {
-  const ordineTesteDiSerie = [0, 3, 2, 1];
+  const ordineTesteDiSerie = [0, 3, 2, 1]; // 1°, 4°, 3°, 2°
   const testaSerieIndex = idx - 4;
   const teamTop4Index = ordineTesteDiSerie[testaSerieIndex];
   const squadraTop = squadre[teamTop4Index];
   spans[0].textContent = `${teamTop4Index + 1}° ${squadraTop.nome}`;
 
   const mapping = [
-    [4, 2],   // 1° vs 8-9
-    [7, 3],   // 4° vs 5-12
-    [6, 0],   // 3° vs 6-11
-    [5, 1]    // 2° vs 7-10
+    [4, 2],   // 1° vs 8–9
+    [7, 3],   // 4° vs 5–12
+    [6, 0],   // 3° vs 6–11
+    [5, 1]    // 2° vs 7–10
   ];
 
-  const [idxA, idxB] = mapping[testaSerieIndex];
-  const squadraAIndex = posizioni[idxA][0];
-  const squadraBIndex = posizioni[idxB][1];
+  const [idxPosA, idxPosB] = mapping[testaSerieIndex];
+  const squadraAIndex = posizioni[idxPosA][0];
+  const squadraBIndex = posizioni[idxPosB][1];
 
-  const nomeA = squadre[squadraAIndex]?.nome;
-  const nomeB = squadre[squadraBIndex]?.nome;
+  const nomeA = `${squadraAIndex + 1}° ${squadre[squadraAIndex]?.nome || "?"}`;
+  const nomeB = `${squadraBIndex + 1}° ${squadre[squadraBIndex]?.nome || "?"}`;
 
   const matchId = `Q${testaSerieIndex + 1}`;
   const risultato = window.risultati?.find(r => r.partita === matchId);
+  
+console.log(`🧠 Quarto ${matchId} → ${nomeA} vs ${nomeB} | Vincente: ${risultato?.vincente || "?"}`);
 
-  if (risultato && (risultato.golA || risultato.golB)) {
+  if (risultato?.vincente) {
     spans[2].textContent = risultato.vincente;
-  } else if (nomeA && nomeB) {
-    spans[2].textContent = `Vincente ${squadraAIndex + 1}° ${nomeA} / ${squadraBIndex + 1}° ${nomeB}`;
   } else {
-    spans[2].textContent = `Vincente ${squadraAIndex + 1} / ${squadraBIndex + 1}`;
+    spans[2].textContent = `Vincente ${nomeA} / ${nomeB}`;
   }
 }
   
