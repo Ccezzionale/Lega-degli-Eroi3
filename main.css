@@ -877,6 +877,38 @@ h1 {
   box-shadow: 0 0 20px #ffcc00;
 }
 
+.bracket {
+  display: flex;
+  gap: 60px;
+  padding: 20px;
+  overflow-x: auto; /* 👈 ABILITA SCROLL ORIZZONTALE */
+  width: 100%;
+  box-sizing: border-box;
+}
+.match {
+  position: relative;
+  background: linear-gradient(145deg, #061d3f, #1a1f70);
+  padding: 16px;
+  border-radius: 12px;
+  border: 2px solid #ffcc00;
+  color: white;
+  text-align: center;
+  min-width: 240px;
+  box-shadow: 0 0 20px #ffcc00;
+}
+
+.match::after {
+  content: "";
+  position: absolute;
+  right: -30px;
+  top: 50%;
+  width: 30px;
+  height: 2px;
+  background-color: #00ffff;
+}
+
+
+
 /* MENU MOBILE - chiuso */
 #mobileMenu {
   display: none;
