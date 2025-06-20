@@ -67,7 +67,7 @@ function aggiornaPlayoff() {
   });
 }
 
-// Esegui la funzione dopo che `window.squadre` è pronta
+// 🟢 Caricamento classifica
 fetch(URL_CLASSIFICA_TOTALE)
   .then(res => res.text())
   .then(csv => {
@@ -91,6 +91,10 @@ fetch(URL_CLASSIFICA_TOTALE)
     });
 
     window.squadre = squadreProvvisorie;
-    aggiornaPlayoff();
+
+    // ✅ Aggiorna playoff se i risultati sono già pronti
+    if (typeof aggiornaPlayoff === "function" && window.risultati) {
+      aggiornaPlayoff();
+    }
   })
   .catch(err => console.error("❌ Errore nel caricamento classifica Totale:", err));
