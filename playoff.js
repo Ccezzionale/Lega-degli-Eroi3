@@ -22,10 +22,11 @@ for (let i = startRow; i < righe.length; i++) {
     squadre.sort((a, b) => b.punti - a.punti);
 
     const posizioni = [
-  [5, 10], // posizione 0
-  [6, 9],  // 1
-  [7, 8],  // 2
-  [4, 11], // 3
+  const posizioni = [
+  [7, 8],   // 8° vs 9°
+  [6, 9],   // 7° vs 10°
+  [5, 10],  // 6° vs 11°
+  [4, 11],  // 5° vs 12°
   [7, 8],  // 4 → Vincente 8°-9°
   [6, 9],  // 5 → Vincente 7°-10°
   [5, 10], // 6 → Vincente 6°-11°
