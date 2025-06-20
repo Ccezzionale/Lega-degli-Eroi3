@@ -3,6 +3,7 @@ const URL_CLASSIFICA_TOTALE = "https://docs.google.com/spreadsheets/d/e/2PACX-1v
 
 // ✅ Funzione principale per aggiornare il bracket
 function aggiornaPlayoff() {
+  console.log("🔄 aggiornaPlayoff chiamata");
   if (!window.squadre || window.squadre.length < 12) {
     console.warn("⛔ Classifica non disponibile per aggiornare il bracket");
     return;
