@@ -92,4 +92,7 @@ fetch(URL_CLASSIFICA_TOTALE)
       aggiornaPlayoff();
     }
   })
-  .catch(err => console.error("❌ Errore nel caricamento classifica Totale:", err));
+.catch(err => {
+  console.error("❌ Errore nel caricamento dei risultati playoff:", err);
+});
+
