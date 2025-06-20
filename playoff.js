@@ -75,13 +75,16 @@ fetch(URL_CLASSIFICA_TOTALE)
     console.log("📥 CSV ricevuto:", csv);
     const righe = csv.trim().split("\n").slice(1); // salta intestazione
     const classifica = righe.map(r => {
-      const c = r.split(",");
-      return {
-        squadra: c[0],
-        punti: parseInt(c[1]),
-        mp: parseInt(c[10]) || 0
-      };
-    });
+  const regex = /(".*?"|[^",]+)(?=\s*,|\s*$)/g;
+  const c = [...r.matchAll(regex)].map(m => m[0].replace(/^"|"$/g, ""));
+
+  return {
+    squadra: c[1], // Colonna 1 = nome squadra
+    punti: parseInt(c[8]), // Colonna corretta dei PUNTI (senza virgolette)
+    mp: parseInt(c[10]) || 0 // MP rimane la 10
+  };
+});
+
 console.log("✅ Classifica parsata:", classifica);
     
     // Salva in window
