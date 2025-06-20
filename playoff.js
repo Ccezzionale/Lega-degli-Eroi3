@@ -21,7 +21,6 @@ fetch(URL_CLASSIFICA_TOTALE)
       if (squadreProvvisorie.length === 12) break;
     }
 
-    // ✅ Ordina e salva nel window per tutto il resto del codice
     squadreProvvisorie.sort((a, b) => {
       if (b.punti !== a.punti) return b.punti - a.punti;
       return b.mp - a.mp;
@@ -30,61 +29,37 @@ fetch(URL_CLASSIFICA_TOTALE)
     window.squadre = squadreProvvisorie;
 
     const posizioni = [
-      [5, 10],
-      [6, 9],
-      [7, 8],
-      [4, 11],
-      [7, 8],
-      [6, 9],
-      [5, 10],
-      [4, 11]
+      [5, 10], [6, 9], [7, 8], [4, 11],
+      [7, 8], [6, 9], [5, 10], [4, 11]
     ];
 
     const matchDivs = document.querySelectorAll(".match");
 
     matchDivs.forEach((match, idx) => {
-      if (!posizioni[idx] || posizioni[idx].length < 2) return;
       const spans = match.querySelectorAll("span");
 
-if (idx < 4) {
-  // Wild Card → ordine personalizzato
-  const mappingWC = [
-    [7, 8],  // 8° vs 9°
-    [4, 11], // 5° vs 12°
-    [5, 10], // 6° vs 11°
-    [6, 9]   // 7° vs 10°
-  ];
+      if (idx < 4) {
+        const mappingWC = [ [7, 8], [4, 11], [5, 10], [6, 9] ];
+        const [i1, i2] = mappingWC[idx];
+        spans[0].textContent = `${i1 + 1}° ${squadre[i1].nome}`;
 
-  const [i1, i2] = mappingWC[idx];
-  spans[0].textContent = `${i1 + 1}° ${squadre[i1].nome}`;
+        const matchId = `WC${idx + 1}`;
+        const vincitore = window.risultati?.find(r => r.partita === matchId)?.vincente;
+        if (vincitore) {
+          spans[2].textContent = vincitore;
+          return;
+        }
 
-  // 🏆 Cerca il vincitore della Wild Card
-  const matchId = `WC${idx + 1}`;
-  const vincitore = window.risultati?.find(r => r.partita === matchId)?.vincente;
-  if (vincitore) {
-    spans[2].textContent = vincitore;
-    return;
-  }
-
-  spans[2].textContent = `${i2 + 1}° ${squadre[i2].nome}`;
-}
+        spans[2].textContent = `${i2 + 1}° ${squadre[i2].nome}`;
 
       } else if (idx < 8) {
-        // Quarti
-        const ordineTesteDiSerie = [0, 3, 2, 1]; // 1°, 4°, 3°, 2°
+        const ordineTesteDiSerie = [0, 3, 2, 1];
         const testaSerieIndex = idx - 4;
         const teamTop4Index = ordineTesteDiSerie[testaSerieIndex];
         const squadra = squadre[teamTop4Index];
         spans[0].textContent = `${teamTop4Index + 1}° ${squadra.nome}`;
 
-        // Mapping corretto:
-        const mapping = [
-          [4, 2],   // 1° vs vincente 8‐9
-          [7, 3],   // 4° vs vincente 5‐12
-          [6, 0],   // 3° vs vincente 6‐11
-          [5, 1]    // 2° vs vincente 7‐10
-        ];
-
+        const mapping = [ [4, 2], [7, 3], [6, 0], [5, 1] ];
         const [idxPosA, idxPosB] = mapping[testaSerieIndex];
         const squadraAIndex = posizioni[idxPosA][0];
         const squadraBIndex = posizioni[idxPosB][1];
@@ -95,18 +70,30 @@ if (idx < 4) {
         }
 
         const nomeA = `${squadraAIndex + 1}° ${squadre[squadraAIndex].nome}`;
-const nomeB = `${squadraBIndex + 1}° ${squadre[squadraBIndex].nome}`;
+        const nomeB = `${squadraBIndex + 1}° ${squadre[squadraBIndex].nome}`;
+        const matchId = `Q${testaSerieIndex + 1}`;
+        const vincitore = window.risultati?.find(r => r.partita === matchId)?.vincente;
+        if (vincitore) {
+          spans[2].textContent = vincitore;
+          return;
+        }
 
-// 🏆 Se disponibile, mostra direttamente il vincitore
-const matchId = `Q${testaSerieIndex + 1}`;
-const vincitore = window.risultati?.find(r => r.partita === matchId)?.vincente;
-if (vincitore) {
-  spans[2].textContent = vincitore;
-  return;
-}
+        spans[2].textContent = `Vincente ${nomeA} / ${nomeB}`;
 
-spans[2].textContent = `Vincente ${nomeA} / ${nomeB}`;
+      } else if (idx < 10) {
+        const semiIndex = idx - 8;
+        spans[0].textContent = `Vincente Quarti ${semiIndex * 2 + 1}`;
+        spans[2].textContent = `Vincente Quarti ${semiIndex * 2 + 2}`;
+        const matchId = `S${semiIndex + 1}`;
+        const vincitore = window.risultati?.find(r => r.partita === matchId)?.vincente;
+        if (vincitore) spans[2].textContent = vincitore;
 
+      } else {
+        spans[0].textContent = "Vincente Semi 1";
+        spans[2].textContent = "Vincente Semi 2";
+        const matchId = "F";
+        const vincitore = window.risultati?.find(r => r.partita === matchId)?.vincente;
+        if (vincitore) spans[2].textContent = vincitore;
       }
     });
   })
