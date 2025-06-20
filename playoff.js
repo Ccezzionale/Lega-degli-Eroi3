@@ -15,10 +15,15 @@ function aggiornaPlayoff() {
   ];
 
   const matchDivs = document.querySelectorAll(".match");
+  console.log("🎯 Match trovati:", matchDivs.length);
 
   matchDivs.forEach((match, idx) => {
     if (!posizioni[idx] || posizioni[idx].length < 2) return;
     const spans = match.querySelectorAll("span");
+    
+     console.log("✅ Squadre:", window.squadre);
+  console.log("📊 Classifica Totale:", window.classificaTotale);
+  console.log("📄 Risultati Playoff:", window.risultati);
 
     if (idx < 4) {
       const mappingWC = [
@@ -67,6 +72,7 @@ function aggiornaPlayoff() {
 fetch(URL_CLASSIFICA_TOTALE)
   .then(res => res.text())
   .then(csv => {
+    console.log("📥 CSV ricevuto:", csv);
     const righe = csv.trim().split("\n").slice(1); // salta intestazione
     const classifica = righe.map(r => {
       const c = r.split(",");
@@ -76,7 +82,8 @@ fetch(URL_CLASSIFICA_TOTALE)
         mp: parseInt(c[10]) || 0
       };
     });
-
+console.log("✅ Classifica parsata:", classifica);
+    
     // Salva in window
   window.classificaTotale = classifica;
   window.squadre = classifica; // ⬅️ così la funzione aggiornaPlayoff funziona correttamente
