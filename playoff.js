@@ -29,11 +29,10 @@ function aggiornaPlayoff() {
       const [i1, i2] = mappingWC[idx];
       const matchId = `WC${idx + 1}`;
       const risultato = window.risultati?.find(r => r.partita === matchId);
-
-      if (!risultato || (!risultato.golA && !risultato.golB)) {
-        spans[0].textContent = `${i1 + 1}° ${squadre[i1].nome}`;
-        spans[2].textContent = `${i2 + 1}° ${squadre[i2].nome}`;
-      }
+if (!window.risultati || !risultato || (!risultato.golA && !risultato.golB)) {
+  spans[0].textContent = `${i1 + 1}° ${squadre[i1].nome}`;
+  spans[2].textContent = `${i2 + 1}° ${squadre[i2].nome}`;
+}
 
     } else if (idx < 8) {
       const ordineTesteDiSerie = [0, 3, 2, 1];
@@ -102,7 +101,7 @@ fetch(URL_CLASSIFICA_TOTALE)
 console.log("📊 Squadre caricate:", squadreProvvisorie.map(s => s.nome));
 
 if (typeof aggiornaPlayoff === "function") {
-  aggiornaPlayoff();
+  aggiornaPlayoff();  // chiama sempre, anche se window.risultati è vuoto
 }
   })
   .catch(err => console.error("❌ Errore nel caricamento classifica Totale:", err));
