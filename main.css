@@ -607,72 +607,6 @@ h1 {
   color: #ffcc00;
 }
 
-/* Stato partita conclusa */
-.match.conclusa {
-  border: 2px solid #00ffcc;
-  background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
-  box-shadow: 0 0 15px #00ffcc;
-}
-
-/* Vittoria squadra A */
-.match.vittoria-a span:first-child {
-  color: #00ff00;
-  font-weight: bold;
-  text-shadow: 0 0 5px #00ff00;
-}
-
-/* Vittoria squadra B */
-.match.vittoria-b span:last-child {
-  color: #ff3333;
-  font-weight: bold;
-  text-shadow: 0 0 5px #ff3333;
-}
-
-/* Highlight punteggio */
-.match .vs {
-  color: #ffff00;
-  font-size: 1.2em;
-  font-weight: bold;
-  text-shadow: 0 0 5px #ffff00;
-}
-
-.match {
-  background: #003366;
-  border: 2px solid #ffcc00;
-  border-radius: 10px;
-  padding: 15px;
-  box-shadow: 0 0 8px #ffcc00;
-  transition: all 0.3s ease-in-out;
-}
-
-/* Quando la partita è conclusa */
-.match.conclusa {
-  border-color: #00ffcc;
-  background: linear-gradient(to bottom, #001f3f, #004466);
-  box-shadow: 0 0 15px #00ffcc;
-}
-
-/* Vittoria squadra A */
-.match.vittoria-a span:first-child {
-  color: #00ff00;
-  font-weight: bold;
-  text-shadow: 0 0 6px #00ff00;
-}
-
-/* Vittoria squadra B */
-.match.vittoria-b span:last-child {
-  color: #ff3300;
-  font-weight: bold;
-  text-shadow: 0 0 6px #ff3300;
-}
-
-/* Punteggio al centro */
-.match .vs {
-  color: #ffff00;
-  font-weight: bold;
-  font-size: 1.1em;
-  text-shadow: 0 0 6px #ffff00;
-}
 /* Titolo principale */
 h1 {
   font-size: 3em;
@@ -694,62 +628,94 @@ h1 {
   margin-bottom: 15px;
 }
 
-/* Match Card - glowing arcade style */
-.match {
-  background: #002244;
-  border: 2px solid #ffcc00;
-  border-radius: 12px;
-  padding: 18px 12px;
-  box-shadow: 0 0 12px #ffcc00, inset 0 0 5px #002244;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+/* Bracket layout */
+.bracket {
+  display: flex;
+  flex-direction: row;
+  gap: 60px;
+  padding: 40px;
+  min-width: 1600px;
+  width: fit-content;
+  box-sizing: border-box;
+  overflow-x: auto;
 }
 
-/* Hover effetto glow */
+.round {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  min-width: 200px;
+}
+
+/* Match style */
+.match {
+  position: relative;
+  background: linear-gradient(145deg, #061d3f, #1a1f70);
+  padding: 16px;
+  border-radius: 12px;
+  border: 2px solid #ffcc00;
+  color: white;
+  text-align: center;
+  min-width: 240px;
+  box-shadow: 0 0 20px #ffcc00;
+  transition: transform 0.3s ease;
+}
+
 .match:hover {
   transform: scale(1.05);
-  box-shadow: 0 0 18px #00ffff, 0 0 25px #00ffff, inset 0 0 8px #001f3f;
+  box-shadow: 0 0 25px #ffcc00;
 }
 
-/* Squadre */
-.match span {
-  display: block;
-  margin: 5px 0;
-  font-size: 1.1em;
+/* Connessione fra match (visuale) */
+.match::after {
+  content: "";
+  position: absolute;
+  right: -30px;
+  top: 50%;
+  width: 30px;
+  height: 2px;
+  background-color: #00ffff;
 }
 
-/* Squadra vincente A */
+/* Stato partita conclusa */
+.match.conclusa {
+  border: 2px solid #00ffcc;
+  background: linear-gradient(to bottom, #001f3f, #004466);
+  box-shadow: 0 0 15px #00ffcc;
+}
+
+/* Vittoria squadra A */
 .match.vittoria-a span:first-child {
-  color: #00ff00;
+  color: #00ff88;
   font-weight: bold;
-  text-shadow: 0 0 8px #00ff00;
+  text-shadow: 0 0 10px #00ff88;
 }
 
-/* Squadra vincente B */
+/* Vittoria squadra B */
 .match.vittoria-b span:last-child {
-  color: #ff3300;
+  color: #ff5555;
   font-weight: bold;
-  text-shadow: 0 0 8px #ff3300;
+  text-shadow: 0 0 10px #ff5555;
 }
 
-/* Punteggio */
+/* Highlight punteggio */
 .match .vs {
   color: #ffff00;
+  font-size: 1.4em;
   font-weight: bold;
-  font-size: 1.2em;
-  text-shadow: 0 0 6px #ffff00, 0 0 10px #ffaa00;
+  text-shadow: 0 0 8px #ffaa00;
 }
 
-.match {
-  background: linear-gradient(135deg, #002244 0%, #001933 100%);
-  border: 2px solid #ffcc00;
-  border-radius: 16px;
-  padding: 20px 14px;
-  box-shadow:
-    0 0 12px rgba(255, 204, 0, 0.4),
-    inset 0 0 12px rgba(255, 204, 0, 0.2);
-  transition: all 0.3s ease;
+/* Contenuto match */
+.match span {
   position: relative;
-  overflow: hidden;
+  z-index: 1;
+  display: block;
+  margin: 6px 0;
+  font-size: 1.15em;
+  letter-spacing: 0.5px;
+  font-weight: 500;
 }
 
 /* Glow animato sul bordo */
@@ -772,146 +738,6 @@ h1 {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
-}
-
-.match span {
-  position: relative;
-  z-index: 1;
-  display: block;
-  margin: 6px 0;
-  font-size: 1.15em;
-  letter-spacing: 0.5px;
-  font-weight: 500;
-}
-
-.match:hover {
-  transform: scale(1.04);
-  box-shadow: 0 0 20px #ffcc00, inset 0 0 10px #002244;
-}
-
-/* Highlight vincitori */
-.match.vittoria-a span:first-child {
-  color: #00ff88;
-  font-weight: bold;
-  text-shadow: 0 0 10px #00ff88;
-}
-
-.match.vittoria-b span:last-child {
-  color: #ff5555;
-  font-weight: bold;
-  text-shadow: 0 0 10px #ff5555;
-}
-
-/* Punteggio */
-.match .vs {
-  font-size: 1.4em;
-  color: #ffff00;
-  font-weight: bold;
-  text-shadow: 0 0 8px #ffaa00;
-}
-.bracket-horizontal {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  gap: 30px;
-  flex-wrap: wrap;
-  align-items: center;
-  margin-top: 30px;
-}
-
-.round-col {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-  min-width: 200px;
-}
-
-.round-col .round-title {
-  font-size: 1.3em;
-  font-weight: bold;
-  margin-bottom: 10px;
-  color: #00ffff;
-  text-shadow: 0 0 5px #00ffff;
-}
-
-.bracket {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  justify-content: space-evenly;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  padding: 40px 20px;
-  gap: 60px;
-}
-
-.round {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 40px;
-  min-width: 180px;
-}
-
-.round-title {
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: cyan;
-  margin-bottom: 10px;
-}
-
-.match {
-  background-color: #003366;
-  padding: 10px 15px;
-  border: 2px solid #ffcc00;
-  border-radius: 10px;
-  min-width: 160px;
-  text-align: center;
-  box-shadow: 0 0 15px #ffcc00;
-  transition: transform 0.3s ease;
-}
-
-.match:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 20px #ffcc00;
-}
-
-.bracket {
-  display: flex;
-  gap: 60px;
-  padding: 20px;
-  overflow-x: auto; /* 👈 ABILITA SCROLL ORIZZONTALE */
-  width: 100%;
-  box-sizing: border-box;
-}
-.match {
-  position: relative;
-  background: linear-gradient(145deg, #061d3f, #1a1f70);
-  padding: 16px;
-  border-radius: 12px;
-  border: 2px solid #ffcc00;
-  color: white;
-  text-align: center;
-  min-width: 240px;
-  box-shadow: 0 0 20px #ffcc00;
-}
-
-.match::after {
-  content: "";
-  position: absolute;
-  right: -30px;
-  top: 50%;
-  width: 30px;
-  height: 2px;
-  background-color: #00ffff;
-}
-
-.bracket {
-  display: flex;
-  gap: 60px;
-  padding: 40px;
-  min-width: 1600px; /* o quanto ti serve per far entrare tutto */
 }
 
 
