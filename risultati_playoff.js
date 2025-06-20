@@ -22,7 +22,9 @@ fetch(URL_PLAYOFF)
       const spans = match.querySelectorAll("span");
 
       if (golA && golB) {
-        spans[1].textContent = `${golA} - ${golB}`;
+  spans[0].textContent = squadraA;
+  spans[1].textContent = `${golA} - ${golB}`;
+  spans[2].textContent = squadraB;
       }
 
       if (vincente) {
