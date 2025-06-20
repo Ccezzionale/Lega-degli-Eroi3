@@ -809,7 +809,31 @@ h1 {
   font-weight: bold;
   text-shadow: 0 0 8px #ffaa00;
 }
+.bracket-horizontal {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  gap: 30px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: 30px;
+}
 
+.round-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  min-width: 200px;
+}
+
+.round-col .round-title {
+  font-size: 1.3em;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #00ffff;
+  text-shadow: 0 0 5px #00ffff;
+}
 
 /* MENU MOBILE - chiuso */
 #mobileMenu {
