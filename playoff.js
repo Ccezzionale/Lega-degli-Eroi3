@@ -51,13 +51,20 @@ window.squadre = squadreProvvisorie;
       if (!posizioni[idx] || posizioni[idx].length < 2) return;
       const spans = match.querySelectorAll("span");
 
-      if (idx < 4) {
-        // Wild Card
-        const i1 = posizioni[idx][0];
-        const i2 = posizioni[idx][1];
-        spans[0].textContent = `${i1 + 1}° ${squadre[i1].nome}`;
-        spans[2].textContent = `${i2 + 1}° ${squadre[i2].nome}`;
-      } else if (idx < 8) {
+if (idx < 4) {
+  // Wild Card → ordine personalizzato
+  const mappingWC = [
+    [7, 8],  // 8° vs 9°
+    [4, 11], // 5° vs 12°
+    [5, 10], // 6° vs 11°
+    [6, 9]   // 7° vs 10°
+  ];
+
+  const [i1, i2] = mappingWC[idx];
+  spans[0].textContent = `${i1 + 1}° ${squadre[i1].nome}`;
+  spans[2].textContent = `${i2 + 1}° ${squadre[i2].nome}`;
+
+} else if (idx < 8) {
   // Quarti
   const ordineTesteDiSerie = [0, 3, 2, 1]; // 1°, 4°, 3°, 2°
   const testaSerieIndex = idx - 4;
