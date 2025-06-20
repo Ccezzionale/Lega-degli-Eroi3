@@ -51,7 +51,8 @@ spans[2].innerHTML = `
     <img src="img/${formattaNomePerLogo(squadre[i2].nome)}.png" alt="${squadre[i2].nome}">
     <span>${i2 + 1}° ${squadre[i2].nome}</span>
   </div>`;
-
+    
+  }
     } else if (idx < 8) {
   const ordineTesteDiSerie = [0, 3, 2, 1]; // 1°, 4°, 3°, 2°
   const testaSerieIndex = idx - 4;
@@ -91,7 +92,6 @@ console.log(`🧠 Quarto ${matchId} → ${nomeA} vs ${nomeB} | Vincente: ${risul
   </div>`;
   }
 }
-  });
 
 // 🟢 Caricamento classifica
 fetch(URL_CLASSIFICA_TOTALE)
