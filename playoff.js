@@ -109,15 +109,16 @@ function aggiornaCardMobile() {
   if (!window.risultati) return;
 
   window.risultati.forEach(partita => {
-    const { partita: codice, squadraA, squadraB } = partita;
+    const { partita: codice, squadra1, squadra2 } = partita;
 
     const matchCard = document.querySelector(`.match-card[data-partita="${codice}"]`);
     if (matchCard) {
       const team1 = matchCard.querySelector(".team1");
       const team2 = matchCard.querySelector(".team2");
+
       if (team1 && team2) {
-        team1.textContent = squadraA || "";
-        team2.textContent = squadraB || "";
+        team1.textContent = squadra1 || "";
+        team2.textContent = squadra2 || "";
       }
     }
   });
