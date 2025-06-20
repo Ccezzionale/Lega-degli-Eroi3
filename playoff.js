@@ -28,10 +28,10 @@ function aggiornaPlayoff() {
 
       const [i1, i2] = mappingWC[idx];
       const matchId = `WC${idx + 1}`;
-      const risultato = window.risultati?.find(r => r.partita === matchId);
+     const risultato = window.risultati?.find(r => r.partita === matchId);
 
-// ✅ Solo se NON ci sono risultati validi, mostra i nomi delle squadre da classifica
-if (!window.risultati || !risultato || (!risultato.squadraA && !risultato.squadraB)) {
+// ✅ Popola solo se i risultati sono assenti o vuoti
+if (!window.risultati || !risultato || (!risultato.golA && !risultato.golB)) {
   spans[0].textContent = `${i1 + 1}° ${squadre[i1].nome}`;
   spans[2].textContent = `${i2 + 1}° ${squadre[i2].nome}`;
 }
@@ -62,11 +62,11 @@ if (!window.risultati || !risultato || (!risultato.squadraA && !risultato.squadr
 
       console.log(`🧠 Quarto ${matchId} → ${nomeA} vs ${nomeB} | Vincente: ${risultato?.vincente || "?"}`);
 
-      if (risultato?.vincente) {
-        spans[2].textContent = risultato.vincente;
-      } else {
-        spans[2].textContent = `Vincente ${nomeA} / ${nomeB}`;
-      }
+     if (!window.risultati || !risultato || (!risultato.golA && !risultato.golB)) {
+  spans[2].textContent = `Vincente ${nomeA} / ${nomeB}`;
+} else {
+  spans[2].textContent = risultato.vincente;
+}
     }
   });
 
