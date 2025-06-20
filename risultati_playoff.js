@@ -1,38 +1,31 @@
 const URL_PLAYOFF = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSwFDMVkq09-yRzsLwFqehbAntqMpTPtyMwUsTJkRtUREmmP6vJcTROPchoYq1rc0h1ynqkcGJvEOsD/pub?output=csv";
 
+// Struttura: [{ partita: "WC1", squadraA: "...", squadraB: "...", golA: x, golB: y, vincente: "..." }, ...]
 fetch(URL_PLAYOFF)
   .then(res => res.text())
   .then(csv => {
-    const righe = csv.trim().split("\n").slice(1); // Salta intestazione
-    const risultati = [];
+    const righe = csv.trim().split("\n").slice(1); // Ignora intestazioni
+    const risultati = righe.map(riga => {
+      const colonne = riga.split(",").map(c => c.trim().replace(/"/g, ""));
+      const [partita, squadraA, squadraB, golA, golB, vincente] = colonne;
+      return {
+        partita,
+        squadraA,
+        squadraB,
+        golA: golA ? parseInt(golA) : null,
+        golB: golB ? parseInt(golB) : null,
+        vincente
+      };
+    });
 
-    righe.forEach(riga => {
-  const colonne = riga.split(",").map(c => c.replace(/"/g, "").trim());
-  const [turno, partita, squadraA, squadraB, golA, golB, vincente] = colonne;
+    console.log("✅ Risultati Playoff:", risultati);
+    window.risultati = risultati;
 
-  const risultato = { turno, partita, squadraA, squadraB, golA, golB, vincente };
-  risultati.push(risultato);
-
-  // Trova il match corretto nel DOM
-  const match = document.querySelector(`.match-card[data-partita="${partita}"]`);
-  if (!match) return;
-
-  const team1 = match.querySelector(".team1");
-  const team2 = match.querySelector(".team2");
-  const vs = match.querySelector(".vs");
-
-  if (golA && golB) {
-    team1.textContent = squadraA;
-    vs.textContent = `${golA} - ${golB}`;
-    team2.textContent = squadraB;
-  } else {
-    team1.textContent = squadraA || "";
-    vs.textContent = "vs";
-    team2.textContent = squadraB || "";
-  }
-
-  if (vincente) {
-    match.classList.add("conclusa");
-    match.classList.add(vincente === squadraA ? "vittoria-a" : "vittoria-b");
-  }
-});
+    // Se la funzione aggiornaPlayoff è già definita, eseguila ora
+    if (typeof aggiornaPlayoff === "function") {
+      aggiornaPlayoff();
+    }
+  })
+  .catch(err => {
+    console.error("❌ Errore nel caricamento dei risultati playoff:", err);
+  });
