@@ -9,33 +9,20 @@ fetch(URL_PLAYOFF)
 
     for (let i = startRow; i < righe.length; i++) {
       const colonne = righe[i].split(",").map(c => c.replace(/"/g, "").trim());
-      const turno = colonne[0];
-      const partita = colonne[1]; // es: "Q1", "WC2"
-      const squadraA = colonne[2];
-      const squadraB = colonne[3];
-      const golA = colonne[4];
-      const golB = colonne[5];
+      const partita = colonne[1];
       const vincente = colonne[6];
-
-      // 🔁 Salva per uso futuro (es. classifica.js)
-      window.risultati.push({ turno, partita, squadraA, squadraB, golA, golB, vincente });
-
-      // Trova il blocco HTML della partita
-      const match = document.querySelector(`.match[data-turno="${turno}"][data-partita="${partita}"]`);
-      if (!match) continue;
-
-      const spans = match.querySelectorAll("span");
-
-      if (golA && golB) {
-        spans[0].textContent = squadraA;
-        spans[1].textContent = `${golA} - ${golB}`;
-        spans[2].textContent = squadraB;
+      if (partita && vincente) {
+        window.risultati.push({ partita, vincente });
       }
+    }
 
-      if (vincente) {
-        match.classList.add("conclusa");
-        match.classList.add(vincente === squadraA ? "vittoria-a" : "vittoria-b");
-      }
+    console.log("✅ Risultati playoff caricati:", window.risultati);
+
+    // chiama funzione principale
+    if (typeof aggiornaPlayoff === "function") {
+      aggiornaPlayoff();
+    } else {
+      console.error("❌ La funzione aggiornaPlayoff() non è definita!");
     }
   })
   .catch(err => {
