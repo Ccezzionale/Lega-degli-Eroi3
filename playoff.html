@@ -1,122 +1,133 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Playoff - Lega degli Eroi</title>
-  <link rel="stylesheet" href="main.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Playoff 2025</title>
   <style>
     body {
       background-color: #001f3f;
       color: white;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 0;
-      padding: 20px;
-      overflow-x: auto;
+      padding: 0;
     }
 
     h1 {
       text-align: center;
-      margin-bottom: 30px;
+      padding: 20px 10px;
       color: #ffcc00;
-      text-shadow: 0 0 10px #ffcc00, 0 0 20px #ffaa00;
-      text-transform: uppercase;
+      text-shadow: 0 0 10px #ffcc00;
       font-size: 2.8em;
     }
 
-    .bracket-horizontal {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-around;
-      gap: 40px;
-      flex-wrap: nowrap;
-      align-items: flex-start;
-      margin-top: 30px;
-      min-width: 1000px;
+    .bracket-container {
+      overflow-x: auto;
+      padding: 40px;
     }
 
-    .round-col {
+    .bracket {
+      display: flex;
+      gap: 80px;
+      justify-content: start;
+      align-items: center;
+      min-width: 1200px;
+      position: relative;
+    }
+
+    .round {
       display: flex;
       flex-direction: column;
-      align-items: center;
-      gap: 25px;
-      min-width: 200px;
+      gap: 40px;
+      position: relative;
     }
 
-    .round-col .round-title {
-      font-size: 1.4em;
+    .round-title {
+      text-align: center;
       font-weight: bold;
+      font-size: 1.4em;
       color: #00ffff;
-      text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff;
+      text-shadow: 0 0 10px #00ffff;
+      margin-bottom: 10px;
     }
 
     .match {
-      background-color: #002e6e;
-      padding: 16px 20px;
+      background: linear-gradient(135deg, #021d3d, #191970);
+      padding: 16px;
       border-radius: 12px;
       border: 2px solid #ffcc00;
-      box-shadow: 0 0 8px #ffcc00;
+      color: white;
       text-align: center;
-      min-width: 160px;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .match:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 15px #ffaa00, 0 0 25px #ffaa00;
+      min-width: 240px;
+      box-shadow: 0 0 12px #ffcc00;
     }
 
     .match span {
       display: block;
-      margin: 5px 0;
+      margin: 6px 0;
       font-size: 1.05em;
     }
 
-    .vs {
-      color: #ffcc00;
-      font-weight: bold;
-      text-shadow: 0 0 3px #ffcc00;
+    svg.connector {
+      position: absolute;
+      top: 0;
+      left: 0;
+      overflow: visible;
+      z-index: 0;
+      pointer-events: none;
     }
   </style>
 </head>
 <body>
-  <h1>Playoff 2025</h1>
-  <div class="bracket">
+  <h1>PLAYOFF 2025</h1>
+  <div class="bracket-container">
+    <div class="bracket">
+      <!-- Wild Card -->
+      <div class="round">
+        <div class="round-title">Wild Card</div>
+        <div class="match" id="WC1"><span></span><span>vs</span><span></span></div>
+        <div class="match" id="WC2"><span></span><span>vs</span><span></span></div>
+        <div class="match" id="WC3"><span></span><span>vs</span><span></span></div>
+        <div class="match" id="WC4"><span></span><span>vs</span><span></span></div>
+      </div>
 
-  <!-- Wild Card -->
-  <div class="round">
-    <div class="round-title">Wild Card</div>
-    <div class="match" data-turno="Wild Card" data-partita="WC1"><span></span><span>vs</span><span></span></div>
-    <div class="match" data-turno="Wild Card" data-partita="WC2"><span></span><span>vs</span><span></span></div>
-    <div class="match" data-turno="Wild Card" data-partita="WC3"><span></span><span>vs</span><span></span></div>
-    <div class="match" data-turno="Wild Card" data-partita="WC4"><span></span><span>vs</span><span></span></div>
+      <!-- Quarti -->
+      <div class="round">
+        <div class="round-title">Quarti</div>
+        <div class="match" id="Q1"><span></span><span>vs</span><span></span></div>
+        <div class="match" id="Q2"><span></span><span>vs</span><span></span></div>
+        <div class="match" id="Q3"><span></span><span>vs</span><span></span></div>
+        <div class="match" id="Q4"><span></span><span>vs</span><span></span></div>
+      </div>
+
+      <!-- Semifinali -->
+      <div class="round">
+        <div class="round-title">Semifinali</div>
+        <div class="match" id="S1"><span></span><span>vs</span><span></span></div>
+        <div class="match" id="S2"><span></span><span>vs</span><span></span></div>
+      </div>
+
+      <!-- Finale -->
+      <div class="round">
+        <div class="round-title">Finale</div>
+        <div class="match" id="F"><span></span><span>vs</span><span></span></div>
+      </div>
+    </div>
   </div>
 
-  <!-- Quarti -->
-  <div class="round">
-    <div class="round-title">Quarti</div>
-    <div class="match" data-turno="Quarti" data-partita="Q1"><span></span><span>vs</span><span></span></div>
-    <div class="match" data-turno="Quarti" data-partita="Q2"><span></span><span>vs</span><span></span></div>
-    <div class="match" data-turno="Quarti" data-partita="Q3"><span></span><span>vs</span><span></span></div>
-    <div class="match" data-turno="Quarti" data-partita="Q4"><span></span><span>vs</span><span></span></div>
-  </div>
+  <!-- SVG per collegamenti -->
+  <svg class="connector" width="2000" height="800">
+    <path d="M260 130 C280 130, 280 130, 300 130" stroke="#00ffff" stroke-width="2" fill="none"/>
+    <!-- Aggiungi qui le altre curve per unire visivamente i match -->
+  </svg>
 
-  <!-- Semifinali -->
-  <div class="round">
-    <div class="round-title">Semifinali (andata/ritorno)</div>
-    <div class="match" data-turno="Semifinali" data-partita="S1"><span></span><span>vs</span><span></span></div>
-    <div class="match" data-turno="Semifinali" data-partita="S2"><span></span><span>vs</span><span></span></div>
-  </div>
+  <script>
+    // Qui puoi eventualmente disegnare dinamicamente i path SVG se vuoi fare tutto con JS
+  </script>
 
-  <!-- Finale -->
-  <div class="round">
-    <div class="round-title">Finale</div>
-    <div class="match" data-turno="Finale" data-partita="F"><span></span><span>vs</span><span></span></div>
-  </div>
-
-</div>
 
   <script src="risultati_playoff.js"></script>
   <script src="playoff.js"></script>
+  
 </body>
 </html>
