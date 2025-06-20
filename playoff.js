@@ -53,11 +53,12 @@ function aggiornaPlayoff() {
       const matchId = `Q${testaSerieIndex + 1}`;
       const risultato = window.risultati?.find(r => r.partita === matchId);
 
-      if (risultato?.vincente) {
-        spans[2].textContent = risultato.vincente;
-      } else {
-        spans[2].textContent = `Vincente ${nomeA} / ${nomeB}`;
-      }
+      if (risultato?.squadraA && risultato?.squadraB) {
+  spans[0].textContent = risultato.squadraA;
+  spans[2].textContent = risultato.squadraB;
+} else {
+  spans[2].textContent = `Vincente ${nomeA} / ${nomeB}`;
+}
     }
   });
 }
@@ -76,7 +77,8 @@ fetch(URL_CLASSIFICA_TOTALE)
     });
 
     // Salva in window
-    window.classificaTotale = classifica;
+  window.classificaTotale = classifica;
+  window.squadre = classifica; // ⬅️ così la funzione aggiornaPlayoff funziona correttamente
     aggiornaPlayoff(); // qui si aggiorna il bracket
   })
   .catch(err => {
