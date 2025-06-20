@@ -28,8 +28,10 @@ function aggiornaPlayoff() {
 
       const [i1, i2] = mappingWC[idx];
       const matchId = `WC${idx + 1}`;
-      const risultato = window.risultati?.find(r => r.partita === matchId);
-if (!window.risultati || !risultato || (!risultato.golA && !risultato.golB)) {
+      cconst risultato = window.risultati?.find(r => r.partita === matchId);
+
+// ✅ Solo se NON ci sono risultati validi, mostra i nomi delle squadre da classifica
+if (!window.risultati || !risultato || (!risultato.squadraA && !risultato.squadraB)) {
   spans[0].textContent = `${i1 + 1}° ${squadre[i1].nome}`;
   spans[2].textContent = `${i2 + 1}° ${squadre[i2].nome}`;
 }
