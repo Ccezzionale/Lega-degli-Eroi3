@@ -30,6 +30,8 @@ fetch(URL_PLAYOFF)
         team2.textContent = squadraB || "";
       }
 
-      if (vincente) {
-        match.classList.add("conclusa");
-        match.classList.add(vincente =
+  if (vincente) {
+  match.classList.add("conclusa");
+  match.classList.add(vincente === squadraA ? "vittoria-a" : "vittoria-b");
+}
+
