@@ -95,5 +95,8 @@ fetch(URL_CLASSIFICA_TOTALE)
 
     window.squadre = squadreProvvisorie;
     console.log("📊 Squadre caricate:", squadreProvvisorie.map(s => s.nome));
+    if (typeof aggiornaPlayoff === "function") {
+  aggiornaPlayoff();
+}
   })
   .catch(err => console.error("❌ Errore nel caricamento classifica Totale:", err));
