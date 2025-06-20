@@ -12,27 +12,24 @@ fetch(URL_PLAYOFF)
 
       risultati.push({ turno, partita, squadraA, squadraB, golA, golB, vincente });
 
-      const match = document.querySelector(`.match[data-turno="${turno}"][data-partita="${partita}"]`);
+      // Trova il match nel DOM (mobile layout usa match-card)
+      const match = document.querySelector(`.match-card[data-partita="${partita}"]`);
       if (!match) return;
 
-      const spans = match.querySelectorAll("span");
+      const team1 = match.querySelector(".team1");
+      const team2 = match.querySelector(".team2");
+      const vs = match.querySelector(".vs");
+
       if (golA && golB) {
-        spans[0].textContent = squadraA;
-        spans[1].textContent = `${golA} - ${golB}`;
-        spans[2].textContent = squadraB;
+        team1.textContent = squadraA;
+        vs.textContent = `${golA} - ${golB}`;
+        team2.textContent = squadraB;
+      } else {
+        // Placeholder
+        team1.textContent = squadraA || "";
+        team2.textContent = squadraB || "";
       }
 
       if (vincente) {
         match.classList.add("conclusa");
-        match.classList.add(vincente === squadraA ? "vittoria-a" : "vittoria-b");
-      }
-    });
-
-    // ✅ Salva i risultati una volta sola
-    window.risultati = risultati;
-console.log("📄 Risultati playoff:", risultati.map(r => `${r.partita}: ${r.squadraA} vs ${r.squadraB}`));
-}) // <--- chiude il .then(...)
-.catch(err => {
-  console.error("❌ Errore nel caricamento dei risultati playoff:", err);
-});
-
+        match.classList.add(vincente =
