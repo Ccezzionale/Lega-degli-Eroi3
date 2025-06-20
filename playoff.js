@@ -10,21 +10,19 @@ function creaHTMLSquadra(nome, posizione = "") {
     </div>`;
 }
 
-// 🏆 Funzione principale che aggiorna il tabellone
-function aggiornaPlayoff() {
-  // tutto il tuo codice...
+function formattaNomePerLogo(nome) {
+  return nome
+    .toLowerCase()
+    .replace(/[\u00A0°]/g, '')
+    .replace(/[^\w\s]/g, '')
+    .replace(/\s+/g, '_')
+    .normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 }
 
 function aggiornaPlayoff() {
   const posizioni = [
-    [5, 10],
-    [6, 9],
-    [7, 8],
-    [4, 11],
-    [7, 8],
-    [6, 9],
-    [5, 10],
-    [4, 11]
+    [5, 10], [6, 9], [7, 8], [4, 11],
+    [7, 8], [6, 9], [5, 10], [4, 11]
   ];
 
   const matchDivs = document.querySelectorAll(".match");
@@ -33,57 +31,50 @@ function aggiornaPlayoff() {
     if (!posizioni[idx] || posizioni[idx].length < 2) return;
     const spans = match.querySelectorAll("span");
 
-if (idx < 4) {
-  const mappingWC = [
-    [7, 8],  // 8° vs 9°
-    [4, 11], // 5° vs 12°
-    [5, 10], // 6° vs 11°
-    [6, 9]   // 7° vs 10°
-  ];
+    if (idx < 4) {
+      const mappingWC = [
+        [7, 8], [4, 11], [5, 10], [6, 9]
+      ];
 
-  const [i1, i2] = mappingWC[idx];
+      const [i1, i2] = mappingWC[idx];
+      const matchId = `WC${idx + 1}`;
+      const risultato = window.risultati?.find(r => r.partita === matchId);
 
-  const matchId = `WC${idx + 1}`;
-  const risultato = window.risultati?.find(r => r.partita === matchId);
-
-  if (!risultato || (!risultato.golA && !risultato.golB)) {
-    spans[0].textContent = `${i1 + 1}° ${squadre[i1].nome}`;
-    spans[2].textContent = `${i2 + 1}° ${squadre[i2].nome}`;
-    }
+      if (!risultato || (!risultato.golA && !risultato.golB)) {
+        spans[0].innerHTML = creaHTMLSquadra(squadre[i1].nome, `${i1 + 1}°`);
+        spans[2].innerHTML = creaHTMLSquadra(squadre[i2].nome, `${i2 + 1}°`);
+      }
 
     } else if (idx < 8) {
-  const ordineTesteDiSerie = [0, 3, 2, 1]; // 1°, 4°, 3°, 2°
-  const testaSerieIndex = idx - 4;
-  const teamTop4Index = ordineTesteDiSerie[testaSerieIndex];
-  const squadraTop = squadre[teamTop4Index];
-  spans[0].textContent = `${teamTop4Index + 1}° ${squadraTop.nome}`;
+      const ordineTesteDiSerie = [0, 3, 2, 1];
+      const testaSerieIndex = idx - 4;
+      const teamTop4Index = ordineTesteDiSerie[testaSerieIndex];
+      const squadraTop = squadre[teamTop4Index];
 
-  const mapping = [
-    [4, 2],   // 1° vs 8–9
-    [7, 3],   // 4° vs 5–12
-    [6, 0],   // 3° vs 6–11
-    [5, 1]    // 2° vs 7–10
-  ];
+      spans[0].innerHTML = creaHTMLSquadra(squadraTop.nome, `${teamTop4Index + 1}°`);
 
-  const [idxPosA, idxPosB] = mapping[testaSerieIndex];
-  const squadraAIndex = posizioni[idxPosA][0];
-  const squadraBIndex = posizioni[idxPosB][1];
+      const mapping = [
+        [4, 2], [7, 3], [6, 0], [5, 1]
+      ];
 
-  const nomeA = `${squadraAIndex + 1}° ${squadre[squadraAIndex]?.nome || "?"}`;
-  const nomeB = `${squadraBIndex + 1}° ${squadre[squadraBIndex]?.nome || "?"}`;
+      const [idxPosA, idxPosB] = mapping[testaSerieIndex];
+      const squadraAIndex = posizioni[idxPosA][0];
+      const squadraBIndex = posizioni[idxPosB][1];
 
-  const matchId = `Q${testaSerieIndex + 1}`;
-  const risultato = window.risultati?.find(r => r.partita === matchId);
-  
-console.log(`🧠 Quarto ${matchId} → ${nomeA} vs ${nomeB} | Vincente: ${risultato?.vincente || "?"}`);
+      const nomeA = `${squadraAIndex + 1}° ${squadre[squadraAIndex]?.nome || "?"}`;
+      const nomeB = `${squadraBIndex + 1}° ${squadre[squadraBIndex]?.nome || "?"}`;
 
-  if (risultato?.vincente) {
-    spans[2].textContent = risultato.vincente;
-  } else {
-    spans[2].textContent = `Vincente ${nomeA} / ${nomeB}`;
-  }
-}
-  
+      const matchId = `Q${testaSerieIndex + 1}`;
+      const risultato = window.risultati?.find(r => r.partita === matchId);
+
+      console.log(`🧠 Quarto ${matchId} → ${nomeA} vs ${nomeB} | Vincente: ${risultato?.vincente || "?"}`);
+
+      if (risultato?.vincente) {
+        spans[2].innerHTML = creaHTMLSquadra(risultato.vincente);
+      } else {
+        spans[2].innerHTML = creaHTMLSquadra(`Vincente ${nomeA} / ${nomeB}`);
+      }
+    }
   });
 }
 
@@ -111,6 +102,5 @@ fetch(URL_CLASSIFICA_TOTALE)
     });
 
     window.squadre = squadreProvvisorie;
-    
   })
   .catch(err => console.error("❌ Errore nel caricamento classifica Totale:", err));
