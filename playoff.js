@@ -1,4 +1,4 @@
-const URL_CLASSIFICA_TOTALE = "https://docs.google.com/spreadsheets/d/1kPDuSW9IKwJArUS4oOv0iIVRHU7F4zPASPXT8Qf86Fo/edit?gid=691152130#gid=691152130";
+const URL_CLASSIFICA_TOTALE = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTduESMbJiPuCDLaAFdOHjep9GW-notjraILSyyjo6SA0xKSR0H0fgMLPNNYSwXgnGGJUyv14kjFRqv/pub?gid=691152130&single=true&output=csv";
 
 fetch(URL_CLASSIFICA_TOTALE)
   .then(res => res.text())
