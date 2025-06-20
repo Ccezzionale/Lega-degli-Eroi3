@@ -46,10 +46,10 @@ for (let i = startRow; i < righe.length; i++) {
   spans[2].textContent = `${i2 + 1}° ${squadre[i2].nome}`;
 } else if (idx < 8) {
   // Quarti
-  const testaSerieIndex = idx - 4;
-  const teamTop4Index = testaSerieIndex;
-  const squadra = squadre[teamTop4Index];
-  spans[0].textContent = `${teamTop4Index + 1}° ${squadra.nome}`;
+ const ordineTesteDiSerie = [0, 3, 2, 1];
+const teamTop4Index = ordineTesteDiSerie[idx - 4];
+const squadra = squadre[teamTop4Index];
+spans[0].textContent = `${teamTop4Index + 1}° ${squadra.nome}`;
 
   // Mapping degli accoppiamenti: [indice in posizioni]
   const mapping = [
