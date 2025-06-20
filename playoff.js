@@ -47,6 +47,7 @@ for (let i = startRow; i < righe.length; i++) {
 } else if (idx < 8) {
   // Quarti
  const ordineTesteDiSerie = [0, 3, 2, 1];
+ const testaSerieIndex = idx - 4;   
 const teamTop4Index = ordineTesteDiSerie[idx - 4];
 const squadra = squadre[teamTop4Index];
 spans[0].textContent = `${teamTop4Index + 1}° ${squadra.nome}`;
