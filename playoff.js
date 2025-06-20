@@ -7,17 +7,27 @@ fetch(URL_CLASSIFICA_TOTALE)
     const startRow = 1;
     window.squadre = [];
 
-    for (let i = startRow; i < righe.length; i++) {
-      const colonne = righe[i].split(",").map(c => c.replace(/"/g, "").trim());
-      const nome = colonne[1];
-      const punti = parseInt(colonne[10]) || 0;
-      const mp = parseFloat(colonne[11].replace(",", ".")) || 0;
+    const squadreProvvisorie = [];
 
-      if (!nome || isNaN(punti)) continue;
+for (let i = startRow; i < righe.length; i++) {
+  const colonne = righe[i].split(",").map(c => c.replace(/"/g, "").trim());
+  const nome = colonne[1];
+  const punti = parseInt(colonne[10]) || 0;
+  const mp = parseFloat(colonne[11].replace(",", ".")) || 0;
 
-      window.squadre.push({ nome, punti, mp });
-      if (window.squadre.length === 12) break;
-    }
+  if (!nome || isNaN(punti)) continue;
+
+  squadreProvvisorie.push({ nome, punti, mp });
+  if (squadreProvvisorie.length === 12) break;
+}
+
+// ✅ Ordina e salva nel window per tutto il resto del codice
+squadreProvvisorie.sort((a, b) => {
+  if (b.punti !== a.punti) return b.punti - a.punti;
+  return b.mp - a.mp;
+});
+
+window.squadre = squadreProvvisorie;
 
     squadre.sort((a, b) => {
       if (b.punti !== a.punti) return b.punti - a.punti;
