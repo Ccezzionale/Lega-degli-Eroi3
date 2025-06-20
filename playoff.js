@@ -75,22 +75,21 @@ fetch(URL_CLASSIFICA_TOTALE)
     console.log("📥 CSV ricevuto:", csv);
     const righe = csv.trim().split("\n").slice(1); // salta intestazione
     const classifica = righe.map(r => {
-  const regex = /(".*?"|[^",]+)(?=\s*,|\s*$)/g;
-  const c = [...r.matchAll(regex)].map(m => m[0].replace(/^"|"$/g, ""));
+  const c = r.split(",");
+  const nome = c[1];
+  const punti = parseInt(c[10]) || 0;
+  const mp = parseFloat(c[11]?.replace(",", ".") || "0");
 
   return {
-    squadra: c[1], // Colonna 1 = nome squadra
-    punti: parseInt(c[8]), // Colonna corretta dei PUNTI (senza virgolette)
-    mp: parseInt(c[10]) || 0 // MP rimane la 10
+    nome,
+    punti,
+    mp
   };
 });
 
-console.log("✅ Classifica parsata:", classifica);
-    
-    // Salva in window
-  window.classificaTotale = classifica;
-  window.squadre = classifica; // ⬅️ così la funzione aggiornaPlayoff funziona correttamente
-    aggiornaPlayoff(); // qui si aggiorna il bracket
+window.classificaTotale = classifica;
+window.squadre = classifica; // ✅ serve per aggiornaPlayoff()
+aggiornaPlayoff(); // chiama la funzione che disegna il bracket
   })
   .catch(err => {
     console.error("❌ Errore nel caricamento classifica Totale:", err);
