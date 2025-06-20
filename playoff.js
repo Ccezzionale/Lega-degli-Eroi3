@@ -10,8 +10,8 @@ fetch(URL_CLASSIFICA_TOTALE)
     for (let i = startRow; i < righe.length; i++) {
       const colonne = righe[i].split(",").map(c => c.replace(/"/g, "").trim());
       const nome = colonne[1];
-      const punti = parseInt(colonne[9]) || 0;
-      const mp = parseFloat(colonne[10].replace(",", ".")) || 0;
+      const punti = parseInt(colonne[10]) || 0;
+      const mp = parseFloat(colonne[11].replace(",", ".")) || 0;
 
       if (!nome || isNaN(punti)) continue;
 
