@@ -12,88 +12,109 @@
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 0;
       padding: 20px;
+      overflow-x: auto;
     }
 
     h1 {
       text-align: center;
       margin-bottom: 30px;
       color: #ffcc00;
+      text-shadow: 0 0 10px #ffcc00, 0 0 20px #ffaa00;
       text-transform: uppercase;
+      font-size: 2.8em;
     }
 
-    .bracket {
+    .bracket-horizontal {
       display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
+      flex-direction: row;
+      justify-content: space-around;
       gap: 40px;
+      flex-wrap: nowrap;
+      align-items: flex-start;
+      margin-top: 30px;
+      min-width: 1000px;
     }
 
-    .round {
+    .round-col {
       display: flex;
       flex-direction: column;
-      gap: 20px;
-      min-width: 180px;
+      align-items: center;
+      gap: 25px;
+      min-width: 200px;
+    }
+
+    .round-col .round-title {
+      font-size: 1.4em;
+      font-weight: bold;
+      color: #00ffff;
+      text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff;
     }
 
     .match {
-      background-color: #003366;
-      padding: 10px;
-      border-radius: 8px;
-      text-align: center;
+      background-color: #002e6e;
+      padding: 16px 20px;
+      border-radius: 12px;
       border: 2px solid #ffcc00;
+      box-shadow: 0 0 8px #ffcc00;
+      text-align: center;
+      min-width: 160px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .match:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px #ffaa00, 0 0 25px #ffaa00;
     }
 
     .match span {
       display: block;
       margin: 5px 0;
+      font-size: 1.05em;
     }
 
-    .round-title {
-      text-align: center;
+    .vs {
+      color: #ffcc00;
       font-weight: bold;
-      margin-bottom: 10px;
-      color: #00ffff;
+      text-shadow: 0 0 3px #ffcc00;
     }
   </style>
 </head>
 <body>
   <h1>Playoff 2025</h1>
-<div class="bracket">
+  <div class="bracket-horizontal">
+    <!-- Wild Card -->
+    <div class="round-col">
+      <div class="round-title">Wild Card</div>
+      <div class="match" data-partita="WC1"><span></span><span class="vs">vs</span><span></span></div>
+      <div class="match" data-partita="WC2"><span></span><span class="vs">vs</span><span></span></div>
+      <div class="match" data-partita="WC3"><span></span><span class="vs">vs</span><span></span></div>
+      <div class="match" data-partita="WC4"><span></span><span class="vs">vs</span><span></span></div>
+    </div>
 
-  <!-- Wild Card -->
-  <div class="round">
-    <div class="round-title">Wild Card</div>
-    <div class="match" data-turno="Wild Card" data-partita="WC1"><span></span><span>vs</span><span></span></div>
-<div class="match" data-turno="Wild Card" data-partita="WC2"><span></span><span>vs</span><span></span></div>
-<div class="match" data-turno="Wild Card" data-partita="WC3"><span></span><span>vs</span><span></span></div>
-<div class="match" data-turno="Wild Card" data-partita="WC4"><span></span><span>vs</span><span></span></div>
+    <!-- Quarti -->
+    <div class="round-col">
+      <div class="round-title">Quarti</div>
+      <div class="match" data-partita="Q1"><span></span><span class="vs">vs</span><span></span></div>
+      <div class="match" data-partita="Q2"><span></span><span class="vs">vs</span><span></span></div>
+      <div class="match" data-partita="Q3"><span></span><span class="vs">vs</span><span></span></div>
+      <div class="match" data-partita="Q4"><span></span><span class="vs">vs</span><span></span></div>
+    </div>
+
+    <!-- Semifinali -->
+    <div class="round-col">
+      <div class="round-title">Semifinali</div>
+      <div class="match" data-partita="S1"><span></span><span class="vs">vs</span><span></span></div>
+      <div class="match" data-partita="S2"><span></span><span class="vs">vs</span><span></span></div>
+    </div>
+
+    <!-- Finale -->
+    <div class="round-col">
+      <div class="round-title">Finale</div>
+      <div class="match" data-partita="F"><span></span><span class="vs">vs</span><span></span></div>
+    </div>
   </div>
 
-  <!-- Quarti -->
-  <div class="round">
-    <div class="round-title">Quarti</div>
-   <div class="match" data-turno="Quarti" data-partita="Q1"><span></span><span>vs</span><span></span></div>
-<div class="match" data-turno="Quarti" data-partita="Q2"><span></span><span>vs</span><span></span></div>
-<div class="match" data-turno="Quarti" data-partita="Q3"><span></span><span>vs</span><span></span></div>
-<div class="match" data-turno="Quarti" data-partita="Q4"><span></span><span>vs</span><span></span></div>
-  </div>
-
- <!-- Semifinali -->
-<div class="round">
-  <div class="round-title">Semifinali (andata/ritorno)</div>
-  <div class="match" data-turno="Semifinali" data-partita="S1"><span></span><span>vs</span><span></span></div>
-  <div class="match" data-turno="Semifinali" data-partita="S2"><span></span><span>vs</span><span></span></div>
-</div>
-
-<!-- Finale -->
-<div class="round">
-  <div class="round-title">Finale</div>
-  <div class="match" data-turno="Finale" data-partita="F"><span></span><span>vs</span><span></span></div>
-</div>
-</div>
-  
-<script src="risultati_playoff.js"></script>
-<script src="playoff.js"></script>
-  
+  <script src="risultati_playoff.js"></script>
+  <script src="playoff.js"></script>
 </body>
 </html>
