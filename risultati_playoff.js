@@ -9,14 +9,13 @@ fetch(URL_PLAYOFF)
     for (let i = startRow; i < righe.length; i++) {
       const colonne = righe[i].split(",").map(c => c.replace(/"/g, "").trim());
       const turno = colonne[0];
-      const partita = parseInt(colonne[1]) || 0;
+      const partita = colonne[1]; // <-- ora è una stringa tipo "Q1", "WC3"
       const squadraA = colonne[2];
       const squadraB = colonne[3];
       const golA = colonne[4];
       const golB = colonne[5];
       const vincente = colonne[6];
 
-      // Trova la partita corrispondente
       const match = document.querySelector(`.match[data-turno="${turno}"][data-partita="${partita}"]`);
       if (!match) continue;
 
