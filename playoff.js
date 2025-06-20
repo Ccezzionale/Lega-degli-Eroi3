@@ -28,7 +28,7 @@ fetch(URL_CLASSIFICA_TOTALE)
     const matchDivs = document.querySelectorAll(".match");
 
     matchDivs.forEach((match, idx) => {
-  if (idx >= 8) return; // 👈 evita errore sulle semifinali e finale per ora
+  if (!posizioni[idx] || posizioni[idx].length < 2) return;
       const spans = match.querySelectorAll("span");
 
       if (idx < 4) {
