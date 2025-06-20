@@ -99,7 +99,9 @@ fetch(URL_CLASSIFICA_TOTALE)
     });
 
     window.squadre = squadreProvvisorie;
-    if (typeof aggiornaPlayoff === "function") {
+console.log("📊 Squadre caricate:", squadreProvvisorie.map(s => s.nome));
+
+if (typeof aggiornaPlayoff === "function") {
   aggiornaPlayoff();
 }
   })
