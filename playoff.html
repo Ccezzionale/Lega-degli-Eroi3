@@ -69,47 +69,58 @@
 }
 
 /* 🔵 STILE MOBILE PER LE CARD */
-@media (max-width: 768px) {
-  .mobile-bracket {
-    display: flex;
-    overflow-x: auto;
-    gap: 16px;
-    padding: 16px;
-    scroll-snap-type: x mandatory;
-  }
+  @media (max-width: 768px) {
+    .mobile-bracket {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding: 16px;
+    }
 
-  .match-card {
-    min-width: 260px;
-    background: linear-gradient(to bottom right, #001f3f, #003366);
-    border: 2px solid #ffcc00;
-    border-radius: 12px;
-    padding: 16px;
-    color: white;
-    text-align: center;
-    flex-shrink: 0;
-    box-shadow: 0 0 8px rgba(0,0,0,0.4);
-    scroll-snap-align: start;
-  }
+    .match-card {
+      min-width: 260px;
+      background: linear-gradient(to bottom right, #001f3f, #003366);
+      border: 2px solid #ffcc00;
+      border-radius: 12px;
+      padding: 16px;
+      color: white;
+      text-align: center;
+      flex-shrink: 0;
+      box-shadow: 0 0 8px rgba(0,0,0,0.4);
+    }
 
-  .match-card h4 {
-    margin: 0 0 8px;
-    font-size: 1.1rem;
-    color: #00ffff;
-  }
+    .match-card h4 {
+      margin: 0 0 8px;
+      font-size: 1.1rem;
+      color: #00ffff;
+    }
 
-  .match-card .team {
-    font-size: 1rem;
-    font-weight: bold;
-  }
+    .match-card .team {
+      font-size: 1rem;
+      font-weight: bold;
+    }
 
-  .match-card .vs {
-    font-size: 0.9rem;
-    color: #ffcc00;
-    margin: 6px 0;
+    .match-card .vs {
+      font-size: 0.9rem;
+      color: #ffcc00;
+      margin: 6px 0;
+    }
+
+    /* 🟨 LAYOUT VERTICALE PER FASI */
+    .fase-mobile {
+      margin-bottom: 24px;
+    }
+
+    .fase-titolo {
+      color: #00ffff;
+      font-size: 1.2rem;
+      text-align: center;
+      margin-bottom: 12px;
+      border-bottom: 1px solid #ffcc00;
+      padding-bottom: 4px;
+    }
   }
-} /* ✅ fine blocco @media */
-    
-  </style>
+</style>
 </head>
 <body>
   <h1>Playoff 2025</h1>
@@ -117,79 +128,36 @@
   <!-- Versione Mobile - Card Bracket -->
 <div class="mobile-bracket">
   <!-- Wild Card -->
-  <div class="match-card" data-partita="WC1">
-    <h4>Wild Card WC1</h4>
-    <div class="team team1"></div>
-    <div class="vs">vs</div>
-    <div class="team team2"></div>
-  </div>
-  <div class="match-card" data-partita="WC2">
-    <h4>Wild Card WC2</h4>
-    <div class="team team1"></div>
-    <div class="vs">vs</div>
-    <div class="team team2"></div>
-  </div>
-  <div class="match-card" data-partita="WC3">
-    <h4>Wild Card WC3</h4>
-    <div class="team team1"></div>
-    <div class="vs">vs</div>
-    <div class="team team2"></div>
-  </div>
-  <div class="match-card" data-partita="WC4">
-    <h4>Wild Card WC4</h4>
-    <div class="team team1"></div>
-    <div class="vs">vs</div>
-    <div class="team team2"></div>
+  <div class="fase-mobile">
+    <h3 class="fase-titolo">Wild Card</h3>
+    <div class="match-card" data-partita="WC1">...</div>
+    <div class="match-card" data-partita="WC2">...</div>
+    <div class="match-card" data-partita="WC3">...</div>
+    <div class="match-card" data-partita="WC4">...</div>
   </div>
 
   <!-- Quarti -->
-  <div class="match-card" data-partita="Q1">
-    <h4>Quarto 01</h4>
-    <div class="team team1"></div>
-    <div class="vs">vs</div>
-    <div class="team team2"></div>
-  </div>
-  <div class="match-card" data-partita="Q2">
-    <h4>Quarto 02</h4>
-    <div class="team team1"></div>
-    <div class="vs">vs</div>
-    <div class="team team2"></div>
-  </div>
-  <div class="match-card" data-partita="Q3">
-    <h4>Quarto 03</h4>
-    <div class="team team1"></div>
-    <div class="vs">vs</div>
-    <div class="team team2"></div>
-  </div>
-  <div class="match-card" data-partita="Q4">
-    <h4>Quarto 04</h4>
-    <div class="team team1"></div>
-    <div class="vs">vs</div>
-    <div class="team team2"></div>
+  <div class="fase-mobile">
+    <h3 class="fase-titolo">Quarti</h3>
+    <div class="match-card" data-partita="Q1">...</div>
+    <div class="match-card" data-partita="Q2">...</div>
+    <div class="match-card" data-partita="Q3">...</div>
+    <div class="match-card" data-partita="Q4">...</div>
   </div>
 
   <!-- Semifinali -->
-  <div class="match-card" data-partita="S1">
-    <h4>Semifinale S1</h4>
-    <div class="team team1"></div>
-    <div class="vs">vs</div>
-    <div class="team team2"></div>
-  </div>
-  <div class="match-card" data-partita="S2">
-    <h4>Semifinale S2</h4>
-    <div class="team team1"></div>
-    <div class="vs">vs</div>
-    <div class="team team2"></div>
+  <div class="fase-mobile">
+    <h3 class="fase-titolo">Semifinali</h3>
+    <div class="match-card" data-partita="S1">...</div>
+    <div class="match-card" data-partita="S2">...</div>
   </div>
 
   <!-- Finale -->
-  <div class="match-card" data-partita="F">
-    <h4>Finale</h4>
-    <div class="team team1"></div>
-    <div class="vs">vs</div>
-    <div class="team team2"></div>
+  <div class="fase-mobile">
+    <h3 class="fase-titolo">Finale</h3>
+    <div class="match-card" data-partita="F">...</div>
   </div>
-<div class="bracket">
+</div>
   
 <!-- Wild Card -->
 <div class="round">
