@@ -106,12 +106,17 @@ fetch(URL_CLASSIFICA_TOTALE)
   .catch(err => console.error("❌ Errore nel caricamento classifica Totale:", err));
 
 function aggiornaCardMobile() {
-  if (!window.risultati) return;
+  if (!window.risultati) {
+    console.warn("⚠️ Nessun risultato presente in window.risultati");
+    return;
+  }
 
   window.risultati.forEach(partita => {
     const { partita: codice, squadraA, squadraB } = partita;
 
     const matchCard = document.querySelector(`.match-card[data-partita="${codice}"]`);
+    console.log(`🎯 matchCard cercato per: ${codice}`, matchCard);
+
     if (matchCard) {
       const team1 = matchCard.querySelector(".team1");
       const team2 = matchCard.querySelector(".team2");
@@ -119,9 +124,15 @@ function aggiornaCardMobile() {
       if (team1 && team2) {
         team1.textContent = squadraA || "";
         team2.textContent = squadraB || "";
+        console.log(`✅ Popolato ${codice}: ${squadraA} vs ${squadraB}`);
+      } else {
+        console.warn(`⚠️ Elementi team mancanti in ${codice}`);
       }
+    } else {
+      console.warn(`❌ Nessuna .match-card trovata per codice: ${codice}`);
     }
   });
 }
+
 
 
