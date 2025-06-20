@@ -13,25 +13,29 @@ fetch(URL_PLAYOFF)
       risultati.push({ turno, partita, squadraA, squadraB, golA, golB, vincente });
 
       // Trova il match nel DOM (mobile layout usa match-card)
-      const match = document.querySelector(`.match-card[data-partita="${partita}"]`);
-      if (!match) return;
+     const matchId = `WC${idx + 1}`; // o Q1, S1, ecc. in base al contesto
+const match = document.querySelector(`.match-card[data-partita="${matchId}"]`);
+if (!match) return;
 
-      const team1 = match.querySelector(".team1");
-      const team2 = match.querySelector(".team2");
-      const vs = match.querySelector(".vs");
+const risultato = window.risultati?.find(r => r.partita === matchId);
+if (!risultato) return;
 
-      if (golA && golB) {
-        team1.textContent = squadraA;
-        vs.textContent = `${golA} - ${golB}`;
-        team2.textContent = squadraB;
-      } else {
-        // Placeholder
-        team1.textContent = squadraA || "";
-        team2.textContent = squadraB || "";
-      }
+const { squadraA, squadraB, golA, golB, vincente } = risultato;
 
-  if (vincente) {
+const team1 = match.querySelector(".team1");
+const team2 = match.querySelector(".team2");
+const vs = match.querySelector(".vs");
+
+if (golA && golB) {
+  team1.textContent = squadraA;
+  vs.textContent = `${golA} - ${golB}`;
+  team2.textContent = squadraB;
+} else {
+  team1.textContent = squadraA || "";
+  team2.textContent = squadraB || "";
+}
+
+if (vincente) {
   match.classList.add("conclusa");
   match.classList.add(vincente === squadraA ? "vittoria-a" : "vittoria-b");
 }
-
