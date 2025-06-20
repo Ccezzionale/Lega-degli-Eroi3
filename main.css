@@ -907,6 +907,12 @@ h1 {
   background-color: #00ffff;
 }
 
+.bracket {
+  display: flex;
+  gap: 60px;
+  padding: 40px;
+  min-width: 1600px; /* o quanto ti serve per far entrare tutto */
+}
 
 
 /* MENU MOBILE - chiuso */
