@@ -738,13 +738,11 @@ h1 {
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
-.squadra img {
-  width: 50px;
-  height: 50px;
+  width: 48px;
+  height: 48px;
   object-fit: contain;
-  display: inline-block;
   vertical-align: middle;
-  margin-right: 6px;
+  border-radius: 8px;
 }
 
 /* MENU MOBILE - chiuso */
