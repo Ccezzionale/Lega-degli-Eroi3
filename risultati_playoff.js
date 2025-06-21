@@ -10,17 +10,17 @@ fetch(URL_PLAYOFF)
       const risultati = righe.map(riga => {
   const colonne = riga.split(",").map(c => c.trim().replace(/"/g, ""));
   console.log("🎯 Riga letta:", colonne); // 👈 QUI va bene
-const [turno, codicePartita, squadraA, squadraB, golA, golB, vincente] = colonne;
+  const [fase, partita, squadraA, squadraB, golA, golB, vincente] = colonne;
+  return {
+    partita,
+    squadraA,
+    squadraB,
+    golA: golA ? parseInt(golA) : null,
+    golB: golB ? parseInt(golB) : null,
+    vincente
+  };
+});
 
-return {
-  turno: turno
-  partita: codicePartita,
-  squadraA: squadra1,
-  squadraB: squadra2,
-  golA: golA ? parseInt(golA) : null,
-  golB: golB ? parseInt(golB) : null,
-  vincente
-};
       const [partita, squadraA, squadraB, golA, golB, vincente] = colonne;
       return {
         partita,
