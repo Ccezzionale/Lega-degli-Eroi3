@@ -55,39 +55,31 @@ matchDivs.forEach((el, idx) => {
     }
 
     // 🔸 Quarti
-    else if (idx >= 4 && idx < 8) {
-      const ordineTesteDiSerie = [0, 3, 2, 1];
-      const testaSerieIndex = idx - 4;
-      const teamTop4Index = ordineTesteDiSerie[testaSerieIndex];
-      const squadraTop = squadre[teamTop4Index];
+   else if (idx >= 4 && idx <= 7) {
+    const ordineTesteDiSerie = [0, 3, 2, 1];
+    const testaSerieIndex = idx - 4;
+    const teamTop4Index = ordineTesteDiSerie[testaSerieIndex];
+    const squadraTop = squadre[teamTop4Index];
 
-      const mapping = [
-        [4, 2], [7, 3], [6, 0], [5, 1]
-      ];
-      const [idxPosA, idxPosB] = mapping[testaSerieIndex];
-      const squadraAIndex = posizioni[idxPosA][0];
-      const squadraBIndex = posizioni[idxPosB][1];
+    const mapping = [
+      [4, 2], [7, 3], [6, 0], [5, 1]
+    ];
+    const [idxPosA, idxPosB] = mapping[testaSerieIndex];
+    const squadraAIndex = posizioni[idxPosA][0];
+    const squadraBIndex = posizioni[idxPosB][1];
 
-      const nomeA = `${squadraAIndex + 1}° ${squadre[squadraAIndex]?.nome || "?"}`;
-      const nomeB = `${squadraBIndex + 1}° ${squadre[squadraBIndex]?.nome || "?"}`;
+    const nomeA = `${squadraAIndex + 1}° ${squadre[squadraAIndex]?.nome || "?"}`;
+    const nomeB = `${squadraBIndex + 1}° ${squadre[squadraBIndex]?.nome || "?"}`;
 
-      const matchId = `Q${testaSerieIndex + 1}`;
-      const risultato = window.risultati?.find(r => r.partita === matchId);
-      const risultatoWC = window.risultati?.find(r => r.partita === mappingWC[testaSerieIndex]);
+    const matchId = `Q${testaSerieIndex + 1}`;
+    const risultato = window.risultati?.find(r => r.partita === matchId);
 
-      console.log(`🧠 Quarto ${matchId} → ${nomeA} vs ${nomeB} | Vincente: ${risultato?.vincente || risultatoWC?.vincente || "?"}`);
+    const squadraA = risultato?.squadraA || nomeA;
+    const squadraB = risultato?.squadraB || nomeB;
 
-      if (risultato?.vincente) {
-        spans[0].innerHTML = creaHTMLSquadra(nomeA);
-        spans[2].innerHTML = creaHTMLSquadra(risultato.vincente);
-      } else if (risultatoWC?.vincente) {
-        spans[0].innerHTML = creaHTMLSquadra(nomeA);
-        spans[2].innerHTML = creaHTMLSquadra(risultatoWC.vincente);
-      } else {
-        spans[0].innerHTML = creaHTMLSquadra(nomeA);
-        spans[2].innerHTML = creaHTMLSquadra(`Vincente ${nomeA} / ${nomeB}`);
-      }
-    }
+    spans[0].innerHTML = creaHTMLSquadra(squadraA);
+    spans[2].innerHTML = creaHTMLSquadra(squadraB);
+  }
 
     // ⚔️ Semifinali
     else if (idx === 8 || idx === 9) {
