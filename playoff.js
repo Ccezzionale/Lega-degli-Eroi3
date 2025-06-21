@@ -163,3 +163,7 @@ fetch(URL_CLASSIFICA_TOTALE)
     window.squadre = squadreProvvisorie;
   })
   .catch(err => console.error("❌ Errore nel caricamento classifica Totale:", err));
+          }
+  });
+}
+
