@@ -12,9 +12,9 @@ function creaHTMLSquadra(nome, posizione = "") {
 
 function formattaNomePerLogo(nome) {
   return nome
+    .replace(/^\s*\d+°?\s*/, '') // ✅ Rimuove tipo '8° ', '12° ', ecc.
     .toLowerCase()
-    .replace(/[°]/g, '')
-    .replace(/[^\w\s]/g, '')
+    .replace(/[^\w\s]/g, '')     // rimuove caratteri speciali
     .replace(/\s+/g, '_')
     .normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 }
