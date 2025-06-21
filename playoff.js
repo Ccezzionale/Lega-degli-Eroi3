@@ -1,11 +1,22 @@
 const URL_CLASSIFICA_TOTALE = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTduESMbJiPuCDLaAFdOHjep9GW-notjraILSyyjo6SA0xKSR0H0fgMLPNNYSwXgnGGJUyv14kjFRqv/pub?gid=691152130&single=true&output=csv";
-const URL_PLAYOFF = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSwFDMVkq09-yRzsLwFqehbAntqMpTPtyMwUsTJkRtUREmmP6vJcTROPchoYq1rc0h1ynqkcGJvEOsD/pub?output=csv";
 
-let squadre = [];
-let risultati = [];
-
+// 🔧 Funzione per creare HTML squadra con logo
 function creaHTMLSquadra(nome, posizione = "") {
-  return `<div class="squadra"><span class="pos">${posizione}</span><span class="nome">${nome}</span></div>`;
+  const fileLogo = `img/${nome}.png`; // usa direttamente il nome con gli spazi
+  return `
+    <div class="squadra">
+      <img src="${fileLogo}" alt="${nome}" onerror="this.style.display='none'">
+      <span>${posizione} ${nome}</span>
+    </div>`;
+}
+
+function formattaNomePerLogo(nome) {
+  return nome
+    .replace(/^\s*\d+°?\s*/, '') // ✅ Rimuove tipo '8° ', '12° ', ecc.
+    .toLowerCase()
+    .replace(/[^\w\s]/g, '')     // rimuove caratteri speciali
+    .replace(/\s+/g, '_')
+    .normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 }
 
 function aggiornaPlayoff() {
@@ -21,16 +32,17 @@ function aggiornaPlayoff() {
     const spans = match.querySelectorAll("span");
 
     if (idx < 4) {
-      const mappingWC = [ [7, 8], [4, 11], [5, 10], [6, 9] ];
+      const mappingWC = [
+        [7, 8], [4, 11], [5, 10], [6, 9]
+      ];
+
       const [i1, i2] = mappingWC[idx];
       const matchId = `WC${idx + 1}`;
-      const r = risultati.find(r => r.partita === matchId);
-      if (!r || (!r.golA && !r.golB)) {
+      const risultato = window.risultati?.find(r => r.partita === matchId);
+
+      if (!risultato || (!risultato.golA && !risultato.golB)) {
         spans[0].innerHTML = creaHTMLSquadra(squadre[i1].nome, `${i1 + 1}°`);
         spans[2].innerHTML = creaHTMLSquadra(squadre[i2].nome, `${i2 + 1}°`);
-      } else {
-        spans[0].innerHTML = creaHTMLSquadra(r.squadraA);
-        spans[2].innerHTML = creaHTMLSquadra(r.squadraB);
       }
 
     } else if (idx < 8) {
@@ -38,65 +50,57 @@ function aggiornaPlayoff() {
       const testaSerieIndex = idx - 4;
       const teamTop4Index = ordineTesteDiSerie[testaSerieIndex];
       const squadraTop = squadre[teamTop4Index];
+
       spans[0].innerHTML = creaHTMLSquadra(squadraTop.nome, `${teamTop4Index + 1}°`);
 
-      const mapping = [ [4, 2], [7, 3], [6, 0], [5, 1] ];
+      const mapping = [
+        [4, 2], [7, 3], [6, 0], [5, 1]
+      ];
+
       const [idxPosA, idxPosB] = mapping[testaSerieIndex];
       const squadraAIndex = posizioni[idxPosA][0];
       const squadraBIndex = posizioni[idxPosB][1];
+
       const nomeA = `${squadraAIndex + 1}° ${squadre[squadraAIndex]?.nome || "?"}`;
       const nomeB = `${squadraBIndex + 1}° ${squadre[squadraBIndex]?.nome || "?"}`;
+
       const matchId = `Q${testaSerieIndex + 1}`;
-      const r = risultati.find(r => r.partita === matchId);
-      if (r?.vincente) {
-        spans[2].innerHTML = creaHTMLSquadra(r.vincente);
+      const risultato = window.risultati?.find(r => r.partita === matchId);
+
+      console.log(`🧠 Quarto ${matchId} → ${nomeA} vs ${nomeB} | Vincente: ${risultato?.vincente || "?"}`);
+
+      if (risultato?.vincente) {
+        spans[2].innerHTML = creaHTMLSquadra(risultato.vincente);
       } else {
         spans[2].innerHTML = creaHTMLSquadra(`Vincente ${nomeA} / ${nomeB}`);
       }
-
-    } else if (idx < 10) {
-      const matchId = `S${idx - 8 + 1}`;
-      const r = risultati.find(r => r.partita === matchId);
-      if (r?.squadraA) spans[0].innerHTML = creaHTMLSquadra(r.squadraA);
-      if (r?.squadraB) spans[2].innerHTML = creaHTMLSquadra(r.squadraB);
-
-    } else if (idx === 10) {
-      const r = risultati.find(r => r.partita === "F");
-      if (r?.squadraA) spans[0].innerHTML = creaHTMLSquadra(r.squadraA);
-      if (r?.squadraB) spans[2].innerHTML = creaHTMLSquadra(r.squadraB);
     }
   });
 }
 
+// 🟢 Caricamento classifica
 fetch(URL_CLASSIFICA_TOTALE)
-  .then(r => r.text())
-  .then(csv => {
-    const righe = csv.trim().split("\n").slice(1);
-    const temp = righe.map(r => r.split(","));
-    squadre = temp.map(col => ({
-      nome: col[0].trim(),
-      punti: parseInt(col[10]) || 0,
-      magic: parseFloat(col[11]) || 0
-    }));
-    squadre.sort((a, b) => b.punti !== a.punti ? b.punti - a.punti : b.magic - a.magic);
-  })
-  .then(() => fetch(URL_PLAYOFF))
   .then(res => res.text())
   .then(csv => {
-    const righe = csv.trim().split("\n").slice(1);
-    risultati = righe.map(riga => {
-      const colonne = riga.split(",").map(c => c.trim().replace(/"/g, ""));
-      const [partita, _, squadraA, squadraB, golA, golB, vincente] = colonne;
-      return {
-        partita,
-        squadraA,
-        squadraB,
-        golA: golA ? parseInt(golA) : null,
-        golB: golB ? parseInt(golB) : null,
-        vincente
-      };
+    const righe = csv.trim().split("\n");
+    const startRow = 1;
+    const squadreProvvisorie = [];
+
+    for (let i = startRow; i < righe.length; i++) {
+      const colonne = righe[i].split(",").map(c => c.replace(/"/g, "").trim());
+      const nome = colonne[1];
+      const punti = parseInt(colonne[10]) || 0;
+      const mp = parseFloat(colonne[11].replace(",", ".")) || 0;
+      if (!nome || isNaN(punti)) continue;
+      squadreProvvisorie.push({ nome, punti, mp });
+      if (squadreProvvisorie.length === 12) break;
+    }
+
+    squadreProvvisorie.sort((a, b) => {
+      if (b.punti !== a.punti) return b.punti - a.punti;
+      return b.mp - a.mp;
     });
-    window.risultati = risultati;
-    aggiornaPlayoff();
+
+    window.squadre = squadreProvvisorie;
   })
-  .catch(err => console.error("❌ Errore playoff:", err));
+  .catch(err => console.error("❌ Errore nel caricamento classifica Totale:", err));
