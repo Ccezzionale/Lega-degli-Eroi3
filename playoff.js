@@ -40,39 +40,98 @@ function aggiornaPlayoff() {
       const matchId = `WC${idx + 1}`;
       const risultato = window.risultati?.find(r => r.partita === matchId);
 
-      if (!risultato || (!risultato.golA && !risultato.golB)) {
+      if (!risultato || risultato.golA === null || risultato.golB === null) {
         spans[0].innerHTML = creaHTMLSquadra(squadre[i1].nome, `${i1 + 1}°`);
         spans[2].innerHTML = creaHTMLSquadra(squadre[i2].nome, `${i2 + 1}°`);
       }
 
-    } else if (idx < 8) {
+   function aggiornaPlayoff() {
+  const posizioni = [
+    [5, 10], [6, 9], [7, 8], [4, 11],
+    [7, 8], [6, 9], [5, 10], [4, 11]
+  ];
+
+  const matchDivs = document.querySelectorAll(".match");
+
+  matchDivs.forEach((match, idx) => {
+    const spans = match.querySelectorAll("span");
+
+    if (idx < 4) {
+      // Wild Card
+      const mappingWC = [
+        [7, 8], [4, 11], [5, 10], [6, 9]
+      ];
+      const [i1, i2] = mappingWC[idx];
+      const matchId = `WC${idx + 1}`;
+      const risultato = window.risultati?.find(r => r.partita === matchId);
+
+      if (!risultato || (!risultato.golA && !risultato.golB)) {
+        spans[0].innerHTML = creaHTMLSquadra(squadre[i1].nome, `${i1 + 1}°`);
+        spans[2].innerHTML = creaHTMLSquadra(squadre[i2].nome, `${i2 + 1}°`);
+      } else {
+        spans[0].innerHTML = creaHTMLSquadra(risultato.squadraA, risultato.golA);
+        spans[2].innerHTML = creaHTMLSquadra(risultato.squadraB, risultato.golB);
+      }
+    }
+
+    else if (idx < 8) {
+      // Quarti
       const ordineTesteDiSerie = [0, 3, 2, 1];
       const testaSerieIndex = idx - 4;
       const teamTop4Index = ordineTesteDiSerie[testaSerieIndex];
       const squadraTop = squadre[teamTop4Index];
-
       spans[0].innerHTML = creaHTMLSquadra(squadraTop.nome, `${teamTop4Index + 1}°`);
 
       const mapping = [
         [4, 2], [7, 3], [6, 0], [5, 1]
       ];
-
       const [idxPosA, idxPosB] = mapping[testaSerieIndex];
       const squadraAIndex = posizioni[idxPosA][0];
       const squadraBIndex = posizioni[idxPosB][1];
-
       const nomeA = `${squadraAIndex + 1}° ${squadre[squadraAIndex]?.nome || "?"}`;
       const nomeB = `${squadraBIndex + 1}° ${squadre[squadraBIndex]?.nome || "?"}`;
-
       const matchId = `Q${testaSerieIndex + 1}`;
       const risultato = window.risultati?.find(r => r.partita === matchId);
-
-      console.log(`🧠 Quarto ${matchId} → ${nomeA} vs ${nomeB} | Vincente: ${risultato?.vincente || "?"}`);
 
       if (risultato?.vincente) {
         spans[2].innerHTML = creaHTMLSquadra(risultato.vincente);
       } else {
         spans[2].innerHTML = creaHTMLSquadra(`Vincente ${nomeA} / ${nomeB}`);
+      }
+    }
+
+    else if (idx < 10) {
+      // Semifinali (idx = 8 o 9)
+      const semifinaleId = `S${idx - 7}`;
+      const risultato = window.risultati?.find(r => r.partita === semifinaleId);
+
+      if (risultato?.squadraA) {
+        spans[0].innerHTML = creaHTMLSquadra(risultato.squadraA, risultato.golA);
+      } else {
+        spans[0].innerHTML = creaHTMLSquadra(`Vincente Q${(idx - 8) * 2 + 1} / Q${(idx - 8) * 2 + 2}`);
+      }
+
+      if (risultato?.squadraB) {
+        spans[2].innerHTML = creaHTMLSquadra(risultato.squadraB, risultato.golB);
+      } else {
+        spans[2].innerHTML = creaHTMLSquadra(`Vincente Q${(idx - 8) * 2 + 1} / Q${(idx - 8) * 2 + 2}`);
+      }
+    }
+
+    else if (idx === 10) {
+      // Finale
+      const risultato = window.risultati?.find(r => r.partita === "F");
+
+      if (risultato?.squadraA) {
+        spans[0].innerHTML = creaHTMLSquadra(risultato.squadraA, risultato.golA);
+      } else {
+        spans[0].innerHTML = creaHTMLSquadra("Vincente S1");
+      }
+
+      if (risultato?.squadraB) {
+        spans[2].innerHTML = creaHTMLSquadra(risultato.squadraB, risultato.golB);
+      } else {
+        spans[2].innerHTML = creaHTMLSquadra("Vincente S2");
       }
     }
   });
