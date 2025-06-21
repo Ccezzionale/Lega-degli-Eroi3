@@ -37,12 +37,11 @@ function aggiornaPlayoff() {
 });
   
   matchDivs.forEach((match, idx) => {
-  if (!posizioni[idx] || posizioni[idx].length < 2) {
-    return;
-  } else if (idx === 8 || idx === 9) {
-    const spans = match.querySelectorAll("span");
-    const semiIndex = idx - 8;
+  const spans = match.querySelectorAll("span");
 
+  // ⚔️ Semifinali  
+  if (idx === 8 || idx === 9) {
+    const semiIndex = idx - 8;
     const mapping = [
       ["Q1", "Q2"],
       ["Q3", "Q4"]
@@ -56,8 +55,6 @@ function aggiornaPlayoff() {
     const squadraA = risultato1?.vincente || `Vincente ${id1}`;
     const squadraB = risultato2?.vincente || `Vincente ${id2}`;
 
-    console.log(`🧠 Semifinale S${semiIndex + 1} - ${squadraA} vs ${squadraB} | Vincente: ${risultatoSemi?.vincente || "?"}`);
-
     if (risultatoSemi?.vincente) {
       spans[0].innerHTML = creaHTMLSquadra(squadraA);
       spans[2].innerHTML = creaHTMLSquadra(squadraB);
@@ -65,8 +62,9 @@ function aggiornaPlayoff() {
       spans[0].innerHTML = creaHTMLSquadra(squadraA);
       spans[2].innerHTML = creaHTMLSquadra(`Vincente ${squadraA} / ${squadraB}`);
     }
-  }
-
+    return; // 👈 esci dopo aver gestito la semifinale
+   }
+                    
     // 🔸 Quarti
     else if (idx < 8) {
       const ordineTesteDiSerie = [0, 3, 2, 1];
