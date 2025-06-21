@@ -28,56 +28,54 @@ function aggiornaPlayoff() {
   const matchDivs = document.querySelectorAll(".match");
 
   matchDivs.forEach((match, idx) => {
-    if (!posizioni[idx] || posizioni[idx].length < 2) return;
-    const spans = match.querySelectorAll("span");
+  if (!posizioni[idx] || posizioni[idx].length < 2) return;
+  const spans = match.querySelectorAll("span");
 
-    if (idx < 4) {
-  const mappingWC = ["WC1", "WC2", "WC3", "WC4"];
-  const matchId = mappingWC[idx];
-  const risultato = window.risultati?.find(r => r.partita === matchId);
+  if (idx < 4) {
+    const mappingWC = ["WC1", "WC2", "WC3", "WC4"];
+    const matchId = mappingWC[idx];
+    const risultato = window.risultati?.find(r => r.partita === matchId);
 
-  // mappatura posizione classifica da usare come fallback
-  const fallbackPosizioni = [
-    [5, 10], [6, 9], [7, 8], [4, 11]
-  ];
-  const [i1, i2] = fallbackPosizioni[idx];
+    const fallbackPosizioni = [
+      [5, 10], [6, 9], [7, 8], [4, 11]
+    ];
+    const [i1, i2] = fallbackPosizioni[idx];
 
-  const usaFoglio = risultato && risultato.squadraA && risultato.squadraB;
-  const squadraA = usaFoglio ? risultato.squadraA : squadre?.[i1]?.nome;
-  const squadraB = usaFoglio ? risultato.squadraB : squadre?.[i2]?.nome;
-  const posizioneA = !usaFoglio ? `${i1 + 1}°` : "";
-  const posizioneB = !usaFoglio ? `${i2 + 1}°` : "";
+    const usaFoglio = risultato && risultato.squadraA && risultato.squadraB;
+    const squadraA = usaFoglio ? risultato.squadraA : squadre?.[i1]?.nome;
+    const squadraB = usaFoglio ? risultato.squadraB : squadre?.[i2]?.nome;
+    const posizioneA = !usaFoglio ? `${i1 + 1}°` : "";
+    const posizioneB = !usaFoglio ? `${i2 + 1}°` : "";
 
-  spans[0].innerHTML = creaHTMLSquadra(squadraA || "?", posizioneA);
-  spans[2].innerHTML = creaHTMLSquadra(squadraB || "?", posizioneB);
-}
-      
-   } else if (idx < 8) {
-  const ordineTesteDiSerie = [0, 3, 2, 1];
-  const testaSerieIndex = idx - 4;
-  const teamTop4Index = ordineTesteDiSerie[testaSerieIndex];
-  const squadraTop = squadre[teamTop4Index];
-  spans[0].innerHTML = creaHTMLSquadra(squadraTop.nome, `${teamTop4Index + 1}°`);
+    spans[0].innerHTML = creaHTMLSquadra(squadraA || "?", posizioneA);
+    spans[2].innerHTML = creaHTMLSquadra(squadraB || "?", posizioneB);
 
-  const mappingWC = ["WC1", "WC4", "WC3", "WC2"];
-  const idWC = mappingWC[testaSerieIndex];
-  const idQuarto = `Q${testaSerieIndex + 1}`;
+  } else if (idx < 8) {
+    const ordineTesteDiSerie = [0, 3, 2, 1];
+    const testaSerieIndex = idx - 4;
+    const teamTop4Index = ordineTesteDiSerie[testaSerieIndex];
+    const squadraTop = squadre[teamTop4Index];
+    spans[0].innerHTML = creaHTMLSquadra(squadraTop.nome, `${teamTop4Index + 1}°`);
 
-  const risultatoQuarto = window.risultati?.find(r => r.partita === idQuarto);
-  const risultatoWC = window.risultati?.find(r => r.partita === idWC);
+    const mappingWC = ["WC1", "WC4", "WC3", "WC2"];
+    const idWC = mappingWC[testaSerieIndex];
+    const idQuarto = `Q${testaSerieIndex + 1}`;
 
-  if (risultatoQuarto?.vincente) {
-    spans[2].innerHTML = creaHTMLSquadra(risultatoQuarto.vincente);
-  } else if (risultatoWC?.vincente) {
-    spans[2].innerHTML = creaHTMLSquadra(risultatoWC.vincente);
-  } else if (risultatoWC) {
-    spans[2].innerHTML = creaHTMLSquadra(`Vincente ${risultatoWC.squadraA} / ${risultatoWC.squadraB}`);
-  } else {
-    spans[2].innerHTML = creaHTMLSquadra("?");
+    const risultatoQuarto = window.risultati?.find(r => r.partita === idQuarto);
+    const risultatoWC = window.risultati?.find(r => r.partita === idWC);
+
+    if (risultatoQuarto?.vincente) {
+      spans[2].innerHTML = creaHTMLSquadra(risultatoQuarto.vincente);
+    } else if (risultatoWC?.vincente) {
+      spans[2].innerHTML = creaHTMLSquadra(risultatoWC.vincente);
+    } else if (risultatoWC) {
+      spans[2].innerHTML = creaHTMLSquadra(`Vincente ${risultatoWC.squadraA} / ${risultatoWC.squadraB}`);
+    } else {
+      spans[2].innerHTML = creaHTMLSquadra("?");
+    }
   }
-}
-  });
-}
+});
+
 
 // 🟢 Caricamento classifica
 fetch(URL_CLASSIFICA_TOTALE)
