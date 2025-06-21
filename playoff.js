@@ -83,7 +83,9 @@ function aggiornaPlayoff() {
       } else {
         spans[2].innerHTML = creaHTMLSquadra(`Vincente ${nomeA} / ${nomeB}`);
       }
-          // 🔺 Semifinali (idx 8 e 9)
+    }
+
+    // 🔺 Semifinali (idx 8 e 9)
     else if (idx < 10) {
       const semiIndex = idx - 8;
       const mappingSemis = [
@@ -111,7 +113,6 @@ function aggiornaPlayoff() {
 
       spans[0].innerHTML = creaHTMLSquadra(squadraA);
       spans[2].innerHTML = creaHTMLSquadra(squadraB);
-    }
     }
   });
 }
