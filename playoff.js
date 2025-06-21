@@ -31,7 +31,11 @@ function aggiornaPlayoff() {
   ];
 
   const matchDivs = document.querySelectorAll(".match");
-
+  
+  matchDivs.forEach((el, idx) => {
+  console.log(`👉 Match idx: ${idx}, id: ${el.id}`);
+});
+  
   matchDivs.forEach((match, idx) => {
     if (!posizioni[idx] || posizioni[idx].length < 2) return;
     const spans = match.querySelectorAll("span");
