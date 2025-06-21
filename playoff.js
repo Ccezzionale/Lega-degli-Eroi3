@@ -100,7 +100,10 @@ function aggiornaPlayoff() {
   const squadraA = risultato1?.vincente || `Vincente ${id1}`;
   const squadraB = risultato2?.vincente || `Vincente ${id2}`;
 
-  console.log(`🧠 Semifinale S${semiIndex + 1} → ${squadraA} vs ${squadraB} | Vincente: ${risultatoSemi?.vincente || "?"}`);
+  console.log(`🧠 Semifinale S${semiIndex + 1} - id1: ${id1}, vincente1: ${risultato1?.vincente}`);
+  console.log(`🧠 Semifinale S${semiIndex + 1} - id2: ${id2}, vincente2: ${risultato2?.vincente}`);
+  console.log(`🧠 Semifinale S${semiIndex + 1} - squadraA: ${squadraA}, squadraB: ${squadraB}`);
+  console.log(`🧠 Semifinale S${semiIndex + 1} - risultato semi: ${risultatoSemi?.vincente}`);
 
   if (risultatoSemi?.vincente) {
     spans[0].innerHTML = creaHTMLSquadra(squadraA);
