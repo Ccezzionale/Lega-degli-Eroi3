@@ -32,6 +32,10 @@ function aggiornaPlayoff() {
 
   const matchDivs = document.querySelectorAll(".match");
 
+matchDivs.forEach((el, idx) => {
+  console.log(`🔢 Match idx ${idx} → id="${el.id}" | contenuto: ${el.outerHTML}`);
+});
+
   matchDivs.forEach((match, idx) => {
     const spans = match.querySelectorAll("span");
 
