@@ -83,6 +83,35 @@ function aggiornaPlayoff() {
       } else {
         spans[2].innerHTML = creaHTMLSquadra(`Vincente ${nomeA} / ${nomeB}`);
       }
+          // 🔺 Semifinali (idx 8 e 9)
+    else if (idx < 10) {
+      const semiIndex = idx - 8;
+      const mappingSemis = [
+        ["Q1", "Q2"],
+        ["Q3", "Q4"]
+      ];
+      const [m1, m2] = mappingSemis[semiIndex];
+      const risultato1 = window.risultati?.find(r => r.partita === m1);
+      const risultato2 = window.risultati?.find(r => r.partita === m2);
+
+      const squadraA = risultato1?.vincente || `Vincente ${m1}`;
+      const squadraB = risultato2?.vincente || `Vincente ${m2}`;
+
+      spans[0].innerHTML = creaHTMLSquadra(squadraA);
+      spans[2].innerHTML = creaHTMLSquadra(squadraB);
+    }
+
+    // 👑 Finale (idx 10)
+    else if (idx === 10) {
+      const risultatoS1 = window.risultati?.find(r => r.partita === "S1");
+      const risultatoS2 = window.risultati?.find(r => r.partita === "S2");
+
+      const squadraA = risultatoS1?.vincente || "Vincente S1";
+      const squadraB = risultatoS2?.vincente || "Vincente S2";
+
+      spans[0].innerHTML = creaHTMLSquadra(squadraA);
+      spans[2].innerHTML = creaHTMLSquadra(squadraB);
+    }
     }
   });
 }
