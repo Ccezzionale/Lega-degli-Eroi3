@@ -32,18 +32,21 @@ function aggiornaPlayoff() {
     const spans = match.querySelectorAll("span");
 
     if (idx < 4) {
-      const mappingWC = [
-        [7, 8], [4, 11], [5, 10], [6, 9]
-      ];
+  const mappingWC = [
+    [7, 8], [4, 11], [5, 10], [6, 9]
+  ];
+  const [i1, i2] = mappingWC[idx];
+  const matchId = `WC${idx + 1}`;
+  const risultato = window.risultati?.find(r => r.partita === matchId);
 
-      const [i1, i2] = mappingWC[idx];
-      const matchId = `WC${idx + 1}`;
-      const risultato = window.risultati?.find(r => r.partita === matchId);
+  const squadraA = risultato?.squadraA || squadre[i1]?.nome || "?";
+  const squadraB = risultato?.squadraB || squadre[i2]?.nome || "?";
+  const posizioneA = !risultato?.squadraA ? `${i1 + 1}°` : "";
+  const posizioneB = !risultato?.squadraB ? `${i2 + 1}°` : "";
 
-      if (!risultato || (!risultato.golA && !risultato.golB)) {
-        spans[0].innerHTML = creaHTMLSquadra(squadre[i1].nome, `${i1 + 1}°`);
-        spans[2].innerHTML = creaHTMLSquadra(squadre[i2].nome, `${i2 + 1}°`);
-      }
+  spans[0].innerHTML = creaHTMLSquadra(squadraA, posizioneA);
+  spans[2].innerHTML = creaHTMLSquadra(squadraB, posizioneB);
+}
 
     } else if (idx < 8) {
       const ordineTesteDiSerie = [0, 3, 2, 1];
