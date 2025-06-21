@@ -1,4 +1,4 @@
-const URL_PLAYOFF = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSwFDMVkq09-yRzsLwFqehbAntqMpTPtyMwUsTJkRtUREmmP6vJcTROPchoYq1rc0h1ynqkcGJvEOsD/pub?output=csv";
+const URL_PLAYOFF = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSwFDMVkq09-yRzsLwFqehbAntqMpTPtyMwUsTJkRtUREmmP6vJcTROPchoYq1rc0h1ynqkcGJvEOsD/pub?gid=0&single=true&output=csv";
 
 // Struttura: [{ partita: "WC1", squadraA: "...", squadraB: "...", golA: x, golB: y, vincente: "..." }, ...]
 fetch(URL_PLAYOFF)
