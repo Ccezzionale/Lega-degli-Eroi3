@@ -109,7 +109,7 @@ matchDivs.forEach((el, idx) => {
     }
 
     // 🏆 Finale
-    else if (idx === 10) {
+   else if (idx === 10) {
   const spans = match.querySelectorAll("span");
 
   const risultato1 = window.risultati?.find(r => r.partita === "S1");
@@ -126,7 +126,7 @@ matchDivs.forEach((el, idx) => {
     spans[2].innerHTML = creaHTMLSquadra(risultatoFinale.vincente);
   } else {
     spans[0].innerHTML = creaHTMLSquadra(squadraA);
-    spans[2].innerHTML = creaHTMLSquadra(`Vincente ${squadraA} / ${squadraB}`);
+    spans[2].innerHTML = `<span class="nome">Vincente ${squadraA} / ${squadraB}</span>`;
   }
 }
 });
