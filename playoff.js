@@ -36,6 +36,12 @@ function aggiornaPlayoff() {
   const matchId = mappingWC[idx];
   const risultato = window.risultati?.find(r => r.partita === matchId);
 
+  // mappatura posizione classifica da usare come fallback
+  const fallbackPosizioni = [
+    [5, 10], [6, 9], [7, 8], [4, 11]
+  ];
+  const [i1, i2] = fallbackPosizioni[idx];
+
   const usaFoglio = risultato && risultato.squadraA && risultato.squadraB;
   const squadraA = usaFoglio ? risultato.squadraA : squadre?.[i1]?.nome;
   const squadraB = usaFoglio ? risultato.squadraB : squadre?.[i2]?.nome;
