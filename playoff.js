@@ -71,11 +71,16 @@ function aggiornaPlayoff() {
 
       console.log(`🧠 Quarto ${matchId} → ${nomeA} vs ${nomeB} | Vincente: ${risultato?.vincente || "?"}`);
 
-      if (risultato?.vincente) {
-        spans[2].innerHTML = creaHTMLSquadra(risultato.vincente);
-      } else {
-        spans[2].innerHTML = creaHTMLSquadra(`Vincente ${nomeA} / ${nomeB}`);
-      }
+      if (
+  !risultato ||
+  (risultato.golA == null && risultato.golB == null)
+) {
+  spans[0].innerHTML = creaHTMLSquadra(squadre[i1].nome, `${i1 + 1}°`);
+  spans[2].innerHTML = creaHTMLSquadra(squadre[i2].nome, `${i2 + 1}°`);
+} else {
+  spans[0].innerHTML = creaHTMLSquadra(risultato.squadraA || "?", "");
+  spans[2].innerHTML = creaHTMLSquadra(risultato.squadraB || "?", "");
+}
     }
   });
 }
