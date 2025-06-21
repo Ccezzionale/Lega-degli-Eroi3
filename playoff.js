@@ -110,21 +110,23 @@ matchDivs.forEach((el, idx) => {
 
     // 🏆 Finale
     else if (idx === 10) {
-      const risultato1 = window.risultati?.find(r => r.partita === "S1");
-      const risultato2 = window.risultati?.find(r => r.partita === "S2");
-      const risultatoFinale = window.risultati?.find(r => r.partita === "F");
+  const risultato1 = window.risultati?.find(r => r.partita === "S1");
+  const risultato2 = window.risultati?.find(r => r.partita === "S2");
+  const risultatoF = window.risultati?.find(r => r.partita === "F");
 
-      const squadraA = risultato1?.vincente || "Vincente S1";
-      const squadraB = risultato2?.vincente || "Vincente S2";
+  const squadraA = risultato1?.vincente || `Vincente S1`;
+  const squadraB = risultato2?.vincente || `Vincente S2`;
 
-      if (risultatoFinale?.vincente) {
-        spans[0].innerHTML = creaHTMLSquadra(squadraA);
-        spans[2].innerHTML = creaHTMLSquadra(squadraB);
-      } else {
-        spans[0].innerHTML = creaHTMLSquadra(squadraA);
-        spans[2].innerHTML = creaHTMLSquadra(`Vincente ${squadraA} / ${squadraB}`);
-      }
-    }
+  if (risultatoF?.vincente) {
+    // Se c'è il risultato della finale, mostra i due finalisti
+    spans[0].innerHTML = creaHTMLSquadra(squadraA);
+    spans[2].innerHTML = creaHTMLSquadra(squadraB);
+  } else {
+    // Altrimenti mostra i nomi placeholder
+    spans[0].innerHTML = creaHTMLSquadra(squadraA);
+    spans[2].innerHTML = creaHTMLSquadra(`Vincente ${squadraA} / ${squadraB}`);
+  }
+}
   });
 }
 
