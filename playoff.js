@@ -85,27 +85,44 @@ function aggiornaPlayoff() {
       }
     }
 
-  // 🔺 Semifinali (S1, S2 → idx 8 e 9)
+ // 🔺 Semifinali (idx 8 e 9 → S1 e S2)
 else if (idx === 8 || idx === 9) {
-  const semiId = `S${idx - 7}`; // 8 → S1, 9 → S2
+  const semiId = `S${idx - 7}`; // S1 o S2
   const risultato = window.risultati?.find(r => r.partita === semiId);
 
-  const squadraA = risultato?.squadraA || `Vincente Q${semiId === "S1" ? 1 : 3}`;
-  const squadraB = risultato?.squadraB || `Vincente Q${semiId === "S1" ? 2 : 4}`;
+  // Recupero vincitori dei quarti
+  const risultatoQ1 = window.risultati?.find(r => r.partita === (semiId === "S1" ? "Q1" : "Q3"));
+  const risultatoQ2 = window.risultati?.find(r => r.partita === (semiId === "S1" ? "Q2" : "Q4"));
+
+  const squadraA = risultatoQ1?.vincente || `Vincente ${semiId === "S1" ? "Q1" : "Q3"}`;
+  const squadraB = risultatoQ2?.vincente || `Vincente ${semiId === "S1" ? "Q2" : "Q4"}`;
 
   spans[0].innerHTML = creaHTMLSquadra(squadraA);
   spans[2].innerHTML = creaHTMLSquadra(squadraB);
+
+  // Se ho già il vincente della semifinale, lo mostro
+  if (risultato?.vincente) {
+    spans[2].innerHTML = creaHTMLSquadra(risultato.vincente);
+  }
 }
 
-// 👑 Finale (F → idx 10)
+// 👑 Finale (idx 10 → F)
 else if (idx === 10) {
   const risultato = window.risultati?.find(r => r.partita === "F");
 
-  const squadraA = risultato?.squadraA || "Vincente S1";
-  const squadraB = risultato?.squadraB || "Vincente S2";
+  const risultatoS1 = window.risultati?.find(r => r.partita === "S1");
+  const risultatoS2 = window.risultati?.find(r => r.partita === "S2");
+
+  const squadraA = risultatoS1?.vincente || "Vincente S1";
+  const squadraB = risultatoS2?.vincente || "Vincente S2";
 
   spans[0].innerHTML = creaHTMLSquadra(squadraA);
   spans[2].innerHTML = creaHTMLSquadra(squadraB);
+
+  // Se ho già il vincente della finale, lo mostro
+  if (risultato?.vincente) {
+    spans[2].innerHTML = creaHTMLSquadra(risultato.vincente);
+  }
 }
 
   });
