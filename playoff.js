@@ -39,31 +39,32 @@ function aggiornaPlayoff() {
   matchDivs.forEach((match, idx) => {
   const spans = match.querySelectorAll("span");
 
-  // ⚔️ Semifinali  
-  if (idx === 8 || idx === 9) {
-    const semiIndex = idx - 8;
-    const mapping = [
-      ["Q1", "Q2"],
-      ["Q3", "Q4"]
-    ];
-    const [id1, id2] = mapping[semiIndex];
+  else if (idx === 8 || idx === 9) {
+  const spans = match.querySelectorAll("span");
+  const semiIndex = idx - 8;
+  const mapping = [
+    ["Q1", "Q2"],
+    ["Q3", "Q4"]
+  ];
+  const [id1, id2] = mapping[semiIndex];
 
-    const risultato1 = window.risultati?.find(r => r.partita === id1);
-    const risultato2 = window.risultati?.find(r => r.partita === id2);
-    const risultatoSemi = window.risultati?.find(r => r.partita === `S${semiIndex + 1}`);
+  const risultato1 = window.risultati?.find(r => r.partita === id1);
+  const risultato2 = window.risultati?.find(r => r.partita === id2);
+  const risultatoSemi = window.risultati?.find(r => r.partita === `S${semiIndex + 1}`);
 
-    const squadraA = risultato1?.vincente || `Vincente ${id1}`;
-    const squadraB = risultato2?.vincente || `Vincente ${id2}`;
+  const squadraA = risultato1?.vincente || `Vincente ${id1}`;
+  const squadraB = risultato2?.vincente || `Vincente ${id2}`;
 
-    if (risultatoSemi?.vincente) {
-      spans[0].innerHTML = creaHTMLSquadra(squadraA);
-      spans[2].innerHTML = creaHTMLSquadra(squadraB);
-    } else {
-      spans[0].innerHTML = creaHTMLSquadra(squadraA);
-      spans[2].innerHTML = creaHTMLSquadra(`Vincente ${squadraA} / ${squadraB}`);
-    }
-    return; // 👈 esci dopo aver gestito la semifinale
-   }
+  console.log(`🧠 Semifinale S${semiIndex + 1} → ${squadraA} vs ${squadraB} | Vincente: ${risultatoSemi?.vincente || "?"}`);
+
+  if (risultatoSemi?.vincente) {
+    spans[0].innerHTML = creaHTMLSquadra(squadraA);
+    spans[2].innerHTML = creaHTMLSquadra(squadraB);
+  } else {
+    spans[0].innerHTML = creaHTMLSquadra(squadraA);
+    spans[2].innerHTML = creaHTMLSquadra(`Vincente ${squadraA} / ${squadraB}`);
+  }
+}
                     
     // 🔸 Quarti
     else if (idx < 8) {
