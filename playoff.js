@@ -125,7 +125,8 @@ function aggiornaPlayoff() {
     spans[2].innerHTML = creaHTMLSquadra(rFinale.vincente);
   } else {
     spans[2].innerHTML = creaHTMLSquadra(`Vincente ${squadraA} / ${squadraB}`);
-  }
+      }
+    }
   });
 }
 
