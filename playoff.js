@@ -31,24 +31,26 @@ function aggiornaPlayoff() {
     if (!posizioni[idx] || posizioni[idx].length < 2) return;
     const spans = match.querySelectorAll("span");
 
+    // 🔹 Wildcard
     if (idx < 4) {
-  const mappingWC = [
-    [7, 8], [4, 11], [5, 10], [6, 9]
-  ];
-  const [i1, i2] = mappingWC[idx];  // ⬅️ QUESTA RIGA È OBBLIGATORIA
+      const mappingWC = [
+        [7, 8], [4, 11], [5, 10], [6, 9]
+      ];
+      const [i1, i2] = mappingWC[idx];
+      const matchId = `WC${idx + 1}`;
+      const risultato = window.risultati?.find(r => r.partita === matchId);
 
-  const matchId = `WC${idx + 1}`;
-  const risultato = window.risultati?.find(r => r.partita === matchId);
+      const squadraA = risultato?.squadraA || squadre[i1]?.nome || "?";
+      const squadraB = risultato?.squadraB || squadre[i2]?.nome || "?";
+      const posizioneA = !risultato?.squadraA ? `${i1 + 1}°` : "";
+      const posizioneB = !risultato?.squadraB ? `${i2 + 1}°` : "";
 
-  const squadraA = risultato?.squadraA || squadre[i1]?.nome || "?";
-  const squadraB = risultato?.squadraB || squadre[i2]?.nome || "?";
-  const posizioneA = !risultato?.squadraA ? `${i1 + 1}°` : "";
-  const posizioneB = !risultato?.squadraB ? `${i2 + 1}°` : "";
+      spans[0].innerHTML = creaHTMLSquadra(squadraA, posizioneA);
+      spans[2].innerHTML = creaHTMLSquadra(squadraB, posizioneB);
+    }
 
-  spans[0].innerHTML = creaHTMLSquadra(squadraA, posizioneA);
-  spans[2].innerHTML = creaHTMLSquadra(squadraB, posizioneB);
-      
-    } else if (idx < 8) {
+    // 🔸 Quarti
+    else if (idx < 8) {
       const ordineTesteDiSerie = [0, 3, 2, 1];
       const testaSerieIndex = idx - 4;
       const teamTop4Index = ordineTesteDiSerie[testaSerieIndex];
@@ -72,19 +74,15 @@ function aggiornaPlayoff() {
 
       console.log(`🧠 Quarto ${matchId} → ${nomeA} vs ${nomeB} | Vincente: ${risultato?.vincente || "?"}`);
 
-      if (
-  !risultato ||
-  (risultato.golA == null && risultato.golB == null)
-) {
-  spans[0].innerHTML = creaHTMLSquadra(squadre[i1].nome, `${i1 + 1}°`);
-  spans[2].innerHTML = creaHTMLSquadra(squadre[i2].nome, `${i2 + 1}°`);
-} else {
-  spans[0].innerHTML = creaHTMLSquadra(risultato.squadraA || "?", "");
-  spans[2].innerHTML = creaHTMLSquadra(risultato.squadraB || "?", "");
-}
+      if (risultato?.vincente) {
+        spans[2].innerHTML = creaHTMLSquadra(risultato.vincente);
+      } else {
+        spans[2].innerHTML = creaHTMLSquadra(`Vincente ${nomeA} / ${nomeB}`);
+      }
     }
   });
 }
+
 
 // 🟢 Caricamento classifica
 fetch(URL_CLASSIFICA_TOTALE)
