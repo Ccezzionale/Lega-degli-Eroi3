@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
+  <link href="https://fonts.googleapis.com/css2?family=Monofett&display=swap" rel="stylesheet">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Playoff 2025</title>
@@ -77,22 +78,18 @@
       z-index: 0;
       pointer-events: none;
     }
-    
-@font-face {
-  font-family: 'Monofett';
-  src: url('https://fonts.gstatic.com/s/monofett/v16/m8JVjfNVeKWVnh3QMuKkFcZVaUuH.woff2') format('woff2');
-}
 
 .squadra {
   display: flex;
-  flex-direction: column; /* logo sopra nome */
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 6px;
   font-size: 1rem;
-  font-family: 'Monofett', sans-serif;
+  font-family: 'Monofett', monospace;
   color: #ffcc00;
   text-align: center;
+  text-shadow: 0 0 5px #ffcc00, 0 0 10px #ffaa00;
 }
 
 .squadra img {
