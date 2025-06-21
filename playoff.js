@@ -85,46 +85,41 @@ function aggiornaPlayoff() {
       }
     }
 
- // 🔺 Semifinali (idx 8 e 9 → S1 e S2)
-else if (idx === 8 || idx === 9) {
-  const semiId = `S${idx - 7}`; // S1 o S2
-  const risultato = window.risultati?.find(r => r.partita === semiId);
+ // 🔺 Semifinali (S1, S2)
+    else if (idx === 8 || idx === 9) {
+      const semiId = `S${idx - 7}`; // S1 o S2
+      const risultatoSemi = window.risultati?.find(r => r.partita === semiId);
 
-  // Recupero vincitori dei quarti
-  const risultatoQ1 = window.risultati?.find(r => r.partita === (semiId === "S1" ? "Q1" : "Q3"));
-  const risultatoQ2 = window.risultati?.find(r => r.partita === (semiId === "S1" ? "Q2" : "Q4"));
+      const q1 = window.risultati?.find(r => r.partita === (semiId === "S1" ? "Q1" : "Q3"));
+      const q2 = window.risultati?.find(r => r.partita === (semiId === "S1" ? "Q2" : "Q4"));
 
-  const squadraA = risultatoQ1?.vincente || `Vincente ${semiId === "S1" ? "Q1" : "Q3"}`;
-  const squadraB = risultatoQ2?.vincente || `Vincente ${semiId === "S1" ? "Q2" : "Q4"}`;
+      const squadraA = q1?.vincente || `Vincente ${semiId === "S1" ? "Q1" : "Q3"}`;
+      const squadraB = q2?.vincente || `Vincente ${semiId === "S1" ? "Q2" : "Q4"}`;
 
-  spans[0].innerHTML = creaHTMLSquadra(squadraA);
-  spans[2].innerHTML = creaHTMLSquadra(squadraB);
+      spans[0].innerHTML = creaHTMLSquadra(squadraA);
+      spans[2].innerHTML = creaHTMLSquadra(squadraB);
 
-  // Se ho già il vincente della semifinale, lo mostro
-  if (risultato?.vincente) {
-    spans[2].innerHTML = creaHTMLSquadra(risultato.vincente);
-  }
-}
+      if (risultatoSemi?.vincente) {
+        spans[2].innerHTML = creaHTMLSquadra(risultatoSemi.vincente);
+      }
+    }
 
-// 👑 Finale (idx 10 → F)
-else if (idx === 10) {
-  const risultato = window.risultati?.find(r => r.partita === "F");
+    // 👑 Finale (F)
+    else if (idx === 10) {
+      const risultatoFinale = window.risultati?.find(r => r.partita === "F");
+      const s1 = window.risultati?.find(r => r.partita === "S1");
+      const s2 = window.risultati?.find(r => r.partita === "S2");
 
-  const risultatoS1 = window.risultati?.find(r => r.partita === "S1");
-  const risultatoS2 = window.risultati?.find(r => r.partita === "S2");
+      const squadraA = s1?.vincente || "Vincente S1";
+      const squadraB = s2?.vincente || "Vincente S2";
 
-  const squadraA = risultatoS1?.vincente || "Vincente S1";
-  const squadraB = risultatoS2?.vincente || "Vincente S2";
+      spans[0].innerHTML = creaHTMLSquadra(squadraA);
+      spans[2].innerHTML = creaHTMLSquadra(squadraB);
 
-  spans[0].innerHTML = creaHTMLSquadra(squadraA);
-  spans[2].innerHTML = creaHTMLSquadra(squadraB);
-
-  // Se ho già il vincente della finale, lo mostro
-  if (risultato?.vincente) {
-    spans[2].innerHTML = creaHTMLSquadra(risultato.vincente);
-  }
-}
-
+      if (risultatoFinale?.vincente) {
+        spans[2].innerHTML = creaHTMLSquadra(risultatoFinale.vincente);
+      }
+    }
   });
 }
 
