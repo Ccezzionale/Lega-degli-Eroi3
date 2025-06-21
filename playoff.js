@@ -36,14 +36,14 @@ function aggiornaPlayoff() {
   const matchId = mappingWC[idx];
   const risultato = window.risultati?.find(r => r.partita === matchId);
 
-  if (risultato?.squadraA && risultato?.squadraB) {
-  // usa i nomi dal foglio se sono completi
-  spans[0].innerHTML = creaHTMLSquadra(risultato.squadraA);
-  spans[2].innerHTML = creaHTMLSquadra(risultato.squadraB);
-} else {
-  // altrimenti usa i nomi dalla classifica
-  spans[0].innerHTML = creaHTMLSquadra(squadre[i1].nome, `${i1 + 1}°`);
-  spans[2].innerHTML = creaHTMLSquadra(squadre[i2].nome, `${i2 + 1}°`);
+  const usaFoglio = risultato && risultato.squadraA && risultato.squadraB;
+  const squadraA = usaFoglio ? risultato.squadraA : squadre?.[i1]?.nome;
+  const squadraB = usaFoglio ? risultato.squadraB : squadre?.[i2]?.nome;
+  const posizioneA = !usaFoglio ? `${i1 + 1}°` : "";
+  const posizioneB = !usaFoglio ? `${i2 + 1}°` : "";
+
+  spans[0].innerHTML = creaHTMLSquadra(squadraA || "?", posizioneA);
+  spans[2].innerHTML = creaHTMLSquadra(squadraB || "?", posizioneB);
 }
       
    } else if (idx < 8) {
