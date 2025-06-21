@@ -46,8 +46,7 @@ function aggiornaPlayoff() {
 
   spans[0].innerHTML = creaHTMLSquadra(squadraA, posizioneA);
   spans[2].innerHTML = creaHTMLSquadra(squadraB, posizioneB);
-}
-
+      
     } else if (idx < 8) {
       const ordineTesteDiSerie = [0, 3, 2, 1];
       const testaSerieIndex = idx - 4;
