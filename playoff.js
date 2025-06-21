@@ -87,36 +87,45 @@ function aggiornaPlayoff() {
 
  // 🔺 Semifinali (S1, S2 → idx 8 e 9)
     else if (idx < 10) {
-      const semiIndex = idx - 8;
-      const mapping = [
-        ["Q1", "Q2"],
-        ["Q3", "Q4"]
-      ];
-      const [id1, id2] = mapping[semiIndex];
+  const semiIndex = idx - 8;
+  const mapping = [
+    ["Q1", "Q2"],
+    ["Q3", "Q4"]
+  ];
+  const [id1, id2] = mapping[semiIndex];
 
-      const r1 = window.risultati?.find(r => r.partita === id1);
-      const r2 = window.risultati?.find(r => r.partita === id2);
-      const vincente = window.risultati?.find(r => r.partita === `S${semiIndex + 1}`)?.vincente;
+  const r1 = window.risultati?.find(r => r.partita === id1);
+  const r2 = window.risultati?.find(r => r.partita === id2);
+  const rSemi = window.risultati?.find(r => r.partita === `S${semiIndex + 1}`);
 
-      const squadraA = r1?.vincente || `Vincente ${id1}`;
-      const squadraB = r2?.vincente || `Vincente ${id2}`;
+  const squadraA = r1?.vincente || `Vincente ${id1}`;
+  const squadraB = r2?.vincente || `Vincente ${id2}`;
 
-      spans[0].innerHTML = creaHTMLSquadra(squadraA);
-      spans[2].innerHTML = creaHTMLSquadra(vincente || `Vincente ${squadraA} / ${squadraB}`);
-    }
+  spans[0].innerHTML = creaHTMLSquadra(squadraA);
+  
+  if (rSemi?.vincente) {
+    spans[2].innerHTML = creaHTMLSquadra(rSemi.vincente);
+  } else {
+    spans[2].innerHTML = creaHTMLSquadra(`Vincente ${squadraA} / ${squadraB}`);
+  }
+}
 
     // 👑 Finale (F)
     else if (idx === 10) {
-      const r1 = window.risultati?.find(r => r.partita === "S1");
-      const r2 = window.risultati?.find(r => r.partita === "S2");
-      const vincente = window.risultati?.find(r => r.partita === "F")?.vincente;
+  const r1 = window.risultati?.find(r => r.partita === "S1");
+  const r2 = window.risultati?.find(r => r.partita === "S2");
+  const rFinale = window.risultati?.find(r => r.partita === "F");
 
-      const squadraA = r1?.vincente || "Vincente S1";
-      const squadraB = r2?.vincente || "Vincente S2";
+  const squadraA = r1?.vincente || "Vincente S1";
+  const squadraB = r2?.vincente || "Vincente S2";
 
-      spans[0].innerHTML = creaHTMLSquadra(squadraA);
-      spans[2].innerHTML = creaHTMLSquadra(vincente || `Vincente ${squadraA} / ${squadraB}`);
-    }
+  spans[0].innerHTML = creaHTMLSquadra(squadraA);
+
+  if (rFinale?.vincente) {
+    spans[2].innerHTML = creaHTMLSquadra(rFinale.vincente);
+  } else {
+    spans[2].innerHTML = creaHTMLSquadra(`Vincente ${squadraA} / ${squadraB}`);
+  }
   });
 }
 
