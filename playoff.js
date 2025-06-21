@@ -56,7 +56,7 @@ matchDivs.forEach((match, idx) => {
         [4, 2], [7, 3], [6, 0], [5, 1]
       ];
 
-      onst idWC = mappingWC[testaSerieIndex];
+  const idWC = mappingWC[testaSerieIndex];
   const idQuarto = `Q${testaSerieIndex + 1}`;
 
   const risultatoQuarto = window.risultati?.find(r => r.partita === idQuarto);
