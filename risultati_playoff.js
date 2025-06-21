@@ -7,6 +7,20 @@ fetch(URL_PLAYOFF)
     const righe = csv.trim().split("\n").slice(1); // Ignora intestazioni
     const risultati = righe.map(riga => {
       const colonne = riga.split(",").map(c => c.trim().replace(/"/g, ""));
+      const risultati = righe.map(riga => {
+  const colonne = riga.split(",").map(c => c.trim().replace(/"/g, ""));
+  console.log("🎯 Riga letta:", colonne); // 👈 QUI va bene
+  const [partita, squadraA, squadraB, golA, golB, vincente] = colonne;
+  return {
+    partita,
+    squadraA,
+    squadraB,
+    golA: golA ? parseInt(golA) : null,
+    golB: golB ? parseInt(golB) : null,
+    vincente
+  };
+});
+
       const [partita, squadraA, squadraB, golA, golB, vincente] = colonne;
       return {
         partita,
