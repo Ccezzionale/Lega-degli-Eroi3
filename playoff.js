@@ -40,8 +40,8 @@ function aggiornaPlayoff() {
     if (!posizioni[idx] || posizioni[idx].length < 2) return;
     const spans = match.querySelectorAll("span");
     
- // ⚔️ Semifinali
-     else if (idx === 8 || idx === 9) {
+ // ⚔️ Semifinali  
+  else if (idx === 8 || idx === 9) {
   const semiIndex = idx - 8;
   const mapping = [
     ["Q1", "Q2"],
