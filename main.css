@@ -738,12 +738,6 @@ h1 {
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
-  width: 48px;
-  height: 48px;
-  object-fit: contain;
-  vertical-align: middle;
-  border-radius: 8px;
-}
 
 /* MENU MOBILE - chiuso */
 #mobileMenu {
