@@ -111,23 +111,19 @@ matchDivs.forEach((el, idx) => {
     // 🏆 Finale
    else if (idx === 10) {
   const spans = match.querySelectorAll("span");
-
   const risultato1 = window.risultati?.find(r => r.partita === "S1");
   const risultato2 = window.risultati?.find(r => r.partita === "S2");
   const risultatoFinale = window.risultati?.find(r => r.partita === "F");
 
-  const squadraA = risultato1?.vincente || "Vincente S1";
-  const squadraB = risultato2?.vincente || "Vincente S2";
+  const squadraA = risultato1?.vincente || `Vincente ${risultato1?.squadraA || "S1A"} / ${risultato1?.squadraB || "S1B"}`;
+  const squadraB = risultato2?.vincente || `Vincente ${risultato2?.squadraA || "S2A"} / ${risultato2?.squadraB || "S2B"}`;
 
   console.log(`🏆 Finale → ${squadraA} vs ${squadraB} | Vincente: ${risultatoFinale?.vincente || "?"}`);
 
-  if (risultatoFinale?.vincente) {
-    spans[0].innerHTML = creaHTMLSquadra(squadraA);
-    spans[2].innerHTML = creaHTMLSquadra(risultatoFinale.vincente);
-  } else {
-    spans[0].innerHTML = creaHTMLSquadra(squadraA);
-    spans[2].innerHTML = `<span class="nome">Vincente ${squadraA} / ${squadraB}</span>`;
-  }
+  // Aggiorna i nomi delle squadre nel tabellone della finale
+  spans[0].innerHTML = creaHTMLSquadra(squadraA);
+  spans[2].innerHTML = creaHTMLSquadra(squadraB);
+}
 }
 });
 }
