@@ -74,11 +74,14 @@ function aggiornaPlayoff() {
 
       console.log(`🧠 Quarto ${matchId} → ${nomeA} vs ${nomeB} | Vincente: ${risultato?.vincente || "?"}`);
 
-      if (risultato?.vincente) {
-        spans[2].innerHTML = creaHTMLSquadra(risultato.vincente);
-      } else {
-        spans[2].innerHTML = creaHTMLSquadra(`Vincente ${nomeA} / ${nomeB}`);
-      }
+      const risultatoWC = window.risultati?.find(r => r.partita === mappingWC[testaSerieIndex]);
+if (risultato?.vincente) {
+  spans[2].innerHTML = creaHTMLSquadra(risultato.vincente);
+} else if (risultatoWC?.vincente) {
+  spans[2].innerHTML = creaHTMLSquadra(risultatoWC.vincente);
+} else {
+  spans[2].innerHTML = creaHTMLSquadra(`Vincente ${nomeA} / ${nomeB}`);
+}
     }
   });
 }
