@@ -35,7 +35,8 @@ function aggiornaPlayoff() {
   const mappingWC = [
     [7, 8], [4, 11], [5, 10], [6, 9]
   ];
-  const [i1, i2] = mappingWC[idx];
+  const [i1, i2] = mappingWC[idx];  // ⬅️ QUESTA RIGA È OBBLIGATORIA
+
   const matchId = `WC${idx + 1}`;
   const risultato = window.risultati?.find(r => r.partita === matchId);
 
