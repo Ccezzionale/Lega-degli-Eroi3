@@ -51,36 +51,30 @@ function aggiornaPlayoff() {
   spans[2].innerHTML = "";
 }
 
-    } else if (idx < 8) {
-      const ordineTesteDiSerie = [0, 3, 2, 1];
-      const testaSerieIndex = idx - 4;
-      const teamTop4Index = ordineTesteDiSerie[testaSerieIndex];
-      const squadraTop = squadre[teamTop4Index];
+   } else if (idx < 8) {
+  const ordineTesteDiSerie = [0, 3, 2, 1];
+  const testaSerieIndex = idx - 4;
+  const teamTop4Index = ordineTesteDiSerie[testaSerieIndex];
+  const squadraTop = squadre[teamTop4Index];
+  spans[0].innerHTML = creaHTMLSquadra(squadraTop.nome, `${teamTop4Index + 1}°`);
 
-      spans[0].innerHTML = creaHTMLSquadra(squadraTop.nome, `${teamTop4Index + 1}°`);
+  const mappingWC = ["WC1", "WC4", "WC3", "WC2"];
+  const idWC = mappingWC[testaSerieIndex];
+  const idQuarto = `Q${testaSerieIndex + 1}`;
 
-      const mapping = [
-        [4, 2], [7, 3], [6, 0], [5, 1]
-      ];
+  const risultatoQuarto = window.risultati?.find(r => r.partita === idQuarto);
+  const risultatoWC = window.risultati?.find(r => r.partita === idWC);
 
-      const [idxPosA, idxPosB] = mapping[testaSerieIndex];
-      const squadraAIndex = posizioni[idxPosA][0];
-      const squadraBIndex = posizioni[idxPosB][1];
-
-      const nomeA = `${squadraAIndex + 1}° ${squadre[squadraAIndex]?.nome || "?"}`;
-      const nomeB = `${squadraBIndex + 1}° ${squadre[squadraBIndex]?.nome || "?"}`;
-
-      const matchId = `Q${testaSerieIndex + 1}`;
-      const risultato = window.risultati?.find(r => r.partita === matchId);
-
-      console.log(`🧠 Quarto ${matchId} → ${nomeA} vs ${nomeB} | Vincente: ${risultato?.vincente || "?"}`);
-
-      if (risultato?.vincente) {
-        spans[2].innerHTML = creaHTMLSquadra(risultato.vincente);
-      } else {
-        spans[2].innerHTML = creaHTMLSquadra(`Vincente ${nomeA} / ${nomeB}`);
-      }
-    }
+  if (risultatoQuarto?.vincente) {
+    spans[2].innerHTML = creaHTMLSquadra(risultatoQuarto.vincente);
+  } else if (risultatoWC?.vincente) {
+    spans[2].innerHTML = creaHTMLSquadra(risultatoWC.vincente);
+  } else if (risultatoWC) {
+    spans[2].innerHTML = creaHTMLSquadra(`Vincente ${risultatoWC.squadraA} / ${risultatoWC.squadraB}`);
+  } else {
+    spans[2].innerHTML = creaHTMLSquadra("?");
+  }
+}
   });
 }
 
