@@ -93,23 +93,23 @@ function aggiornaPlayoff() {
   ];
   const [id1, id2] = mapping[semiIndex];
 
-  const r1 = window.risultati?.find(r => r.partita === id1);
-  const r2 = window.risultati?.find(r => r.partita === id2);
+  const risultato1 = window.risultati?.find(r => r.partita === id1);
+  const risultato2 = window.risultati?.find(r => r.partita === id2);
   const risultatoSemi = window.risultati?.find(r => r.partita === `S${semiIndex + 1}`);
 
-  const nomeA = r1?.vincente || `Vincente ${id1}`;
-  const nomeB = r2?.vincente || `Vincente ${id2}`;
+  const squadraA = risultato1?.vincente || `Vincente ${id1}`;
+  const squadraB = risultato2?.vincente || `Vincente ${id2}`;
 
-  console.log(`🧠 Semifinale S${semiIndex + 1} → ${nomeA} vs ${nomeB} | Vincente: ${risultatoSemi?.vincente || "?"}`);
+  console.log(`🧠 Semifinale S${semiIndex + 1} → ${squadraA} vs ${squadraB} | Vincente: ${risultatoSemi?.vincente || "?"}`);
 
-  spans[0].innerHTML = creaHTMLSquadra(nomeA);
   if (risultatoSemi?.vincente) {
-    spans[2].innerHTML = creaHTMLSquadra(risultatoSemi.vincente);
+    spans[0].innerHTML = creaHTMLSquadra(squadraA);
+    spans[2].innerHTML = creaHTMLSquadra(squadraB);
   } else {
-    spans[2].innerHTML = creaHTMLSquadra(`Vincente ${nomeA} / ${nomeB}`);
+    spans[0].innerHTML = creaHTMLSquadra(squadraA);
+    spans[2].innerHTML = creaHTMLSquadra(`Vincente ${squadraA} / ${squadraB}`);
   }
 }
-
   });
 }
 
