@@ -738,7 +738,13 @@ h1 {
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
-
+.squadra img {
+  max-width: 50px; /* o 50px, come preferisci */
+  height: auto;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 6px;
+}
 
 /* MENU MOBILE - chiuso */
 #mobileMenu {
