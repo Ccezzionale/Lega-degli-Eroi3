@@ -124,7 +124,6 @@ matchDivs.forEach((el, idx) => {
   spans[0].innerHTML = creaHTMLSquadra(squadraA);
   spans[2].innerHTML = creaHTMLSquadra(squadraB);
 }
-}
 });
 }
 
