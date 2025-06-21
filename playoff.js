@@ -115,7 +115,6 @@ function aggiornaPlayoff() {
       spans[0].innerHTML = creaHTMLSquadra(squadraA, posizioneA);
       spans[2].innerHTML = creaHTMLSquadra(squadraB, posizioneB);
     }
-    }
   });
 }
 
