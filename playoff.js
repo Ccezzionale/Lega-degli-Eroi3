@@ -72,7 +72,12 @@ function aggiornaPlayoff() {
       const teamTop4Index = ordineTesteDiSerie[testaSerieIndex];
       const squadraTop = squadre[teamTop4Index];
 
-      spans[0].innerHTML = creaHTMLSquadra(squadraTop.nome, `${teamTop4Index + 1}°`);
+      spans[0].innerHTML = creaHTMLSquadra(squadraA);
+spans[2].innerHTML = creaHTMLSquadra(
+  risultatoSemi?.vincente
+    ? squadraB
+    : `Vincente ${squadraA} / ${squadraB}`
+);
 
       const mapping = [
         [4, 2], [7, 3], [6, 0], [5, 1]
