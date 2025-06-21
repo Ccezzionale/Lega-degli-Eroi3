@@ -40,10 +40,16 @@ function aggiornaPlayoff() {
       const matchId = `WC${idx + 1}`;
       const risultato = window.risultati?.find(r => r.partita === matchId);
 
-      if (!risultato || (!risultato.golA && !risultato.golB)) {
-        spans[0].innerHTML = creaHTMLSquadra(squadre[i1].nome, `${i1 + 1}°`);
-        spans[2].innerHTML = creaHTMLSquadra(squadre[i2].nome, `${i2 + 1}°`);
-      }
+      if (!risultato || risultato.vincente === "") {
+  // mostra squadre della classifica (default)
+  spans[0].innerHTML = creaHTMLSquadra(squadre[i1].nome, `${i1 + 1}°`);
+  spans[2].innerHTML = creaHTMLSquadra(squadre[i2].nome, `${i2 + 1}°`);
+} else {
+  // mostra vincente
+  const squadraVincente = risultato.vincente;
+  spans[0].innerHTML = creaHTMLSquadra(squadraVincente);
+  spans[2].innerHTML = "";
+}
 
     } else if (idx < 8) {
       const ordineTesteDiSerie = [0, 3, 2, 1];
