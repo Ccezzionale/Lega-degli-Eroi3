@@ -2,7 +2,7 @@ const URL_CLASSIFICA_TOTALE = "https://docs.google.com/spreadsheets/d/e/2PACX-1v
 
 // 🔧 Funzione per creare HTML squadra con logo
 function creaHTMLSquadra(nome, posizione = "") {
-  const fileLogo = `img/${nome.replace(/\s+/g, '_')}.png`;
+  const fileLogo = `img/${nome}.png`; // usa direttamente il nome con gli spazi
   return `
     <div class="squadra">
       <img src="${fileLogo}" alt="${nome}" onerror="this.style.display='none'">
