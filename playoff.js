@@ -60,9 +60,11 @@ function aggiornaPlayoff() {
       const squadraB = risultato?.squadraB || squadre[i2]?.nome || "?";
       const posizioneA = `${squadre.findIndex(s => s.nome === squadraA) + 1}°` || `${i1 + 1}°`;
       const posizioneB = `${squadre.findIndex(s => s.nome === squadraB) + 1}°` || `${i2 + 1}°`;
-
-      spans[0].innerHTML = creaHTMLSquadra(squadraA, posizioneA);
-      spans[2].innerHTML = creaHTMLSquadra(squadraB, posizioneB);
+      const punteggioA = risultato?.puntiA || "";
+      const punteggioB = risultato?.puntiB || "";
+      
+      spans[0].innerHTML = creaHTMLSquadra(squadraA, posizioneA, punteggioA);
+      spans[2].innerHTML = creaHTMLSquadra(squadraB, posizioneB, punteggioB);  
     }
 
     // 🔸 Quarti
@@ -90,9 +92,6 @@ function aggiornaPlayoff() {
   const posizioneB = squadre.find(s => s.nome === squadraB)
   ? `${squadre.findIndex(s => s.nome === squadraB) + 1}°`
   : "";
-
-  const punteggioA = risultato?.puntiA || "";
-  const punteggioB = risultato?.puntiB || "";
          
   spans[0].innerHTML = creaHTMLSquadra(squadraA, posizioneA);
   spans[1].innerHTML = `<strong class="vs">vs</strong>`;
