@@ -45,7 +45,14 @@ function aggiornaPlayoff() {
     console.log(`🔢 Match idx ${idx} → id="${el.id}" | contenuto: ${el.outerHTML}`);
   });
 
- partiteIds.forEach((id, idx) => {
+ const partiteIds = [
+  "match-wc1", "match-wc2", "match-wc3", "match-wc4",
+  "match-q1", "match-q2", "match-q3", "match-q4",
+  "match-s1", "match-s2",
+  "match-f"
+];
+
+partiteIds.forEach((id, idx) => {
   const match = document.getElementById(id);
   const spans = match?.querySelectorAll("span");
   if (!spans || spans.length < 3) return;
