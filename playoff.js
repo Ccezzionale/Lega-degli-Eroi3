@@ -56,7 +56,7 @@ function aggiornaPlayoff() {
 
     // 🔸 Quarti
         else if (idx >= 4 && idx <= 7) {
-  const ordineTesteDiSerie = [0, 3, 2, 1]; // 1° contro WC4, 4° contro WC1, etc.
+  const ordineTesteDiSerie = [0, 3, 2, 1]; // Classifiche: 1°, 4°, 3°, 2°
   const testaSerieIndex = idx - 4;
   const teamTop4Index = ordineTesteDiSerie[testaSerieIndex];
 
@@ -67,15 +67,14 @@ function aggiornaPlayoff() {
   const squadraBIndex1 = posizioni[idxPosB][0];
   const squadraBIndex2 = posizioni[idxPosB][1];
 
-  // 🟡 Nomi fallback: 1° Giodi, Vincente 5°/12°, ecc.
-  const nomeA = `🎖️ ${teamTop4Index + 1}° ${squadre[teamTop4Index]?.nome || "?"}`;
-  const nomeB = `Vincente ${squadraBIndex1 + 1}°/${squadraBIndex2 + 1}°`;
+  const teamTopName = squadre[teamTop4Index]?.nome || "?";
+  const wildcardName = `Vincente ${squadraBIndex1 + 1}°/${squadraBIndex2 + 1}°`;
 
   const matchId = `Q${testaSerieIndex + 1}`;
   const risultato = window.risultati?.find(r => r.partita === matchId);
 
-  const squadraA = risultato?.squadraA || nomeA;
-  const squadraB = risultato?.squadraB || nomeB;
+  const squadraA = risultato?.squadraA || teamTopName;
+  const squadraB = risultato?.squadraB || wildcardName;
 
   spans[0].innerHTML = creaHTMLSquadra(squadraA);
   spans[2].innerHTML = creaHTMLSquadra(squadraB);
