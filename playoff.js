@@ -55,7 +55,7 @@ function aggiornaPlayoff() {
     }
 
     // 🔸 Quarti
-    else if (idx >= 4 && idx <= 7) {
+        else if (idx >= 4 && idx <= 7) {
       const ordineTesteDiSerie = [0, 3, 2, 1];
       const testaSerieIndex = idx - 4;
       const teamTop4Index = ordineTesteDiSerie[testaSerieIndex];
@@ -74,11 +74,13 @@ function aggiornaPlayoff() {
       const matchId = `Q${testaSerieIndex + 1}`;
       const risultato = window.risultati?.find(r => r.partita === matchId);
 
-      const squadraA = risultato?.squadraA || nomeA;
-      const squadraB = risultato?.squadraB || nomeB;
+      const squadraA = risultato?.squadraA;
+      const squadraB = risultato?.squadraB;
 
-      spans[0].innerHTML = creaHTMLSquadra(squadraA);
-      spans[2].innerHTML = creaHTMLSquadra(squadraB);
+      if (squadraA && squadraB) {
+        spans[0].innerHTML = creaHTMLSquadra(squadraA);
+        spans[2].innerHTML = creaHTMLSquadra(squadraB);
+      }
     }
 
     // ⚔️ Semifinali
