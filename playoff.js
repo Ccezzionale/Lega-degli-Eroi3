@@ -10,16 +10,16 @@ function creaHTMLSquadra(nome, posizione = "", punteggio = "") {
     ? `<img src="${fileLogo}" alt="${nome}" onerror="this.style.display='none'">`
     : "";
 
-  const testo = posizione ? `${posizione} ${nome}` : nome;
-  const punteggioHTML = punteggio ? `<strong class="punteggio">${punteggio}</strong>` : "";
+  const punteggioHTML = punteggio !== "" ? `<div class="punteggio">${punteggio}</div>` : "";
 
   return `
     <div class="squadra">
       ${logoHTML}
-      <span>${testo}</span>
+      <span>${posizione} ${nome}</span>
       ${punteggioHTML}
     </div>`;
 }
+
 
 function formattaNomePerLogo(nome) {
   return nome
