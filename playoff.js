@@ -68,7 +68,7 @@ function aggiornaPlayoff() {
       const squadraAIndex = posizioni[idxPosA][0];
       const squadraBIndex = posizioni[idxPosB][1];
 
-      const nomeA = `${squadraAIndex + 1}° ${squadre[squadraAIndex]?.nome || "?"}`;
+      const nomeA = `🎖️ ${teamTop4Index + 1}° ${squadre[teamTop4Index]?.nome || "?"}`;
       const nomeB = `${squadraBIndex + 1}° ${squadre[squadraBIndex]?.nome || "?"}`;
 
       const matchId = `Q${testaSerieIndex + 1}`;
