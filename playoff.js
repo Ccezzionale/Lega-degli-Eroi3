@@ -1,7 +1,7 @@
 const URL_CLASSIFICA_TOTALE = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTduESMbJiPuCDLaAFdOHjep9GW-notjraILSyyjo6SA0xKSR0H0fgMLPNNYSwXgnGGJUyv14kjFRqv/pub?gid=691152130&single=true&output=csv";
 
 // 🔧 Funzione per creare HTML squadra con logo
-function creaHTMLSquadra(nome, posizione = "") {
+function creaHTMLSquadra(nome, posizione = "", punteggio = "") {
   const nomePulito = nome.replace(/[°]/g, "").trim();
   const usaLogo = !nome.toLowerCase().includes("vincente") && !nome.toLowerCase().includes("classificata");
 
@@ -10,10 +10,14 @@ function creaHTMLSquadra(nome, posizione = "") {
     ? `<img src="${fileLogo}" alt="${nome}" onerror="this.style.display='none'">`
     : "";
 
+  const testo = posizione ? `${posizione} ${nome}` : nome;
+  const punteggioHTML = punteggio ? `<strong class="punteggio">${punteggio}</strong>` : "";
+
   return `
     <div class="squadra">
       ${logoHTML}
-      <span>${posizione} ${nome}</span>
+      <span>${testo}</span>
+      ${punteggioHTML}
     </div>`;
 }
 
@@ -87,6 +91,9 @@ function aggiornaPlayoff() {
   ? `${squadre.findIndex(s => s.nome === squadraB) + 1}°`
   : "";
 
+  const punteggioA = risultato?.puntiA || "";
+  const punteggioB = risultato?.puntiB || "";
+         
   spans[0].innerHTML = creaHTMLSquadra(squadraA, posizioneA);
   spans[1].innerHTML = `<strong class="vs">vs</strong>`;
   spans[2].innerHTML = creaHTMLSquadra(squadraB, posizioneB);
