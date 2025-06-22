@@ -100,7 +100,6 @@ quartiIds.forEach((id, idx) => {
     spans[0].innerHTML = creaHTMLSquadra(nomeA);
     spans[2].innerHTML = creaHTMLSquadra(nomeB);
   }
-  }
 
     // ⚔️ Semifinali
     else if (idx === 8 || idx === 9) {
