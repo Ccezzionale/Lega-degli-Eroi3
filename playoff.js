@@ -81,6 +81,27 @@ matchDivs.forEach((el, idx) => {
     spans[2].innerHTML = creaHTMLSquadra(squadraB);
   }
 
+     // 🔁 Fallback Quarti – se non ci sono risultati dal foglio
+const quartiIds = ["Q1", "Q2", "Q3", "Q4"];
+const fallbackQuarti = [
+  ["1° Classificata", "Vincente WC4"],
+  ["4° Classificata", "Vincente WC1"],
+  ["3° Classificata", "Vincente WC2"],
+  ["2° Classificata", "Vincente WC3"]
+];
+
+quartiIds.forEach((id, idx) => {
+  const match = document.getElementById(id);
+  const spans = match?.querySelectorAll("span");
+  const haRisultato = window.risultati?.find(r => r.partita === id);
+
+  if (!haRisultato && spans?.length >= 3) {
+    const [nomeA, nomeB] = fallbackQuarti[idx];
+    spans[0].innerHTML = creaHTMLSquadra(nomeA);
+    spans[2].innerHTML = creaHTMLSquadra(nomeB);
+  }
+});
+
     // ⚔️ Semifinali
     else if (idx === 8 || idx === 9) {
       const semiIndex = idx - 8;
