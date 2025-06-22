@@ -54,8 +54,8 @@ function aggiornaPlayoff() {
 
       const squadraA = risultato?.squadraA || squadre[i1]?.nome || "?";
       const squadraB = risultato?.squadraB || squadre[i2]?.nome || "?";
-      const posizioneA = !risultato?.squadraA ? `${i1 + 1}°` : "";
-      const posizioneB = !risultato?.squadraB ? `${i2 + 1}°` : "";
+      const posizioneA = `${squadre.findIndex(s => s.nome === squadraA) + 1}°` || `${i1 + 1}°`;
+      const posizioneB = `${squadre.findIndex(s => s.nome === squadraB) + 1}°` || `${i2 + 1}°`;
 
       spans[0].innerHTML = creaHTMLSquadra(squadraA, posizioneA);
       spans[2].innerHTML = creaHTMLSquadra(squadraB, posizioneB);
@@ -82,11 +82,14 @@ function aggiornaPlayoff() {
   const squadraA = risultato?.squadraA || squadre[teamTop4Index]?.nome || "?";
   const squadraB = risultato?.squadraB || nomeB_fallback;
 
-  const posizioneA = risultato?.squadraA ? "" : `${teamTop4Index + 1}°`;
+  const posizioneA = `${squadre.findIndex(s => s.nome === squadraA) + 1}°`;
+  const posizioneB = squadre.find(s => s.nome === squadraB)
+  ? `${squadre.findIndex(s => s.nome === squadraB) + 1}°`
+  : "";
 
   spans[0].innerHTML = creaHTMLSquadra(squadraA, posizioneA);
   spans[1].innerHTML = `<strong class="vs">vs</strong>`;
-  spans[2].innerHTML = creaHTMLSquadra(squadraB);
+  spans[2].innerHTML = creaHTMLSquadra(squadraB, posizioneB);
 }
 
     // ⚔️ Semifinali
