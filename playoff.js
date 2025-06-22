@@ -126,27 +126,26 @@ function aggiornaPlayoff() {
     }
   });
 
-  // 🔁 Fallback Quarti – solo se NON ci sono risultati
-  const quartiIds = ["Q1", "Q2", "Q3", "Q4"];
-  const fallbackQuarti = [
-    ["1° Classificata", "Vincente WC4"],
-    ["4° Classificata", "Vincente WC1"],
-    ["3° Classificata", "Vincente WC2"],
-    ["2° Classificata", "Vincente WC3"]
-  ];
+  // 🔁 Fallback Quarti – se non ci sono risultati dal foglio
+const quartiIds = ["Q1", "Q2", "Q3", "Q4"];
+const fallbackQuarti = [
+  ["1° Classificata", "Vincente WC4"],
+  ["4° Classificata", "Vincente WC1"],
+  ["3° Classificata", "Vincente WC2"],
+  ["2° Classificata", "Vincente WC3"]
+];
 
-  quartiIds.forEach((id, idx) => {
-    const match = document.getElementById(id);
-    const spans = match?.querySelectorAll("span");
-    const haRisultato = window.risultati?.find(r => r.partita === id);
+quartiIds.forEach((id, idx) => {
+  const match = document.getElementById(id);
+  const spans = match?.querySelectorAll("span");
+  const haRisultato = window.risultati?.find(r => r.partita === id);
 
-    if (!haRisultato && spans?.length >= 3) {
-      const [nomeA, nomeB] = fallbackQuarti[idx];
-      spans[0].innerHTML = creaHTMLSquadra(nomeA);
-      spans[2].innerHTML = creaHTMLSquadra(nomeB);
-    }
-  });
-}
+  if (!haRisultato && spans?.length >= 3) {
+    const [nomeA, nomeB] = fallbackQuarti[idx];
+    spans[0].innerHTML = creaHTMLSquadra(nomeA);
+    spans[2].innerHTML = creaHTMLSquadra(nomeB);
+  }
+});
 
 // 🟢 Caricamento classifica
 fetch(URL_CLASSIFICA_TOTALE)
