@@ -67,16 +67,20 @@ function aggiornaPlayoff() {
   const squadraBIndex1 = posizioni[idxPosB][0];
   const squadraBIndex2 = posizioni[idxPosB][1];
 
-  const teamTopName = squadre[teamTop4Index]?.nome || "?";
-  const wildcardName = `Vincente ${squadraBIndex1 + 1}°/${squadraBIndex2 + 1}°`;
+  const topTeamNome = squadre[teamTop4Index]?.nome || "?";
+  const topTeamPosizione = `${teamTop4Index + 1}°`;
+  const nomeA = `${topTeamPosizione} ${topTeamNome}`;
+  const nomeB = `Vincente ${squadraBIndex1 + 1}°/${squadraBIndex2 + 1}°`;
 
   const matchId = `Q${testaSerieIndex + 1}`;
   const risultato = window.risultati?.find(r => r.partita === matchId);
 
-  const squadraA = risultato?.squadraA || teamTopName;
-  const squadraB = risultato?.squadraB || wildcardName;
+  const squadraA = risultato?.squadraA || nomeA;
+  const squadraB = risultato?.squadraB || nomeB;
 
+  // Se c'è un risultato, usalo; altrimenti fallback
   spans[0].innerHTML = creaHTMLSquadra(squadraA);
+  spans[1].innerHTML = `<strong>vs</strong>`; // solo una riga "vs"
   spans[2].innerHTML = creaHTMLSquadra(squadraB);
 }
 
