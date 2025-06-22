@@ -65,7 +65,6 @@ function aggiornaPlayoff() {
       const posizioneB = `${squadre.findIndex(s => s.nome === squadraB) + 1}°` || `${i2 + 1}°`;
       const punteggioA = risultato?.golA ?? "";
       const punteggioB = risultato?.golB ?? "";
-      console.log("🎯 squadraA", squadraA, "| posizione:", posizioneA, "| punti:", punteggioA);
 
       spans[0].innerHTML = creaHTMLSquadra(squadraA, posizioneA, punteggioA);
       spans[2].innerHTML = creaHTMLSquadra(squadraB, posizioneB, punteggioB);  
@@ -96,6 +95,8 @@ function aggiornaPlayoff() {
   const posizioneB = squadre.find(s => s.nome === squadraB)
   ? `${squadre.findIndex(s => s.nome === squadraB) + 1}°`
   : "";
+  const punteggioA = risultato?.golA ?? "";
+  const punteggioB = risultato?.golB ?? "";
          
   spans[0].innerHTML = creaHTMLSquadra(squadraA, posizioneA);
   spans[1].innerHTML = `<strong class="vs">vs</strong>`;
@@ -125,7 +126,9 @@ else if (idx === 8 || idx === 9) {
   const posizioneB = squadre.findIndex(s => s.nome === squadraB) !== -1
     ? `${squadre.findIndex(s => s.nome === squadraB) + 1}°`
     : "";
-
+  const punteggioA = risultato?.golA ?? "";
+  const punteggioB = risultato?.golB ?? "";
+  
   spans[0].innerHTML = creaHTMLSquadra(squadraA, posizioneA);
   spans[2].innerHTML = creaHTMLSquadra(squadraB, posizioneB);
 }
@@ -146,7 +149,9 @@ else if (idx === 8 || idx === 9) {
   const posizioneB = squadre.findIndex(s => s.nome === squadraB) !== -1
     ? `${squadre.findIndex(s => s.nome === squadraB) + 1}°`
     : "";
-
+  const punteggioA = risultato?.golA ?? "";
+  const punteggioB = risultato?.golB ?? "";
+      
   spans[0].innerHTML = creaHTMLSquadra(squadraA, posizioneA);
   spans[2].innerHTML = creaHTMLSquadra(squadraB, posizioneB);
 }
