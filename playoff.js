@@ -63,8 +63,8 @@ function aggiornaPlayoff() {
       const squadraB = risultato?.squadraB || squadre[i2]?.nome || "?";
       const posizioneA = `${squadre.findIndex(s => s.nome === squadraA) + 1}°` || `${i1 + 1}°`;
       const posizioneB = `${squadre.findIndex(s => s.nome === squadraB) + 1}°` || `${i2 + 1}°`;
-      const punteggioA = risultato?.puntiA || "";
-      const punteggioB = risultato?.puntiB || "";
+      const punteggioA = risultato?.golA ?? "";
+      const punteggioB = risultato?.golB ?? "";
       console.log("🎯 squadraA", squadraA, "| posizione:", posizioneA, "| punti:", punteggioA);
 
       spans[0].innerHTML = creaHTMLSquadra(squadraA, posizioneA, punteggioA);
