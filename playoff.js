@@ -98,9 +98,9 @@ function aggiornaPlayoff() {
   const punteggioA = risultato?.golA ?? "";
   const punteggioB = risultato?.golB ?? "";
          
-  spans[0].innerHTML = creaHTMLSquadra(squadraA, posizioneA);
+  spans[0].innerHTML = creaHTMLSquadra(squadraA, posizioneA, punteggioA);
   spans[1].innerHTML = `<strong class="vs">vs</strong>`;
-  spans[2].innerHTML = creaHTMLSquadra(squadraB, posizioneB);
+  spans[2].innerHTML = creaHTMLSquadra(squadraB, posizioneB, punteggioB);
 }
 
     // ⚔️ Semifinali
