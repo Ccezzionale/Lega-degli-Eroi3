@@ -126,11 +126,11 @@ else if (idx === 8 || idx === 9) {
   const posizioneB = squadre.findIndex(s => s.nome === squadraB) !== -1
     ? `${squadre.findIndex(s => s.nome === squadraB) + 1}°`
     : "";
-  const punteggioA = risultato?.golA ?? "";
-  const punteggioB = risultato?.golB ?? "";
+const punteggioA = risultatoSemi?.golA ?? "";
+const punteggioB = risultatoSemi?.golB ?? "";
   
-  spans[0].innerHTML = creaHTMLSquadra(squadraA, posizioneA, punteggioA);
-  spans[2].innerHTML = creaHTMLSquadra(squadraB, posizioneB, punteggioB);
+spans[0].innerHTML = creaHTMLSquadra(squadraA, posizioneA, punteggioA);
+spans[2].innerHTML = creaHTMLSquadra(squadraB, posizioneB, punteggioB);
 }
 
     // 🏆 Finale
@@ -149,9 +149,11 @@ else if (idx === 8 || idx === 9) {
   const posizioneB = squadre.findIndex(s => s.nome === squadraB) !== -1
     ? `${squadre.findIndex(s => s.nome === squadraB) + 1}°`
     : "";
+   const punteggioA = risultatoFinale?.golA ?? "";
+    const punteggioB = risultatoFinale?.golB ?? "";
       
-  spans[0].innerHTML = creaHTMLSquadra(squadraA, posizioneA);
-  spans[2].innerHTML = creaHTMLSquadra(squadraB, posizioneB);
+spans[0].innerHTML = creaHTMLSquadra(squadraA, posizioneA, punteggioA);
+spans[2].innerHTML = creaHTMLSquadra(squadraB, posizioneB, punteggioB);
 }
   });
   }
