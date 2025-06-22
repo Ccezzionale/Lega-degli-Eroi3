@@ -55,7 +55,7 @@ function aggiornaPlayoff() {
     }
 
     // 🔸 Quarti
-        else if (idx >= 4 && idx <= 7) {
+       else if (idx >= 4 && idx <= 7) {
   const ordineTesteDiSerie = [0, 3, 2, 1]; // Classifiche: 1°, 4°, 3°, 2°
   const testaSerieIndex = idx - 4;
   const teamTop4Index = ordineTesteDiSerie[testaSerieIndex];
@@ -67,20 +67,18 @@ function aggiornaPlayoff() {
   const squadraBIndex1 = posizioni[idxPosB][0];
   const squadraBIndex2 = posizioni[idxPosB][1];
 
-  const topTeamNome = squadre[teamTop4Index]?.nome || "?";
-  const topTeamPosizione = `${teamTop4Index + 1}°`;
-  const nomeA = `${topTeamPosizione} ${topTeamNome}`;
-  const nomeB = `Vincente ${squadraBIndex1 + 1}°/${squadraBIndex2 + 1}°`;
+  const nomeB_fallback = `Vincente ${squadraBIndex1 + 1}°/${squadraBIndex2 + 1}°`;
 
   const matchId = `Q${testaSerieIndex + 1}`;
   const risultato = window.risultati?.find(r => r.partita === matchId);
 
-  const squadraA = risultato?.squadraA || nomeA;
-  const squadraB = risultato?.squadraB || nomeB;
+  const squadraA = risultato?.squadraA || squadre[teamTop4Index]?.nome || "?";
+  const squadraB = risultato?.squadraB || nomeB_fallback;
 
-  // Se c'è un risultato, usalo; altrimenti fallback
-  spans[0].innerHTML = creaHTMLSquadra(squadraA);
-  spans[1].innerHTML = `<strong>vs</strong>`; // solo una riga "vs"
+  const posizioneA = risultato?.squadraA ? "" : `${teamTop4Index + 1}°`;
+
+  spans[0].innerHTML = creaHTMLSquadra(squadraA, posizioneA);
+  spans[1].innerHTML = `<strong class="vs">vs</strong>`;
   spans[2].innerHTML = creaHTMLSquadra(squadraB);
 }
 
