@@ -56,32 +56,30 @@ function aggiornaPlayoff() {
 
     // 🔸 Quarti
         else if (idx >= 4 && idx <= 7) {
-      const ordineTesteDiSerie = [0, 3, 2, 1];
-      const testaSerieIndex = idx - 4;
-      const teamTop4Index = ordineTesteDiSerie[testaSerieIndex];
-      const squadraTop = squadre[teamTop4Index];
+  const ordineTesteDiSerie = [0, 3, 2, 1]; // 1° contro WC4, 4° contro WC1, etc.
+  const testaSerieIndex = idx - 4;
+  const teamTop4Index = ordineTesteDiSerie[testaSerieIndex];
 
-      const mapping = [
-        [4, 2], [7, 3], [6, 0], [5, 1]
-      ];
-      const [idxPosA, idxPosB] = mapping[testaSerieIndex];
-      const squadraAIndex = posizioni[idxPosA][0];
-      const squadraBIndex = posizioni[idxPosB][1];
+  const mapping = [
+    [4, 2], [7, 3], [6, 0], [5, 1]
+  ];
+  const [idxPosA, idxPosB] = mapping[testaSerieIndex];
+  const squadraBIndex1 = posizioni[idxPosB][0];
+  const squadraBIndex2 = posizioni[idxPosB][1];
 
-      const nomeA = `🎖️ ${teamTop4Index + 1}° ${squadre[teamTop4Index]?.nome || "?"}`;
-      const nomeB = `${squadraBIndex + 1}° ${squadre[squadraBIndex]?.nome || "?"}`;
+  // 🟡 Nomi fallback: 1° Giodi, Vincente 5°/12°, ecc.
+  const nomeA = `🎖️ ${teamTop4Index + 1}° ${squadre[teamTop4Index]?.nome || "?"}`;
+  const nomeB = `Vincente ${squadraBIndex1 + 1}°/${squadraBIndex2 + 1}°`;
 
-      const matchId = `Q${testaSerieIndex + 1}`;
-      const risultato = window.risultati?.find(r => r.partita === matchId);
+  const matchId = `Q${testaSerieIndex + 1}`;
+  const risultato = window.risultati?.find(r => r.partita === matchId);
 
-      const squadraA = risultato?.squadraA;
-      const squadraB = risultato?.squadraB;
+  const squadraA = risultato?.squadraA || nomeA;
+  const squadraB = risultato?.squadraB || nomeB;
 
-      if (squadraA && squadraB) {
-        spans[0].innerHTML = creaHTMLSquadra(squadraA);
-        spans[2].innerHTML = creaHTMLSquadra(squadraB);
-      }
-    }
+  spans[0].innerHTML = creaHTMLSquadra(squadraA);
+  spans[2].innerHTML = creaHTMLSquadra(squadraB);
+}
 
     // ⚔️ Semifinali
     else if (idx === 8 || idx === 9) {
