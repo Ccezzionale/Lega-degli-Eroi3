@@ -32,9 +32,9 @@ function aggiornaPlayoff() {
 
   const matchDivs = document.querySelectorAll(".match");
 
-matchDivs.forEach((el, idx) => {
-  console.log(`🔢 Match idx ${idx} → id="${el.id}" | contenuto: ${el.outerHTML}`);
-});
+  matchDivs.forEach((el, idx) => {
+    console.log(`🔢 Match idx ${idx} → id="${el.id}" | contenuto: ${el.outerHTML}`);
+  });
 
   matchDivs.forEach((match, idx) => {
     const spans = match.querySelectorAll("span");
@@ -55,51 +55,31 @@ matchDivs.forEach((el, idx) => {
     }
 
     // 🔸 Quarti
-   else if (idx >= 4 && idx <= 7) {
-    const ordineTesteDiSerie = [0, 3, 2, 1];
-    const testaSerieIndex = idx - 4;
-    const teamTop4Index = ordineTesteDiSerie[testaSerieIndex];
-    const squadraTop = squadre[teamTop4Index];
+    else if (idx >= 4 && idx <= 7) {
+      const ordineTesteDiSerie = [0, 3, 2, 1];
+      const testaSerieIndex = idx - 4;
+      const teamTop4Index = ordineTesteDiSerie[testaSerieIndex];
+      const squadraTop = squadre[teamTop4Index];
 
-    const mapping = [
-      [4, 2], [7, 3], [6, 0], [5, 1]
-    ];
-    const [idxPosA, idxPosB] = mapping[testaSerieIndex];
-    const squadraAIndex = posizioni[idxPosA][0];
-    const squadraBIndex = posizioni[idxPosB][1];
+      const mapping = [
+        [4, 2], [7, 3], [6, 0], [5, 1]
+      ];
+      const [idxPosA, idxPosB] = mapping[testaSerieIndex];
+      const squadraAIndex = posizioni[idxPosA][0];
+      const squadraBIndex = posizioni[idxPosB][1];
 
-    const nomeA = `${squadraAIndex + 1}° ${squadre[squadraAIndex]?.nome || "?"}`;
-    const nomeB = `${squadraBIndex + 1}° ${squadre[squadraBIndex]?.nome || "?"}`;
+      const nomeA = `${squadraAIndex + 1}° ${squadre[squadraAIndex]?.nome || "?"}`;
+      const nomeB = `${squadraBIndex + 1}° ${squadre[squadraBIndex]?.nome || "?"}`;
 
-    const matchId = `Q${testaSerieIndex + 1}`;
-    const risultato = window.risultati?.find(r => r.partita === matchId);
+      const matchId = `Q${testaSerieIndex + 1}`;
+      const risultato = window.risultati?.find(r => r.partita === matchId);
 
-    const squadraA = risultato?.squadraA || nomeA;
-    const squadraB = risultato?.squadraB || nomeB;
+      const squadraA = risultato?.squadraA || nomeA;
+      const squadraB = risultato?.squadraB || nomeB;
 
-    spans[0].innerHTML = creaHTMLSquadra(squadraA);
-    spans[2].innerHTML = creaHTMLSquadra(squadraB);
-  }
-
-     // 🔁 Fallback Quarti – se non ci sono risultati dal foglio
-const quartiIds = ["Q1", "Q2", "Q3", "Q4"];
-const fallbackQuarti = [
-  ["1° Classificata", "Vincente WC4"],
-  ["4° Classificata", "Vincente WC1"],
-  ["3° Classificata", "Vincente WC2"],
-  ["2° Classificata", "Vincente WC3"]
-];
-
-quartiIds.forEach((id, idx) => {
-  const match = document.getElementById(id);
-  const spans = match?.querySelectorAll("span");
-  const haRisultato = window.risultati?.find(r => r.partita === id);
-
-  if (!haRisultato && spans?.length >= 3) {
-    const [nomeA, nomeB] = fallbackQuarti[idx];
-    spans[0].innerHTML = creaHTMLSquadra(nomeA);
-    spans[2].innerHTML = creaHTMLSquadra(nomeB);
-  }
+      spans[0].innerHTML = creaHTMLSquadra(squadraA);
+      spans[2].innerHTML = creaHTMLSquadra(squadraB);
+    }
 
     // ⚔️ Semifinali
     else if (idx === 8 || idx === 9) {
@@ -129,22 +109,41 @@ quartiIds.forEach((id, idx) => {
     }
 
     // 🏆 Finale
-   else if (idx === 10) {
-  const spans = match.querySelectorAll("span");
-  const risultato1 = window.risultati?.find(r => r.partita === "S1");
-  const risultato2 = window.risultati?.find(r => r.partita === "S2");
-  const risultatoFinale = window.risultati?.find(r => r.partita === "F");
+    else if (idx === 10) {
+      const risultato1 = window.risultati?.find(r => r.partita === "S1");
+      const risultato2 = window.risultati?.find(r => r.partita === "S2");
+      const risultatoFinale = window.risultati?.find(r => r.partita === "F");
 
-  const squadraA = risultato1?.vincente || `Vincente ${risultato1?.squadraA || "S1A"} / ${risultato1?.squadraB || "S1B"}`;
-  const squadraB = risultato2?.vincente || `Vincente ${risultato2?.squadraA || "S2A"} / ${risultato2?.squadraB || "S2B"}`;
+      const squadraA = risultato1?.vincente || `Vincente ${risultato1?.squadraA || "S1A"} / ${risultato1?.squadraB || "S1B"}`;
+      const squadraB = risultato2?.vincente || `Vincente ${risultato2?.squadraA || "S2A"} / ${risultato2?.squadraB || "S2B"}`;
 
-  console.log(`🏆 Finale → ${squadraA} vs ${squadraB} | Vincente: ${risultatoFinale?.vincente || "?"}`);
+      console.log(`🏆 Finale → ${squadraA} vs ${squadraB} | Vincente: ${risultatoFinale?.vincente || "?"}`);
 
-  // Aggiorna i nomi delle squadre nel tabellone della finale
-  spans[0].innerHTML = creaHTMLSquadra(squadraA);
-  spans[2].innerHTML = creaHTMLSquadra(squadraB);
-}
-});
+      spans[0].innerHTML = creaHTMLSquadra(squadraA);
+      spans[2].innerHTML = creaHTMLSquadra(squadraB);
+    }
+  });
+
+  // 🔁 Fallback Quarti – solo se NON ci sono risultati
+  const quartiIds = ["Q1", "Q2", "Q3", "Q4"];
+  const fallbackQuarti = [
+    ["1° Classificata", "Vincente WC4"],
+    ["4° Classificata", "Vincente WC1"],
+    ["3° Classificata", "Vincente WC2"],
+    ["2° Classificata", "Vincente WC3"]
+  ];
+
+  quartiIds.forEach((id, idx) => {
+    const match = document.getElementById(id);
+    const spans = match?.querySelectorAll("span");
+    const haRisultato = window.risultati?.find(r => r.partita === id);
+
+    if (!haRisultato && spans?.length >= 3) {
+      const [nomeA, nomeB] = fallbackQuarti[idx];
+      spans[0].innerHTML = creaHTMLSquadra(nomeA);
+      spans[2].innerHTML = creaHTMLSquadra(nomeB);
+    }
+  });
 }
 
 // 🟢 Caricamento classifica
