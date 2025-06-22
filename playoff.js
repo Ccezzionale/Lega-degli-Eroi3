@@ -126,8 +126,6 @@ else if (idx === 8 || idx === 9) {
   const posizioneB = squadre.findIndex(s => s.nome === squadraB) !== -1
     ? `${squadre.findIndex(s => s.nome === squadraB) + 1}°`
     : "";
-  const punteggioA = risultato?.golA ?? "";
-  const punteggioB = risultato?.golB ?? "";
   
   spans[0].innerHTML = creaHTMLSquadra(squadraA, posizioneA);
   spans[2].innerHTML = creaHTMLSquadra(squadraB, posizioneB);
@@ -149,8 +147,6 @@ else if (idx === 8 || idx === 9) {
   const posizioneB = squadre.findIndex(s => s.nome === squadraB) !== -1
     ? `${squadre.findIndex(s => s.nome === squadraB) + 1}°`
     : "";
-  const punteggioA = risultato?.golA ?? "";
-  const punteggioB = risultato?.golB ?? "";
       
   spans[0].innerHTML = creaHTMLSquadra(squadraA, posizioneA);
   spans[2].innerHTML = creaHTMLSquadra(squadraB, posizioneB);
