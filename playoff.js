@@ -125,6 +125,7 @@ function aggiornaPlayoff() {
       spans[2].innerHTML = creaHTMLSquadra(squadraB);
     }
   });
+  }
 
   // 🔁 Fallback Quarti – se non ci sono risultati dal foglio
 const quartiIds = ["Q1", "Q2", "Q3", "Q4"];
