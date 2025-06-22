@@ -2,21 +2,13 @@ const URL_CLASSIFICA_TOTALE = "https://docs.google.com/spreadsheets/d/e/2PACX-1v
 
 // 🔧 Funzione per creare HTML squadra con logo
 function creaHTMLSquadra(nome, posizione = "", punteggio = "") {
-  const nomePulito = nome.replace(/[°]/g, "").trim();
-  const usaLogo = !nome.toLowerCase().includes("vincente") && !nome.toLowerCase().includes("classificata");
-  const fileLogo = `img/${nomePulito}.png`;
-
-  const logoHTML = usaLogo
-    ? `<img src="${fileLogo}" alt="${nome}" onerror="this.style.display='none'">`
-    : "";
-
   return `
-    <div class="squadra">
-      ${logoHTML}
-      <span>${posizione} ${nome}</span>
-      ${punteggio !== "" ? `<div class="punteggio">${punteggio}</div>` : ""}
+    <div class="squadra" style="border: 1px solid red; padding: 5px;">
+      <div style="font-size: 0.9rem; color: cyan;">${posizione} ${nome}</div>
+      <div style="font-size: 1rem; font-weight: bold; color: yellow;">${punteggio}</div>
     </div>`;
 }
+
 
 function formattaNomePerLogo(nome) {
   return nome
@@ -59,7 +51,7 @@ function aggiornaPlayoff() {
       const posizioneB = `${squadre.findIndex(s => s.nome === squadraB) + 1}°` || `${i2 + 1}°`;
       const punteggioA = risultato?.puntiA || "";
       const punteggioB = risultato?.puntiB || "";
-      console.log(`🎯 Wildcard ${matchId}: ${squadraA} (${posizioneA}) - ${squadraB} (${posizioneB}) | Punti: ${punteggioA}-${punteggioB}`);
+      console.log("🎯 squadraA", squadraA, "| posizione:", posizioneA, "| punti:", punteggioA);
 
       spans[0].innerHTML = creaHTMLSquadra(squadraA, posizioneA, punteggioA);
       spans[2].innerHTML = creaHTMLSquadra(squadraB, posizioneB, punteggioB);  
