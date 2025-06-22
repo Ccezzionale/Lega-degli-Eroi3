@@ -126,27 +126,6 @@ function aggiornaPlayoff() {
   });
   }
 
-  // 🔁 Fallback Quarti – se non ci sono risultati dal foglio
-const quartiIds = ["Q1", "Q2", "Q3", "Q4"];
-const fallbackQuarti = [
-  ["1° Classificata", "Vincente 8°/9°"],
-  ["4° Classificata", "Vincente 5°/12°"],
-  ["3° Classificata", "Vincente 6°/11°"],
-  ["2° Classificata", "Vincente 7°/10°"]
-];
-
-quartiIds.forEach((id, idx) => {
-  const match = document.getElementById(id);
-  const spans = match?.querySelectorAll("span");
-  const haRisultato = window.risultati?.find(r => r.partita === id);
-
-  if (!haRisultato && spans?.length >= 3) {
-    const [nomeA, nomeB] = fallbackQuarti[idx];
-    spans[0].innerHTML = creaHTMLSquadra(nomeA);
-    spans[2].innerHTML = creaHTMLSquadra(nomeB);
-  }
-});
-
 // 🟢 Caricamento classifica
 fetch(URL_CLASSIFICA_TOTALE)
   .then(res => res.text())
