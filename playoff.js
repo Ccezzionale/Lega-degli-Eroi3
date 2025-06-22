@@ -62,7 +62,8 @@ function aggiornaPlayoff() {
       const posizioneB = `${squadre.findIndex(s => s.nome === squadraB) + 1}°` || `${i2 + 1}°`;
       const punteggioA = risultato?.puntiA || "";
       const punteggioB = risultato?.puntiB || "";
-      
+      console.log(`🎯 Wildcard ${matchId}: ${squadraA} (${posizioneA}) - ${squadraB} (${posizioneB}) | Punti: ${punteggioA}-${punteggioB}`);
+
       spans[0].innerHTML = creaHTMLSquadra(squadraA, posizioneA, punteggioA);
       spans[2].innerHTML = creaHTMLSquadra(squadraB, posizioneB, punteggioB);  
     }
