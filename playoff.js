@@ -130,10 +130,10 @@ function aggiornaPlayoff() {
   // 🔁 Fallback Quarti – se non ci sono risultati dal foglio
 const quartiIds = ["Q1", "Q2", "Q3", "Q4"];
 const fallbackQuarti = [
-  ["1° Classificata", "Vincente WC4"],
-  ["4° Classificata", "Vincente WC1"],
-  ["3° Classificata", "Vincente WC2"],
-  ["2° Classificata", "Vincente WC3"]
+  ["1° Classificata", "Vincente 8°/9°"],
+  ["4° Classificata", "Vincente 5°/12°"],
+  ["3° Classificata", "Vincente 6°/11°"],
+  ["2° Classificata", "Vincente 7°/10°"]
 ];
 
 quartiIds.forEach((id, idx) => {
