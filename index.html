@@ -5,20 +5,133 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Lega degli Eroi</title>
   <link rel="stylesheet" href="main.css" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f4f4;
+      color: #222;
+    }
+
+    nav {
+      background-color: #001f3f;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+    }
+
+    .navbar {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+
+    .navbar li {
+      position: relative;
+    }
+
+    .navbar a {
+      text-decoration: none;
+      color: white;
+      padding: 6px 12px;
+      display: block;
+    }
+
+    .navbar a:hover {
+      background-color: #0074D9;
+      border-radius: 6px;
+    }
+
+    .dropdown:hover .submenu,
+    .dropdown:focus-within .submenu {
+      display: block;
+    }
+
+    .submenu {
+      display: none;
+      position: absolute;
+      top: 35px;
+      left: 0;
+      background-color: #003366;
+      border-radius: 4px;
+      z-index: 99;
+      min-width: 180px;
+    }
+
+    .submenu li {
+      padding: 5px 0;
+    }
+
+    main {
+      text-align: center;
+      padding: 60px 20px;
+    }
+
+    .hero {
+      background: url('img/hero_desktop.jpg') no-repeat center center;
+      background-size: cover;
+      height: 250px;
+      border-bottom: 4px solid #ffcc00;
+    }
+
+    h1 {
+      color: #001f3f;
+      margin: 30px 0 10px;
+      font-size: 2.2rem;
+    }
+
+    p {
+      font-size: 1.1rem;
+      color: #333;
+    }
+
+    .mobile-nav, .mobile-only { display: none; }
+
+    @media (max-width: 768px) {
+      .desktop-only { display: none; }
+      .mobile-nav, .mobile-only { display: flex; }
+    }
+  </style>
 </head>
 <body>
 
-<!-- NAVBAR -->
-<nav>
-  <!-- NAV MOBILE -->
-  <div class="mobile-nav">
+<!-- NAVBAR DESKTOP -->
+<nav class="desktop-only">
+  <ul class="navbar">
+    <li><a href="index.html">🏠</a></li>
+    <li><a href="rose.html">Rose</a></li>
+    <li class="dropdown">
+      <a href="#">Draft ▾</a>
+      <ul class="submenu">
+        <li><a href="draft_championship.html">🟦 Conf.Championship</a></li>
+        <li><a href="draft_conference.html">🟨 Conf.League</a></li>
+      </ul>
+    </li>
+    <li class="dropdown">
+      <a href="#">Competizioni ▾</a>
+      <ul class="submenu">
+        <li><a href="classifica.html">📊 Classifiche</a></li>
+        <li><a href="playoff.html">🏆 Playoff</a></li>
+      </ul>
+    </li>
+    <li><a href="svincolati.html">Svincolati</a></li>
+    <li><a href="chiamate.html">Chiamate</a></li>
+    <li><a href="albo.html">Albo d'Oro</a></li>
+  </ul>
+</nav>
+
+<!-- NAVBAR MOBILE -->
+<div class="mobile-nav">
   <span id="hamburger" class="hamburger">☰</span>
   <a href="index.html" class="home-icon">🏠</a>
 </div>
-
 <ul class="navbar mobile-only hidden" id="mobileMenu">
   <li><a href="rose.html">Rose</a></li>
-  <li><a href="classifica.html">Classifica</a></li>
   <li class="dropdown">
     <a href="#" id="toggle-draft">Draft ▾</a>
     <ul class="submenu hidden" id="submenu-draft">
@@ -26,32 +139,18 @@
       <li><a href="draft_conference.html">🟨 Conf.League</a></li>
     </ul>
   </li>
+  <li class="dropdown">
+    <a href="#" id="toggle-competizioni">Competizioni ▾</a>
+    <ul class="submenu hidden" id="submenu-competizioni">
+      <li><a href="classifica.html">📊 Classifiche</a></li>
+      <li><a href="playoff.html">🏆 Playoff</a></li>
+    </ul>
+  </li>
   <li><a href="svincolati.html">Svincolati</a></li>
   <li><a href="chiamate.html">Chiamate</a></li>
   <li><a href="albo.html">Albo d'Oro</a></li>
-  <li><a href="playoff.html">Playoff</a></li>
 </ul>
 
-  <!-- MENU DESKTOP -->
-  <ul class="navbar desktop-only">
-    <li><a href="index.html">🏠</a></li>
-    <li><a href="rose.html">Rose</a></li>
-    <li><a href="classifica.html">Classifica</a></li>
-    <li class="dropdown">
-      <a href="#" id="desktop-toggle-draft">Draft ▾</a>
-      <ul class="submenu hidden" id="desktop-submenu-draft">
-        <li><a href="draft_championship.html?tab=Draft Championship">🟦 Conf.Championship</a></li>
-        <li><a href="draft_conference.html?tab=Draft Conference">🟨 Conf.League</a></li>
-      </ul>
-    </li>
-    <li><a href="svincolati.html">Svincolati</a></li>
-    <li><a href="chiamate.html">Chiamate</a></li>
-    <li><a href="albo.html">Albo d'Oro</a></li>
-    <li><a href="playoff.html">Playoff</a></li>
-  </ul>
-</nav>
-
-<!-- CONTENUTO -->
 <main>
   <div class="hero"></div>
   <h1>Benvenuto nella Lega degli Eroi</h1>
@@ -64,28 +163,24 @@
     const mobileMenu = document.getElementById("mobileMenu");
     const draftToggle = document.getElementById("toggle-draft");
     const draftSubmenu = document.getElementById("submenu-draft");
+    const compToggle = document.getElementById("toggle-competizioni");
+    const compSubmenu = document.getElementById("submenu-competizioni");
 
-    // Toggle apertura menu mobile
-    hamburger.addEventListener("click", () => {
+    hamburger?.addEventListener("click", () => {
       mobileMenu.classList.toggle("show");
     });
 
-    // Toggle submenu draft mobile
     draftToggle?.addEventListener("click", function (e) {
       e.preventDefault();
       draftSubmenu.classList.toggle("hidden");
     });
 
-    // Chiude tutto se clicchi un link normale
-    document.querySelectorAll("#mobileMenu a").forEach(link => {
-      link.addEventListener("click", function (e) {
-        if (link.id !== "toggle-draft") {
-          mobileMenu.classList.remove("show");
-          draftSubmenu.classList.add("hidden");
-        }
-      });
+    compToggle?.addEventListener("click", function (e) {
+      e.preventDefault();
+      compSubmenu.classList.toggle("hidden");
     });
   });
 </script>
 </body>
 </html>
+
