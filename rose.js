@@ -18,7 +18,9 @@ const conferencePerSquadra = {
   "Ibla": "Conference League",
   "Pandinicoccolosini": "Conference League"
 };
+
 const giocatoriFP = new Set();
+
 const giocatoriU21PerSquadra = {
   "Team Bartowski": ["baldanzi"],
   "Desperados": ["fazzini"],
@@ -39,7 +41,6 @@ const giocatoriU21PerSquadra = {
 };
 
 const URL_ROSE = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSE8Q0l1pnU8NCtId51qCk8Pstat27g6JBQaU-3UKIY0ZCZicUJ1u1T-ElvuR9NK9pc2WYpunW-a4ld/pub?output=csv";
-
 const URL_QUOTAZIONI = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSE8Q0l1pnU8NCtId51qCk8Pstat27g6JBQaU-3UKIY0ZCZicUJ1u1T-ElvuR9NK9pc2WYpunW-a4ld/pub?gid=2087990274&single=true&output=csv";
 
 const squadre = [
@@ -68,33 +69,28 @@ function trovaLogo(nomeSquadra) {
     nomeSquadra.toLowerCase(),
     nomeSquadra.replaceAll(" ", "_").toLowerCase()
   ];
-
   for (const base of varianti) {
     for (const ext of estensioni) {
-      const path = `img/${base}${ext}`;
-      return path;
+      return `img/${base}${ext}`;
     }
   }
-
   return "img/default.png";
 }
-console.log("🔍 Avvio caricaGiocatoriFP");
+
 async function caricaGiocatoriFP() {
   try {
     const response = await fetch(URL_QUOTAZIONI);
     const text = await response.text();
     const rows = text.split("\n").map(r => r.split(","));
-
-    const portieriPerSquadra = {}; // Per i blocchi portieri
+    const portieriPerSquadra = {};
 
     for (let i = 1; i < rows.length; i++) {
-      const ruolo = rows[i][0]?.trim().toUpperCase();     // Ruolo
-      const nome = rows[i][2]?.trim();                     // Nome
-      const squadra = rows[i][3]?.trim();                  // Squadra
-      const quotazione = parseFloat(rows[i][4]?.replace(",", ".")); // Quotazione Mantra
+      const ruolo = rows[i][0]?.trim().toUpperCase();
+      const nome = rows[i][2]?.trim();
+      const squadra = rows[i][3]?.trim();
+      const quotazione = parseFloat(rows[i][4]?.replace(",", "."));
 
       if (!nome || isNaN(quotazione)) continue;
-
       const nomeLower = nome.toLowerCase();
 
       if (ruolo === "P") {
@@ -109,7 +105,6 @@ async function caricaGiocatoriFP() {
       }
     }
 
-    // Verifica dei blocchi portieri FP
     for (const squadra in portieriPerSquadra) {
       const blocco = portieriPerSquadra[squadra];
       const maxQuota = Math.max(...blocco.map(p => p.quotazione));
@@ -117,16 +112,13 @@ async function caricaGiocatoriFP() {
         blocco.forEach(p => giocatoriFP.add(p.nome));
       }
     }
-
   } catch (e) {
     console.error("Errore nel caricamento FP:", e);
   }
 }
 
-
 async function caricaRose() {
   await caricaGiocatoriFP();
-
   const response = await fetch(URL_ROSE);
   const text = await response.text();
   const rows = text.split("\n").map(r => r.split(","));
@@ -144,14 +136,14 @@ async function caricaRose() {
       const nomeClean = nome.toLowerCase();
 
       if (nome && nome.toLowerCase() !== "nome") {
-       giocatori.push({
-  nome,
-  ruolo,
-  squadra,
-  quotazione,
-  fp: giocatoriFP.has(nomeClean),
-  u21: giocatoriU21PerSquadra[nomeSquadra]?.includes(nomeClean) || false
-});
+        giocatori.push({
+          nome,
+          ruolo,
+          squadra,
+          quotazione,
+          fp: giocatoriFP.has(nomeClean),
+          u21: giocatoriU21PerSquadra[nomeSquadra]?.includes(nomeClean) || false
+        });
       }
     }
 
@@ -274,3 +266,5 @@ function resetFiltri() {
   document.getElementById('filtro-squadra').value = 'Tutte';
   filtraGiocatori();
 }
+
+window.addEventListener("DOMContentLoaded", caricaRose);
