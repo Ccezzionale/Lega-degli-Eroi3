@@ -204,7 +204,24 @@
         parent.classList.toggle("show");
       });
     });
+    
+    // Supporto mobile menu toggles
+    const toggleDraft = document.getElementById("toggle-draft");
+    const toggleCompetizioni = document.getElementById("toggle-competizioni");
+    const submenuDraft = document.getElementById("submenu-draft");
+    const submenuCompetizioni = document.getElementById("submenu-competizioni");
+
+    toggleDraft?.addEventListener("click", function (e) {
+      e.preventDefault();
+      submenuDraft.classList.toggle("hidden");
+    });
+
+    toggleCompetizioni?.addEventListener("click", function (e) {
+      e.preventDefault();
+      submenuCompetizioni.classList.toggle("hidden");
+    });
     </script>
+
 
 
 
