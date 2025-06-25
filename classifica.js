@@ -42,7 +42,20 @@ function caricaClassifica(nomeFoglio = "Conference") {
       thead.appendChild(headerRow);
 
       for (let i = startRow; i < righe.length; i++) {
-        const colonne = righe[i].split(",").map(c => c.replace(/"/g, "").trim());
+        const colonneGrezze = righe[i].split(",");
+let colonne = [];
+
+for (let j = 0; j < colonneGrezze.length; j++) {
+  let val = colonneGrezze[j].replace(/"/g, "").trim();
+
+  // Se il valore è numerico e il prossimo è esattamente "5", uniscili
+  if (/^\d+$/.test(val) && colonneGrezze[j + 1] && colonneGrezze[j + 1].trim() === "5") {
+    colonne.push(val + ".5");
+    j++; // Salta il prossimo indice (già usato)
+  } else {
+    colonne.push(val);
+  }
+}
         if (nomeFoglio !== "Totale") colonne.splice(2, 1);
 
         const tr = document.createElement("tr");
