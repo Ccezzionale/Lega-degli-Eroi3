@@ -62,6 +62,7 @@ function caricaClassifica(nomeFoglio = "Conference") {
 
         // --- DESKTOP ---
         const tr = document.createElement("tr");
+        tr.classList.add("riga-classifica");
 
         if (nomeFoglio === "Totale" && i <= 4) {
           tr.classList.add("top4");
