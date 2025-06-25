@@ -83,7 +83,7 @@ h2 {
   border-radius: 8px;
   margin-top: 20px;
 }
-   .navbar {
+.navbar {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -91,6 +91,8 @@ h2 {
   padding: 10px;
   list-style: none;
   margin: 0;
+  width: 100%;
+  position: relative;
 }
 
 .navbar li {
@@ -124,6 +126,21 @@ h2 {
 .dropdown.show .submenu {
   display: block;
 }
+
+ .mobile-nav {
+  background-color: #001f3f;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+}
+
+.home-icon {
+  color: white;
+  font-size: 1.4rem;
+  text-decoration: none;
+  margin-left: 10px;
+}
+
 
 @media (max-width: 768px) {
   .navbar {
