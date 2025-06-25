@@ -178,21 +178,37 @@ function mostraRose() {
     div.setAttribute("data-squadra", nome);
     div.setAttribute("data-conference", conferencePerSquadra[nome] || "N/A");
 
-    div.innerHTML = `
-      <h2><img src="${data.logo}" class="logo-squadra"> ${nome}</h2>
-      <table>
-        <thead><tr><th>Ruolo</th><th>Nome</th><th>Squadra</th><th>Q</th></tr></thead>
-        <tbody>
-          ${data.giocatori.map(g => `
-            <tr>
-              <td>${g.ruolo}</td>
-              <td class="nome">${g.nome} ${g.fp ? '🅕' : ''} ${g.u21 ? '🅤21' : ''}</td>
-              <td>${g.squadra}</td>
-              <td>${g.quotazione}</td>
-            </tr>`).join("")}
-        </tbody>
-      </table>
-    `;
+    // Header centrato con logo e nome squadra
+    const header = document.createElement("div");
+    header.className = "logo-nome";
+
+    const img = document.createElement("img");
+    img.src = data.logo;
+    img.alt = nome;
+    img.onerror = () => { img.style.display = "none"; };
+
+    const name = document.createElement("span");
+    name.textContent = nome;
+
+    header.appendChild(img);
+    header.appendChild(name);
+    div.appendChild(header);
+
+    // Tabella giocatori
+    const table = document.createElement("table");
+    table.innerHTML = \`
+      <thead><tr><th>Ruolo</th><th>Nome</th><th>Squadra</th><th>Q</th></tr></thead>
+      <tbody>
+        \${data.giocatori.map(g => \`
+          <tr>
+            <td>\${g.ruolo}</td>
+            <td class="nome">\${g.nome} \${g.fp ? '🅕' : ''} \${g.u21 ? '🅤21' : ''}</td>
+            <td>\${g.squadra}</td>
+            <td>\${g.quotazione}</td>
+          </tr>\`).join("")}
+      </tbody>
+    \`;
+    div.appendChild(table);
     container.appendChild(div);
   }
 }
