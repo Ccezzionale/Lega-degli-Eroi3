@@ -1,5 +1,3 @@
-console.log("✅ Script caricato");
-
 const URL_MAP = {
   "Conference": "https://docs.google.com/spreadsheets/d/e/2PACX-1vTduESMbJiPuCDLaAFdOHjep9GW-notjraILSyyjo6SA0xKSR0H0fgMLPNNYSwXgnGGJUyv14kjFRqv/pub?gid=0&single=true&output=csv",
   "Championship": "https://docs.google.com/spreadsheets/d/e/2PACX-1vTduESMbJiPuCDLaAFdOHjep9GW-notjraILSyyjo6SA0xKSR0H0fgMLPNNYSwXgnGGJUyv14kjFRqv/pub?gid=547378102&single=true&output=csv",
@@ -46,9 +44,6 @@ function caricaClassifica(nomeFoglio = "Conference") {
 
   // 🔍 DEBUG: stampa la riga originale e le colonne
   if (colonneGrezze.includes("5")) {
-    console.log(`RIGA ${i}:`, righe[i]);
-    console.log("Colonne grezze:", colonneGrezze);
-    console.log("Colonne attese:", intestazione.length, " | Colonne reali:", colonneGrezze.length);
   }
 
   // MERGE punto bonus se "5" è colonna extra
@@ -58,7 +53,6 @@ function caricaClassifica(nomeFoglio = "Conference") {
 
     if (/^\d+$/.test(penultimo) && ultimo === "5") {
       colonneGrezze.splice(-2, 2, `${penultimo}.5`);
-      console.log("✅ Fix applicato:", colonneGrezze);
     }
   }
 
