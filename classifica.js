@@ -125,7 +125,7 @@ function caricaClassifica(nomeFoglio = "Conference") {
 
 const NOMI_ESTESI = {
   "Conference": "Conference League",
-  "Championship": "Championship",
+  "Championship": "Conference Championship",
   "Totale": "Totale"
 };
 
