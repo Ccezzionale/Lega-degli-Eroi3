@@ -62,7 +62,7 @@ function caricaClassifica(nomeFoglio = "Conference") {
         tr.classList.add("riga-classifica");
         if (nomeFoglio === "Totale" && i <= 4) tr.classList.add("top4");
         if (nomeFoglio === "Totale" && i >= righe.length - 4) tr.classList.add("ultime4");
-        if ((nomeFoglio === "Conference" || nomeFoglio === "Championship") && i === startRow) tr.classList.add("top1");
+        if ((nomeFoglio === "Conference League" || nomeFoglio === "Conference Championship") && i === startRow) tr.classList.add("top1");
 
         colonne.forEach((val, idx) => {
           const td = document.createElement("td");
