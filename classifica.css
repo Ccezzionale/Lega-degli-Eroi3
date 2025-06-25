@@ -1,126 +1,96 @@
-/* Logo + nome */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f4f4;
+  color: #222;
+}
+nav {
+  background-color: #001f3f;
+  color: white;
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  flex-wrap: wrap;
+}
+.home-icon {
+  font-size: 1.4rem;
+  margin-right: 20px;
+  text-decoration: none;
+  color: white;
+}
+.navbar {
+  list-style-type: none;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+.navbar a {
+  text-decoration: none;
+  color: white;
+  padding: 8px 12px;
+}
+.switcher {
+  text-align: center;
+  margin: 20px;
+}
+.switcher button {
+  padding: 10px 20px;
+  background-color: #001f3f;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.switcher button:hover {
+  background-color: #0074D9;
+}
+table {
+  border-collapse: collapse;
+  margin: 0 auto 40px;
+  width: 95%;
+  max-width: 1000px;
+}
+thead {
+  background-color: #001f3f;
+  color: white;
+}
+th, td {
+  padding: 10px;
+  text-align: left;
+}
 #tabella-classifica td .logo-nome {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
   gap: 8px;
 }
 #tabella-classifica td .logo-nome img {
   width: 48px;
   height: 48px;
   object-fit: contain;
+  border-radius: 50%;
 }
-#tabella-classifica td .logo-nome img {
-  background-color: transparent;
-  border: none;
-  border-radius: 0;
+tr.riga-classifica {
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+  display: table-row;
 }
-#tabella-classifica td .logo-nome img {
-  border-radius: 50%; /* oppure 10px per rettangolare con angoli stondati */
+#tabella-classifica tbody {
+  display: table;
+  width: 100%;
 }
-
-/* Accordion Mobile */
-@media (max-width: 768px) {
-  #tabella-classifica {
-    display: none;
-  }
-
-  #classifica-mobile {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding: 10px;
-  }
-
-  .accordion-item {
-    border-radius: 10px;
-    overflow: hidden;
-  }
-
-  .accordion-header {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 12px;
-    padding: 12px 16px;
-    font-weight: bold;
-    font-size: 0.95rem;
-    text-align: left;
-    background-color: #003b66;
-    color: white;
-  }
-
-.accordion-header img {
-  height: 48px;
-  width: 48px;
-  object-fit: contain;
+tr.top4 {
+  background-color: #ffcc00 !important;
+  color: black;
+  font-weight: bold;
 }
-
-  .accordion-header span {
-    display: flex;
-    flex-direction: column;
-    line-height: 1.2;
-    width: 100%;
-  }
-
-  .accordion-body {
-    display: none;
-    flex-wrap: wrap;
-    gap: 10px;
-    padding: 12px 16px;
-    background-color: #004080;
-    font-size: 0.85rem;
-  }
-
-  .accordion-item.active .accordion-body {
-    display: flex;
-  }
-
-  .accordion-body span {
-    flex: 1 1 45%;
-    white-space: nowrap;
-    color: white;
-  }
-
-  /* Zebratura: righe alternate */
-  .accordion-item:nth-child(even) .accordion-header {
-    background-color: #004472;
-  }
-
-  .accordion-item:nth-child(odd) .accordion-header {
-    background-color: #003b66;
-  }
-
-  /* Giallo per Top 4 in classifica TOTALE */
-  .accordion-item.top4 .accordion-header {
-    background-color: #ffcc00 !important;
-    color: black;
-    font-weight: bold;
-  }
-
-  /* Rosso per Ultime 4 */
-  .accordion-item.ultime4 .accordion-header {
-    background-color: #5c0000 !important;
-    color: white;
-  }
-
-  .accordion-item.ultime4 .accordion-body span {
-    color: white;
-  }
-
-  /* Mantieni zebratura normale per righe non evidenziate */
-  .accordion-item:not(.top4):not(.ultime4):nth-child(even) .accordion-header {
-    background-color: #004472;
-  }
-
-  .accordion-item:not(.top4):not(.ultime4):nth-child(odd) .accordion-header {
-    background-color: #003b66;
-  }
+tr.ultime4 {
+  background-color: #8B0000 !important;
+  color: white;
 }
-
-/* Nasconde mobile su desktop */
-@media (min-width: 769px) {
-  #classifica-mobile {
-    display: none !important;
-  }
+tr.top1 {
+  background-color: #ffcc00 !important;
+  color: black;
+  font-weight: bold;
 }

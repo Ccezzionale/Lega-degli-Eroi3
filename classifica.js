@@ -1,4 +1,3 @@
-// ✅ Versione corretta di classifica.js compatibile con layout centrato e mobile
 console.log("✅ Script caricato");
 
 const URL_MAP = {
@@ -92,7 +91,7 @@ function caricaClassifica(nomeFoglio = "Conference") {
         img.src = `img/${team}.png`;
         img.onerror = () => (img.style.display = "none");
         const span = document.createElement("span");
-        span.innerHTML = `<strong>${colonne[0]}\u00B0 ${colonne[1]}</strong><br><span style='font-weight:normal'>PT. ${colonne.at(-2)} / MP. ${colonne.at(-1)}</span>`;
+        span.innerHTML = `<strong>${colonne[0]}° ${colonne[1]}</strong><br><span style='font-weight:normal'>PT. ${colonne.at(-2)} / MP. ${colonne.at(-1)}</span>`;
         header.appendChild(img);
         header.appendChild(span);
 
@@ -119,4 +118,3 @@ window.onload = () => caricaClassifica("Conference");
 document.querySelectorAll(".switcher button").forEach(btn =>
   btn.addEventListener("click", () => caricaClassifica(btn.textContent))
 );
-
