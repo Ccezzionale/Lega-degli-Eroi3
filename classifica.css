@@ -120,6 +120,14 @@ thead {
   color: white;
 }
 
+#tabella-classifica td:last-child {
+  max-width: 70px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 0.9rem; /* opzionale, ma migliora il layout */
+}
+
 th, td {
   padding: 10px;
   text-align: left;
