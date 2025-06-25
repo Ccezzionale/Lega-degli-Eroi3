@@ -120,12 +120,13 @@ thead {
   color: white;
 }
 
-#tabella-classifica td:last-child {
-  max-width: 70px;
+#tabella-classifica td:nth-last-child(1),
+#tabella-classifica td:nth-last-child(2) {
+  max-width: 80px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-size: 0.9rem; /* opzionale, ma migliora il layout */
+  font-size: 0.9rem;
 }
 
 th, td {
