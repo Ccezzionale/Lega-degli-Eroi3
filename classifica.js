@@ -138,6 +138,3 @@ document.querySelectorAll(".switcher button").forEach(btn => {
     caricaClassifica(nomeFoglio);
   });
 });
-
-
-);
