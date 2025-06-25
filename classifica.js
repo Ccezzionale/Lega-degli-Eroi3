@@ -41,21 +41,30 @@ function caricaClassifica(nomeFoglio = "Conference") {
       });
       thead.appendChild(headerRow);
 
-      for (let i = startRow; i < righe.length; i++) {
-        const colonneGrezze = righe[i].split(",").map(c => c.replace(/"/g, "").trim());
-let colonne = [...colonneGrezze];
+     for (let i = startRow; i < righe.length; i++) {
+  const colonneGrezze = righe[i].split(",").map(c => c.replace(/"/g, "").trim());
 
-// Fai il merge solo se la riga ha una colonna in più del previsto
-if (colonneGrezze.length > intestazione.length) {
-  const ultimo = colonneGrezze[colonneGrezze.length - 1];
-  const penultimo = colonneGrezze[colonneGrezze.length - 2];
-
-  if (/^\d+$/.test(penultimo) && ultimo === "5") {
-    colonneGrezze.splice(-2, 2, `${penultimo}.5`);
+  // 🔍 DEBUG: stampa la riga originale e le colonne
+  if (colonneGrezze.includes("5")) {
+    console.log(`RIGA ${i}:`, righe[i]);
+    console.log("Colonne grezze:", colonneGrezze);
+    console.log("Colonne attese:", intestazione.length, " | Colonne reali:", colonneGrezze.length);
   }
-}
 
-        if (nomeFoglio !== "Totale") colonne.splice(2, 1);
+  // MERGE punto bonus se "5" è colonna extra
+  if (colonneGrezze.length > intestazione.length) {
+    const ultimo = colonneGrezze[colonneGrezze.length - 1];
+    const penultimo = colonneGrezze[colonneGrezze.length - 2];
+
+    if (/^\d+$/.test(penultimo) && ultimo === "5") {
+      colonneGrezze.splice(-2, 2, `${penultimo}.5`);
+      console.log("✅ Fix applicato:", colonneGrezze);
+    }
+  }
+
+  const colonne = [...colonneGrezze];
+
+  if (nomeFoglio !== "Totale") colonne.splice(2, 1);
 
         const tr = document.createElement("tr");
         tr.classList.add("riga-classifica");
