@@ -6,52 +6,84 @@
   <title>Chiamate Settimanali</title>
   <link rel="stylesheet" href="main.css" />
   <style>
-    @media (max-width: 768px) {
-      body {
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-start;
-        padding: 20px;
-        text-align: center;
-      }
+    body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f9fa;
+  color: #212529;
+  margin: 0;
+  padding: 20px;
+}
 
-      h2 {
-        margin-bottom: 15px;
-        font-size: 1.4rem;
-      }
+h2 {
+  text-align: center;
+  color: #001f3f;
+  font-size: 2rem;
+  margin-top: 30px;
+  text-transform: uppercase;
+  font-weight: 700;
+}
 
-      .moduli-container {
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-        width: 90%;
-        max-width: 500px;
-        margin-bottom: 20px;
-      }
+.moduli-container, .switcher {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 0;
+}
 
-      .switcher {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        width: 90%;
-        max-width: 500px;
-        margin-bottom: 20px;
-      }
+.bottone-chiamata, .switcher button {
+  background-color: #0074D9;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-weight: bold;
+  border-radius: 6px;
+  text-decoration: none;
+  cursor: pointer;
+  width: 90%;
+  max-width: 500px;
+  text-align: center;
+}
 
-      .switcher button,
-      .bottone-chiamata {
-        width: 100%;
-        font-size: 0.9rem;
-        padding: 10px;
-      }
+.bottone-chiamata:hover, .switcher button:hover {
+  background-color: #005fa3;
+}
 
-      #chiamate-container {
-        width: 90%;
-        max-width: 700px;
-        font-size: 0.9rem;
-      }
+#chiamate-container {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 10px;
+  font-size: 0.95rem;
+}
+
+#chiamate-container table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+#chiamate-container th,
+#chiamate-container td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: center;
+}
+
+#chiamate-container thead {
+  background-color: #001f3f;
+  color: white;
+}
+
+.avviso {
+  background-color: #001f3f;
+  color: white;
+  padding: 12px;
+  text-align: center;
+  font-weight: bold;
+  border-radius: 8px;
+  margin-top: 20px;
+}
     }
   </style>
 </head>
