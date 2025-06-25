@@ -1,4 +1,4 @@
-/* === BASE === */
+/* Reset base */
 body {
   margin: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -6,6 +6,7 @@ body {
   color: #222;
 }
 
+/* NAVBAR */
 nav {
   background-color: #001f3f;
   color: white;
@@ -40,10 +41,6 @@ nav {
   flex-wrap: wrap;
 }
 
-.navbar li {
-  position: relative;
-}
-
 .navbar a {
   text-decoration: none;
   color: white;
@@ -56,26 +53,7 @@ nav {
   border-radius: 6px;
 }
 
-.submenu {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  background-color: #003366;
-  border-radius: 4px;
-  z-index: 10;
-  min-width: 180px;
-  flex-direction: column;
-}
-
-.submenu a {
-  font-size: 0.95rem;
-}
-
-.dropdown.show .submenu {
-  display: flex;
-}
-
+/* TITOLI E BOTTONI */
 h1 {
   color: #001f3f;
   margin: 20px 0 10px;
@@ -102,6 +80,7 @@ h1 {
   background-color: #0074D9;
 }
 
+/* CONTENITORE TABELLA */
 #classifica-container {
   display: flex;
   flex-direction: column;
@@ -109,11 +88,10 @@ h1 {
   padding: 20px;
 }
 
-/* === TABELLA === */
 #tabella-classifica {
   border-collapse: collapse;
   width: 95%;
-  max-width: 1000px;
+  max-width: 1200px;
   margin-bottom: 40px;
   table-layout: fixed;
 }
@@ -124,29 +102,22 @@ thead {
 }
 
 th, td {
-  padding: 10px;
+  padding: 10px 6px;
+  text-align: center;
+  font-size: 0.95rem;
+  overflow-wrap: break-word;
+}
+
+#tabella-classifica td:nth-child(2) {
   text-align: left;
 }
 
-/* === COLONNE MAGIC POINTS === */
-#tabella-classifica th:nth-last-child(1),
-#tabella-classifica td:nth-last-child(1),
-#tabella-classifica th:nth-last-child(2),
-#tabella-classifica td:nth-last-child(2) {
-  max-width: 80px;
-  width: 80px;
-  text-align: right;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-size: 0.9rem;
-}
-
-/* === LOGO E NOME === */
+/* Logo + nome */
 #tabella-classifica td .logo-nome {
   display: flex;
   align-items: center;
   gap: 8px;
+  justify-content: flex-start;
 }
 
 #tabella-classifica td .logo-nome img {
@@ -156,7 +127,7 @@ th, td {
   border-radius: 50%;
 }
 
-/* === RIGHE SPECIALI === */
+/* RIGHE */
 .riga-classifica {
   background-color: white;
   border: 1px solid #ccc;
@@ -183,7 +154,7 @@ th, td {
   font-weight: bold;
 }
 
-/* === VERSIONE MOBILE === */
+/* RESPONSIVE */
 #classifica-mobile {
   display: none;
 }
