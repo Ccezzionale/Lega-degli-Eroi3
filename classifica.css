@@ -129,8 +129,8 @@ th, td {
 }
 
 /* === COLONNE MAGIC POINTS === */
-#tabella-classifica td:nth-last-child(1),
-#tabella-classifica td:nth-last-child(2) {
+#tabella-classifica td:nth-last-child(11),
+#tabella-classifica td:nth-last-child(12) {
   max-width: 80px;
   width: 80px;
   text-align: right;
