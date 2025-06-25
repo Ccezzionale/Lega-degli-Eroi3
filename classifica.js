@@ -7,9 +7,10 @@ const URL_MAP = {
 };
 
 function formattaNumero(val) {
-  return (!isNaN(val) && val.toString().includes("."))
-    ? parseFloat(val).toString().replace(".", ",")
-    : val;
+  if (!isNaN(val) && val.toString().includes(".")) {
+    return parseFloat(val).toFixed(1).replace(".", ",");
+  }
+  return val;
 }
 
 function caricaClassifica(nomeFoglio = "Conference") {
@@ -20,8 +21,10 @@ function caricaClassifica(nomeFoglio = "Conference") {
     .then(response => response.text())
     .then(csv => {
       const righe = csv.trim().split("\n");
-      const startRow = nomeFoglio === "Totale" ? 1 : 4;
-      const intestazione = righe[startRow - 1].split(",").map(cell => cell.replace(/"/g, "").trim());
+
+      let startRow = nomeFoglio === "Totale" ? 1 : 4;
+      let intestazione = righe[startRow - 1].split(",").map(cell => cell.replace(/"/g, "").trim());
+
       if (nomeFoglio !== "Totale") intestazione.splice(2, 1);
 
       const tbody = document.querySelector("#tabella-classifica tbody");
@@ -45,12 +48,14 @@ function caricaClassifica(nomeFoglio = "Conference") {
 
         const tr = document.createElement("tr");
         tr.classList.add("riga-classifica");
+
         if (nomeFoglio === "Totale" && i <= 4) tr.classList.add("top4");
         if (nomeFoglio === "Totale" && i >= righe.length - 4) tr.classList.add("ultime4");
         if ((nomeFoglio === "Conference" || nomeFoglio === "Championship") && i === startRow) tr.classList.add("top1");
 
         colonne.forEach((val, idx) => {
           const td = document.createElement("td");
+
           if (idx === 1) {
             const div = document.createElement("div");
             div.className = "logo-nome";
@@ -65,42 +70,15 @@ function caricaClassifica(nomeFoglio = "Conference") {
             td.appendChild(div);
           } else {
             td.textContent = formattaNumero(val);
+            if (idx === intestazione.length - 1) {
+              td.style.textAlign = "right";
+              td.style.whiteSpace = "nowrap";
+            }
           }
+
           tr.appendChild(td);
         });
         tbody.appendChild(tr);
-
-        const item = document.createElement("div");
-        item.className = "accordion-item";
-        if (tr.classList.contains("top4")) item.classList.add("top4");
-        if (tr.classList.contains("ultime4")) item.classList.add("ultime4");
-        if (tr.classList.contains("top1")) item.classList.add("top1");
-
-        const header = document.createElement("div");
-        header.className = "accordion-header";
-        const img = document.createElement("img");
-        const team = colonne[1].replace(/[👑🎖️💀]/g, "").trim();
-        img.src = `img/${team}.png`;
-        img.onerror = () => (img.style.display = "none");
-        const span = document.createElement("span");
-        span.innerHTML = `<strong>${colonne[0]}\u00B0 ${colonne[1]}</strong><br><span style='font-weight:normal'>PT. ${colonne.at(-2)} / MP. ${colonne.at(-1)}</span>`;
-        header.appendChild(img);
-        header.appendChild(span);
-
-        const body = document.createElement("div");
-        body.className = "accordion-body";
-        for (let j = 2; j < colonne.length; j++) {
-          const label = intestazione[j];
-          const val = formattaNumero(colonne[j]);
-          const p = document.createElement("span");
-          p.innerHTML = `<strong>${label}:</strong> ${val}`;
-          body.appendChild(p);
-        }
-
-        header.addEventListener("click", () => item.classList.toggle("active"));
-        item.appendChild(header);
-        item.appendChild(body);
-        mobile.appendChild(item);
       }
     })
     .catch(e => console.error("Errore caricamento classifica:", e));
@@ -110,3 +88,4 @@ window.onload = () => caricaClassifica("Conference");
 document.querySelectorAll(".switcher button").forEach(btn =>
   btn.addEventListener("click", () => caricaClassifica(btn.textContent))
 );
+
