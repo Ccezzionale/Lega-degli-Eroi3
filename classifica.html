@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Classifica - Lega degli Eroi</title>
+  <link rel="stylesheet" href="classifica.js" />
   <style>
     body {
       margin: 0;
@@ -108,98 +109,67 @@
       background-color: #0074D9;
     }
 
-    table {
+    #tabella-classifica {
       border-collapse: collapse;
-      margin: 0 auto 40px;
-      width: 95%;
+      width: 100%;
       max-width: 1000px;
+      margin: 0 auto 40px;
     }
 
-    thead {
+    #tabella-classifica thead {
       background-color: #001f3f;
       color: white;
     }
 
-    th, td {
+    #tabella-classifica th,
+    #tabella-classifica td {
       padding: 10px;
       text-align: left;
     }
 
-    /* Logo + nome */
-    #tabella-classifica td .logo-nome {
+    #tabella-classifica tbody {
       display: flex;
+      flex-direction: column;
       align-items: center;
-      gap: 8px;
-    }
-
-    #tabella-classifica td .logo-nome img {
-      width: 48px;
-      height: 48px;
-      object-fit: contain;
-      border-radius: 50%;
-    }
-
-        #tabella-classifica td .logo-nome {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    #tabella-classifica td .logo-nome img {
-      width: 48px;
-      height: 48px;
-      object-fit: contain;
-      border-radius: 50%;
+      gap: 12px;
     }
 
     tr.riga-classifica {
-  background-color: white;
-  border: 1px solid #ccc;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
-  margin-bottom: 12px;
-  display: block;
-  padding: 10px 12px;
-}
-tr.riga-classifica td {
-  display: inline-block;
-  min-width: 100px;
-  vertical-align: middle;
-}
-    
-/* Top 4 Totale */
-tr.top4 {
-  background-color: #ffcc00 !important;
-  color: black;
-  font-weight: bold;
-}
+      background-color: white;
+      border: 1px solid #ccc;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+      margin-bottom: 12px;
+      display: block;
+      padding: 10px 12px;
+      width: 90%;
+      max-width: 850px;
+    }
 
-/* Ultime 4 Totale */
-tr.ultime4 {
-  background-color: #8B0000 !important;
-  color: white;
-}
+    tr.riga-classifica td {
+      display: inline-block;
+      min-width: 100px;
+      vertical-align: middle;
+    }
 
-tr.top1 {
-  background-color: #006400 !important; /* Verde scuro comune */
-  color: white;
-  font-weight: bold;
-}
+    /* Evidenziazioni */
+    tr.top4 {
+      background-color: #ffcc00 !important;
+      color: black;
+      font-weight: bold;
+    }
 
-#tabella-classifica tbody {
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* 💡 questo centra le card */
-  gap: 12px;
-}
-    
-tr.riga-classifica {
-  width: 90%;
-  max-width: 850px;
-}
+    tr.ultime4 {
+      background-color: #8B0000 !important;
+      color: white;
+    }
 
-    
-    /* Accordion Mobile */
+    tr.top1 {
+      background-color: #ffcc00 !important;
+      color: black;
+      font-weight: bold;
+    }
+
     @media (max-width: 768px) {
       #tabella-classifica {
         display: none;
@@ -260,15 +230,8 @@ tr.riga-classifica {
         color: white;
       }
 
-      .accordion-item:nth-child(even) .accordion-header {
-        background-color: #004472;
-      }
-
-      .accordion-item:nth-child(odd) .accordion-header {
-        background-color: #003b66;
-      }
-
-      .accordion-item.top4 .accordion-header {
+      .accordion-item.top4 .accordion-header,
+      .accordion-item.top1 .accordion-header {
         background-color: #ffcc00 !important;
         color: black;
         font-weight: bold;
@@ -276,10 +239,6 @@ tr.riga-classifica {
 
       .accordion-item.ultime4 .accordion-header {
         background-color: #5c0000 !important;
-        color: white;
-      }
-
-      .accordion-item.ultime4 .accordion-body span {
         color: white;
       }
     }
