@@ -178,7 +178,6 @@ function mostraRose() {
     div.setAttribute("data-squadra", nome);
     div.setAttribute("data-conference", conferencePerSquadra[nome] || "N/A");
 
-    // Header centrato con logo e nome squadra
     const header = document.createElement("div");
     header.className = "logo-nome";
 
@@ -194,44 +193,28 @@ function mostraRose() {
     header.appendChild(name);
     div.appendChild(header);
 
-    // Tabella giocatori
-const table = document.createElement("table");
-table.innerHTML = `
-  <thead><tr><th>Ruolo</th><th>Nome</th><th>Squadra</th><th>Q</th></tr></thead>
-  <tbody>
-    ${data.giocatori.map(g => `
-      <tr>
-        <td>${g.ruolo}</td>
-        <td class="nome">${g.nome} ${g.fp ? '🅕' : ''} ${g.u21 ? '🅤21' : ''}</td>
-        <td>${g.squadra}</td>
-        <td>${g.quotazione}</td>
-      </tr>`).join("")}
-  </tbody>
-`;
-div.appendChild(table);
-container.appendChild(div);
-
-window.addEventListener("DOMContentLoaded", caricaRose);
-
-// 🔍 Filtro per nome giocatore
-document.getElementById('filtro-nome').addEventListener('input', filtraGiocatori);
-// 🎯 Filtro per conference
-document.getElementById('filtro-conference').addEventListener('change', filtraGiocatori);
-// 🏟️ Filtro per squadra
-document.getElementById('filtro-squadra').addEventListener('change', filtraGiocatori);
-
-// 🔄 Reset filtri
-function resetFiltri() {
-  document.getElementById('filtro-nome').value = '';
-  document.getElementById('filtro-conference').value = 'Tutte';
-  document.getElementById('filtro-squadra').value = 'Tutte';
-  filtraGiocatori();
+    const table = document.createElement("table");
+    table.innerHTML = `
+      <thead><tr><th>Ruolo</th><th>Nome</th><th>Squadra</th><th>Q</th></tr></thead>
+      <tbody>
+        ${data.giocatori.map(g => `
+          <tr>
+            <td>${g.ruolo}</td>
+            <td class="nome">${g.nome} ${g.fp ? '🅕' : ''} ${g.u21 ? '🅤21' : ''}</td>
+            <td>${g.squadra}</td>
+            <td>${g.quotazione}</td>
+          </tr>`).join("")}
+      </tbody>
+    `;
+    div.appendChild(table);
+    container.appendChild(div);
+  }
 }
+
 function popolaFiltri() {
   const selectSquadra = document.getElementById("filtro-squadra");
   const selectConference = document.getElementById("filtro-conference");
 
-  // ✅ Prima svuoto i menu per evitare duplicati
   selectSquadra.innerHTML = '<option value="Tutte">Tutte le squadre</option>';
   selectConference.innerHTML = '<option value="Tutte">Tutte le Conference</option>';
 
@@ -244,20 +227,14 @@ function popolaFiltri() {
     conferenceSet.add(conf);
   }
 
-  // Ordina alfabeticamente
-  const squadreOrdinate = Array.from(squadreSet).sort();
-  const conferenceOrdinate = Array.from(conferenceSet).sort();
-
-  // Popola filtro squadre
-  squadreOrdinate.forEach(sq => {
+  Array.from(squadreSet).sort().forEach(sq => {
     const option = document.createElement("option");
     option.value = sq;
     option.textContent = sq;
     selectSquadra.appendChild(option);
   });
 
-  // Popola filtro conference
-  conferenceOrdinate.forEach(conf => {
+  Array.from(conferenceSet).sort().forEach(conf => {
     const option = document.createElement("option");
     option.value = conf;
     option.textContent = conf;
@@ -265,7 +242,6 @@ function popolaFiltri() {
   });
 }
 
-// 🔎 Funzione di filtro
 function filtraGiocatori() {
   const nome = document.getElementById('filtro-nome').value.toLowerCase();
   const conference = document.getElementById('filtro-conference').value;
@@ -273,12 +249,12 @@ function filtraGiocatori() {
 
   document.querySelectorAll('.giocatore').forEach(row => {
     const nomiGiocatori = [...row.querySelectorAll('.nome')].map(e => e.textContent.toLowerCase());
-const conf = row.getAttribute('data-conference');
-const team = row.getAttribute('data-squadra');
+    const conf = row.getAttribute('data-conference');
+    const team = row.getAttribute('data-squadra');
 
-const matchNome = nomiGiocatori.some(n => n.includes(nome));
-const matchConf = (conference === 'Tutte' || conf === conference);
-const matchTeam = (squadra === 'Tutte' || team === squadra);
+    const matchNome = nomiGiocatori.some(n => n.includes(nome));
+    const matchConf = (conference === 'Tutte' || conf === conference);
+    const matchTeam = (squadra === 'Tutte' || team === squadra);
 
     if (matchNome && matchConf && matchTeam) {
       row.style.display = '';
@@ -286,4 +262,15 @@ const matchTeam = (squadra === 'Tutte' || team === squadra);
       row.style.display = 'none';
     }
   });
+}
+
+document.getElementById('filtro-nome').addEventListener('input', filtraGiocatori);
+document.getElementById('filtro-conference').addEventListener('change', filtraGiocatori);
+document.getElementById('filtro-squadra').addEventListener('change', filtraGiocatori);
+
+function resetFiltri() {
+  document.getElementById('filtro-nome').value = '';
+  document.getElementById('filtro-conference').value = 'Tutte';
+  document.getElementById('filtro-squadra').value = 'Tutte';
+  filtraGiocatori();
 }
