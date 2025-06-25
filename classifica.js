@@ -123,7 +123,21 @@ function caricaClassifica(nomeFoglio = "Conference") {
     .catch(e => console.error("Errore caricamento classifica:", e));
 }
 
+const NOMI_ESTESI = {
+  "Conference": "Conference League",
+  "Championship": "Championship",
+  "Totale": "Totale"
+};
+
 window.onload = () => caricaClassifica("Conference");
-document.querySelectorAll(".switcher button").forEach(btn =>
-  btn.addEventListener("click", () => caricaClassifica(btn.textContent))
+
+document.querySelectorAll(".switcher button").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const nomeFoglio = btn.textContent;
+    document.querySelector("h1").textContent = "Classifica " + NOMI_ESTESI[nomeFoglio];
+    caricaClassifica(nomeFoglio);
+  });
+});
+
+
 );
