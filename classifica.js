@@ -72,6 +72,10 @@ function caricaClassifica(nomeFoglio = "Conference") {
           tr.classList.add("ultime4");
         }
 
+        if ((nomeFoglio === "Conference" || nomeFoglio === "Championship") && i === startRow) {
+  tr.classList.add("top1");
+ }
+        
         colonne.forEach((val, idx) => {
           const td = document.createElement("td");
 
