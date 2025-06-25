@@ -120,13 +120,20 @@ thead {
   color: white;
 }
 
+#tabella-classifica {
+  table-layout: fixed;
+}
+
+#tabella-classifica th:nth-last-child(1),
 #tabella-classifica td:nth-last-child(1),
+#tabella-classifica th:nth-last-child(2),
 #tabella-classifica td:nth-last-child(2) {
-  max-width: 80px;
+  width: 80px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   font-size: 0.9rem;
+  text-align: right;
 }
 
 th, td {
