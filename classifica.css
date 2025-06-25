@@ -4,6 +4,7 @@ body {
   background-color: #f4f4f4;
   color: #222;
 }
+
 nav {
   background-color: #001f3f;
   color: white;
@@ -12,85 +13,232 @@ nav {
   padding: 10px 20px;
   flex-wrap: wrap;
 }
+
 .home-icon {
   font-size: 1.4rem;
   margin-right: 20px;
   text-decoration: none;
   color: white;
 }
+
+.hamburger {
+  font-size: 1.5rem;
+  cursor: pointer;
+  margin-right: 20px;
+  display: none;
+}
+
 .navbar {
   list-style-type: none;
+  padding: 0;
+  margin: 0;
   display: flex;
+  flex-direction: row;
   gap: 15px;
   align-items: center;
+  flex-wrap: wrap;
 }
+
+.navbar li {
+  position: relative;
+}
+
 .navbar a {
   text-decoration: none;
   color: white;
   padding: 8px 12px;
+  display: block;
 }
+
+.navbar a:hover {
+  background-color: #0074D9;
+  border-radius: 6px;
+}
+
+.submenu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #003366;
+  border-radius: 4px;
+  z-index: 10;
+  min-width: 180px;
+  flex-direction: column;
+}
+
+.submenu a {
+  font-size: 0.95rem;
+}
+
+.dropdown.show .submenu {
+  display: flex;
+}
+
+h1 {
+  color: #001f3f;
+  margin: 20px 0 10px;
+  text-align: center;
+  font-size: 2rem;
+}
+
 .switcher {
   text-align: center;
   margin: 20px;
 }
+
 .switcher button {
   padding: 10px 20px;
+  margin: 0 5px;
   background-color: #001f3f;
   color: white;
   border: none;
   border-radius: 6px;
   cursor: pointer;
 }
+
 .switcher button:hover {
   background-color: #0074D9;
 }
-table {
+
+#classifica-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+#tabella-classifica {
   border-collapse: collapse;
-  margin: 0 auto 40px;
   width: 95%;
   max-width: 1000px;
+  margin-bottom: 40px;
 }
+
 thead {
   background-color: #001f3f;
   color: white;
 }
+
 th, td {
   padding: 10px;
   text-align: left;
 }
+
 #tabella-classifica td .logo-nome {
   display: flex;
   align-items: center;
   gap: 8px;
 }
+
 #tabella-classifica td .logo-nome img {
-  width: 48px;
-  height: 48px;
+  width: 32px;
+  height: 32px;
   object-fit: contain;
   border-radius: 50%;
 }
-tr.riga-classifica {
+
+.riga-classifica {
   background-color: white;
   border: 1px solid #ccc;
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.08);
-  display: table-row;
+  margin-bottom: 8px;
 }
-#tabella-classifica tbody {
-  display: table;
-  width: 100%;
-}
-tr.top4 {
+
+.top4 {
   background-color: #ffcc00 !important;
   color: black;
   font-weight: bold;
 }
-tr.ultime4 {
+
+.ultime4 {
   background-color: #8B0000 !important;
   color: white;
+  font-weight: bold;
 }
-tr.top1 {
+
+.top1 {
   background-color: #ffcc00 !important;
   color: black;
   font-weight: bold;
+}
+
+#classifica-mobile {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  #tabella-classifica {
+    display: none;
+  }
+
+  #classifica-mobile {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+  }
+
+  .accordion-item {
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .accordion-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    font-weight: bold;
+    font-size: 0.95rem;
+    background-color: #003b66;
+    color: white;
+  }
+
+  .accordion-header img {
+    height: 48px;
+    width: 48px;
+    object-fit: contain;
+  }
+
+  .accordion-body {
+    display: none;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 12px 16px;
+    background-color: #004080;
+    font-size: 0.85rem;
+  }
+
+  .accordion-item.active .accordion-body {
+    display: flex;
+  }
+
+  .accordion-body span {
+    flex: 1 1 45%;
+    white-space: nowrap;
+    color: white;
+  }
+
+  .accordion-item.top4 .accordion-header {
+    background-color: #ffcc00 !important;
+    color: black;
+  }
+
+  .accordion-item.ultime4 .accordion-header {
+    background-color: #8B0000 !important;
+    color: white;
+  }
+
+  .accordion-item.top1 .accordion-header {
+    background-color: #ffcc00 !important;
+    color: black;
+  }
+}
+
+@media (min-width: 769px) {
+  .accordion-item {
+    display: none !important;
+  }
 }
