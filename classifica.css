@@ -113,7 +113,7 @@ h1 {
   width: 100%;
   max-width: 1200px;
   margin-bottom: 40px;
-  table-layout: fixed;
+  table-layout: auto; /* ✅ Adatta la larghezza in base al contenuto */
 }
 
 thead {
@@ -129,6 +129,8 @@ th, td {
 #tabella-classifica th:nth-child(2),
 #tabella-classifica td:nth-child(2) {
   text-align: left;
+  white-space: normal;     /* ✅ consente l'andata a capo */
+  word-break: break-word;  /* ✅ forza il testo a capo se troppo lungo */
 }
 
 #tabella-classifica td .logo-nome {
