@@ -42,19 +42,14 @@ function caricaClassifica(nomeFoglio = "Conference") {
       thead.appendChild(headerRow);
 
       for (let i = startRow; i < righe.length; i++) {
-        const colonneGrezze = righe[i].split(",");
-let colonne = [];
+        const colonneGrezze = righe[i].split(",").map(c => c.replace(/"/g, "").trim());
+let colonne = [...colonneGrezze];
 
-for (let j = 0; j < colonneGrezze.length; j++) {
-  let val = colonneGrezze[j].replace(/"/g, "").trim();
-
-  // Se il valore è numerico e il prossimo è esattamente "5", uniscili
-  if (/^\d+$/.test(val) && colonneGrezze[j + 1] && colonneGrezze[j + 1].trim() === "5") {
-    colonne.push(val + ".5");
-    j++; // Salta il prossimo indice (già usato)
-  } else {
-    colonne.push(val);
-  }
+// Fai il merge solo se la riga ha una colonna in più del previsto
+if (colonne.length > intestazione.length) {
+  const ultimo = colonne.pop(); // "5"
+  const penultimo = colonne.pop(); // es: "2111"
+  colonne.push(penultimo + ".5"); // es: "2111.5"
 }
         if (nomeFoglio !== "Totale") colonne.splice(2, 1);
 
