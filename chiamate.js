@@ -1,42 +1,39 @@
-
-const chiamateCSV = {
-  league15: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRK5ADcukTU83udU_Z9Zd9w66-2LGi8TlWJP_F5WfcaHQePIUpRBynnpbnxbkEGnrh44jMvvBo7Wzo3/pub?gid=492764886&single=true&output=csv",
-  league16: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRVk3BAULnfGd_CcqlPTwHRLCERbwAkhKJRSd_bNCgH9E9lCoaNfiafroJcRa_m9zs1eGoioU9YOy34/pub?gid=0&single=true&output=csv",
-  champ15:  "https://docs.google.com/spreadsheets/d/e/2PACX-1vSGbT5qMBn_PHnAyGfR1IayL3BgrfBYENXZ1tMoBXjvoZxQAFVI5wRk7kY0M9sAXuJg0wVImKh0g_bB/pub?gid=1279168385&single=true&output=csv",
-  champ16:  "https://docs.google.com/spreadsheets/d/e/2PACX-1vRVk3BAULnfGd_CcqlPTwHRLCERbwAkhKJRSd_bNCgH9E9lCoaNfiafroJcRa_m9zs1eGoioU9YOy34/pub?gid=0&single=true&output=csv"
+const MODULI = {
+  Conference: {
+    '15:00': 'https://docs.google.com/forms/d/e/1FAIpQLScmKzGZDqQYgiyZ_-conference-15/viewform',
+    '16:00': 'https://docs.google.com/forms/d/e/1FAIpQLScmKzGZDqQYgiyZ_-conference-16/viewform'
+  },
+  Championship: {
+    '15:00': 'https://docs.google.com/forms/d/e/1FAIpQLScmKzGZDqQYgiyZ_-championship-15/viewform',
+    '16:00': 'https://docs.google.com/forms/d/e/1FAIpQLScmKzGZDqQYgiyZ_-championship-16/viewform'
+  }
 };
 
-function caricaChiamate(conference) {
-  const container = document.getElementById("chiamate-container");
-  container.innerHTML = "<p>⏳ Caricamento in corso...</p>";
-  const url = chiamateCSV[conference];
-  if (!url) return;
+function caricaChiamate(conf) {
+  document.getElementById("titolo-chiamate").textContent = `Chiamate ${conf}`.toUpperCase();
+  const container = document.getElementById("moduli-container");
+  container.innerHTML = "";
 
-  fetch(url)
-    .then(response => response.text())
-    .then(csv => {
-      const righe = csv.split("\n").map(r => r.split(","));
-      const intestazioni = righe[0];
-      const dati = righe.slice(1);
+  const oggi = new Date();
+  const giorno = oggi.getDay(); // 5 = Venerdì
+  const ora = oggi.getHours();
+  const minuti = oggi.getMinutes();
+  const mostra = (giorno === 5 && (ora > 15 || (ora === 15 && minuti >= 0))) || giorno === 6 || giorno === 0;
 
-      if (dati.length === 1 && dati[0][0].startsWith("🔒")) {
-        container.innerHTML = '<div class="avviso">' + dati[0][0] + '</div>';
-        return;
-      }
+  if (!mostra) {
+    document.getElementById("avviso-chiamate").style.display = "block";
+    return;
+  }
+  document.getElementById("avviso-chiamate").style.display = "none";
 
-      let html = '<table><thead><tr>';
-      intestazioni.forEach(t => html += '<th>' + t + '</th>');
-      html += '</tr></thead><tbody>';
-      dati.forEach(r => {
-        if (r.length > 1 && r[1].trim() !== '') {
-          html += '<tr>' + r.map(v => '<td>' + v + '</td>').join('') + '</tr>';
-        }
-      });
-      html += '</tbody></table>';
-      container.innerHTML = html;
-    })
-    .catch(err => {
-      container.innerHTML = '<p style="color:red;">❌ Errore nel caricamento.</p>';
-      console.error(err);
-    });
-}
+  const moduli = MODULI[conf];
+  for (const orario in moduli) {
+    const a = document.createElement("a");
+    a.href = moduli[orario];
+    a.target = "_blank";
+    a.innerHTML = `✚ Compila chiamata ${orario} (${conf})`;
+    container.appendChild(a);
+  }
+} 
+
+window.onload = () => caricaChiamate("Conference");
