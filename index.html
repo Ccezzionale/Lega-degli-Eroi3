@@ -18,6 +18,7 @@
       display: flex;
       align-items: center;
       padding: 10px 20px;
+      flex-wrap: wrap;
     }
 
     .home-icon {
@@ -31,23 +32,22 @@
       font-size: 1.5rem;
       cursor: pointer;
       margin-right: 20px;
+      display: none;
     }
 
     .navbar {
       list-style-type: none;
       padding: 0;
       margin: 0;
-      display: none;
-      flex-direction: column;
-      gap: 10px;
-      width: 100%;
-      background-color: #001f3f;
-      text-align: left;
-      padding-left: 20px;
+      display: flex;
+      flex-direction: row;
+      gap: 15px;
+      align-items: center;
+      flex-wrap: wrap;
     }
 
-    .navbar.show {
-      display: flex;
+    .navbar li {
+      position: relative;
     }
 
     .navbar a {
@@ -64,13 +64,21 @@
 
     .submenu {
       display: none;
-      flex-direction: column;
-      margin-left: 15px;
+      position: absolute;
+      top: 100%;
+      left: 0;
       background-color: #003366;
       border-radius: 4px;
+      z-index: 10;
+      min-width: 180px;
+      flex-direction: column;
     }
 
-    .submenu.show {
+    .submenu a {
+      font-size: 0.95rem;
+    }
+
+    .dropdown.show .submenu {
       display: flex;
     }
 
@@ -95,36 +103,31 @@
       text-align: center;
     }
 
-    @media (min-width: 768px) {
+    @media (max-width: 768px) {
+      .hamburger {
+        display: block;
+      }
+
       .navbar {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        background-color: #001f3f;
+        margin-top: 10px;
+      }
+
+      .navbar.show {
         display: flex;
-        flex-direction: row;
-        gap: 20px;
-        background-color: transparent;
-        padding-left: 0;
       }
 
       .submenu {
-        position: absolute;
-        display: none;
-        top: 100%;
-        left: 0;
-        z-index: 10;
-        min-width: 180px;
+        position: relative;
+        background-color: #003366;
+        margin-left: 10px;
       }
 
-      .dropdown:hover .submenu {
-        display: flex;
-        flex-direction: column;
-      }
-
-      nav {
-        justify-content: flex-start;
-        gap: 30px;
-      }
-
-      .hamburger {
-        display: none;
+      .dropdown .submenu a {
+        padding-left: 20px;
       }
     }
   </style>
@@ -136,16 +139,16 @@
   <a href="index.html" class="home-icon">🏠</a>
   <ul class="navbar" id="mainMenu">
     <li><a href="rose.html">Rose</a></li>
-    <li>
-      <a href="#" id="toggle-draft">Draft ▾</a>
-      <ul class="submenu" id="submenu-draft">
+    <li class="dropdown">
+      <a href="#" class="toggle-submenu">Draft ▾</a>
+      <ul class="submenu">
         <li><a href="draft_championship.html">🟦 Conf.Championship</a></li>
         <li><a href="draft_conference.html">🟨 Conf.League</a></li>
       </ul>
     </li>
-    <li>
-      <a href="#" id="toggle-competizioni">Competizioni ▾</a>
-      <ul class="submenu" id="submenu-competizioni">
+    <li class="dropdown">
+      <a href="#" class="toggle-submenu">Competizioni ▾</a>
+      <ul class="submenu">
         <li><a href="classifica.html">📊 Classifiche</a></li>
         <li><a href="playoff.html">🏆 Playoff</a></li>
       </ul>
@@ -166,23 +169,18 @@
   document.addEventListener("DOMContentLoaded", function () {
     const hamburger = document.getElementById("hamburger");
     const mainMenu = document.getElementById("mainMenu");
-    const toggleDraft = document.getElementById("toggle-draft");
-    const toggleCompetizioni = document.getElementById("toggle-competizioni");
-    const submenuDraft = document.getElementById("submenu-draft");
-    const submenuCompetizioni = document.getElementById("submenu-competizioni");
+    const submenuToggles = document.querySelectorAll(".toggle-submenu");
 
     hamburger?.addEventListener("click", () => {
       mainMenu.classList.toggle("show");
     });
 
-    toggleDraft?.addEventListener("click", function (e) {
-      e.preventDefault();
-      submenuDraft.classList.toggle("show");
-    });
-
-    toggleCompetizioni?.addEventListener("click", function (e) {
-      e.preventDefault();
-      submenuCompetizioni.classList.toggle("show");
+    submenuToggles.forEach(toggle => {
+      toggle.addEventListener("click", function (e) {
+        e.preventDefault();
+        const parent = this.closest(".dropdown");
+        parent.classList.toggle("show");
+      });
     });
   });
 </script>
