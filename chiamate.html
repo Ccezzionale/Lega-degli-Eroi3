@@ -83,7 +83,63 @@ h2 {
   border-radius: 8px;
   margin-top: 20px;
 }
-    }
+    .navbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #001f3f;
+  padding: 10px;
+  list-style: none;
+  margin: 0;
+}
+
+.navbar li {
+  margin: 0 10px;
+  position: relative;
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.hamburger {
+  display: none;
+  font-size: 1.5em;
+  margin: 10px;
+  cursor: pointer;
+}
+
+.dropdown .submenu {
+  display: none;
+  position: absolute;
+  background-color: #003366;
+  list-style: none;
+  padding: 10px;
+  top: 100%;
+  left: 0;
+}
+
+.dropdown.show .submenu {
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .navbar.show {
+    display: flex;
+  }
+
+  .hamburger {
+    display: block;
+  }
+}
   </style>
 </head>
 <body class="pagina-chiamate">
@@ -146,24 +202,25 @@ h2 {
 
   <script src="chiamate.js"></script>
 
- <!-- SCRIPT NAVBAR -->
- document.addEventListener("DOMContentLoaded", function () {
-      const hamburger = document.getElementById("hamburger");
-      const mainMenu = document.getElementById("mainMenu");
-      const submenuToggles = document.querySelectorAll(".toggle-submenu");
+ <<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const hamburger = document.getElementById("hamburger");
+    const mainMenu = document.getElementById("mainMenu");
+    const submenuToggles = document.querySelectorAll(".toggle-submenu");
 
-      hamburger?.addEventListener("click", () => {
-        mainMenu.classList.toggle("show");
-      });
+    hamburger?.addEventListener("click", () => {
+      mainMenu.classList.toggle("show");
+    });
 
-      submenuToggles.forEach(toggle => {
-        toggle.addEventListener("click", function (e) {
-          e.preventDefault();
-          const parent = this.closest(".dropdown");
-          parent.classList.toggle("show");
-        });
+    submenuToggles.forEach(toggle => {
+      toggle.addEventListener("click", function (e) {
+        e.preventDefault();
+        const parent = this.closest(".dropdown");
+        parent.classList.toggle("show");
       });
     });
-  </script>
+  });
+</script>
+
 </body>
 </html>
