@@ -46,11 +46,17 @@ function caricaClassifica(nomeFoglio = "Conference") {
 let colonne = [...colonneGrezze];
 
 // Fai il merge solo se la riga ha una colonna in più del previsto
-if (colonne.length > intestazione.length) {
-  const ultimo = colonne.pop(); // "5"
-  const penultimo = colonne.pop(); // es: "2111"
-  colonne.push(penultimo + ".5"); // es: "2111.5"
+if (colonneGrezze.length > intestazione.length) {
+  const ultimo = colonneGrezze[colonneGrezze.length - 1];
+  const penultimo = colonneGrezze[colonneGrezze.length - 2];
+
+  if (/^\d+$/.test(penultimo) && ultimo === "5") {
+    colonneGrezze.splice(-2, 2, `${penultimo}.5`);
+  }
 }
+
+let colonne = [...colonneGrezze];
+
         if (nomeFoglio !== "Totale") colonne.splice(2, 1);
 
         const tr = document.createElement("tr");
