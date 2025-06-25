@@ -1,4 +1,4 @@
-
+/* === BASE === */
 body {
   margin: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -109,10 +109,11 @@ h1 {
   padding: 20px;
 }
 
+/* === TABELLA === */
 #tabella-classifica {
   border-collapse: collapse;
   width: 95%;
-  max-width: 1100px;
+  max-width: 1000px;
   margin-bottom: 40px;
   table-layout: fixed;
 }
@@ -124,38 +125,44 @@ thead {
 
 th, td {
   padding: 10px;
-  text-align: center;
-  font-size: 0.95rem;
+  text-align: left;
 }
 
-#tabella-classifica td:nth-last-child(2),
-#tabella-classifica td:nth-last-child(1) {
-  max-width: 75px;
+/* === COLONNE MAGIC POINTS === */
+#tabella-classifica th:nth-last-child(1),
+#tabella-classifica td:nth-last-child(1),
+#tabella-classifica th:nth-last-child(2),
+#tabella-classifica td:nth-last-child(2) {
+  max-width: 80px;
+  width: 80px;
+  text-align: right;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-weight: bold;
+  font-size: 0.9rem;
 }
 
+/* === LOGO E NOME === */
 #tabella-classifica td .logo-nome {
   display: flex;
   align-items: center;
   gap: 8px;
-  justify-content: left;
 }
 
 #tabella-classifica td .logo-nome img {
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   object-fit: contain;
   border-radius: 50%;
 }
 
+/* === RIGHE SPECIALI === */
 .riga-classifica {
   background-color: white;
   border: 1px solid #ccc;
   border-radius: 12px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+  margin-bottom: 8px;
 }
 
 .top4 {
@@ -176,6 +183,7 @@ th, td {
   font-weight: bold;
 }
 
+/* === VERSIONE MOBILE === */
 #classifica-mobile {
   display: none;
 }
