@@ -186,6 +186,19 @@ tr.top1 {
   font-weight: bold;
 }
 
+#tabella-classifica tbody {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* 💡 questo centra le card */
+  gap: 12px;
+}
+    
+tr.riga-classifica {
+  width: 90%;
+  max-width: 850px;
+}
+
+    
     /* Accordion Mobile */
     @media (max-width: 768px) {
       #tabella-classifica {
