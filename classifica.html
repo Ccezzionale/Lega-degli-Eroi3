@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Classifica - Lega degli Eroi</title>
-  <link rel="stylesheet" href="classifica.js" />
   <style>
     body {
       margin: 0;
@@ -12,7 +11,6 @@
       background-color: #f4f4f4;
       color: #222;
     }
-
     nav {
       background-color: #001f3f;
       color: white;
@@ -21,21 +19,18 @@
       padding: 10px 20px;
       flex-wrap: wrap;
     }
-
     .home-icon {
       font-size: 1.4rem;
       margin-right: 20px;
       text-decoration: none;
       color: white;
     }
-
     .hamburger {
       font-size: 1.5rem;
       cursor: pointer;
       margin-right: 20px;
       display: none;
     }
-
     .navbar {
       list-style-type: none;
       padding: 0;
@@ -46,23 +41,19 @@
       align-items: center;
       flex-wrap: wrap;
     }
-
     .navbar li {
       position: relative;
     }
-
     .navbar a {
       text-decoration: none;
       color: white;
       padding: 8px 12px;
       display: block;
     }
-
     .navbar a:hover {
       background-color: #0074D9;
       border-radius: 6px;
     }
-
     .submenu {
       display: none;
       position: absolute;
@@ -74,27 +65,22 @@
       min-width: 180px;
       flex-direction: column;
     }
-
     .submenu a {
       font-size: 0.95rem;
     }
-
     .dropdown.show .submenu {
       display: flex;
     }
-
     h1 {
       color: #001f3f;
       margin: 20px 0 10px;
       text-align: center;
       font-size: 2rem;
     }
-
     .switcher {
       text-align: center;
       margin: 20px;
     }
-
     .switcher button {
       padding: 10px 20px;
       margin: 0 5px;
@@ -104,209 +90,97 @@
       border-radius: 6px;
       cursor: pointer;
     }
-
     .switcher button:hover {
       background-color: #0074D9;
     }
-
-    #tabella-classifica {
+    table {
       border-collapse: collapse;
-      width: 100%;
-      max-width: 1000px;
       margin: 0 auto 40px;
+      width: 95%;
+      max-width: 1000px;
     }
-
-    #tabella-classifica thead {
+    thead {
       background-color: #001f3f;
       color: white;
     }
-
-    #tabella-classifica th,
-    #tabella-classifica td {
+    th, td {
       padding: 10px;
       text-align: left;
     }
-
-    #tabella-classifica tbody {
+    #tabella-classifica td .logo-nome {
       display: flex;
-      flex-direction: column;
       align-items: center;
-      gap: 12px;
+      gap: 8px;
     }
-
-tr.riga-classifica {
-  background-color: white;
-  border: 1px solid #ccc;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
-  margin-bottom: 12px;
-  padding: 10px 12px;
-  display: table;
-  width: 90%;
-  max-width: 850px;
-  table-layout: fixed;
-}
-tr.riga-classifica td {
-  padding: 8px;
-  text-align: center;
-}
-
-
-    /* Evidenziazioni */
+    #tabella-classifica td .logo-nome img {
+      width: 48px;
+      height: 48px;
+      object-fit: contain;
+      border-radius: 50%;
+    }
+    tr.riga-classifica {
+      background-color: white;
+      border: 1px solid #ccc;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+      margin-bottom: 12px;
+      display: table-row;
+    }
+    #tabella-classifica tbody {
+      display: table;
+      width: 100%;
+    }
+    /* Colori speciali */
     tr.top4 {
       background-color: #ffcc00 !important;
       color: black;
       font-weight: bold;
     }
-
     tr.ultime4 {
       background-color: #8B0000 !important;
       color: white;
     }
-
     tr.top1 {
       background-color: #ffcc00 !important;
       color: black;
       font-weight: bold;
     }
-
-    @media (max-width: 768px) {
-      #tabella-classifica {
-        display: none;
-      }
-
-      #classifica-mobile {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        padding: 10px;
-      }
-
-      .accordion-item {
-        border-radius: 10px;
-        overflow: hidden;
-      }
-
-      .accordion-header {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        padding: 12px 16px;
-        font-weight: bold;
-        font-size: 0.95rem;
-        background-color: #003b66;
-        color: white;
-      }
-
-      .accordion-header img {
-        height: 48px;
-        width: 48px;
-        object-fit: contain;
-      }
-
-      .accordion-header span {
-        display: flex;
-        flex-direction: column;
-        line-height: 1.2;
-        width: 100%;
-      }
-
-      .accordion-body {
-        display: none;
-        flex-wrap: wrap;
-        gap: 10px;
-        padding: 12px 16px;
-        background-color: #004080;
-        font-size: 0.85rem;
-      }
-
-      .accordion-item.active .accordion-body {
-        display: flex;
-      }
-
-      .accordion-body span {
-        flex: 1 1 45%;
-        white-space: nowrap;
-        color: white;
-      }
-
-      .accordion-item.top4 .accordion-header,
-      .accordion-item.top1 .accordion-header {
-        background-color: #ffcc00 !important;
-        color: black;
-        font-weight: bold;
-      }
-
-      .accordion-item.ultime4 .accordion-header {
-        background-color: #5c0000 !important;
-        color: white;
-      }
-    }
-
-    @media (min-width: 769px) {
-      #classifica-mobile {
-        display: none !important;
-      }
-    }
   </style>
 </head>
 <body>
-
-<nav>
-  <span id="hamburger" class="hamburger">☰</span>
-  <a href="index.html" class="home-icon">🏠</a>
-  <ul class="navbar" id="mainMenu">
-    <li><a href="rose.html">Rose</a></li>
-    <li class="dropdown">
-      <a href="#" class="toggle-submenu">Draft ▾</a>
-      <ul class="submenu">
-        <li><a href="draft_championship.html?tab=Draft Championship">🟦 Conf.Championship</a></li>
-        <li><a href="draft_conference.html?tab=Draft Conference">🟨 Conf.League</a></li>
-      </ul>
-    </li>
-    <li><a href="classifica.html">Classifica</a></li>
-    <li><a href="svincolati.html">Svincolati</a></li>
-    <li><a href="chiamate.html">Chiamate</a></li>
-    <li><a href="albo.html">Albo d'Oro</a></li>
-  </ul>
-</nav>
-
-<main>
-  <h1>Classifica</h1>
-  <div class="switcher">
-    <button>Conference</button>
-    <button>Championship</button>
-    <button>Totale</button>
-  </div>
-  <div id="classifica-container">
-    <table id="tabella-classifica">
-      <thead></thead>
-      <tbody></tbody>
-    </table>
-    <div id="classifica-mobile"></div>
-  </div>
-</main>
-
-<script src="classifica.js"></script>
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const hamburger = document.getElementById("hamburger");
-    const mainMenu = document.getElementById("mainMenu");
-    const submenuToggles = document.querySelectorAll(".toggle-submenu");
-
-    hamburger?.addEventListener("click", () => {
-      mainMenu.classList.toggle("show");
-    });
-
-    submenuToggles.forEach(toggle => {
-      toggle.addEventListener("click", function (e) {
-        e.preventDefault();
-        const parent = this.closest(".dropdown");
-        parent.classList.toggle("show");
-      });
-    });
-  });
-</script>
-
+  <nav>
+    <span id="hamburger" class="hamburger">☰</span>
+    <a href="index.html" class="home-icon">🏠</a>
+    <ul class="navbar" id="mainMenu">
+      <li><a href="rose.html">Rose</a></li>
+      <li class="dropdown">
+        <a href="#" class="toggle-submenu">Draft ▾</a>
+        <ul class="submenu">
+          <li><a href="draft_championship.html?tab=Draft Championship">🟦 Conf.Championship</a></li>
+          <li><a href="draft_conference.html?tab=Draft Conference">🟨 Conf.League</a></li>
+        </ul>
+      </li>
+      <li><a href="classifica.html">Classifica</a></li>
+      <li><a href="svincolati.html">Svincolati</a></li>
+      <li><a href="chiamate.html">Chiamate</a></li>
+      <li><a href="albo.html">Albo d'Oro</a></li>
+    </ul>
+  </nav>
+  <main>
+    <h1>Classifica</h1>
+    <div class="switcher">
+      <button>Conference</button>
+      <button>Championship</button>
+      <button>Totale</button>
+    </div>
+    <div id="classifica-container">
+      <table id="tabella-classifica">
+        <thead></thead>
+        <tbody></tbody>
+      </table>
+      <div id="classifica-mobile"></div>
+    </div>
+  </main>
+  <script src="classifica.js"></script>
 </body>
 </html>
