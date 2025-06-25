@@ -8,31 +8,40 @@ const URL_MAP = {
 
 function formattaNumero(val) {
   if (!isNaN(val) && val.toString().includes(".")) {
-    const num = parseFloat(val).toFixed(2); // Limita a 2 decimali
-    return num.replace(".", ",");
+    return parseFloat(val).toString().replace(".", ",");
   }
   return val;
 }
 
 function caricaClassifica(nomeFoglio = "Conference") {
   const url = URL_MAP[nomeFoglio];
-  if (!url) return;
+  if (!url) {
+  console.error("❌ Nome foglio non valido o URL mancante:", nomeFoglio);
+  return;
+}
 
   fetch(url)
     .then(response => response.text())
     .then(csv => {
       const righe = csv.trim().split("\n");
-      const startRow = nomeFoglio === "Totale" ? 1 : 4;
-      const intestazione = righe[startRow - 1].split(",").map(cell => cell.replace(/"/g, "").trim());
-      if (nomeFoglio !== "Totale") intestazione.splice(2, 1);
 
-      const tbody = document.querySelector("#tabella-classifica tbody");
+      let startRow = 1;
+      if (nomeFoglio === "Conference") startRow = 4;
+      if (nomeFoglio === "Championship") startRow = 4;
+      if (nomeFoglio === "Round Robin") startRow = 2;
+
+      let intestazione = righe[startRow - 1].split(",").map(cell => cell.replace(/"/g, "").trim());
+      const hasBlankColumn = intestazione[2] === "" || nomeFoglio !== "Totale";
+      if (hasBlankColumn) intestazione.splice(2, 1);
+
+      const corpoTabella = document.querySelector("#tabella-classifica tbody");
       const thead = document.querySelector("#tabella-classifica thead");
-      const mobile = document.getElementById("classifica-mobile");
-      tbody.innerHTML = "";
+      const accordionMobile = document.querySelector("#classifica-mobile");
+      corpoTabella.innerHTML = "";
       thead.innerHTML = "";
-      mobile.innerHTML = "";
+      accordionMobile.innerHTML = "";
 
+      // Intestazione
       const headerRow = document.createElement("tr");
       intestazione.forEach(col => {
         const th = document.createElement("th");
@@ -41,74 +50,160 @@ function caricaClassifica(nomeFoglio = "Conference") {
       });
       thead.appendChild(headerRow);
 
-      for (let i = startRow; i < righe.length; i++) {
-        const colonne = righe[i].split(",").map(c => c.replace(/"/g, "").trim());
-        if (nomeFoglio !== "Totale") colonne.splice(2, 1);
+      const numSquadre = righe.length - 1;
 
+      for (let i = startRow; i < righe.length; i++) {
+        let colonne = righe[i].split(",").map(cell => cell.replace(/"/g, "").trim());
+        if (hasBlankColumn && colonne[2] === "") colonne.splice(2, 1);
+        while (colonne.length > intestazione.length) {
+          colonne[intestazione.length - 1] += "." + colonne[intestazione.length];
+          colonne.splice(intestazione.length, 1);
+        }
+
+        // --- DESKTOP ---
         const tr = document.createElement("tr");
-        tr.classList.add("riga-classifica");
-        if (nomeFoglio === "Totale" && i <= 4) tr.classList.add("top4");
-        if (nomeFoglio === "Totale" && i >= righe.length - 4) tr.classList.add("ultime4");
-        if ((nomeFoglio === "Conference" || nomeFoglio === "Championship") && i === startRow) tr.classList.add("top1");
+
+        if (nomeFoglio === "Totale" && i <= 4) {
+          tr.classList.add("top4");
+        }
+
+        if (nomeFoglio === "Totale" && i > numSquadre - 4) {
+          tr.classList.add("ultime4");
+        }
 
         colonne.forEach((val, idx) => {
           const td = document.createElement("td");
+
           if (idx === 1) {
-            const div = document.createElement("div");
-            div.className = "logo-nome";
-            const img = document.createElement("img");
-            const name = val.replace(/[👑🎖️💀]/g, "").trim();
-            img.src = `img/${name}.png`;
-            img.onerror = () => (img.style.display = "none");
-            const span = document.createElement("span");
-            span.textContent = val;
-            div.appendChild(img);
-            div.appendChild(span);
-            td.appendChild(div);
+           const wrapper = document.createElement("div");
+wrapper.className = "logo-nome";
+
+const img = document.createElement("img");
+
+// Pulisce il nome rimuovendo emoji ma lasciando spazi e maiuscole per il file immagine
+const nomeLogo = val.replace(/[👑🎖️💀]/g, "").trim();
+img.src = `img/${nomeLogo}.png`;
+img.alt = nomeLogo;
+img.onerror = () => { img.style.display = "none"; };
+
+// Aggiunge le emoji giuste al testo visualizzato
+let displayName = nomeLogo;
+if (val.includes("💀")) displayName = "💀 " + displayName;
+if (val.includes("👑")) displayName = "👑 " + displayName;
+if (nomeFoglio === "Totale" && i <= 4) displayName = "🎖️ " + displayName;
+if (nomeFoglio !== "Totale" && i === 1) displayName = "🎖️ " + displayName;
+
+const testo = document.createElement("span");
+testo.textContent = displayName;
+
+wrapper.appendChild(img);
+wrapper.appendChild(testo);
+td.appendChild(wrapper);
+
           } else {
             td.textContent = formattaNumero(val);
           }
+
           tr.appendChild(td);
         });
-        tbody.appendChild(tr);
 
+        corpoTabella.appendChild(tr);
+
+        // --- MOBILE ---
         const item = document.createElement("div");
         item.className = "accordion-item";
-        if (tr.classList.contains("top4")) item.classList.add("top4");
-        if (tr.classList.contains("ultime4")) item.classList.add("ultime4");
-        if (tr.classList.contains("top1")) item.classList.add("top1");
+
+        if (nomeFoglio === "Totale" && i <= 4) {
+          item.classList.add("top4");
+        }
+
+        if (nomeFoglio === "Totale" && i > numSquadre - 4) {
+          item.classList.add("ultime4");
+        }
 
         const header = document.createElement("div");
         header.className = "accordion-header";
-        const img = document.createElement("img");
-        const team = colonne[1].replace(/[👑🎖️💀]/g, "").trim();
-        img.src = `img/${team}.png`;
-        img.onerror = () => (img.style.display = "none");
-        const span = document.createElement("span");
-        span.innerHTML = `<strong>${colonne[0]}\u00B0 ${colonne[1]}</strong><br><span style='font-weight:normal'>PT. ${colonne.at(-2)} / MP. ${colonne.at(-1)}</span>`;
-        header.appendChild(img);
-        header.appendChild(span);
+
+const nomeSquadra = colonne[1];
+const logo = document.createElement("img"); // ✅ CREATO SEMPRE
+
+if (!nomeSquadra || nomeSquadra === "undefined") {
+  logo.style.display = "none";
+} else {
+  logo.src = "img/" + nomeSquadra + ".png";
+  logo.alt = nomeSquadra;
+  logo.onerror = () => {
+    logo.style.display = "none";
+  };
+}
+
+header.appendChild(logo); // ✅ sempre aggiunto
+
+const pos = colonne[0]; // 👈 spostalo qui prima dell’uso
+
+if (!nomeSquadra || nomeSquadra === "undefined") {
+  logo.style.display = "none";
+} else {
+  logo.src = "img/" + nomeSquadra + ".png";
+  logo.alt = nomeSquadra;
+  logo.onerror = () => {
+    logo.style.display = "none";
+  };
+}
+
+header.appendChild(logo); // sempre
+if (pos === "1") {
+  item.classList.add("top1");
+}
+
+let punti, puntiTot;
+
+if (nomeFoglio === "Totale") {
+  punti = formattaNumero(colonne[10]);     // PT
+  puntiTot = formattaNumero(colonne[11]);  // MP
+} else {
+  punti = formattaNumero(colonne[9]);      // PT
+  puntiTot = formattaNumero(colonne[10]);  // MP
+}
+
+
+        const testo = document.createElement("span");
+        testo.innerHTML = `<strong>${pos}. ${nomeSquadra}</strong><br><span style="font-weight:normal">PT. ${punti} / MP. ${puntiTot}</span>`;
+
+        header.appendChild(logo);
+        header.appendChild(testo);
 
         const body = document.createElement("div");
         body.className = "accordion-body";
-        for (let j = 2; j < colonne.length; j++) {
+
+        const startDetailColumnIndex = nomeFoglio === "Totale" ? 3 : 2;
+
+          for (let j = startDetailColumnIndex; j < colonne.length; j++) {
           const label = intestazione[j];
-          const val = formattaNumero(colonne[j]);
-          const p = document.createElement("span");
-          p.innerHTML = `<strong>${label}:</strong> ${val}`;
+          const value = formattaNumero(colonne[j]);
+          const p = document.createElement("p");
+          p.innerHTML = `<strong>${label}:</strong> ${value}`;
           body.appendChild(p);
         }
 
-        header.addEventListener("click", () => item.classList.toggle("active"));
+        header.addEventListener("click", () => {
+          item.classList.toggle("active");
+        });
+
         item.appendChild(header);
         item.appendChild(body);
-        mobile.appendChild(item);
+        accordionMobile.appendChild(item);
       }
     })
-    .catch(e => console.error("Errore caricamento classifica:", e));
+    .catch(err => {
+      console.error("❌ Errore nel caricamento della classifica:", err);
+    });
 }
 
 window.onload = () => caricaClassifica("Conference");
-document.querySelectorAll(".switcher button").forEach(btn =>
-  btn.addEventListener("click", () => caricaClassifica(btn.textContent))
-);
+
+document.querySelectorAll(".switcher button").forEach(btn => {
+  btn.addEventListener("click", () => {
+    caricaClassifica(btn.textContent);
+  });
+});
