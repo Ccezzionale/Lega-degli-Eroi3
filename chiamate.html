@@ -1,116 +1,115 @@
-
 <!DOCTYPE html>
 <html lang="it">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Chiamate - Lega degli Eroi</title>
+  <title>Chiamate Settimanali</title>
+  <link rel="stylesheet" href="main.css" />
   <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f0f4ff;
-      color: #001f3f;
-    }
-
-    nav {
-      background-color: #001f3f;
-      color: white;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 20px;
-    }
-
-    nav a {
-      color: white;
-      text-decoration: none;
-      margin: 0 10px;
-      font-weight: bold;
-    }
-
-    nav .menu {
-      display: flex;
-      align-items: center;
-    }
-
-    .title {
-      text-align: center;
-      font-size: 1.8rem;
-      margin: 20px 0;
-      font-weight: bold;
-    }
-
-    .moduli-container,
-    .switcher {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 12px;
-      margin: 20px auto;
-      width: 90%;
-      max-width: 500px;
-    }
-
-    .bottone-chiamata,
-    .switcher button {
-      width: 100%;
-      padding: 10px;
-      font-size: 1rem;
-      background-color: #0074D9;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    .bottone-chiamata:hover,
-    .switcher button:hover {
-      background-color: #005fa3;
-    }
-
-    #chiamate-container {
-      width: 90%;
-      max-width: 700px;
-      margin: 0 auto 40px;
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-    }
-
     @media (max-width: 768px) {
-      nav {
+      body {
+        min-height: 100vh;
+        display: flex;
         flex-direction: column;
-        align-items: flex-start;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 20px;
+        text-align: center;
+      }
+
+      h2 {
+        margin-bottom: 15px;
+        font-size: 1.4rem;
+      }
+
+      .moduli-container {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        width: 90%;
+        max-width: 500px;
+        margin-bottom: 20px;
+      }
+
+      .switcher {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 90%;
+        max-width: 500px;
+        margin-bottom: 20px;
+      }
+
+      .switcher button,
+      .bottone-chiamata {
+        width: 100%;
+        font-size: 0.9rem;
+        padding: 10px;
+      }
+
+      #chiamate-container {
+        width: 90%;
+        max-width: 700px;
+        font-size: 0.9rem;
       }
     }
   </style>
 </head>
-<body>
+<body class="pagina-chiamate">
+  <!-- NAVBAR -->
+<nav>
+  <!-- NAV MOBILE -->
+  <div class="mobile-nav">
+    <span id="hamburger" class="hamburger">☰</span>
+    <a href="index.html" class="home-icon">🏠</a>
+  </div>
 
-  <nav>
-    <div class="menu">
-      <a href="index.html">🏠</a>
-      <a href="rose.html">Rose</a>
-      <a href="classifica.html">Classifica</a>
-      <a href="draft_conference.html?tab=Draft Conference">Draft ▾</a>
-      <a href="svincolati.html">Svincolati</a>
-      <a href="chiamate.html">Chiamate</a>
-      <a href="albo.html">Albo d'Oro</a>
-    </div>
-    <div><strong>Competizioni</strong></div>
-  </nav>
+  <!-- MENU MOBILE -->
+  <ul class="navbar mobile-only hidden" id="mobileMenu">
+    <li><a href="rose.html">Rose</a></li>
+    <li><a href="classifica.html">Classifica</a></li>
+    <li class="dropdown">
+      <a href="#" id="toggle-draft">Draft ▾</a>
+      <ul class="submenu hidden" id="submenu-draft">
+        <li><a href="draft_championship.html?tab=Draft Championship">🟦 Conf.Championship</a></li>
+        <li><a href="draft_conference.html?tab=Draft Conference">🟨 Conf.League</a></li>
+      </ul>
+    </li>
+    <li><a href="svincolati.html">Svincolati</a></li>
+    <li><a href="chiamate.html">Chiamate</a></li>
+    <li><a href="albo.html">Albo d'Oro</a></li>
+  </ul>
 
-  <div class="title" id="titolo-pagina">Chiamate Settimanali</div>
+  <!-- MENU DESKTOP -->
+  <ul class="navbar desktop-only">
+    <li><a href="index.html">🏠</a></li>
+    <li><a href="rose.html">Rose</a></li>
+    <li><a href="classifica.html">Classifica</a></li>
+    <li class="dropdown">
+      <a href="#" id="desktop-toggle-draft">Draft ▾</a>
+      <ul class="submenu hidden" id="desktop-submenu-draft">
+        <li><a href="draft_championship.html?tab=Draft Championship">🟦 Conf.Championship</a></li>
+        <li><a href="draft_conference.html?tab=Draft Conference">🟨 Conf.League</a></li>
+      </ul>
+    </li>
+    <li><a href="svincolati.html">Svincolati</a></li>
+    <li><a href="chiamate.html">Chiamate</a></li>
+    <li><a href="albo.html">Albo d'Oro</a></li>
+  </ul>
+</nav>
+  
+  <h2>Chiamate Settimanali</h2>
 
   <div class="moduli-container">
+    <!-- Moduli League -->
     <a class="bottone-chiamata" href="https://docs.google.com/forms/d/e/1FAIpQLSdxOpFrvWkhi6TrhryrIVJUeMISAxo-CatGtw8TuNApRyU8Yg/viewform?usp=dialog" target="_blank">
       ➕ Compila chiamata 15:00 (Conference League)
     </a>
     <a class="bottone-chiamata" href="https://docs.google.com/forms/d/e/1FAIpQLScR411PT9pvIZ9SxoFeiKKwbI_Mk0r5USa-rk6Egv0ZyOnSSQ/viewform?usp=dialog" target="_blank">
       ➕ Compila chiamata 16:00 (Conference League)
     </a>
+
+    <!-- Moduli Championship -->
     <a class="bottone-chiamata" href="https://docs.google.com/forms/d/e/1FAIpQLScNaxnbpVmIW_t23uvRqLkRy6sDrzyEvQQ-mpLDkk67DVDLag/viewform?usp=dialog" target="_blank">
       ➕ Compila chiamata 15:00 (Conference Championship)
     </a>
@@ -131,18 +130,46 @@
   </div>
 
   <script src="chiamate.js"></script>
-  <script>
-    function caricaChiamate(tab) {
-      const mappaTitoli = {
-        "league15": "Conference League - Chiamate 15:00",
-        "league16": "Conference League - Chiamate 16:00",
-        "champ15": "Championship - Chiamate 15:00",
-        "champ16": "Championship - Chiamate 16:00",
-      };
-      document.getElementById("titolo-pagina").textContent = mappaTitoli[tab] || "Chiamate Settimanali";
-      // carica chiamate via chiamate.js
-    }
-  </script>
+
+ <!-- SCRIPT NAVBAR -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const hamburger = document.getElementById("hamburger");
+    const mobileMenu = document.getElementById("mobileMenu");
+    const draftToggle = document.getElementById("toggle-draft");
+    const draftSubmenu = document.getElementById("submenu-draft");
+
+    const desktopToggle = document.getElementById("desktop-toggle-draft");
+    const desktopSubmenu = document.getElementById("desktop-submenu-draft");
+
+    // Toggle mobile menu
+    hamburger?.addEventListener("click", function () {
+      mobileMenu.classList.toggle("show");
+    });
+
+    // Chiude mobile al clic (eccetto toggle draft)
+    document.querySelectorAll("#mobileMenu a").forEach(link => {
+      link.addEventListener("click", function (e) {
+        if (link.id !== "toggle-draft") {
+          mobileMenu.classList.remove("show");
+          draftSubmenu?.classList.add("hidden");
+        }
+      });
+    });
+
+    // Mobile: Draft submenu toggle
+    draftToggle?.addEventListener("click", function (e) {
+      e.preventDefault();
+      draftSubmenu.classList.toggle("hidden");
+    });
+
+    // Desktop: Draft submenu toggle
+    desktopToggle?.addEventListener("click", function (e) {
+      e.preventDefault();
+      desktopSubmenu.classList.toggle("hidden");
+    });
+  });
+</script>
 
 </body>
 </html>
