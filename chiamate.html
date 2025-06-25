@@ -4,171 +4,52 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Chiamate Settimanali</title>
-  <style>
-    @media (max-width: 768px) {
-      body {
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-start;
-        padding: 20px;
-        text-align: center;
-      }
-
-      h2 {
-        margin-bottom: 15px;
-        font-size: 1.4rem;
-      }
-
-      .moduli-container {
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-        width: 90%;
-        max-width: 500px;
-        margin-bottom: 20px;
-      }
-
-      .switcher {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        width: 90%;
-        max-width: 500px;
-        margin-bottom: 20px;
-      }
-
-      .switcher button,
-      .bottone-chiamata {
-        width: 100%;
-        font-size: 0.9rem;
-        padding: 10px;
-      }
-
-      #chiamate-container {
-        width: 90%;
-        max-width: 700px;
-        font-size: 0.9rem;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="main_chiamate.css" />
 </head>
-<body class="pagina-chiamate">
-  <!-- NAVBAR -->
-<nav>
-  <!-- NAV MOBILE -->
-  <div class="mobile-nav">
-    <span id="hamburger" class="hamburger">☰</span>
-    <a href="index.html" class="home-icon">🏠</a>
-  </div>
+<body>
+  <!-- Navbar -->
+  <nav>
+    <div class="mobile-nav">
+      <span id="hamburger" class="hamburger">☰</span>
+      <a href="index.html" class="home-icon">🏠</a>
+    </div>
+    <ul class="navbar mobile-only hidden" id="mobileMenu">
+      <li><a href="rose.html">Rose</a></li>
+      <li class="dropdown">
+        <a href="#" class="toggle-submenu">Draft ▾</a>
+        <ul class="submenu">
+          <li><a href="draft.html">Draft Board</a></li>
+          <li><a href="ordine_draft.html">Ordine Draft</a></li>
+        </ul>
+      </li>
+      <li class="dropdown">
+        <a href="#" class="toggle-submenu">Competizioni ▾</a>
+        <ul class="submenu">
+          <li><a href="classifica.html">📊 Classifica</a></li>
+          <li><a href="playoff.html">🏆 Playoff</a></li>
+          <li><a href="chiamate.html">📥 Chiamate</a></li>
+        </ul>
+      </li>
+      <li><a href="albo.html">Albo d'Oro</a></li>
+    </ul>
+  </nav>
 
-  <!-- MENU MOBILE -->
-  <ul class="navbar mobile-only hidden" id="mobileMenu">
-    <li><a href="rose.html">Rose</a></li>
-    <li><a href="classifica.html">Classifica</a></li>
-    <li class="dropdown">
-      <a href="#" id="toggle-draft">Draft ▾</a>
-      <ul class="submenu hidden" id="submenu-draft">
-        <li><a href="draft_championship.html?tab=Draft Championship">🟦 Conf.Championship</a></li>
-        <li><a href="draft_conference.html?tab=Draft Conference">🟨 Conf.League</a></li>
-      </ul>
-    </li>
-    <li><a href="svincolati.html">Svincolati</a></li>
-    <li><a href="chiamate.html">Chiamate</a></li>
-    <li><a href="albo.html">Albo d'Oro</a></li>
-  </ul>
-
-  <!-- MENU DESKTOP -->
-  <ul class="navbar desktop-only">
-    <li><a href="index.html">🏠</a></li>
-    <li><a href="rose.html">Rose</a></li>
-    <li><a href="classifica.html">Classifica</a></li>
-    <li class="dropdown">
-      <a href="#" id="desktop-toggle-draft">Draft ▾</a>
-      <ul class="submenu hidden" id="desktop-submenu-draft">
-        <li><a href="draft_championship.html?tab=Draft Championship">🟦 Conf.Championship</a></li>
-        <li><a href="draft_conference.html?tab=Draft Conference">🟨 Conf.League</a></li>
-      </ul>
-    </li>
-    <li><a href="svincolati.html">Svincolati</a></li>
-    <li><a href="chiamate.html">Chiamate</a></li>
-    <li><a href="albo.html">Albo d'Oro</a></li>
-  </ul>
-</nav>
-  
-  <h2>Chiamate Settimanali</h2>
-
-  <div class="moduli-container">
-    <!-- Moduli League -->
-    <a class="bottone-chiamata" href="https://docs.google.com/forms/d/e/1FAIpQLSdxOpFrvWkhi6TrhryrIVJUeMISAxo-CatGtw8TuNApRyU8Yg/viewform?usp=dialog" target="_blank">
-      ➕ Compila chiamata 15:00 (Conference League)
-    </a>
-    <a class="bottone-chiamata" href="https://docs.google.com/forms/d/e/1FAIpQLScR411PT9pvIZ9SxoFeiKKwbI_Mk0r5USa-rk6Egv0ZyOnSSQ/viewform?usp=dialog" target="_blank">
-      ➕ Compila chiamata 16:00 (Conference League)
-    </a>
-
-    <!-- Moduli Championship -->
-    <a class="bottone-chiamata" href="https://docs.google.com/forms/d/e/1FAIpQLScNaxnbpVmIW_t23uvRqLkRy6sDrzyEvQQ-mpLDkk67DVDLag/viewform?usp=dialog" target="_blank">
-      ➕ Compila chiamata 15:00 (Conference Championship)
-    </a>
-    <a class="bottone-chiamata" href="https://docs.google.com/forms/d/e/1FAIpQLSfwpZkHssyd3GVJodKLwGJjNttEe-qvMqqCRE50LiTp6bH2jA/viewform?usp=dialog" target="_blank">
-      ➕ Compila chiamata 16:00 (Conference Championship)
-    </a>
-  </div>
-
-  <div class="switcher">
-    <button onclick="caricaChiamate('league15')">📋 Visualizza Conference League (15:00)</button>
-    <button onclick="caricaChiamate('league16')">📋 Visualizza Conference League (16:00)</button>
-    <button onclick="caricaChiamate('champ15')">📋 Visualizza Conference Championship (15:00)</button>
-    <button onclick="caricaChiamate('champ16')">📋 Visualizza Conference Championship (16:00)</button>
-  </div>
-
-  <div id="chiamate-container">
-    <p>⏳ Seleziona una conference per visualizzare le chiamate.</p>
-  </div>
+  <h1 id="titolo-chiamate">Chiamate Settimanali</h1>
+  <div class="switcher" id="switcher"></div>
+  <div class="moduli-container" id="moduli-container"></div>
 
   <script src="chiamate.js"></script>
-
- <!-- SCRIPT NAVBAR -->
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const hamburger = document.getElementById("hamburger");
-    const mobileMenu = document.getElementById("mobileMenu");
-    const draftToggle = document.getElementById("toggle-draft");
-    const draftSubmenu = document.getElementById("submenu-draft");
-
-    const desktopToggle = document.getElementById("desktop-toggle-draft");
-    const desktopSubmenu = document.getElementById("desktop-submenu-draft");
-
-    // Toggle mobile menu
-    hamburger?.addEventListener("click", function () {
-      mobileMenu.classList.toggle("show");
+  <script>
+    document.getElementById("hamburger").addEventListener("click", () => {
+      document.getElementById("mobileMenu").classList.toggle("hidden");
     });
-
-    // Chiude mobile al clic (eccetto toggle draft)
-    document.querySelectorAll("#mobileMenu a").forEach(link => {
-      link.addEventListener("click", function (e) {
-        if (link.id !== "toggle-draft") {
-          mobileMenu.classList.remove("show");
-          draftSubmenu?.classList.add("hidden");
-        }
+    document.querySelectorAll(".toggle-submenu").forEach(toggle => {
+      toggle.addEventListener("click", (e) => {
+        e.preventDefault();
+        const submenu = toggle.nextElementSibling;
+        submenu.classList.toggle("visible");
       });
     });
-
-    // Mobile: Draft submenu toggle
-    draftToggle?.addEventListener("click", function (e) {
-      e.preventDefault();
-      draftSubmenu.classList.toggle("hidden");
-    });
-
-    // Desktop: Draft submenu toggle
-    desktopToggle?.addEventListener("click", function (e) {
-      e.preventDefault();
-      desktopSubmenu.classList.toggle("hidden");
-    });
-  });
-</script>
-
+  </script>
 </body>
 </html>
