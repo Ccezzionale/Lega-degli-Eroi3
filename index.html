@@ -62,23 +62,16 @@
       border-radius: 6px;
     }
 
-    .dropdown .submenu {
+    .submenu {
       display: none;
       flex-direction: column;
       margin-left: 15px;
+      background-color: #003366;
+      border-radius: 4px;
     }
 
-    .dropdown .submenu a {
-      font-size: 0.95rem;
-    }
-
-    .dropdown.show .submenu {
+    .submenu.show {
       display: flex;
-    }
-
-    .nav-header {
-      display: flex;
-      align-items: center;
     }
 
     .hero {
@@ -107,28 +100,22 @@
         display: flex;
         flex-direction: row;
         gap: 20px;
-        align-items: center;
         background-color: transparent;
         padding-left: 0;
       }
 
-      .dropdown .submenu {
-        background-color: #003366;
-        border-radius: 4px;
+      .submenu {
+        position: absolute;
         display: none;
-        padding-left: 10px;
-        margin-top: 5px;
+        top: 100%;
+        left: 0;
+        z-index: 10;
+        min-width: 180px;
       }
 
-      .dropdown.show .submenu {
-        display: flex !important;
+      .dropdown:hover .submenu {
+        display: flex;
         flex-direction: column;
-      }
-
-      @media (max-width: 768px) {
-        .navbar .dropdown .submenu a {
-          padding-left: 20px;
-        }
       }
 
       nav {
@@ -149,19 +136,19 @@
   <a href="index.html" class="home-icon">🏠</a>
   <ul class="navbar" id="mainMenu">
     <li><a href="rose.html">Rose</a></li>
-    <li class="dropdown">
-      <a href="#" class="dropdown-toggle" data-target="draft">Draft ▾</a>
-      <div class="submenu">
-        <a href="draft_championship.html">🟦 Conf.Championship</a>
-        <a href="draft_conference.html">🟨 Conf.League</a>
-      </div>
+    <li>
+      <a href="#" id="toggle-draft">Draft ▾</a>
+      <ul class="submenu" id="submenu-draft">
+        <li><a href="draft_championship.html">🟦 Conf.Championship</a></li>
+        <li><a href="draft_conference.html">🟨 Conf.League</a></li>
+      </ul>
     </li>
-    <li class="dropdown">
-      <a href="#" class="dropdown-toggle" data-target="competizioni">Competizioni ▾</a>
-      <div class="submenu">
-        <a href="classifica.html">📊 Classifiche</a>
-        <a href="playoff.html">🏆 Playoff</a>
-      </div>
+    <li>
+      <a href="#" id="toggle-competizioni">Competizioni ▾</a>
+      <ul class="submenu" id="submenu-competizioni">
+        <li><a href="classifica.html">📊 Classifiche</a></li>
+        <li><a href="playoff.html">🏆 Playoff</a></li>
+      </ul>
     </li>
     <li><a href="svincolati.html">Svincolati</a></li>
     <li><a href="chiamate.html">Chiamate</a></li>
@@ -179,51 +166,25 @@
   document.addEventListener("DOMContentLoaded", function () {
     const hamburger = document.getElementById("hamburger");
     const mainMenu = document.getElementById("mainMenu");
-
-    hamburger?.addEventListener("click", () => {
-      mainMenu.classList.toggle("show");
-    });
-  });
-
-    const dropdowns = document.querySelectorAll(".dropdown > a");
-    dropdowns.forEach(link => {
-      link.addEventListener("click", function(e) {
-        if (window.innerWidth < 768) {
-          e.preventDefault();
-          const parent = this.parentElement;
-          parent.classList.toggle("show");
-        }
-      });
-    });
-    
-    const dropdownToggles = document.querySelectorAll(".dropdown-toggle");
-    dropdownToggles.forEach(toggle => {
-      toggle.addEventListener("click", function(e) {
-        e.preventDefault();
-        const parent = this.closest(".dropdown");
-        parent.classList.toggle("show");
-      });
-    });
-    
-    // Supporto mobile menu toggles
     const toggleDraft = document.getElementById("toggle-draft");
     const toggleCompetizioni = document.getElementById("toggle-competizioni");
     const submenuDraft = document.getElementById("submenu-draft");
     const submenuCompetizioni = document.getElementById("submenu-competizioni");
 
+    hamburger?.addEventListener("click", () => {
+      mainMenu.classList.toggle("show");
+    });
+
     toggleDraft?.addEventListener("click", function (e) {
       e.preventDefault();
-      submenuDraft.classList.toggle("hidden");
+      submenuDraft.classList.toggle("show");
     });
 
     toggleCompetizioni?.addEventListener("click", function (e) {
       e.preventDefault();
-      submenuCompetizioni.classList.toggle("hidden");
+      submenuCompetizioni.classList.toggle("show");
     });
-    </script>
-
-
-
-
+  });
+</script>
 </body>
 </html>
