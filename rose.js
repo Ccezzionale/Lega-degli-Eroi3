@@ -194,7 +194,6 @@ function mostraRose() {
             <td>${g.ruolo}</td>
             <td class="nome">${g.nome} ${g.fp ? '🅕' : ''} ${g.u21 ? '🅤21' : ''}</td>
             <td>${g.squadra}</td>
-            <td>${g.quotazione}</td>
           </tr>`).join("")}
       </tbody>
     `;
