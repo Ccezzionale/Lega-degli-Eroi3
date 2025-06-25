@@ -187,15 +187,15 @@ function mostraRose() {
 
     const table = document.createElement("table");
     table.innerHTML = `
-      <thead><tr><th>Ruolo</th><th>Nome</th><th>Squadra</th><th>Q</th></tr></thead>
-      <tbody>
-        ${data.giocatori.map(g => `
-          <tr>
-            <td>${g.ruolo}</td>
-            <td class="nome">${g.nome} ${g.fp ? '🅕' : ''} ${g.u21 ? '🅤21' : ''}</td>
-            <td>${g.squadra}</td>
-          </tr>`).join("")}
-      </tbody>
+  <thead><tr><th>Ruolo</th><th>Nome</th><th>Squadra</th></tr></thead>
+  <tbody>
+    ${data.giocatori.map(g => `
+      <tr>
+        <td>${g.ruolo}</td>
+        <td class="nome">${g.nome} ${g.fp ? '🅕' : ''} ${g.u21 ? '🅤21' : ''}</td>
+        <td>${g.squadra}</td>
+      </tr>`).join("")}
+  </tbody>
     `;
     div.appendChild(table);
     container.appendChild(div);
