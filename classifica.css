@@ -129,9 +129,7 @@ th, td {
 }
 
 /* === COLONNE MAGIC POINTS === */
-#tabella-classifica th:nth-last-child(1),
 #tabella-classifica td:nth-last-child(1),
-#tabella-classifica th:nth-last-child(2),
 #tabella-classifica td:nth-last-child(2) {
   max-width: 80px;
   width: 80px;
@@ -140,6 +138,7 @@ th, td {
   overflow: hidden;
   text-overflow: ellipsis;
   font-size: 0.9rem;
+  display: inline-block; /* 👈 aggiunta necessaria per text-overflow */
 }
 
 /* === LOGO E NOME === */
