@@ -180,7 +180,19 @@
       mainMenu.classList.toggle("show");
     });
   });
-</script>
+
+    const dropdowns = document.querySelectorAll(".dropdown > a");
+    dropdowns.forEach(link => {
+      link.addEventListener("click", function(e) {
+        if (window.innerWidth < 768) {
+          e.preventDefault();
+          const parent = this.parentElement;
+          parent.classList.toggle("show");
+        }
+      });
+    });
+    </script>
+
 
 </body>
 </html>
