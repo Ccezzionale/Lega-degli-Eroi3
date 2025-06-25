@@ -121,8 +121,14 @@
       }
 
       .dropdown.show .submenu {
-        display: flex;
+        display: flex !important;
         flex-direction: column;
+      }
+
+      @media (max-width: 768px) {
+        .navbar .dropdown .submenu a {
+          padding-left: 20px;
+        }
       }
 
       nav {
