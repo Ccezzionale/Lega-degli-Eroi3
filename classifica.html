@@ -134,23 +134,23 @@
       gap: 12px;
     }
 
-    tr.riga-classifica {
-      background-color: white;
-      border: 1px solid #ccc;
-      border-radius: 12px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.08);
-      margin-bottom: 12px;
-      display: block;
-      padding: 10px 12px;
-      width: 90%;
-      max-width: 850px;
-    }
+tr.riga-classifica {
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+  margin-bottom: 12px;
+  padding: 10px 12px;
+  display: table;
+  width: 90%;
+  max-width: 850px;
+  table-layout: fixed;
+}
+tr.riga-classifica td {
+  padding: 8px;
+  text-align: center;
+}
 
-    tr.riga-classifica td {
-      display: inline-block;
-      min-width: 100px;
-      vertical-align: middle;
-    }
 
     /* Evidenziazioni */
     tr.top4 {
