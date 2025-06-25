@@ -1,55 +1,150 @@
+
 <!DOCTYPE html>
 <html lang="it">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Chiamate Settimanali</title>
-  <link rel="stylesheet" href="main_chiamate.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Chiamate</title>
+  <script src="chiamate.js" defer></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f8f9fa;
+      color: #212529;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #001f3f;
+      font-size: 2rem;
+      margin-top: 30px;
+      text-transform: uppercase;
+    }
+    .switcher {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .switcher button {
+      background-color: #001f3f;
+      color: #fff;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .switcher button:hover {
+      background-color: #003366;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px auto;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: center;
+    }
+    th {
+      background-color: #001f3f;
+      color: white;
+    }
+    .avviso {
+      text-align: center;
+      font-size: 1.2rem;
+      color: red;
+    }
+
+    nav, .mobile-nav {
+      background-color: #001f3f;
+      color: white;
+      padding: 10px;
+    }
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .navbar a, .mobile-nav a {
+      color: white;
+      margin: 0 10px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .submenu {
+      display: none;
+      background-color: #003366;
+      position: absolute;
+      margin-top: 8px;
+      padding: 10px;
+      list-style: none;
+    }
+    .submenu.visible {
+      display: block;
+    }
+    .dropdown {
+      position: relative;
+    }
+    .dropdown:hover .submenu {
+      display: block;
+    }
+  </style>
 </head>
 <body>
-  <!-- Navbar -->
   <nav>
-    <div class="mobile-nav">
-      <span id="hamburger" class="hamburger">☰</span>
-      <a href="index.html" class="home-icon">🏠</a>
-    </div>
-    <ul class="navbar mobile-only hidden" id="mobileMenu">
-      <li><a href="rose.html">Rose</a></li>
-      <li class="dropdown">
-        <a href="#" class="toggle-submenu">Draft ▾</a>
-        <ul class="submenu">
-          <li><a href="draft.html">Draft Board</a></li>
-          <li><a href="ordine_draft.html">Ordine Draft</a></li>
-        </ul>
-      </li>
-      <li class="dropdown">
+    <div class="navbar">
+      <a href="index.html">🏠</a>
+      <div class="dropdown">
         <a href="#" class="toggle-submenu">Competizioni ▾</a>
         <ul class="submenu">
           <li><a href="classifica.html">📊 Classifica</a></li>
           <li><a href="playoff.html">🏆 Playoff</a></li>
-          <li><a href="chiamate.html">📥 Chiamate</a></li>
+          <li><a href="chiamate.html">📞 Chiamate</a></li>
         </ul>
-      </li>
-      <li><a href="albo.html">Albo d'Oro</a></li>
-    </ul>
+      </div>
+    </div>
   </nav>
 
-  <h1 id="titolo-chiamate">Chiamate Settimanali</h1>
-  <div class="switcher" id="switcher"></div>
-  <div class="moduli-container" id="moduli-container"></div>
+  <h1 id="titolo-chiamate">Chiamate</h1>
 
-  <script src="chiamate.js"></script>
+  <div class="switcher">
+    <button data-conf="league15">Visualizza Conference League</button>
+    <button data-conf="champ15">Visualizza Championship</button>
+  </div>
+
+  <div id="chiamate-container"></div>
+
   <script>
-    document.getElementById("hamburger").addEventListener("click", () => {
-      document.getElementById("mobileMenu").classList.toggle("hidden");
-    });
-    document.querySelectorAll(".toggle-submenu").forEach(toggle => {
-      toggle.addEventListener("click", (e) => {
-        e.preventDefault();
-        const submenu = toggle.nextElementSibling;
-        submenu.classList.toggle("visible");
-      });
-    });
+    const NOMI_ESTESI = {
+      league15: "Conference League",
+      champ15: "Championship",
+      league16: "Conference League - Week 16",
+      champ16: "Championship - Week 16"
+    };
+
+    function aggiornaTitolo(conf) {
+      const titolo = document.getElementById("titolo-chiamate");
+      titolo.textContent = "Chiamate " + (NOMI_ESTESI[conf] || "");
+    }
+
+    window.onload = () => {
+      const conf = "league15";
+      aggiornaTitolo(conf);
+      caricaChiamate(conf);
+    };
+
+    document.querySelectorAll(".switcher button").forEach(btn =>
+      btn.addEventListener("click", () => {
+        const conf = btn.dataset.conf;
+        aggiornaTitolo(conf);
+        caricaChiamate(conf);
+      })
+    );
   </script>
 </body>
 </html>
