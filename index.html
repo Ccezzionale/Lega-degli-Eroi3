@@ -113,18 +113,16 @@
       }
 
       .dropdown .submenu {
-        position: absolute;
         background-color: #003366;
         border-radius: 4px;
         display: none;
-        top: 100%;
-        left: 0;
-        z-index: 10;
-        min-width: 180px;
+        padding-left: 10px;
+        margin-top: 5px;
       }
 
-      .dropdown:hover .submenu {
-        display: block;
+      .dropdown.show .submenu {
+        display: flex;
+        flex-direction: column;
       }
 
       nav {
