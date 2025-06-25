@@ -55,8 +55,6 @@ if (colonneGrezze.length > intestazione.length) {
   }
 }
 
-let colonne = [...colonneGrezze];
-
         if (nomeFoglio !== "Totale") colonne.splice(2, 1);
 
         const tr = document.createElement("tr");
