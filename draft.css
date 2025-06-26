@@ -245,28 +245,40 @@ input[type="text"], select {
     gap: 12px;
   }
 
-@media (max-width: 768px) {
   .colonna-pick {
     max-height: 300px;
     overflow-y: auto;
   }
 
-#tabella-pick tbody {
-  display: block;
-  max-height: 300px;
-  overflow-y: auto;
-}
+  #tabella-pick {
+    min-width: 500px;
+    border-collapse: collapse;
+  }
 
-#tabella-pick thead,
-#tabella-pick tbody tr {
-  display: table;
-  width: 100%;
-}
+  #tabella-pick thead {
+    background-color: #001f3f;
+    color: white;
+  }
 
-#tabella-pick td, 
-#tabella-pick th {
-  word-break: break-word;
-  white-space: normal;
-}
-}
+  #tabella-pick thead,
+  #tabella-pick tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+  }
 
+  #tabella-pick tbody {
+    display: block;
+    max-height: 300px;
+    overflow-y: auto;
+  }
+
+  #tabella-pick td,
+  #tabella-pick th {
+    padding: 8px;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
