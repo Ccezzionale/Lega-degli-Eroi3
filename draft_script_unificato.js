@@ -259,12 +259,15 @@ div.className = "card-pick";
     h4.style.textAlign = "center";
     div.appendChild(h4);
 
-    picks.forEach(txt => {
-      const riga = document.createElement("div");
-      riga.textContent = txt;
-      riga.style.textAlign = "center";
-      div.appendChild(riga);
-    });
+picks.forEach((txt, index) => {
+  const riga = document.createElement("div");
+  riga.textContent = txt;
+  riga.style.textAlign = "center";
+  if (index < 6) {
+    riga.classList.add("highlight-pick");
+  }
+  div.appendChild(riga);
+});
 
     container.appendChild(div);
   }
