@@ -231,14 +231,12 @@ div.className = "card-pick";
     const h4 = document.createElement("h4");
     h4.textContent = team;
     h4.style.textAlign = "center";
-    h4.style.color = "#ffffff";
     div.appendChild(h4);
 
     picks.forEach(txt => {
       const riga = document.createElement("div");
       riga.textContent = txt;
       riga.style.textAlign = "center";
-      riga.style.color = "#ffffff";
       div.appendChild(riga);
     });
 
