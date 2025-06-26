@@ -57,10 +57,10 @@
       color: #001f3f;
     }
 
-    .match.vincente {
-      border: 2px solid #ffcc00;
-      background-color: #fff8dc;
-    }
+.match-card.vincente {
+  background-color: #ffe066;
+  border-color: #ff9900;
+}
 
     .squadra.orizzontale {
       display: flex;
