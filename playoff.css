@@ -292,8 +292,10 @@ nav {
         font-size: 1.6rem;
         margin-top: 10px;
       }
-    .match-card .team-line {
+    
+.match-card .team-line {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   padding: 4px 0;
@@ -307,15 +309,16 @@ nav {
 }
 
 .match-card .team-line img {
-  width: 24px;
-  height: 24px;
-  object-fit: contain;
+  width: 32px;
+  height: 32px;
 }
 
 .match-card .team-line .nome {
   flex-grow: 1;
+  min-width: 80px;
   text-align: left;
   font-size: 0.95rem;
+  word-break: break-word;
 }
 
 .match-card .team-line .gol {
