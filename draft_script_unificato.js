@@ -92,7 +92,7 @@ function caricaPick() {
 if (!nome && !prossima) {
   prossima = { fantaTeam, pick };
   tr.classList.add("next-pick");
-  tr.style.backgroundColor = "#fff7aa"; // Giallo chiaro
+  tr.style.backgroundColor = "#ffcc00"; // Giallo chiaro
   setTimeout(() => tr.scrollIntoView({ behavior: "smooth", block: "center" }), 300);
 } else {
   tr.style.backgroundColor = "white";
