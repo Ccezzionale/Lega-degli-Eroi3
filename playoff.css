@@ -323,8 +323,9 @@ nav {
 
 .match-card .team-line .gol {
   font-weight: bold;
-  min-width: 18px;
+  min-width: 20px;
   text-align: right;
+  margin-left: auto;
 }
     }
 
