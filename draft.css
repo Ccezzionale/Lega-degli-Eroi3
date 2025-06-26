@@ -251,45 +251,38 @@ input[type="text"], select {
     padding: 0;
   }
 
-  #tabella-pick {
-    border-collapse: collapse;
-    width: 100%;
-  }
+ #tabella-pick {
+  border-collapse: collapse;
+  width: 100%;
+}
 
-  #tabella-pick thead,
-  #tabella-pick tbody tr {
-    display: table;
-    width: 100%;
-    table-layout: auto;
-  }
+#tabella-pick thead,
+#tabella-pick tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
 
-  #tabella-pick tbody {
-    display: block;
-    max-height: 300px;
-    overflow-y: auto;
-  }
+#tabella-pick tbody {
+  display: block;
+  max-height: 300px;
+  overflow-y: auto;
+}
 
-  #tabella-pick th,
+#tabella-pick th,
 #tabella-pick td {
   padding: 4px 6px;
   font-size: 0.85rem;
-  white-space: normal;
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   text-align: left;
 }
 
-#tabella-pick td {
-  width: auto;
+/* Solo la colonna 'Pick' centrata */
+#tabella-pick td:first-child,
+#tabella-pick th:first-child {
+  text-align: center;
+  width: 36px;
 }
-
-  #tabella-pick td:nth-child(2) {
-    width: auto;
-  }
-
-  #tabella-pick td:nth-child(3),
-  #tabella-pick td:nth-child(4) {
-    width: auto;
-    text-align: left !important;
-  }
 }
