@@ -194,6 +194,9 @@ input[type="text"], select {
   text-align: center;
 }
 
+#lista-giocatori-table tbody tr {
+  cursor: pointer;
+}
 
 @media (max-width: 768px) {
   .container {
