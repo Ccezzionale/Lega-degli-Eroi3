@@ -41,7 +41,12 @@ function aggiornaPlayoffMobile() {
 
   const rounds = window.risultati || [];
   for (const r of rounds) {
-    const key = r.partita?.[0]; // WC, Q, S, F
+    let key = "";
+if (r.partita?.startsWith("WC")) key = "WC";
+else if (r.partita?.startsWith("Q")) key = "Q";
+else if (r.partita?.startsWith("S")) key = "S";
+else if (r.partita?.startsWith("F")) key = "F";
+
     const container = sezioni[key];
     if (!container) continue;
 
@@ -122,6 +127,35 @@ function aggiornaPlayoff() {
     `;
     const container = document.getElementById("vincitore-assoluto");
     if (container) container.innerHTML = htmlVincitore;
+  }
+}
+
+function aggiornaPlayoffMobile() {
+  if (window.innerWidth > 768) return;
+
+  const sezioni = {
+    WC: document.getElementById("round-wc"),
+    Q: document.getElementById("round-qf"),
+    S: document.getElementById("round-sf"),
+    F: document.getElementById("round-f")
+  };
+
+  const rounds = window.risultati || [];
+  for (const r of rounds) {
+    let key = "";
+    if (r.partita?.startsWith("WC")) key = "WC";
+    else if (r.partita?.startsWith("Q")) key = "Q";
+    else if (r.partita?.startsWith("S")) key = "S";
+    else if (r.partita?.startsWith("F")) key = "F";
+
+    const container = sezioni[key];
+    if (!container) continue;
+
+    const logoA = `img/${r.squadraA.replace(/[°]/g, "").trim()}.png`;
+    const logoB = `img/${r.squadraB.replace(/[°]/g, "").trim()}.png`;
+
+    const matchHTML = creaMatchCardMobile(r.squadraA, r.squadraB, logoA, logoB, r.vincente);
+    container.insertAdjacentHTML("beforeend", matchHTML);
   }
 }
 
