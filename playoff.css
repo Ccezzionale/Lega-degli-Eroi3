@@ -198,27 +198,30 @@ nav {
   .mobile-nav {
     display: flex;
     align-items: center;
-    padding: 10px 30px;
+    justify-content: flex-start;
+    gap: 20px;
     background-color: #001f3f;
-    gap: 15px;
+    padding: 12px 30px;
+    height: 52px; /* forza altezza uniforme con navbar */
   }
 
   .home-icon {
-    font-size: 1.5rem;
-    color: white;
+    font-size: 1.6rem;
     text-decoration: none;
+    color: white;
+    display: flex;
+    align-items: center;
   }
 
   .navbar {
-    display: flex !important;
-    flex-direction: row;
+    list-style-type: none;
+    margin: 0;
+    padding: 10px 30px;
+    display: flex;
     align-items: center;
-    justify-content: flex-start;
     gap: 25px;
     background-color: #001f3f;
-    padding: 0 30px;
-    list-style: none;
-    margin: 0;
+    margin-top: -4px; /* allineamento verticale perfetto */
   }
 
   .navbar a {
