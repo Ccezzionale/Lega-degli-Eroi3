@@ -268,5 +268,11 @@ th, td {
   .hamburger {
     display: block;
   }
+  .nav-left {
+  display: flex;
+  align-items: center;
+  flex-direction: row; /* 👈 FORZA l’allineamento orizzontale */
+  gap: 12px;
+}
 }
 
