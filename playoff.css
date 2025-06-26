@@ -189,7 +189,69 @@ nav {
   display: flex;
 }
 
+#bracket-mobile {
+  display: none;
+  padding: 20px;
+}
+
 @media (max-width: 768px) {
+  .bracket {
+    display: none !important;
+  }
+
+  #bracket-mobile {
+    display: block;
+  }
+
+  .round-mobile {
+    margin-bottom: 30px;
+  }
+
+  .round-mobile h2 {
+    font-size: 1.2rem;
+    color: #001f3f;
+    margin-bottom: 10px;
+    border-left: 4px solid #ffcc00;
+    padding-left: 10px;
+  }
+
+  .match-card {
+    background: white;
+    border: 2px solid #001f3f;
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: 0.95rem;
+  }
+
+  .match-card.vincente {
+    background-color: #fff8dc;
+    border-color: #ffcc00;
+  }
+
+  .match-card img {
+    height: 24px;
+    width: 24px;
+    object-fit: contain;
+  }
+
+  .match-card .team {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .match-card .vs {
+    font-weight: bold;
+    color: #888;
+  }
+    
   .hamburger {
     display: block;
   }
