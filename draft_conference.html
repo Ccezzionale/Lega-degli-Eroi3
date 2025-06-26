@@ -1,22 +1,12 @@
-
 <!DOCTYPE html>
 <html lang="it">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Lega degli Eroi – Conference League</title>
-  
-  <link rel="stylesheet" href="draft.css">
-  
-
-
-
-
-
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Draft Conference</title>
+  <link rel="stylesheet" href="draft.css" />
 </head>
 <body>
-
 <nav>
   <div class="nav-left">
     <span id="hamburger" class="hamburger">☰</span>
@@ -44,100 +34,25 @@
   </ul>
 </nav>
 
-<!-- NAVBAR -->
-
-<h1>🟨 Draft Room - Conference League</h1>
-<div class="top-link">
-  <a href="statistiche.html" target="_blank">📊 Vai alle Statistiche del Draft</a>
-</div>
-<div id="turno-attuale">⏳ Caricamento turno in corso...</div>
-
-<div class="container">
-  <div class="tabella-container">
-    <div id="tabella-pick-container">
-<div class="container-draft"><div class="colonna-pick"><table id="tabella-pick">
-  <thead>
-    <tr>
-      <th onclick="ordinaPick(0)">Pick</th>
-      <th onclick="ordinaPick(1)">Squadra</th>
-      <th onclick="ordinaPick(2)">Giocatore</th>
-      <th onclick="ordinaPick(3)">Ruolo</th>
-      </tr>
-  </thead>
-  <tbody></tbody>
-</table></div><div class="colonna-svincolati">
-    </div>
+<div class="container-draft">
+  <div class="colonna-pick">
+    <table id="tabella-pick"></table>
+    <div id="riepilogo-pick"></div>
   </div>
-  <div class="lista-container">
-    <label for="filtroSerieA">Filtra per Squadra Serie A:</label>
-    <select id="filtroSerieA"><option value="">-- Tutte --</option></select>
-    <label for="filtroRuolo">Filtra per Ruolo:</label>
-    <input type="text" id="cercaRuolo" placeholder="Cerca ruolo (es. DD, E...)" style="margin-bottom: 6px; padding: 6px; font-size: 0.9em;" />
-    <select id="filtroRuolo"><option value="">-- Tutti i Ruoli --</option></select>
-    <label for="searchGiocatore">Cerca Giocatore:</label>
-    <input id="searchGiocatore" placeholder="Digita un nome..." type="text"/>
-    <div id="lista-giocatori-table-container">
-      <table id="lista-giocatori-table">
-        <thead>
-          <tr>
-            <th onclick="ordinaLista(0)">Giocatore</th>
-            <th onclick="ordinaLista(1)">Ruolo</th>
-            <th onclick="ordinaLista(2)">Squadra</th>
-            <th onclick="ordinaLista(3, true)">Quotazione</th>
-          </tr>
-        </thead>
-        <tbody id="lista-giocatori"></tbody>
-      </table></div></div>
+  <div class="colonna-svincolati">
+    <div id="filtri">
+      <select id="filtro-ruolo">
+        <option value="">Tutti i Ruoli</option>
+      </select>
+      <select id="filtro-squadra">
+        <option value="">Tutte le Squadre</option>
+      </select>
+      <input type="text" id="barra-ricerca" placeholder="Cerca giocatore..." />
+      <button id="reset-filtri">Reset</button>
     </div>
+    <table id="tabella-svincolati"></table>
   </div>
 </div>
-
-<h2 style="text-align:center; color:#ffcc00;">📋 Riepilogo Pick per Squadra</h2>
-<button onclick="aggiornaChiamatePerSquadra()">🔄 Ricarica Riepilogo</button>
-<div id="riepilogo-squadre" style="display: flex; flex-wrap: wrap; gap: 20px; padding: 20px;"></div>
-
-<script src="draft_script_unificato.js"></script>
-
-<!-- SCRIPT NAVBAR -->
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const hamburger = document.getElementById("hamburger");
-    const mobileMenu = document.getElementById("mobileMenu");
-    const draftToggle = document.getElementById("toggle-draft");
-    const draftSubmenu = document.getElementById("submenu-draft");
-
-    const desktopToggle = document.getElementById("desktop-toggle-draft");
-    const desktopSubmenu = document.getElementById("desktop-submenu-draft");
-
-    // Toggle mobile menu
-    hamburger?.addEventListener("click", function () {
-      mobileMenu.classList.toggle("show");
-    });
-
-    // Chiude mobile al clic (eccetto toggle draft)
-    document.querySelectorAll("#mobileMenu a").forEach(link => {
-      link.addEventListener("click", function (e) {
-        if (link.id !== "toggle-draft") {
-          mobileMenu.classList.remove("show");
-          draftSubmenu?.classList.add("hidden");
-        }
-      });
-    });
-
-    // Mobile: Draft submenu toggle
-    draftToggle?.addEventListener("click", function (e) {
-      e.preventDefault();
-      draftSubmenu.classList.toggle("hidden");
-    });
-
-    // Desktop: Draft submenu toggle
-    desktopToggle?.addEventListener("click", function (e) {
-      e.preventDefault();
-      desktopSubmenu.classList.toggle("hidden");
-    });
-  });
-</script>
-
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
@@ -158,6 +73,6 @@
     });
   });
 </script>
-
+<script src="draft_script_unificato.js"></script>
 </body>
 </html>
