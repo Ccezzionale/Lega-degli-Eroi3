@@ -265,4 +265,8 @@ th, td {
     position: static;
     width: 100%;
   }
+  .hamburger {
+    display: block;
+  }
 }
+
