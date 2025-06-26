@@ -94,13 +94,10 @@ if (!nome && !prossima) {
   tr.classList.add("next-pick");
   tr.style.backgroundColor = "#fff7aa"; // Giallo chiaro
   setTimeout(() => tr.scrollIntoView({ behavior: "smooth", block: "center" }), 300);
+} else {
+  tr.style.backgroundColor = "white";
+  tr.style.fontWeight = "bold";
 }
-
-          } else {
-            tr.style.backgroundColor = "white";
-            tr.style.fontWeight = "bold";
-          }
-
           corpoTabella.appendChild(tr);
         });
 
