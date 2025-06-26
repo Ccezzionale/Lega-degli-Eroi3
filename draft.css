@@ -186,6 +186,15 @@ input[type="text"], select {
   background-color: #0074D9;
 }
 
+#turno-attuale {
+  font-size: 1.2rem;
+  color: #ff851b;
+  font-weight: bold;
+  margin: 10px auto;
+  text-align: center;
+}
+
+
 @media (max-width: 768px) {
   .container {
     flex-direction: column;
