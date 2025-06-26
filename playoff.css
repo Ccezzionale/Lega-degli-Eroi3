@@ -292,4 +292,36 @@ nav {
         font-size: 1.6rem;
         margin-top: 10px;
       }
+    .match-card .team-line {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 0;
+  gap: 6px;
+}
+
+.match-card .team-line .pos {
+  font-weight: bold;
+  color: #001f3f;
+  min-width: 28px;
+}
+
+.match-card .team-line img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.match-card .team-line .nome {
+  flex-grow: 1;
+  text-align: left;
+  font-size: 0.95rem;
+}
+
+.match-card .team-line .gol {
+  font-weight: bold;
+  min-width: 18px;
+  text-align: right;
+}
     }
+
