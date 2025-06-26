@@ -159,6 +159,42 @@ function aggiornaPlayoffMobile() {
   }
 }
 
+function creaMatchCardMobile(nomeA, nomeB, logoA, logoB, vincenteNome) {
+  const squadraA = window.squadre?.find(s => s.nome === nomeA);
+  const squadraB = window.squadre?.find(s => s.nome === nomeB);
+  const posA = squadraA ? window.squadre.indexOf(squadraA) + 1 : "";
+  const posB = squadraB ? window.squadre.indexOf(squadraB) + 1 : "";
+
+  const risultato = window.risultati?.find(r => 
+    r.squadraA === nomeA && r.squadraB === nomeB || 
+    r.squadraA === nomeB && r.squadraB === nomeA
+  );
+
+  const golA = risultato?.squadraA === nomeA ? risultato?.golA : risultato?.golB ?? "";
+  const golB = risultato?.squadraB === nomeB ? risultato?.golB : risultato?.golA ?? "";
+
+  const isV1 = vincenteNome === nomeA;
+  const isV2 = vincenteNome === nomeB;
+
+  return `
+    <div class="match-card ${isV1 || isV2 ? 'vincente' : ''}">
+      <div class="team-line">
+        <span class="pos">${posA ? posA + "°" : ""}</span>
+        <img src="${logoA}" onerror="this.style.display='none'">
+        <span class="nome">${nomeA}</span>
+        <span class="gol">${golA !== null ? golA : ""}</span>
+      </div>
+      <div class="vs">vs</div>
+      <div class="team-line">
+        <span class="pos">${posB ? posB + "°" : ""}</span>
+        <img src="${logoB}" onerror="this.style.display='none'">
+        <span class="nome">${nomeB}</span>
+        <span class="gol">${golB !== null ? golB : ""}</span>
+      </div>
+    </div>
+  `;
+}
+
 fetch(URL_CLASSIFICA_TOTALE)
   .then(res => res.text())
   .then(csv => {
