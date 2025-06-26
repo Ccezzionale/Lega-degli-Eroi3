@@ -251,12 +251,17 @@ input[type="text"], select {
     overflow-y: auto;
   }
 
-  #tabella-pick tbody tr {
-    display: none;
-  }
+#tabella-pick tbody {
+  display: block;
+  max-height: 300px;
+  overflow-y: auto;
+}
 
-  #tabella-pick tbody tr.show-mobile {
-    display: table-row;
-  }
+#tabella-pick thead,
+#tabella-pick tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
 }
 
