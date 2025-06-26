@@ -109,6 +109,14 @@ h1 {
   padding: 10px;
 }
 
+#tabella-pick-container {
+  max-height: 500px;
+  overflow-y: auto;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
