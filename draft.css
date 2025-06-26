@@ -235,4 +235,16 @@ input[type="text"], select {
     flex-direction: row;
     gap: 12px;
   }
+    .colonna-pick {
+    max-height: 300px; /* altezza per circa 5 righe */
+    overflow-y: auto;
+  }
+
+  #tabella-pick tbody tr {
+    display: none; /* nasconde tutto di default */
+  }
+
+  #tabella-pick tbody tr.show-mobile {
+    display: table-row; /* mostra solo le 5 righe selezionate */
+  }
 }
