@@ -66,15 +66,37 @@ console.log("📡 Endpoint:", endpoint);
 
 function caricaPick() {
   return fetch(endpoint)
-    .then(res => res.text()) // Legge la risposta come testo grezzo
+    .then(res => res.text())
     .then(txt => {
       try {
-        const dati = JSON.parse(txt); // Tenta di fare il parse del JSON
-        let prossima = null;
+        const dati = JSON.parse(txt);
         const corpoTabella = document.querySelector("#tabella-pick tbody");
-        corpoTabella.innerHTML = ""; // Pulisce la tabella prima di riempirla
+        corpoTabella.innerHTML = "";
 
-        dati.forEach(riga => {
+        let prossima = null;
+        let prossimaIndex = -1;
+
+        dati.forEach((riga, index) => {
+          const nome = riga["Giocatore"]?.trim() || "";
+          if (!nome && prossimaIndex === -1) {
+            prossimaIndex = index;
+            prossima = {
+              fantaTeam: riga["Fanta Team"],
+              pick: riga["Pick"]
+            };
+          }
+        });
+
+        const isMobile = window.innerWidth <= 768;
+        const inizio = isMobile
+          ? Math.max(0, prossimaIndex - 2)
+          : 0;
+        const fine = isMobile
+          ? Math.min(dati.length, prossimaIndex + 3)
+          : dati.length;
+
+        for (let i = inizio; i < fine; i++) {
+          const riga = dati[i];
           const tr = document.createElement("tr");
           const nome = riga["Giocatore"]?.trim() || "";
           const fantaTeam = riga["Fanta Team"];
@@ -89,23 +111,23 @@ function caricaPick() {
             <td>${nome}</td>
             <td>${ruolo}</td>`;
 
-if (!nome && !prossima) {
-  prossima = { fantaTeam, pick };
-  tr.classList.add("next-pick");
-  tr.style.backgroundColor = "#ffcc00"; // Giallo chiaro
-  setTimeout(() => tr.scrollIntoView({ behavior: "smooth", block: "center" }), 300);
-} else {
-  tr.style.backgroundColor = "white";
-  tr.style.fontWeight = "bold";
-}
-          corpoTabella.appendChild(tr);
-        });
+          if (i === prossimaIndex) {
+            tr.classList.add("next-pick");
+            tr.style.backgroundColor = "#ffcc00";
+            setTimeout(() => {
+              tr.scrollIntoView({ behavior: "smooth", block: "center" });
+            }, 300);
+          } else if (nome) {
+            tr.style.backgroundColor = "white";
+            tr.style.fontWeight = "bold";
+          }
 
-        // Aggiorna il messaggio del turno attuale
-        document.getElementById("turno-attuale").textContent =
-          prossima
-            ? `🎯 È il turno di: ${prossima.fantaTeam} (Pick ${prossima.pick})`
-            : "✅ Draft completato!";
+          corpoTabella.appendChild(tr);
+        }
+
+        document.getElementById("turno-attuale").textContent = prossima
+          ? `🎯 È il turno di: ${prossima.fantaTeam} (Pick ${prossima.pick})`
+          : "✅ Draft completato!";
       } catch (err) {
         console.error("❌ Errore parsing JSON:", err);
         console.error("❌ Risposta ricevuta:", txt);
