@@ -202,9 +202,7 @@ input[type="text"], select {
   .container {
     flex-direction: column;
   }
-}
 
-@media (max-width: 768px) {
   .navbar {
     display: none;
     flex-direction: column;
@@ -235,16 +233,18 @@ input[type="text"], select {
     flex-direction: row;
     gap: 12px;
   }
-    .colonna-pick {
-    max-height: 300px; /* altezza per circa 5 righe */
+
+  .colonna-pick {
+    max-height: 300px;
     overflow-y: auto;
+    overflow-x: hidden;
   }
 
   #tabella-pick tbody tr {
-    display: none; /* nasconde tutto di default */
+    display: none;
   }
 
   #tabella-pick tbody tr.show-mobile {
-    display: table-row; /* mostra solo le 5 righe selezionate */
+    display: table-row;
   }
 }
