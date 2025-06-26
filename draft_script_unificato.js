@@ -93,7 +93,7 @@ function caricaPick() {
             prossima = { fantaTeam, pick };
             tr.classList.add("next-pick");
           } else {
-            tr.style.backgroundColor = "#d4edda";
+            tr.style.backgroundColor = "white";
             tr.style.fontWeight = "bold";
           }
 
@@ -137,7 +137,7 @@ function popolaListaDisponibili() {
             const fantaTeam = celle[1].textContent;
             celle[2].textContent = nome;
             celle[3].textContent = ruolo;
-            r.style.backgroundColor = "#d4edda";
+            tr.style.backgroundColor = "white";
             r.style.fontWeight = "bold";
             r.classList.remove("next-pick");
             document.getElementById("turno-attuale").textContent = `✅ ${nome} selezionato!`;
