@@ -248,6 +248,7 @@ input[type="text"], select {
   .colonna-pick {
     max-height: 300px;
     overflow-y: auto;
+    padding: 0;
   }
 
   #tabella-pick {
@@ -259,7 +260,7 @@ input[type="text"], select {
   #tabella-pick tbody tr {
     display: table;
     width: 100%;
-    table-layout: auto; /* cambia da fixed a auto per adattare alle celle */
+    table-layout: auto;
   }
 
   #tabella-pick tbody {
@@ -268,25 +269,27 @@ input[type="text"], select {
     overflow-y: auto;
   }
 
-  #tabella-pick td,
-  #tabella-pick th {
-    padding: 6px 4px;
-    font-size: 0.9rem;
+  #tabella-pick th,
+  #tabella-pick td {
+    padding: 4px 6px;
+    font-size: 0.85rem;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
 
   #tabella-pick td:first-child {
-    width: 36px; /* Pick */
+    width: 32px;
+    text-align: center;
   }
 
   #tabella-pick td:nth-child(2) {
-    width: auto; /* Squadra */
+    width: auto;
   }
 
   #tabella-pick td:nth-child(3),
   #tabella-pick td:nth-child(4) {
     width: 1%;
+    text-align: right;
   }
 }
