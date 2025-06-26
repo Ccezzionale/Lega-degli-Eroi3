@@ -144,29 +144,29 @@ nav {
 
 .navbar {
   list-style-type: none;
-  padding: 0;
-  margin: 0;
+  margin-left: auto;
   display: flex;
-  flex-direction: row;
-  gap: 15px;
   align-items: center;
-  flex-wrap: wrap;
+  gap: 25px;
+  background-color: #001f3f;
+  padding: 10px 30px;
 }
+
 
 .navbar li {
   position: relative;
 }
 
 .navbar a {
-  text-decoration: none;
   color: white;
-  padding: 8px 12px;
-  display: block;
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 5px;
+  background-color: transparent;
 }
 
 .navbar a:hover {
   background-color: #0074D9;
-  border-radius: 6px;
 }
 
 .submenu {
