@@ -166,8 +166,8 @@ function creaMatchCardMobile(nomeA, nomeB, logoA, logoB, vincenteNome) {
   const posB = squadraB ? window.squadre.indexOf(squadraB) + 1 : "";
 
   const risultato = window.risultati?.find(r => 
-    r.squadraA === nomeA && r.squadraB === nomeB || 
-    r.squadraA === nomeB && r.squadraB === nomeA
+    (r.squadraA === nomeA && r.squadraB === nomeB) || 
+    (r.squadraA === nomeB && r.squadraB === nomeA)
   );
 
   const golA = risultato?.squadraA === nomeA ? risultato?.golA : risultato?.golB ?? "";
@@ -178,14 +178,14 @@ function creaMatchCardMobile(nomeA, nomeB, logoA, logoB, vincenteNome) {
 
   return `
     <div class="match-card ${isV1 || isV2 ? 'vincente' : ''}">
-      <div class="team-line">
+      <div class="team-line ${isV1 ? 'winner' : ''}">
         <span class="pos">${posA ? posA + "°" : ""}</span>
         <img src="${logoA}" onerror="this.style.display='none'">
         <span class="nome">${nomeA}</span>
         <span class="gol">${golA !== null ? golA : ""}</span>
       </div>
       <div class="vs">vs</div>
-      <div class="team-line">
+      <div class="team-line ${isV2 ? 'winner' : ''}">
         <span class="pos">${posB ? posB + "°" : ""}</span>
         <img src="${logoB}" onerror="this.style.display='none'">
         <span class="nome">${nomeB}</span>
@@ -194,6 +194,7 @@ function creaMatchCardMobile(nomeA, nomeB, logoA, logoB, vincenteNome) {
     </div>
   `;
 }
+
 
 fetch(URL_CLASSIFICA_TOTALE)
   .then(res => res.text())
