@@ -217,8 +217,8 @@ function aggiornaChiamatePerSquadra() {
   container.innerHTML = "";
 
   for (const [team, picks] of Object.entries(riepilogo)) {
-    const div = document.createElement("div");
-    div.className = "riepilogo-team";
+const div = document.createElement("div");
+div.className = "riepilogo-team card-pick";
     const logoPath = `img/${team}.png`;
     const img = document.createElement("img");
     img.src = logoPath;
