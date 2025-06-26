@@ -290,6 +290,6 @@ input[type="text"], select {
   #tabella-pick td:nth-child(3),
   #tabella-pick td:nth-child(4) {
     width: 1%;
-    text-align: left;
+    text-align: left !important;
   }
 }
