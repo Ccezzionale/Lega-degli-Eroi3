@@ -279,6 +279,19 @@ input[type="text"], select {
   text-align: left;
 }
 
+  #tabella-pick td:nth-child(3) {
+  width: 40px; /* Ridotto rispetto a prima */
+  text-align: center;
+}
+
+#tabella-pick td:nth-child(1),
+#tabella-pick td:nth-child(2) {
+  max-width: 120px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
 /* Solo la colonna 'Pick' centrata */
 #tabella-pick td:first-child,
 #tabella-pick th:first-child {
