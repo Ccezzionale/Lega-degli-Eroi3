@@ -89,9 +89,13 @@ function caricaPick() {
             <td>${nome}</td>
             <td>${ruolo}</td>`;
 
-          if (!nome && !prossima) {
-            prossima = { fantaTeam, pick };
-            tr.classList.add("next-pick");
+if (!nome && !prossima) {
+  prossima = { fantaTeam, pick };
+  tr.classList.add("next-pick");
+  tr.style.backgroundColor = "#fff7aa"; // Giallo chiaro
+  setTimeout(() => tr.scrollIntoView({ behavior: "smooth", block: "center" }), 300);
+}
+
           } else {
             tr.style.backgroundColor = "white";
             tr.style.fontWeight = "bold";
