@@ -309,4 +309,9 @@ input[type="text"], select {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+  #lista-giocatori-scroll {
+  max-height: 300px;
+  overflow-y: auto;
+}
 }
