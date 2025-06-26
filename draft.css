@@ -198,6 +198,17 @@ input[type="text"], select {
   cursor: pointer;
 }
 
+.colonna-pick {
+  flex: 1 1 60%;
+  max-height: 500px;
+  overflow-y: auto;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+  padding: 10px;
+}
+
+
 @media (max-width: 768px) {
   .container {
     flex-direction: column;
@@ -234,15 +245,11 @@ input[type="text"], select {
     gap: 12px;
   }
 
-.colonna-pick {
-  flex: 1 1 60%;
-  max-height: 500px;
-  overflow-y: auto;
-  background-color: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
-  padding: 10px;
-}
+@media (max-width: 768px) {
+  .colonna-pick {
+    max-height: 300px;
+    overflow-y: auto;
+  }
 
   #tabella-pick tbody tr {
     display: none;
@@ -252,3 +259,4 @@ input[type="text"], select {
     display: table-row;
   }
 }
+
