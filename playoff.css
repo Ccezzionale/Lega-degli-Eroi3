@@ -294,12 +294,11 @@ nav {
       }
     
 .match-card .team-line {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: auto 32px 1fr auto;
   align-items: center;
-  justify-content: space-between;
-  padding: 4px 0;
   gap: 6px;
+  padding: 4px 0;
 }
 
 .match-card .team-line .pos {
