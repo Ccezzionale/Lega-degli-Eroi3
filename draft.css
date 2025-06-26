@@ -101,150 +101,44 @@ h1 {
   background-color: #0074D9;
 }
 
-#classifica-container {
+.container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  gap: 20px;
+  justify-content: center;
+  align-items: flex-start;
   padding: 20px;
+  flex-wrap: wrap;
 }
 
-#tabella-classifica {
-  border-collapse: collapse;
+.colonna-pick, .lista-container {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+  padding: 20px;
+  overflow-y: auto;
+  max-height: 600px;
+  flex: 1;
+  min-width: 320px;
+}
+
+#tabella-pick, #lista-giocatori-table {
   width: 100%;
-  max-width: 1200px;
-  margin-bottom: 40px;
-  table-layout: auto; /* ✅ Adatta la larghezza in base al contenuto */
+  border-collapse: collapse;
 }
 
-thead {
+#tabella-pick th, #tabella-pick td,
+#lista-giocatori-table th, #lista-giocatori-table td {
+  padding: 10px;
+  border: 1px solid #ccc;
+  text-align: center;
+}
+
+#tabella-pick thead,
+#lista-giocatori-table thead {
   background-color: #001f3f;
   color: white;
 }
 
-th, td {
-  padding: 10px;
-  text-align: center;
-}
-
-#tabella-classifica th:nth-child(2),
-#tabella-classifica td:nth-child(2) {
-  text-align: left;
-  white-space: normal;     /* ✅ consente l'andata a capo */
-  word-break: break-word;  /* ✅ forza il testo a capo se troppo lungo */
-}
-
-#tabella-classifica td .logo-nome {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  overflow: hidden;
-}
-
-#tabella-classifica td .logo-nome img {
-  width: 32px;
-  height: 32px;
-  object-fit: contain;
-  border-radius: 50%;
-}
-
-.riga-classifica {
-  background-color: white;
-  border: 1px solid #ccc;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
-  margin-bottom: 8px;
-}
-
-.top4 {
-  background-color: #ffcc00 !important;
-  color: black;
-  font-weight: bold;
-}
-
-.ultime4 {
-  background-color: #8B0000 !important;
-  color: white;
-  font-weight: bold;
-}
-
-.top1 {
-  background-color: #ffcc00 !important;
-  color: black;
-  font-weight: bold;
-}
-
-#classifica-mobile {
-  display: none;
-}
-
-@media (max-width: 768px) {
-  #tabella-classifica {
-    display: none;
-  }
-
-  #classifica-mobile {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding: 10px;
-  }
-
-  .accordion-item {
-    border-radius: 10px;
-    overflow: hidden;
-  }
-
-  .accordion-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 12px 16px;
-    font-weight: bold;
-    font-size: 0.95rem;
-    background-color: #003b66;
-    color: white;
-  }
-
-  .accordion-header img {
-    height: 48px;
-    width: 48px;
-    object-fit: contain;
-  }
-
-  .accordion-body {
-    display: none;
-    flex-wrap: wrap;
-    gap: 10px;
-    padding: 12px 16px;
-    background-color: #004080;
-    font-size: 0.85rem;
-  }
-
-  .accordion-item.active .accordion-body {
-    display: flex;
-  }
-
-  .accordion-body span {
-    flex: 1 1 45%;
-    white-space: nowrap;
-    color: white;
-  }
-
-  .accordion-item.top4 .accordion-header {
-    background-color: #ffcc00 !important;
-    color: black;
-  }
-
-  .accordion-item.ultime4 .accordion-header {
-    background-color: #8B0000 !important;
-    color: white;
-  }
-
-  .accordion-item.top1 .accordion-header {
-    background-color: #ffcc00 !important;
-    color: black;
-  }
-}
 @media (max-width: 768px) {
   .navbar {
     display: none;
@@ -265,14 +159,19 @@ th, td {
     position: static;
     width: 100%;
   }
+
   .hamburger {
     display: block;
   }
-  .nav-left {
-  display: flex;
-  align-items: center;
-  flex-direction: row; /* 👈 FORZA l’allineamento orizzontale */
-  gap: 12px;
-}
-}
 
+  .nav-left {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 12px;
+  }
+
+  .container {
+    flex-direction: column;
+  }
+}
