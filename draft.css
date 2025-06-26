@@ -291,4 +291,9 @@ input[type="text"], select {
   white-space: nowrap;
   overflow: hidden;
 }
+  #tabella-pick td:first-child,
+#tabella-pick th:first-child {
+  text-align: center;
+  width: 36px;
+}
 }
