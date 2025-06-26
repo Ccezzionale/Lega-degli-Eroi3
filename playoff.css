@@ -294,35 +294,36 @@ nav {
       }
     
 .match-card .team-line {
-  display: grid;
+  display: grid !important;
   grid-template-columns: auto 32px 1fr auto;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   padding: 4px 0;
+  width: 100%;
 }
 
 .match-card .team-line .pos {
   font-weight: bold;
   color: #001f3f;
   min-width: 28px;
+  text-align: left;
 }
 
 .match-card .team-line img {
   width: 32px;
   height: 32px;
+  object-fit: contain;
 }
 
 .match-card .team-line .nome {
-  flex-grow: 1;
-  min-width: 80px;
-  text-align: left;
   font-size: 0.95rem;
-  word-break: break-word;
+  text-align: left;
+  overflow-wrap: break-word;
 }
 
 .match-card .team-line .gol {
   font-weight: bold;
   text-align: right;
+  min-width: 16px;
 }
-    }
-
+}
