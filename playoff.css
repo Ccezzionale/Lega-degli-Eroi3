@@ -252,10 +252,23 @@ nav {
     color: #888;
   }
     
-  .hamburger {
-    display: block;
-  }
+.hamburger {
+  font-size: 24px;
+  color: white;
+  cursor: pointer;
+}
 
+    .home-icon img {
+  height: 28px;
+  width: 28px;
+}
+    .mobile-nav {
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  background-color: #001f3f;
+  gap: 15px;
+}
   .navbar {
     display: none;
     flex-direction: column;
