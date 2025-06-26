@@ -269,27 +269,30 @@ nav {
   background-color: #001f3f;
   gap: 15px;
 }
-  .navbar {
-    display: none;
-    flex-direction: column;
-    width: 100%;
-    background-color: #001f3f;
-    margin-top: 10px;
-  }
+.navbar {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: none;
+  flex-direction: column;
+  width: 100%;
+  background-color: #001f3f;
+}
 
   .navbar.show {
     display: flex;
   }
 
-  .submenu {
-    position: relative;
-    background-color: #003366;
-    margin-left: 10px;
-  }
+.submenu {
+  display: none;
+  flex-direction: column;
+  background-color: #002244;
+  margin-left: 20px;
+}
 
-  .dropdown .submenu a {
-    padding-left: 20px;
-  }
+.dropdown.show .submenu {
+  display: flex;
+}
       .bracket {
         gap: 20px;
         padding: 20px;
