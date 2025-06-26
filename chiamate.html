@@ -100,18 +100,23 @@ nav {
   flex-wrap: wrap;
 }
 
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
 .home-icon {
   font-size: 1.4rem;
   text-decoration: none;
   color: white;
-  margin-right: 20px;
 }
 
 .hamburger {
   font-size: 1.5rem;
   cursor: pointer;
   display: none;
-  margin-left: auto;
   color: white;
 }
 
@@ -163,6 +168,7 @@ nav {
 @media (max-width: 768px) {
   .hamburger {
     display: block;
+    margin-left: auto;
   }
 
   .navbar {
