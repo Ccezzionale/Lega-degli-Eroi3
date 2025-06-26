@@ -76,6 +76,7 @@ function caricaPick() {
         let prossima = null;
         let prossimaIndex = -1;
 
+        // Identifica la prossima pick
         dati.forEach((riga, index) => {
           const nome = riga["Giocatore"]?.trim() || "";
           if (!nome && prossimaIndex === -1) {
@@ -87,16 +88,7 @@ function caricaPick() {
           }
         });
 
-        const isMobile = window.innerWidth <= 768;
-        const inizio = isMobile
-          ? Math.max(0, prossimaIndex - 2)
-          : 0;
-        const fine = isMobile
-          ? Math.min(dati.length, prossimaIndex + 3)
-          : dati.length;
-
-        for (let i = inizio; i < fine; i++) {
-          const riga = dati[i];
+        dati.forEach((riga, i) => {
           const tr = document.createElement("tr");
           const nome = riga["Giocatore"]?.trim() || "";
           const fantaTeam = riga["Fanta Team"];
@@ -123,6 +115,17 @@ function caricaPick() {
           }
 
           corpoTabella.appendChild(tr);
+        });
+
+        // Su mobile, mostra solo le 5 righe attorno alla pick corrente
+        if (window.innerWidth <= 768 && prossimaIndex >= 0) {
+          const start = Math.max(0, prossimaIndex - 2);
+          const end = prossimaIndex + 3;
+          document.querySelectorAll("#tabella-pick tbody tr").forEach((riga, i) => {
+            if (i >= start && i < end) {
+              riga.classList.add("show-mobile");
+            }
+          });
         }
 
         document.getElementById("turno-attuale").textContent = prossima
