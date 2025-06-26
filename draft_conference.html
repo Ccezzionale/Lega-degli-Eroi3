@@ -8,6 +8,12 @@
   
   <link rel="stylesheet" href="draft.css">
   
+
+
+
+
+
+
 </head>
 <body>
 
@@ -49,7 +55,7 @@
 <div class="container">
   <div class="tabella-container">
     <div id="tabella-pick-container">
-<table id="tabella-pick">
+<div class="container-draft"><div class="colonna-pick"><table id="tabella-pick">
   <thead>
     <tr>
       <th onclick="ordinaPick(0)">Pick</th>
@@ -59,7 +65,7 @@
       </tr>
   </thead>
   <tbody></tbody>
-</table>
+</table></div><div class="colonna-svincolati">
     </div>
   </div>
   <div class="lista-container">
@@ -81,7 +87,7 @@
           </tr>
         </thead>
         <tbody id="lista-giocatori"></tbody>
-      </table>
+      </table></div></div>
     </div>
   </div>
 </div>
@@ -93,6 +99,45 @@
 <script src="draft_script_unificato.js"></script>
 
 <!-- SCRIPT NAVBAR -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const hamburger = document.getElementById("hamburger");
+    const mobileMenu = document.getElementById("mobileMenu");
+    const draftToggle = document.getElementById("toggle-draft");
+    const draftSubmenu = document.getElementById("submenu-draft");
+
+    const desktopToggle = document.getElementById("desktop-toggle-draft");
+    const desktopSubmenu = document.getElementById("desktop-submenu-draft");
+
+    // Toggle mobile menu
+    hamburger?.addEventListener("click", function () {
+      mobileMenu.classList.toggle("show");
+    });
+
+    // Chiude mobile al clic (eccetto toggle draft)
+    document.querySelectorAll("#mobileMenu a").forEach(link => {
+      link.addEventListener("click", function (e) {
+        if (link.id !== "toggle-draft") {
+          mobileMenu.classList.remove("show");
+          draftSubmenu?.classList.add("hidden");
+        }
+      });
+    });
+
+    // Mobile: Draft submenu toggle
+    draftToggle?.addEventListener("click", function (e) {
+      e.preventDefault();
+      draftSubmenu.classList.toggle("hidden");
+    });
+
+    // Desktop: Draft submenu toggle
+    desktopToggle?.addEventListener("click", function (e) {
+      e.preventDefault();
+      desktopSubmenu.classList.toggle("hidden");
+    });
+  });
+</script>
+
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
