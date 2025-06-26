@@ -314,4 +314,8 @@ input[type="text"], select {
   max-height: 300px;
   overflow-y: auto;
 }
+  .lista-container {
+  display: flex;
+  flex-direction: column;
+}
 }
