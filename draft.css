@@ -208,6 +208,14 @@ input[type="text"], select {
   padding: 10px;
 }
 
+.pick-top6 {
+  color: #001f3f;
+  font-weight: bold;
+  background-color: #ffecb3; /* giallino chiaro, modificabile */
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+
 
 @media (max-width: 768px) {
   .container {
