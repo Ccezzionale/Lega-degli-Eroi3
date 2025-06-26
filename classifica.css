@@ -245,13 +245,7 @@ th, td {
     color: black;
   }
 }
-
-@media (min-width: 769px) {
-  .accordion-item {
-    display: none !important;
-  }
-
-  @media (max-width: 768px) {
+@media (max-width: 768px) {
   .navbar {
     display: none;
     flex-direction: column;
