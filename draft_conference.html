@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="draft.css" />
 </head>
 <body>
+
 <nav>
   <div class="nav-left">
     <span id="hamburger" class="hamburger">☰</span>
@@ -34,25 +35,55 @@
   </ul>
 </nav>
 
+<h1>🟨 Draft Room - Conference League</h1>
+<div class="top-link">
+  <a href="statistiche.html" target="_blank">📊 Vai alle Statistiche del Draft</a>
+</div>
+<div id="turno-attuale">⏳ Caricamento turno in corso...</div>
+
 <div class="container-draft">
   <div class="colonna-pick">
-    <table id="tabella-pick"></table>
-    <div id="riepilogo-pick"></div>
+    <table id="tabella-pick">
+      <thead>
+        <tr>
+          <th onclick="ordinaPick(0)">Pick</th>
+          <th onclick="ordinaPick(1)">Squadra</th>
+          <th onclick="ordinaPick(2)">Giocatore</th>
+          <th onclick="ordinaPick(3)">Ruolo</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
   </div>
   <div class="colonna-svincolati">
     <div id="filtri">
-      <select id="filtro-ruolo">
-        <option value="">Tutti i Ruoli</option>
-      </select>
-      <select id="filtro-squadra">
-        <option value="">Tutte le Squadre</option>
-      </select>
-      <input type="text" id="barra-ricerca" placeholder="Cerca giocatore..." />
-      <button id="reset-filtri">Reset</button>
+      <label for="filtroSerieA">Filtra per Squadra Serie A:</label>
+      <select id="filtroSerieA"><option value="">-- Tutte --</option></select>
+      <label for="filtroRuolo">Filtra per Ruolo:</label>
+      <input type="text" id="cercaRuolo" placeholder="Cerca ruolo (es. DD, E...)" />
+      <select id="filtroRuolo"><option value="">-- Tutti i Ruoli --</option></select>
+      <label for="searchGiocatore">Cerca Giocatore:</label>
+      <input id="searchGiocatore" placeholder="Digita un nome..." type="text"/>
     </div>
-    <table id="tabella-svincolati"></table>
+    <div id="lista-giocatori-table-container">
+      <table id="lista-giocatori-table">
+        <thead>
+          <tr>
+            <th onclick="ordinaLista(0)">Giocatore</th>
+            <th onclick="ordinaLista(1)">Ruolo</th>
+            <th onclick="ordinaLista(2)">Squadra</th>
+            <th onclick="ordinaLista(3, true)">Quotazione</th>
+          </tr>
+        </thead>
+        <tbody id="lista-giocatori"></tbody>
+      </table>
+    </div>
   </div>
 </div>
+
+<h2 style="text-align:center; color:#ffcc00;">📋 Riepilogo Pick per Squadra</h2>
+<button onclick="aggiornaChiamatePerSquadra()">🔄 Ricarica Riepilogo</button>
+<div id="riepilogo-squadre" style="display: flex; flex-wrap: wrap; gap: 20px; padding: 20px;"></div>
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
@@ -73,6 +104,8 @@
     });
   });
 </script>
+
 <script src="draft_script_unificato.js"></script>
+
 </body>
 </html>
