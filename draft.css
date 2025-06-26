@@ -1,234 +1,278 @@
-/* === IMPOSTAZIONI GENERALI === */
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #001f3f;
-  color: #ffffff;
   margin: 0;
-  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f4f4;
+  color: #222;
 }
 
-h1, h2, h3, h4 {
-  color: #ffcc00;
-  text-align: center;
-}
-
-/* === BOTTONI === */
-button {
-  background-color: #ffcc00;
-  color: #001f3f;
-  border: none;
-  padding: 10px 20px;
-  font-size: 1rem;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-button:hover {
-  background-color: #e6b800;
-}
-
-/* === TABELLE === */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 1rem 0;
-  font-size: 0.9rem;
-}
-
-th, td {
-  padding: 8px;
-  text-align: center;
-}
-
-thead {
-  background-color: #003366;
-  font-weight: bold;
-}
-
-th {
-  cursor: pointer;
-}
-
-tbody tr:nth-child(even) {
-  background-color: #002b5c;
-}
-
-tbody tr:nth-child(odd) {
-  background-color: #003366;
-}
-
-tbody tr:hover {
-  background-color: #00509e;
-  cursor: pointer;
-}
-
-/* === RIEPILOGO PER SQUADRA === */
-#riepilogo-squadre {
+nav {
+  background-color: #001f3f;
+  color: white;
   display: flex;
+  align-items: center;
+  padding: 10px 20px;
   flex-wrap: wrap;
-  justify-content: center;
-  gap: 1rem;
-  margin-top: 2rem;
 }
 
-.riepilogo-team {
-  background-color: #003366;
-  padding: 1rem;
-  border-radius: 20px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-  width: 220px;
-  text-align: center;
+.home-icon {
+  font-size: 1.4rem;
+  margin-right: 20px;
+  text-decoration: none;
+  color: white;
 }
 
-.riepilogo-team img {
-  max-width: 80px;
-  display: block;
-  margin: 0 auto 1rem;
+.hamburger {
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: none;
+  color: white;
 }
 
-.riepilogo-team h4 {
-  margin-top: 0;
-  font-size: 1.1rem;
-  color: #ffffff;
+.navbar {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  align-items: center;
+  flex-wrap: wrap;
 }
-.dropdown {
+
+.navbar li {
   position: relative;
 }
 
-.submenu {
-  position: absolute;
-  background-color: #004080;
-  border-radius: 0 0 6px 6px;
-  padding: 0;
-  margin: 0;
-  list-style: none;
-  z-index: 999;
-}
-
-.submenu li a {
-  display: block;
-  padding: 10px 20px;
-  color: white;
+.navbar a {
   text-decoration: none;
-  white-space: nowrap;
+  color: white;
+  padding: 8px 12px;
+  display: block;
 }
 
-.submenu li a:hover {
-  background-color: #00509e;
+.navbar a:hover {
+  background-color: #0074D9;
+  border-radius: 6px;
 }
 
-.hidden {
+.submenu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #003366;
+  border-radius: 4px;
+  z-index: 10;
+  min-width: 180px;
+  flex-direction: column;
+}
+
+.submenu a {
+  font-size: 0.95rem;
+}
+
+.dropdown.show .submenu {
+  display: flex;
+}
+
+h1 {
+  color: #001f3f;
+  margin: 20px 0 10px;
+  text-align: center;
+  font-size: 2rem;
+}
+
+.switcher {
+  text-align: center;
+  margin: 20px;
+}
+
+.switcher button {
+  padding: 10px 20px;
+  margin: 0 5px;
+  background-color: #001f3f;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.switcher button:hover {
+  background-color: #0074D9;
+}
+
+#classifica-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+#tabella-classifica {
+  border-collapse: collapse;
+  width: 100%;
+  max-width: 1200px;
+  margin-bottom: 40px;
+  table-layout: auto; /* ✅ Adatta la larghezza in base al contenuto */
+}
+
+thead {
+  background-color: #001f3f;
+  color: white;
+}
+
+th, td {
+  padding: 10px;
+  text-align: center;
+}
+
+#tabella-classifica th:nth-child(2),
+#tabella-classifica td:nth-child(2) {
+  text-align: left;
+  white-space: normal;     /* ✅ consente l'andata a capo */
+  word-break: break-word;  /* ✅ forza il testo a capo se troppo lungo */
+}
+
+#tabella-classifica td .logo-nome {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow: hidden;
+}
+
+#tabella-classifica td .logo-nome img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
+.riga-classifica {
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+  margin-bottom: 8px;
+}
+
+.top4 {
+  background-color: #ffcc00 !important;
+  color: black;
+  font-weight: bold;
+}
+
+.ultime4 {
+  background-color: #8B0000 !important;
+  color: white;
+  font-weight: bold;
+}
+
+.top1 {
+  background-color: #ffcc00 !important;
+  color: black;
+  font-weight: bold;
+}
+
+#classifica-mobile {
   display: none;
 }
 
-
-/* === MOBILE === */
 @media (max-width: 768px) {
-
-  /* RIDUZIONE HEADER */
-  h1 {
-    font-size: 1.4em;
-    margin: 10px 0;
+  #tabella-classifica {
+    display: none;
   }
 
-  #currentPick {
-    font-size: 14px;
-    padding: 4px 0;
+  #classifica-mobile {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
   }
 
-  /* BLOCCO TABELLA PICK COMPATTA */
-  .tabella-pick {
-    max-height: 180px;
-    overflow-y: scroll;
-    display: block;
-    margin-bottom: 10px;
-    border: 1px solid #fff;
-    border-radius: 6px;
+  .accordion-item {
+    border-radius: 10px;
+    overflow: hidden;
   }
 
-  .tabella-pick table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 12px;
+  .accordion-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    font-weight: bold;
+    font-size: 0.95rem;
+    background-color: #003b66;
+    color: white;
   }
 
-  .tabella-pick th,
-  .tabella-pick td {
-    padding: 3px 5px;
-    text-align: center;
+  .accordion-header img {
+    height: 48px;
+    width: 48px;
+    object-fit: contain;
   }
 
-  /* TABELLA LISTONE: SCROLL ORIZZONTALE */
-  .tabella-listone {
-    display: block;
-    overflow-x: auto;
+  .accordion-body {
+    display: none;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 12px 16px;
+    background-color: #004080;
+    font-size: 0.85rem;
+  }
+
+  .accordion-item.active .accordion-body {
+    display: flex;
+  }
+
+  .accordion-body span {
+    flex: 1 1 45%;
     white-space: nowrap;
-    font-size: 12px;
+    color: white;
+  }
+
+  .accordion-item.top4 .accordion-header {
+    background-color: #ffcc00 !important;
+    color: black;
+  }
+
+  .accordion-item.ultime4 .accordion-header {
+    background-color: #8B0000 !important;
+    color: white;
+  }
+
+  .accordion-item.top1 .accordion-header {
+    background-color: #ffcc00 !important;
+    color: black;
+  }
+}
+@media (max-width: 768px) {
+  .navbar {
+    display: none;
+    flex-direction: column;
+    width: 100%;
     margin-top: 10px;
   }
 
-  /* FILTRI COMPATTI */
-  .filtro-container {
+  .navbar.show {
     display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    justify-content: center;
-    margin-bottom: 10px;
-  }
-  
-  @media (max-width: 768px) {
-  .container {
-    margin-top: -10px;
   }
 
-  .filtro-container select,
-  .filtro-container input {
-    font-size: 13px;
-    padding: 4px;
-  }
-
-  /* COMPATTA RIEPILOGO PICK (SE PRESENTE) */
-  .riepilogo-pick .squadra {
-    font-size: 12px;
-    padding: 6px 8px;
-    margin-bottom: 8px;
-    background-color: #f5f5f5;
-    color: #000;
-    border-radius: 6px;
-  }
-
-  .riepilogo-pick .squadra h3 {
-    font-size: 14px;
-    margin-bottom: 4px;
-  }
-
-  .riepilogo-pick .squadra ol {
-    padding-left: 18px;
-  }
-
-.scelta-draft {
-  display: flex !important;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-  margin-top: 60px;
-  padding: 0 20px;
-  width: 100%;
-}
-
-  .scelta-draft a {
-    display: block;
+  .navbar li {
     width: 100%;
-    max-width: 320px;
-    font-size: 1em;
-    text-align: left;
-    padding: 12px 24px;
-    box-sizing: border-box;
   }
 
-  h1 {
-    font-size: 1.6em;
-    margin-top: 100px;
+  .submenu {
+    position: static;
+    width: 100%;
   }
+  .hamburger {
+    display: block;
+  }
+  .nav-left {
+  display: flex;
+  align-items: center;
+  flex-direction: row; /* 👈 FORZA l’allineamento orizzontale */
+  gap: 12px;
 }
+}
+
