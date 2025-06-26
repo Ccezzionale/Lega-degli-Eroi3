@@ -124,3 +124,48 @@ fetch(URL_CLASSIFICA_TOTALE)
     aggiornaPlayoff();
   }) // chiude il secondo .then
   .catch(err => console.error("Errore nel caricamento classifica:", err));
+
+function creaMatchCardMobile(nomeA, nomeB, logoA, logoB, vincenteNome) {
+  const isV1 = vincenteNome === nomeA;
+  const isV2 = vincenteNome === nomeB;
+
+  return `
+    <div class="match-card ${isV1 || isV2 ? 'vincente' : ''}">
+      <div class="team"><img src="${logoA}" onerror="this.style.display='none'"><span>${nomeA}</span></div>
+      <span class="vs">vs</span>
+      <div class="team"><img src="${logoB}" onerror="this.style.display='none'"><span>${nomeB}</span></div>
+    </div>`;
+}
+
+function aggiornaPlayoffMobile() {
+  if (window.innerWidth > 768) return;
+
+  const sezioni = {
+    WC: document.getElementById("round-wc"),
+    Q: document.getElementById("round-qf"),
+    S: document.getElementById("round-sf"),
+    F: document.getElementById("round-f")
+  };
+
+  const rounds = window.risultati || [];
+  for (const r of rounds) {
+    const key = r.partita?.[0]; // WC, Q, S, F
+    const container = sezioni[key];
+    if (!container) continue;
+
+    const logoA = `img/${r.squadraA.replace(/[°]/g, "").trim()}.png`;
+    const logoB = `img/${r.squadraB.replace(/[°]/g, "").trim()}.png`;
+
+    const matchHTML = creaMatchCardMobile(r.squadraA, r.squadraB, logoA, logoB, r.vincente);
+    container.insertAdjacentHTML("beforeend", matchHTML);
+  }
+}
+
+// Dopo il caricamento dei dati:
+if (typeof aggiornaPlayoff === "function" && window.squadre) {
+  aggiornaPlayoff();
+}
+if (typeof aggiornaPlayoffMobile === "function" && window.squadre) {
+  aggiornaPlayoffMobile();
+}
+
