@@ -1,6 +1,6 @@
 
 const squadre = [
-  { nome: "Rubin Kebab", logo: "img/Rubin Kebab.png", status: "attiva" },
+  { nome: "RubinKebab", logo: "img/RubinKebab.png", status: "attiva" },
   { nome: "Bayern Christiansen", logo: "img/Bayern Christiansen.png", status: "attiva" },
   { nome: "Team Bartowski", logo: "img/Team Bartowski.png", status: "attiva" },
   { nome: "Real Mimmo", logo: "img/Real Mimmo.png", status: "attiva" },
@@ -9,13 +9,13 @@ const squadre = [
   { nome: "Rafa Casablanca", logo: "img/Rafa Casablanca.png", status: "attiva" },
   { nome: "Giody", logo: "img/Giody.png", status: "attiva" },
   { nome: "Desperados", logo: "img/Desperados.png", status: "attiva" },
-  { nome: "Wildboys 78", logo: "img/Wildboys 78.png", status: "attiva" },
+  { nome: "Wildboys 78", logo: "img/wildboys78.png", status: "attiva" },
   { nome: "Pandinicoccolosini", logo: "img/Pandinicoccolosini.png", status: "attiva" },
   { nome: "Giulay", logo: "img/Giulay.png", status: "attiva" },
-  { nome: "Pokermantra", logo: "img/Pokermantra.png", status: "attiva" },
+  { nome: "Pokermantra", logo: "img/PokerMantra.png", status: "attiva" },
   { nome: "Minnesode Timberland", logo: "img/Minnesode Timberland.png", status: "attiva" },
   { nome: "Minnesota Snakes", logo: "img/Minnesota Snakes.png", status: "attiva" },
-  { nome: "Sharknado04", logo: "img/Sharknado04.png", status: "attiva" }
+  { nome: "Sharknado04", logo: "img/Sharknado 04.png", status: "attiva" }
 ];
 
 const center = document.getElementById("arena-center");
