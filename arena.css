@@ -74,9 +74,16 @@ h1 {
 }
 
 .eliminata-testo {
-  color: #f05;
+  color: #ff3366;
   font-weight: bold;
   text-align: center;
-  font-size: 0.9rem;
+  font-size: 1rem;
+  text-shadow: 1px 1px 3px #000; /* 👈 migliora contrasto */
+  margin-top: 8px;
+  line-height: 1.2;
+  background-color: rgba(0, 0, 0, 0.5); /* 👈 sfondo scuro semi-trasparente */
+  padding: 4px 8px;
+  border-radius: 6px;
 }
+
 
