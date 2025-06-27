@@ -35,9 +35,6 @@ squadre.forEach((s, i) => {
   const img = document.createElement("img");
   img.src = s.logo;
   img.alt = s.nome;
-  const name = document.createElement("div");
-  name.textContent = s.nome;
   div.appendChild(img);
-  div.appendChild(name);
   arena.appendChild(div);
 });
