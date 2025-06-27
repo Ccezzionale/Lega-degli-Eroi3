@@ -14,7 +14,7 @@ const squadre = [
   { nome: "Giulay", logo: "img/Giulay.png", status: "attiva" },
   { nome: "Pokermantra", logo: "img/PokerMantra.png", status: "attiva" },
   { nome: "Minnesode Timberland", logo: "img/Minnesode Timberland.png", status: "attiva" },
-  { nome: "Minnesota Snakes", logo: "img/Minnesota Snakes.png", status: "attiva" },
+  { nome: "Minnesota Snakes", logo: "img/MinneSota Snakes.png", status: "attiva" },
   { nome: "Sharknado04", logo: "img/Sharknado 04.png", status: "attiva" }
 ];
 
