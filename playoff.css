@@ -206,6 +206,10 @@ justify-content: center;
     height: 52px; /* forza altezza uniforme con navbar */
   }
 
+    .mobile-nav {
+  display: none;
+}
+
   .home-icon {
     font-size: 1.6rem;
     text-decoration: none;
@@ -270,6 +274,10 @@ justify-content: center;
   #bracket-mobile {
     display: block;
   }
+
+    .navbar .home-desktop {
+  display: none;
+}
 
   .round-mobile {
     margin-bottom: 30px;
