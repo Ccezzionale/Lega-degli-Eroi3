@@ -341,7 +341,7 @@ display: block;
     .mobile-nav {
   display: flex;
   align-items: center;
-  padding: 10px 0px 0px 0px;
+  padding: 0px 0px 0px 0px;
   background-color: #001f3f;
   gap: 15px;
 }
