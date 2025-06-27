@@ -1,49 +1,42 @@
 
 const squadre = [
-  { nome: "RAFA CASABLANCA", logo: "img/rafa.png", status: "attiva" },
-  { nome: "UNION LIBRINO", logo: "img/union.png", status: "attiva" },
-  { nome: "WILDBOYS", logo: "img/wildboys.png", status: "eliminata" },
-  { nome: "TEAM BARTOWSKI", logo: "img/bartowski.png", status: "attiva" },
-  { nome: "GIODY", logo: "img/giody.png", status: "attiva" },
-  { nome: "POKERMANTRA", logo: "img/pokermantra.png", status: "attiva" },
-  { nome: "GIULAY", logo: "img/giulay.png", status: "attiva" },
-  { nome: "IBLA", logo: "img/ibla.png", status: "attiva" },
-  { nome: "REAL MIMMO", logo: "img/mimmo.png", status: "attiva" },
-  { nome: "RUBINKABAB", logo: "img/rubin.png", status: "attiva" },
-  { nome: "BAYERN CHRISTIANSEN", logo: "img/bayern.png", status: "attiva" },
-  { nome: "MINNESODE TIMBERLAND", logo: "img/minnesode.png", status: "attiva" },
-  { nome: "SQUADRA 13", logo: "img/placeholder.png", status: "attiva" },
-  { nome: "SQUADRA 14", logo: "img/placeholder.png", status: "attiva" },
-  { nome: "SQUADRA 15", logo: "img/placeholder.png", status: "attiva" },
-  { nome: "SQUADRA 16", logo: "img/placeholder.png", status: "attiva" }
+  { nome: "Rubin Kebab", logo: "img/Rubin Kebab.png", status: "attiva" },
+  { nome: "Bayern Christiansen", logo: "img/Bayern Christiansen.png", status: "attiva" },
+  { nome: "Team Bartowski", logo: "img/Team Bartowski.png", status: "attiva" },
+  { nome: "Real Mimmo", logo: "img/Real Mimmo.png", status: "attiva" },
+  { nome: "Union Librino", logo: "img/Union Librino.png", status: "attiva" },
+  { nome: "Ibla", logo: "img/Ibla.png", status: "attiva" },
+  { nome: "Rafa Casablanca", logo: "img/Rafa Casablanca.png", status: "attiva" },
+  { nome: "Giody", logo: "img/Giody.png", status: "attiva" },
+  { nome: "Desperados", logo: "img/Desperados.png", status: "attiva" },
+  { nome: "Wildboys 78", logo: "img/Wildboys 78.png", status: "attiva" },
+  { nome: "Pandinicoccolosini", logo: "img/Pandinicoccolosini.png", status: "attiva" },
+  { nome: "Giulay", logo: "img/Giulay.png", status: "attiva" },
+  { nome: "Pokermantra", logo: "img/Pokermantra.png", status: "attiva" },
+  { nome: "Minnesode Timberland", logo: "img/Minnesode Timberland.png", status: "attiva" },
+  { nome: "Minnesota Snakes", logo: "img/Minnesota Snakes.png", status: "attiva" },
+  { nome: "Sharknado04", logo: "img/Sharknado04.png", status: "attiva" }
 ];
 
 const center = document.getElementById("arena-center");
 center.innerHTML = "Sfida in corso";
 
 const arena = document.querySelector(".arena");
-const raggio = 260;
-const centroX = 300;
-const centroY = 300;
+const r = 260, cx = 300, cy = 300;
 
-squadre.forEach((squadra, i) => {
+squadre.forEach((s, i) => {
   const angle = (2 * Math.PI / squadre.length) * i;
-  const x = centroX + raggio * Math.cos(angle);
-  const y = centroY + raggio * Math.sin(angle);
-
+  const x = cx + r * Math.cos(angle);
+  const y = cy + r * Math.sin(angle);
   const div = document.createElement("div");
-  div.className = "squadra" + (squadra.status === "eliminata" ? " eliminata" : "");
-
-  const img = document.createElement("img");
-  img.src = squadra.logo;
-  img.alt = squadra.nome;
-
-  const name = document.createElement("div");
-  name.textContent = squadra.nome;
-
+  div.className = "squadra" + (s.status === "eliminata" ? " eliminata" : "");
   div.style.left = `${x}px`;
   div.style.top = `${y}px`;
-
+  const img = document.createElement("img");
+  img.src = s.logo;
+  img.alt = s.nome;
+  const name = document.createElement("div");
+  name.textContent = s.nome;
   div.appendChild(img);
   div.appendChild(name);
   arena.appendChild(div);
