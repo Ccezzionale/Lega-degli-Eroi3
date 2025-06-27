@@ -6,6 +6,7 @@ body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
   padding: 20px;
+  position: relative;
 }
 
 h1 {
@@ -37,6 +38,7 @@ h1 {
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  position: relative;
 }
 
 .squadra img {
@@ -60,15 +62,66 @@ h1 {
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
+.squadra.eliminata::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: url('img/fumo.gif') center center no-repeat;
+  background-size: cover;
+  opacity: 0.6;
+  pointer-events: none;
+  animation: dissolve 1.2s ease-out forwards;
+}
+
+@keyframes dissolve {
+  0% { opacity: 0; }
+  100% { opacity: 0.6; }
+}
+
+#avanzano {
+  margin-top: 40px;
+  text-align: center;
+}
+
+#avanzano h2 {
+  font-size: 1.8rem;
+  margin-bottom: 15px;
+  color: #00ff66;
+  text-shadow: 1px 1px 4px black;
+}
+
+#lista-vincitori {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.vincitore {
+  width: 140px;
+  padding: 10px;
+  background: rgba(0,0,0,0.6);
+  border-radius: 10px;
+  border: 2px solid #00ff66;
+  box-shadow: 0 0 10px #00ff66;
+  text-align: center;
+}
+
+.vincitore img {
+  max-height: 40px;
+  display: block;
+  margin: 0 auto 5px;
+}
+
 @media (max-width: 768px) {
-  #griglia-highlander {
+  #griglia-highlander, #lista-vincitori {
     flex-direction: column;
     align-items: center;
   }
 
-  .squadra {
+  .squadra, .vincitore {
     width: 90%;
     max-width: 300px;
   }
 }
-
