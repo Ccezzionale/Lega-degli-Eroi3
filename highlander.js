@@ -35,3 +35,25 @@ squadre.forEach(sq => {
   div.appendChild(nome);
   container.appendChild(div);
 });
+
+
+// Sezione vincitori (attivi)
+const lista = document.getElementById("lista-vincitori");
+if (lista) {
+  const attivi = squadre.filter(sq => sq.status === "attiva");
+  attivi.forEach(sq => {
+    const blocco = document.createElement("div");
+    blocco.className = "vincitore";
+
+    const img = document.createElement("img");
+    img.src = sq.logo;
+    img.alt = sq.nome;
+
+    const nome = document.createElement("div");
+    nome.textContent = sq.nome;
+
+    blocco.appendChild(img);
+    blocco.appendChild(nome);
+    lista.appendChild(blocco);
+  });
+}
