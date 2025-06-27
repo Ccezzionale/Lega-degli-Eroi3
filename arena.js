@@ -1,12 +1,12 @@
 
 const squadre = [
-  { nome: "RubinKebab", logo: "img/RubinKebab.png", status: "attiva" },
+  { nome: "RubinKebab", logo: "img/Rubinkebab.png", status: "attiva" },
   { nome: "Bayern Christiansen", logo: "img/Bayern Christiansen.png", status: "attiva" },
   { nome: "Team Bartowski", logo: "img/Team Bartowski.png", status: "attiva" },
   { nome: "Real Mimmo", logo: "img/Real Mimmo.png", status: "attiva" },
   { nome: "Union Librino", logo: "img/Union Librino.png", status: "attiva" },
   { nome: "Ibla", logo: "img/Ibla.png", status: "attiva" },
-  { nome: "Rafa Casablanca", logo: "img/Rafa Casablanca.png", status: "attiva" },
+  { nome: "Rafa Casablanca", logo: "img/Rafa Casablanca.png", status: "eliminata" },
   { nome: "Giody", logo: "img/Giody.png", status: "attiva" },
   { nome: "Desperados", logo: "img/Desperados.png", status: "attiva" },
   { nome: "Wildboys 78", logo: "img/wildboys78.png", status: "attiva" },
