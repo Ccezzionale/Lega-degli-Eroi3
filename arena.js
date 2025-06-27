@@ -21,13 +21,23 @@ const squadre = [
 const center = document.getElementById("arena-center");
 
 const ultimaEliminata = squadre.find(s => s.ultimaEliminata);
-if (ultimaEliminata) {
-center.innerHTML = `
-  <div class="eliminata-wrapper">
-    <img src="${ultimaEliminata.logo}" class="eliminata-logo" />
-    <div class="eliminata-testo">❌ Eliminata<br>${ultimaEliminata.nome}</div>
-  </div>
-`;
+const inGioco = squadre.filter(s => !s.eliminata);
+
+if (inGioco.length === 1) {
+  const vincitore = inGioco[0];
+  center.innerHTML = `
+    <div class="eliminata-wrapper">
+      <img src="${vincitore.logo}" class="eliminata-logo" />
+      <div class="eliminata-testo" style="color: gold; text-shadow: 1px 1px 5px #000;">🏆 Vincitore<br>${vincitore.nome}</div>
+    </div>
+  `;
+} else if (ultimaEliminata) {
+  center.innerHTML = `
+    <div class="eliminata-wrapper">
+      <img src="${ultimaEliminata.logo}" class="eliminata-logo" />
+      <div class="eliminata-testo">❌ Eliminata<br>${ultimaEliminata.nome}</div>
+    </div>
+  `;
 } else {
   center.innerHTML = "Sfida in corso";
 }
