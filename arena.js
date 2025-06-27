@@ -22,10 +22,12 @@ const center = document.getElementById("arena-center");
 
 const ultimaEliminata = squadre.find(s => s.ultimaEliminata);
 if (ultimaEliminata) {
-  center.innerHTML = `
+center.innerHTML = `
+  <div class="eliminata-wrapper">
     <img src="${ultimaEliminata.logo}" class="eliminata-logo" />
     <div class="eliminata-testo">❌ Eliminata<br>${ultimaEliminata.nome}</div>
-  `;
+  </div>
+`;
 } else {
   center.innerHTML = "Sfida in corso";
 }
