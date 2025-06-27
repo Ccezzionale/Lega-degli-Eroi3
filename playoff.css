@@ -150,6 +150,7 @@ nav {
   gap: 25px;
   background-color: #001f3f;
   padding: 10px 30px;
+justify-content: center;
 }
 
 
@@ -236,6 +237,9 @@ nav {
     background-color: #0074D9;
     border-radius: 6px;
   }
+    .home-desktop {
+  margin-right: 10px;
+}
 
   .submenu {
     display: none;
