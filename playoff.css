@@ -53,13 +53,12 @@
 
     .finale {
       font-weight: bold;
-      background-color: #ffcc00;
       color: #001f3f;
     }
 
-.match-card.vincente {
-  background-color: #ffcc00;
-  border-color: #ff9900;
+.match.vincente {
+  border: 3px solid gold;
+  font-weight: bold;
 }
 
     .squadra.orizzontale {
