@@ -93,19 +93,22 @@
     }
 
 .accordion-header {
-  gap: 10px;
-  align-items: center;
-  padding-left: 16px;
+  display: flex;
+  align-items: center;     /* 👈 centra verticalmente */
+  gap: 12px;
+  padding: 12px 16px;
+  background-color: #001f3f;
+  color: white;
+  font-weight: bold;
   font-size: 1rem;
-  letter-spacing: 0.5px;
-  min-height: 64px;
+  border-radius: 8px;
 }
 
 .accordion-header img {
   height: 48px;
   width: 48px;
   object-fit: contain;
-  margin-right: 12px;
+  flex-shrink: 0;
 }
 
     .accordion-content {
