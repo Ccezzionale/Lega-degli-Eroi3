@@ -45,10 +45,11 @@
     }
 
     td {
-      padding: 12px 10px;
+      padding: 14px 12px;
       text-align: center;
       background-color: rgba(255, 255, 255, 0.85);
       border-bottom: 2px solid #ccc;
+      vertical-align: middle;
     }
 
     tr:hover td {
@@ -62,9 +63,16 @@
     .top3 td { background-color: rgba(205, 127, 50, 0.85); color: #000; font-weight: bold; }
 
     .logo-squadra {
-      height: 40px;
+      height: 48px;
       vertical-align: middle;
       margin-right: 10px;
+    }
+
+    .nome-squadra {
+      display: inline-block;
+      vertical-align: middle;
+      font-weight: bold;
+      font-size: 1.1rem;
     }
   </style>
 </head>
@@ -101,7 +109,7 @@
       { squadra: "Giody", oro: 0, argento: 0, bronzo: 1 },
       { squadra: "Union Librino", oro: 0, argento: 0, bronzo: 1 },
       { squadra: "Minnesode Timberland", oro: 0, argento: 0, bronzo: 1 },
-    ];
+     ];
 
     medagliere.sort((a, b) => {
       if (b.oro !== a.oro) return b.oro - a.oro;
@@ -117,10 +125,10 @@
       else if (i === 1) tr.classList.add("top2");
       else if (i === 2) tr.classList.add("top3");
 
-      const logoPath = `img/${s.squadra}.png`;
+      const logoPath = `img/loghi/${s.squadra}.png`;
       tr.innerHTML = `
         <td>${i + 1}</td>
-        <td><img src="${logoPath}" alt="${s.squadra}" class="logo-squadra">${s.squadra}</td>
+        <td><img src="${logoPath}" alt="${s.squadra}" class="logo-squadra"> <span class="nome-squadra">${s.squadra}</span></td>
         <td>${s.oro}</td>
         <td>${s.argento}</td>
         <td>${s.bronzo}</td>
