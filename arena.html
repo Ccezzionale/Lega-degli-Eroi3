@@ -45,15 +45,26 @@
     <div id="arena-center"></div>
   </div>
   <script src="arena.js"></script>
-  <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const hamburger = document.getElementById("hamburger");
-    const navbar = document.getElementById("mainMenu");
+   <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const hamburger = document.getElementById("hamburger");
+      const mainMenu = document.getElementById("mainMenu");
+      const submenuToggles = document.querySelectorAll(".toggle-submenu");
 
-    hamburger.addEventListener("click", function () {
-      navbar.classList.toggle("show");
+      hamburger?.addEventListener("click", () => {
+        mainMenu.classList.toggle("show");
+      });
+
+      submenuToggles.forEach(toggle => {
+        toggle.addEventListener("click", function (e) {
+          e.preventDefault();
+          const parent = this.closest(".dropdown");
+          parent.classList.toggle("show");
+        });
+      });
     });
-  });
-</script>
+  </script>
+</body>
+</html>
 </body>
 </html>
