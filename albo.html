@@ -7,16 +7,18 @@
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #f8f9fa;
+      background: url('img/sfondo_podio.jpg') no-repeat center center fixed;
+      background-size: cover;
       color: #212529;
       padding: 20px;
     }
 
     h1 {
       text-align: center;
-      color: #001f3f;
+      color: #f1f1f1;
       margin-bottom: 30px;
       text-transform: uppercase;
+      text-shadow: 2px 2px 4px #000;
     }
 
     table {
@@ -24,6 +26,9 @@
       border-collapse: collapse;
       margin: 0 auto;
       font-size: 1rem;
+      background-color: rgba(255, 255, 255, 0.95);
+      border-radius: 10px;
+      overflow: hidden;
     }
 
     th, td {
@@ -46,6 +51,12 @@
     .top1 td { background-color: #ffd70088; font-weight: bold; }
     .top2 td { background-color: #c0c0c088; font-weight: bold; }
     .top3 td { background-color: #cd7f3288; font-weight: bold; }
+
+    .logo-squadra {
+      height: 24px;
+      vertical-align: middle;
+      margin-right: 8px;
+    }
   </style>
 </head>
 <body>
@@ -83,6 +94,12 @@
       { squadra: "Minnesode Timberland", oro: 0, argento: 0, bronzo: 1 },
     ];
 
+    function normalizzaNome(nome) {
+      return nome.toLowerCase().replace(/\s+/g, '').replace(/[àèéìòù]/g, c => ({
+        'à': 'a', 'è': 'e', 'é': 'e', 'ì': 'i', 'ò': 'o', 'ù': 'u'
+      }[c]));
+    }
+
     medagliere.sort((a, b) => {
       if (b.oro !== a.oro) return b.oro - a.oro;
       if (b.argento !== a.argento) return b.argento - a.argento;
@@ -97,9 +114,10 @@
       else if (i === 1) tr.classList.add("top2");
       else if (i === 2) tr.classList.add("top3");
 
+      const logoPath = `img/loghi/${normalizzaNome(s.squadra)}.png`;
       tr.innerHTML = `
         <td>${i + 1}</td>
-        <td>${s.squadra}</td>
+        <td><img src="${logoPath}" alt="${s.squadra}" class="logo-squadra">${s.squadra}</td>
         <td>${s.oro}</td>
         <td>${s.argento}</td>
         <td>${s.bronzo}</td>
