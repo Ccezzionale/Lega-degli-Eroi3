@@ -94,12 +94,6 @@
       { squadra: "Minnesode Timberland", oro: 0, argento: 0, bronzo: 1 },
     ];
 
-    function normalizzaNome(nome) {
-      return nome.toLowerCase().replace(/\s+/g, '').replace(/[àèéìòù]/g, c => ({
-        'à': 'a', 'è': 'e', 'é': 'e', 'ì': 'i', 'ò': 'o', 'ù': 'u'
-      }[c]));
-    }
-
     medagliere.sort((a, b) => {
       if (b.oro !== a.oro) return b.oro - a.oro;
       if (b.argento !== a.argento) return b.argento - a.argento;
@@ -114,7 +108,7 @@
       else if (i === 1) tr.classList.add("top2");
       else if (i === 2) tr.classList.add("top3");
 
-      const logoPath = `img/loghi/${normalizzaNome(s.squadra)}.png`;
+      const logoPath = `img/loghi/${s.squadra}.png`;
       tr.innerHTML = `
         <td>${i + 1}</td>
         <td><img src="${logoPath}" alt="${s.squadra}" class="logo-squadra">${s.squadra}</td>
