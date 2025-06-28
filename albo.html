@@ -15,47 +15,56 @@
 
     h1 {
       text-align: center;
-      color: #f1f1f1;
+      color: #fff;
       margin-bottom: 30px;
       text-transform: uppercase;
-      text-shadow: 2px 2px 4px #000;
+      text-shadow: 3px 3px 6px #000;
+      letter-spacing: 1px;
     }
 
     table {
-      width: 100%;
-      border-collapse: collapse;
+      width: 95%;
+      max-width: 1000px;
+      border-collapse: separate;
+      border-spacing: 0 12px;
       margin: 0 auto;
-      font-size: 1rem;
-      background-color: rgba(255, 255, 255, 0.95);
-      border-radius: 10px;
+      font-size: 1.1rem;
+      backdrop-filter: blur(10px);
+      background-color: rgba(255, 255, 255, 0.15);
+      border-radius: 15px;
       overflow: hidden;
-    }
-
-    th, td {
-      border: 1px solid #ddd;
-      padding: 10px;
-      text-align: center;
+      box-shadow: 0 0 12px rgba(0,0,0,0.4);
     }
 
     th {
-      background-color: #001f3f;
-      color: white;
+      background-color: rgba(0, 0, 0, 0.7);
+      color: #fff;
+      padding: 12px 10px;
+      font-weight: bold;
+      text-shadow: 1px 1px 2px #000;
     }
 
-    tr:nth-child(even) { background-color: #f1f1f1; }
+    td {
+      padding: 12px 10px;
+      text-align: center;
+      background-color: rgba(255, 255, 255, 0.85);
+      border-bottom: 2px solid #ccc;
+    }
 
-    .gold { background-color: #ffd70033; }
-    .silver { background-color: #c0c0c033; }
-    .bronze { background-color: #cd7f3233; }
+    tr:hover td {
+      background-color: rgba(255, 255, 255, 0.95);
+      transform: scale(1.01);
+      transition: all 0.2s ease-in-out;
+    }
 
-    .top1 td { background-color: #ffd70088; font-weight: bold; }
-    .top2 td { background-color: #c0c0c088; font-weight: bold; }
-    .top3 td { background-color: #cd7f3288; font-weight: bold; }
+    .top1 td { background-color: rgba(255, 215, 0, 0.85); color: #000; font-weight: bold; }
+    .top2 td { background-color: rgba(192, 192, 192, 0.85); color: #000; font-weight: bold; }
+    .top3 td { background-color: rgba(205, 127, 50, 0.85); color: #000; font-weight: bold; }
 
     .logo-squadra {
-      height: 24px;
+      height: 40px;
       vertical-align: middle;
-      margin-right: 8px;
+      margin-right: 10px;
     }
   </style>
 </head>
