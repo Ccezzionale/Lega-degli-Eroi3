@@ -1,1 +1,112 @@
-<!DOCTYPE html><html><head><title>Albo d'Oro</title><link rel='stylesheet' href='main.css'></head><body><h2>Albo d'Oro</h2><div id='contenitore-albo'></div><script src='albo_doro.js'></script></body></html>
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Albo d'Oro - Medagliere</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f8f9fa;
+      color: #212529;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #001f3f;
+      margin-bottom: 30px;
+      text-transform: uppercase;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0 auto;
+      font-size: 1rem;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #001f3f;
+      color: white;
+    }
+
+    tr:nth-child(even) { background-color: #f1f1f1; }
+
+    .gold { background-color: #ffd70033; }
+    .silver { background-color: #c0c0c033; }
+    .bronze { background-color: #cd7f3233; }
+
+    .top1 td { background-color: #ffd70088; font-weight: bold; }
+    .top2 td { background-color: #c0c0c088; font-weight: bold; }
+    .top3 td { background-color: #cd7f3288; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h1>Albo d'Oro - Medagliere</h1>
+  <table id="medagliere">
+    <thead>
+      <tr>
+        <th>Pos</th>
+        <th>Squadra</th>
+        <th>🥇 Oro</th>
+        <th>🥈 Argento</th>
+        <th>🥉 Bronzo</th>
+        <th>🏆 Totale</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    const medagliere = [
+      { squadra: "Rubin Kebab", oro: 3, argento: 1, bronzo: 0 },
+      { squadra: "Costantinobull", oro: 3, argento: 0, bronzo: 0 },
+      { squadra: "Team Bartowski", oro: 2, argento: 1, bronzo: 1 },
+      { squadra: "Pollisti", oro: 2, argento: 2, bronzo: 1 },
+      { squadra: "Bayern Christiansen", oro: 1, argento: 1, bronzo: 3 },
+      { squadra: "Real Mimmo", oro: 1, argento: 2, bronzo: 2 },
+      { squadra: "Minnesota Snakes", oro: 1, argento: 0, bronzo: 0 },
+      { squadra: "Desperados", oro: 0, argento: 2, bronzo: 1 },
+      { squadra: "Cugini di Zampagna", oro: 0, argento: 1, bronzo: 1 },
+      { squadra: "Ibla", oro: 0, argento: 1, bronzo: 1 },
+      { squadra: "Pokermantra", oro: 0, argento: 1, bronzo: 1 },
+      { squadra: "3 Amici al Var", oro: 0, argento: 1, bronzo: 0 },
+      { squadra: "Giody", oro: 0, argento: 0, bronzo: 1 },
+      { squadra: "Union Librino", oro: 0, argento: 0, bronzo: 1 },
+      { squadra: "Minnesode Timberland", oro: 0, argento: 0, bronzo: 1 },
+    ];
+
+    medagliere.sort((a, b) => {
+      if (b.oro !== a.oro) return b.oro - a.oro;
+      if (b.argento !== a.argento) return b.argento - a.argento;
+      return b.bronzo - a.bronzo;
+    });
+
+    const tbody = document.querySelector("#medagliere tbody");
+
+    medagliere.forEach((s, i) => {
+      const tr = document.createElement("tr");
+      if (i === 0) tr.classList.add("top1");
+      else if (i === 1) tr.classList.add("top2");
+      else if (i === 2) tr.classList.add("top3");
+
+      tr.innerHTML = `
+        <td>${i + 1}</td>
+        <td>${s.squadra}</td>
+        <td>${s.oro}</td>
+        <td>${s.argento}</td>
+        <td>${s.bronzo}</td>
+        <td>${s.oro + s.argento + s.bronzo}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+  </script>
+</body>
+</html>
