@@ -45,5 +45,15 @@
     <div id="arena-center"></div>
   </div>
   <script src="arena.js"></script>
+  <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const hamburger = document.getElementById("hamburger");
+    const navbar = document.getElementById("mainMenu");
+
+    hamburger.addEventListener("click", function () {
+      navbar.classList.toggle("show");
+    });
+  });
+</script>
 </body>
 </html>
