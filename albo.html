@@ -22,6 +22,7 @@
       letter-spacing: 1px;
     }
 
+    /* Desktop table */
     table {
       width: 95%;
       max-width: 1000px;
@@ -51,7 +52,6 @@
       border-bottom: 2px solid #ccc;
       vertical-align: middle;
     }
-    
 
     tr:hover td {
       background-color: rgba(255, 255, 255, 0.95);
@@ -76,10 +76,53 @@
       font-size: 1.1rem;
       line-height: 48px;
     }
+
+    /* Mobile Accordion */
+    .accordion {
+      display: none;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .accordion-item {
+      background-color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 10px;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 0 6px rgba(0,0,0,0.2);
+    }
+
+    .accordion-header {
+      display: flex;
+      align-items: center;
+      padding: 12px;
+      cursor: pointer;
+      background-color: #001f3f;
+      color: white;
+      font-weight: bold;
+    }
+
+    .accordion-header img {
+      height: 36px;
+      margin-right: 10px;
+    }
+
+    .accordion-content {
+      padding: 10px 16px;
+      display: none;
+      background-color: #fff;
+    }
+
+    @media (max-width: 768px) {
+      table { display: none; }
+      .accordion { display: block; }
+    }
   </style>
 </head>
 <body>
   <h1>Albo d'Oro - Medagliere</h1>
+
+  <!-- Tabella Desktop -->
   <table id="medagliere">
     <thead>
       <tr>
@@ -93,6 +136,9 @@
     </thead>
     <tbody></tbody>
   </table>
+
+  <!-- Accordion Mobile -->
+  <div class="accordion" id="accordion"></div>
 
   <script>
     const medagliere = [
@@ -111,7 +157,7 @@
       { squadra: "Giody", oro: 0, argento: 0, bronzo: 1 },
       { squadra: "Union Librino", oro: 0, argento: 0, bronzo: 1 },
       { squadra: "Minnesode Timberland", oro: 0, argento: 0, bronzo: 1 },
-        ];
+      ];
 
     medagliere.sort((a, b) => {
       if (b.oro !== a.oro) return b.oro - a.oro;
@@ -120,6 +166,7 @@
     });
 
     const tbody = document.querySelector("#medagliere tbody");
+    const accordion = document.getElementById("accordion");
 
     medagliere.forEach((s, i) => {
       const tr = document.createElement("tr");
@@ -127,7 +174,7 @@
       else if (i === 1) tr.classList.add("top2");
       else if (i === 2) tr.classList.add("top3");
 
-      const logoPath = `img/${s.squadra}.png`;
+      const logoPath = `img/loghi/${s.squadra}.png`;
       tr.innerHTML = `
         <td>${i + 1}</td>
         <td><img src="${logoPath}" alt="${s.squadra}" class="logo-squadra"> <span class="nome-squadra">${s.squadra}</span></td>
@@ -137,6 +184,28 @@
         <td>${s.oro + s.argento + s.bronzo}</td>
       `;
       tbody.appendChild(tr);
+
+      // Accordion item
+      const acc = document.createElement("div");
+      acc.className = "accordion-item";
+      acc.innerHTML = `
+        <div class="accordion-header">
+          <img src="${logoPath}" alt="${s.squadra}">
+          ${i + 1}. ${s.squadra}
+        </div>
+        <div class="accordion-content">
+          🥇 Oro: ${s.oro} 🥈 Argento: ${s.argento} 🥉 Bronzo: ${s.bronzo} 🏆 Totale: ${s.oro + s.argento + s.bronzo}
+        </div>
+      `;
+      accordion.appendChild(acc);
+    });
+
+    // Fisarmonica toggle
+    document.querySelectorAll('.accordion-header').forEach(header => {
+      header.addEventListener('click', () => {
+        const content = header.nextElementSibling;
+        content.style.display = content.style.display === 'block' ? 'none' : 'block';
+      });
     });
   </script>
 </body>
