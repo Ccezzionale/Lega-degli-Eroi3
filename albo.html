@@ -70,10 +70,11 @@ th {
   flex-shrink: 0;
 }
 
-    .logo-placeholder {
+.logo-placeholder {
   width: 48px;
-  height: 1px;
+  height: 48px;     /* 👈 stesso dell'immagine */
   display: inline-block;
+  flex-shrink: 0;
 }
 
 .nome-squadra {
@@ -85,7 +86,7 @@ th {
 .squadra-wrapper {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 10px; /* 👈 questo crea lo stesso spazio tra logo e nome */
 }
 
     /* Mobile Accordion */
