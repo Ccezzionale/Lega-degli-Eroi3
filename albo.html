@@ -70,6 +70,12 @@ th {
   flex-shrink: 0;
 }
 
+    .logo-placeholder {
+  width: 48px;
+  height: 1px;
+  display: inline-block;
+}
+
 .nome-squadra {
   font-weight: bold;
   font-size: 1.1rem;
@@ -136,7 +142,12 @@ th {
     <thead>
       <tr>
         <th>Pos</th>
-        <th>Squadra</th>
+        <th>
+  <div class="squadra-wrapper">
+    <span class="logo-placeholder"></span>
+    <span>Squadra</span>
+  </div>
+</th>
         <th>🥇 Oro</th>
         <th>🥈 Argento</th>
         <th>🥉 Bronzo</th>
