@@ -75,6 +75,11 @@
       font-size: 1.1rem;
       line-height: 48px;
     }
+    .squadra-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 
     /* Mobile Accordion */
     .accordion {
@@ -180,7 +185,12 @@
       const logoPath = `img/${s.squadra}.png`;
       tr.innerHTML = `
         <td>${i + 1}</td>
-        <td><img src="${logoPath}" alt="${s.squadra}" class="logo-squadra"> <span class="nome-squadra">${s.squadra}</span></td>
+        <td>
+  <div class="squadra-wrapper">
+    <img src="${logoPath}" alt="${s.squadra}" class="logo-squadra">
+    <span class="nome-squadra">${s.squadra}</span>
+  </div>
+</td>
         <td>${s.oro}</td>
         <td>${s.argento}</td>
         <td>${s.bronzo}</td>
