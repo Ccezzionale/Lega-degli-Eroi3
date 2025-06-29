@@ -8,7 +8,8 @@
 }
 
 .blocco-competizione {
-  background-color: rgba(255,255,255,0.9);
+  background-color: #001f3f; /* 🔵 blu */
+  color: white;
   padding: 16px;
   border-radius: 12px;
   box-shadow: 0 0 10px rgba(0,0,0,0.2);
@@ -49,11 +50,12 @@
 .argento { background-color: #c0c0c033; }
 .bronzo { background-color: #cd7f3233; }
 
-.anno {
-  margin-bottom: 20px;
-  padding: 10px;
-  border-top: 1px solid #ccc;
-  background-color: #001f3f; /* 🔵 blu Lega degli Eroi */
-  color: white;              /* ✏️ testo bianco */
+.blocco-competizione .anno {
+  background-color: white;
+  color: #222;
   border-radius: 8px;
+  padding: 10px;
+  margin-top: 10px;
+  border: 1px solid #ddd;
 }
+
