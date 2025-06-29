@@ -62,20 +62,20 @@
     .top2 td { background-color: rgba(192, 192, 192, 0.85); color: #000; font-weight: bold; }
     .top3 td { background-color: rgba(205, 127, 50, 0.85); color: #000; font-weight: bold; }
 
-    .logo-squadra {
-      height: 48px;
-      vertical-align: middle;
-      margin-right: 10px;
-    }
+.logo-squadra {
+  height: 48px;
+  width: 48px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
 
-    .nome-squadra {
-      display: inline-block;
-      vertical-align: middle;
-      font-weight: bold;
-      font-size: 1.1rem;
-      line-height: 48px;
-    }
-    .squadra-wrapper {
+.nome-squadra {
+  font-weight: bold;
+  font-size: 1.1rem;
+  line-height: normal; /* 👈 rimuove l'offset verticale */
+}
+    
+.squadra-wrapper {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -183,19 +183,19 @@
       else if (i === 2) tr.classList.add("top3");
 
       const logoPath = `img/${s.squadra}.png`;
-      tr.innerHTML = `
-        <td>${i + 1}</td>
-        <td>
-  <div class="squadra-wrapper">
-    <img src="${logoPath}" alt="${s.squadra}" class="logo-squadra">
-    <span class="nome-squadra">${s.squadra}</span>
-  </div>
-</td>
-        <td>${s.oro}</td>
-        <td>${s.argento}</td>
-        <td>${s.bronzo}</td>
-        <td>${s.oro + s.argento + s.bronzo}</td>
-      `;
+tr.innerHTML = `
+  <td>${i + 1}</td>
+  <td>
+    <div class="squadra-wrapper">
+      <img src="${logoPath}" alt="${s.squadra}" class="logo-squadra">
+      <span class="nome-squadra">${s.squadra}</span>
+    </div>
+  </td>
+  <td>${s.oro}</td>
+  <td>${s.argento}</td>
+  <td>${s.bronzo}</td>
+  <td>${s.oro + s.argento + s.bronzo}</td>
+`;
       tbody.appendChild(tr);
 
       // Accordion item
