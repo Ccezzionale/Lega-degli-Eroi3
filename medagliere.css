@@ -48,3 +48,12 @@
 .oro { background-color: #ffd70033; }
 .argento { background-color: #c0c0c033; }
 .bronzo { background-color: #cd7f3233; }
+
+.anno {
+  margin-bottom: 20px;
+  padding: 10px;
+  border-top: 1px solid #ccc;
+  background-color: #001f3f; /* 🔵 blu Lega degli Eroi */
+  color: white;              /* ✏️ testo bianco */
+  border-radius: 8px;
+}
