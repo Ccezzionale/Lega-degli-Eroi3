@@ -1,0 +1,48 @@
+.blocchi-medagliere {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  padding: 20px;
+}
+
+.blocco-competizione {
+  background-color: rgba(255,255,255,0.9);
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  width: 250px;
+  text-align: center;
+}
+
+.blocco-competizione h2 {
+  font-size: 1.1rem;
+  color: #001f3f;
+  margin-bottom: 12px;
+  text-shadow: 1px 1px 1px #ccc;
+}
+
+.blocco-competizione ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.blocco-competizione li {
+  font-weight: bold;
+  padding: 6px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+}
+
+.blocco-competizione li img {
+  height: 28px;
+  width: 28px;
+  object-fit: contain;
+}
+
+.oro { background-color: #ffd70033; }
+.argento { background-color: #c0c0c033; }
+.bronzo { background-color: #cd7f3233; }
