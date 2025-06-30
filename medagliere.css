@@ -19,7 +19,7 @@
 
 .blocco-competizione h2 {
   font-size: 1.2rem;
-  color: white;
+  color: #ffcc00;
   margin-bottom: 12px;
   text-shadow: 1px 1px 1px #ccc;
   height: 48px;          /* 👈 forza stessa altezza per tutti */
@@ -78,4 +78,17 @@
   cursor: pointer;
   margin-bottom: 8px;
 }
+
+@media (max-width: 768px) {
+  .blocchi-medagliere {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .blocco-competizione {
+    width: 90%;
+    max-width: 400px;
+  }
+}
+
 
