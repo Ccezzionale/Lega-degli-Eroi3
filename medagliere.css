@@ -22,6 +22,14 @@
   color: white;
   margin-bottom: 12px;
   text-shadow: 1px 1px 1px #ccc;
+  height: 48px;          /* 👈 forza stessa altezza per tutti */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  line-height: 1.2;
+  padding: 0 6px;
+}
 }
 
 .blocco-competizione ol {
