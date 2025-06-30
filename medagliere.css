@@ -82,14 +82,13 @@
 
 @media (max-width: 768px) {
   .blocchi-medagliere {
-    flex-direction: column;
-    align-items: center;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
   }
 
   .blocco-competizione {
-    width: 90%;
-    max-width: 400px;
+    width: 90% !important;
+    max-width: 400px !important;
   }
 }
-
-
