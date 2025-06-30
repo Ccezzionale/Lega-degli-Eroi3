@@ -9,50 +9,51 @@
 <body>
 
   <nav>
-  <div class="nav-left">
-    <span id="hamburger" class="hamburger">☰</span>
-    <a href="index.html" class="home-icon">🏠</a>
-    <ul class="navbar" id="mainMenu">
-      <li><a href="rose.html">Rose</a></li>
-      <li class="dropdown">
-        <a href="#" class="toggle-submenu">Draft ▾</a>
-        <ul class="submenu">
-          <li><a href="draft_championship.html">🟦 Conf.Championship</a></li>
-          <li><a href="draft_conference.html">🟨 Conf.League</a></li>
-        </ul>
-      </li>
-       <li class="dropdown">
-      <a href="#" class="toggle-submenu">Competizioni ▾</a>
-      <ul class="submenu">
-        <li><a href="classifica.html">📊 Classifica</a></li>
-        <li><a href="playoff.html">🏆 Playoff</a></li>
-        <li><a href="arena.html">🏟️ Higlander</a></li>
+    <div class="nav-left">
+      <span id="hamburger" class="hamburger">☰</span>
+      <a href="index.html" class="home-icon">🏠</a>
+      <ul class="navbar" id="mainMenu">
+        <li><a href="rose.html">Rose</a></li>
+        <li class="dropdown">
+          <a href="#" class="toggle-submenu">Draft ▾</a>
+          <ul class="submenu">
+            <li><a href="draft_championship.html">🟦 Conf.Championship</a></li>
+            <li><a href="draft_conference.html">🟨 Conf.League</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="toggle-submenu">Competizioni ▾</a>
+          <ul class="submenu">
+            <li><a href="classifica.html">📊 Classifica</a></li>
+            <li><a href="playoff.html">🏆 Playoff</a></li>
+            <li><a href="arena.html">🏟️ Higlander</a></li>
+          </ul>
+        </li>
+        <li><a href="svincolati.html">Svincolati</a></li>
+        <li><a href="chiamate.html">Chiamate</a></li>
+        <li class="dropdown">
+          <a href="#" class="toggle-submenu">Hall of Fame ▾</a>
+          <ul class="submenu">
+            <li><a href="albo.html">🏆 Albo d'oro</a></li>
+            <li><a href="medagliere.html">🏟️ Medagliere</a></li>
+          </ul>
+        </li>
       </ul>
-      </li>
-      <li><a href="svincolati.html">Svincolati</a></li>
-      <li><a href="chiamate.html">Chiamate</a></li>
-<li class="dropdown">
-        <a href="#" class="toggle-submenu">Hall of Fame ▾</a>
-        <ul class="submenu">
-          <li><a href="albo.html">🏆 Albo d'oro</a></li>
-        <li><a href="medaliere.html">🏟️ Medagliere</a></li>
-    </ul>
-  </div>
-</nav>
-  
-  <h1>Albo d'Oro - Medagliere</h1>
+    </div>
+  </nav>
 
-  <!-- Tabella Desktop -->
+  <h1 class="titolo-albo">Albo d'Oro - Medagliere</h1>
+
   <table id="medagliere">
     <thead>
       <tr>
         <th>Pos</th>
         <th>
-  <div class="squadra-wrapper">
-    <span class="logo-placeholder"></span>
-    <span>Squadra</span>
-  </div>
-</th>
+          <div class="squadra-wrapper">
+            <span class="logo-placeholder"></span>
+            <span>Squadra</span>
+          </div>
+        </th>
         <th>🥇 Oro</th>
         <th>🥈 Argento</th>
         <th>🥉 Bronzo</th>
@@ -62,7 +63,6 @@
     <tbody></tbody>
   </table>
 
-  <!-- Accordion Mobile -->
   <div class="accordion" id="accordion"></div>
 
   <script>
@@ -82,7 +82,7 @@
       { squadra: "Giody", oro: 0, argento: 0, bronzo: 1 },
       { squadra: "Union Librino", oro: 0, argento: 0, bronzo: 1 },
       { squadra: "Minnesode Timberland", oro: 0, argento: 0, bronzo: 1 },
-      ];
+    ];
 
     medagliere.sort((a, b) => {
       if (b.oro !== a.oro) return b.oro - a.oro;
@@ -100,22 +100,21 @@
       else if (i === 2) tr.classList.add("top3");
 
       const logoPath = `img/${s.squadra}.png`;
-tr.innerHTML = `
-  <td>${i + 1}</td>
-  <td>
-    <div class="squadra-wrapper">
-      <img src="${logoPath}" alt="${s.squadra}" class="logo-squadra">
-      <span class="nome-squadra">${s.squadra}</span>
-    </div>
-  </td>
-  <td>${s.oro}</td>
-  <td>${s.argento}</td>
-  <td>${s.bronzo}</td>
-  <td>${s.oro + s.argento + s.bronzo}</td>
-`;
+      tr.innerHTML = `
+        <td>${i + 1}</td>
+        <td>
+          <div class="squadra-wrapper">
+            <img src="${logoPath}" alt="${s.squadra}" class="logo-squadra">
+            <span class="nome-squadra">${s.squadra}</span>
+          </div>
+        </td>
+        <td>${s.oro}</td>
+        <td>${s.argento}</td>
+        <td>${s.bronzo}</td>
+        <td>${s.oro + s.argento + s.bronzo}</td>
+      `;
       tbody.appendChild(tr);
 
-      // Accordion item
       const acc = document.createElement("div");
       acc.className = "accordion-item";
       acc.innerHTML = `
@@ -130,7 +129,6 @@ tr.innerHTML = `
       accordion.appendChild(acc);
     });
 
-    // Fisarmonica toggle
     document.querySelectorAll('.accordion-header').forEach(header => {
       header.addEventListener('click', () => {
         const content = header.nextElementSibling;
