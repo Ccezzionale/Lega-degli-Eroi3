@@ -270,8 +270,8 @@ nav {
   }
 
   .draft-columns {
-    overflow-x: auto;
-    flex-wrap: nowrap;
+    transform: scale(0.75); /* 👈 riduce tutto al 85% */
+    transform-origin: top center;
   }
 
   .draft-card {
