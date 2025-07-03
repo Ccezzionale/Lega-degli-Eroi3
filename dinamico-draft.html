@@ -137,7 +137,7 @@ const scambi = scambiCSV.trim().split("\n").slice(1).map(r => {
 }
 
 // Mostra il draft in colonne
-ffunction generaTabellaVerticale(containerId, draftData) {
+function generaTabellaVerticale(containerId, draftData) {
   const container = document.getElementById(containerId);
   if (!draftData || draftData.length === 0) {
     container.innerHTML = "<p>⚠️ Nessun dato disponibile</p>";
