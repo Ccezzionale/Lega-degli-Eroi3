@@ -1,0 +1,63 @@
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f9fa;
+  color: #222;
+  margin: 0;
+  padding: 20px;
+}
+
+/* Titolo */
+.titolo {
+  text-align: center;
+  color: #001f3f;
+  font-size: 2rem;
+  margin: 30px 0 10px;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+/* Container delle tabelle */
+.draft-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto 40px auto;
+  overflow-x: auto;
+}
+
+/* Tabella */
+.draft-container table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  font-size: 0.95rem;
+  background-color: white;
+}
+
+.draft-container th,
+.draft-container td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: center;
+}
+
+/* Intestazioni */
+.draft-container thead {
+  background-color: #001f3f;
+  color: white;
+}
+
+/* Alternanza righe */
+.draft-container tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .titolo {
+    font-size: 1.5rem;
+  }
+
+  .draft-container table {
+    font-size: 0.85rem;
+  }
+}
