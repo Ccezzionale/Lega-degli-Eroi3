@@ -164,10 +164,13 @@ let html = '<div class="draft-columns">';
 squadre.forEach(squadra => {
   html += `<div class="draft-card">
               <div class="draft-header">
-                <img src="img/${squadra}.png" alt="${squadra}" class="draft-logo">
+                <div class="draft-logo-wrapper">
+                  <img src="img/${squadra}.png" alt="${squadra}" class="draft-logo">
+                </div>
                 <h3>${squadra}</h3>
               </div>
               <div class="draft-picks">`;
+
   
   draftPerSquadra[squadra].forEach(pick => {
     const scambioClass = pick.scambioId ? `scambio-${pick.scambioId}` : "";
