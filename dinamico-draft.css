@@ -129,12 +129,13 @@ nav {
 /* Container delle colonne draft */
 .draft-columns {
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  flex-wrap: wrap; /* se vuoi mandare a capo su mobile */
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  justify-content: flex-start;
   gap: 30px;
   margin-bottom: 40px;
 }
+
 
 /* Colonna singola */
 .draft-column {
