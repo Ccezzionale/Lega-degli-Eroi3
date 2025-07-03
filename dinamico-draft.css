@@ -154,6 +154,39 @@ nav {
   font-size: 1rem;
 }
 
+.draft-columns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.draft-card {
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  padding: 12px;
+  width: 220px;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.draft-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.draft-logo {
+  width: 32px;
+  height: 32px;
+}
+
+.draft-picks .pick {
+  padding: 4px 8px;
+  margin: 2px 0;
+  border-radius: 4px;
+}
+
 /* Lista delle pick */
 .draft-column div {
   margin: 4px 0;
