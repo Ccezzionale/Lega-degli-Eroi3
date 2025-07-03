@@ -87,6 +87,51 @@ function generaTabellaVerticale(containerId, draftData) {
   container.innerHTML = html;
 }
 
+function csvToDraft(csvText) {
+  const conferenceMap = {
+    "Team Bartowski": "Conference League",
+    "Desperados": "Conference League",
+    "Sharknado 04": "Conference Championship",
+    "Real Mimmo": "Conference Championship",
+    "Giody": "Conference Championship",
+    "Union Librino": "Conference Championship",
+    "Rubinkebab": "Conference Championship",
+    "Rafa Casablanca": "Conference Championship",
+    "PokerMantra": "Conference Championship",
+    "wildboys78": "Conference Championship",
+    "Bayern Christiansen": "Conference League",
+    "Minnesode Timberland": "Conference League",
+    "Giulay": "Conference League",
+    "MinneSota Snakes": "Conference League",
+    "Ibla": "Conference League",
+    "Pandinicoccolosini": "Conference League"
+  };
+
+  const rows = csvText.trim().split("\n").slice(1); // salta intestazione
+  const squadre = rows.map(row => row.split(",")[1]).reverse(); // prendi la colonna squadra e inverti l’ordine
+
+  const leagueTeams = squadre.filter(s => conferenceMap[s] === "Conference League");
+  const championshipTeams = squadre.filter(s => conferenceMap[s] === "Conference Championship");
+
+  return {
+    league: generaSnakeDraft(leagueTeams, 18),
+    championship: generaSnakeDraft(championshipTeams, 18)
+  };
+}
+
+// Serpentina
+function generaSnakeDraft(teams, rounds) {
+  const draft = [];
+  for (let i = 1; i <= rounds; i++) {
+    draft.push({
+      Round: i,
+      Picks: (i % 2 === 1 ? teams : [...teams].reverse())
+    });
+  }
+  return draft;
+}
+
+
 // CHIAMATA AI GOOGLE SCRIPT
 fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vTduESMbJiPuCDLaAFdOHjep9GW-notjraILSyyjo6SA0xKSR0H0fgMLPNNYSwXgnGGJUyv14kjFRqv/pub?gid=691152130&single=true&output=csv")
   .then(response => response.text())
