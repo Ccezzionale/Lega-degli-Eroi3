@@ -268,4 +268,17 @@ nav {
   .draft-container table {
     font-size: 0.85rem;
   }
+
+@media (max-width: 768px) {
+  .draft-columns {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+  }
+
+  .draft-card {
+    flex: 0 0 auto;
+    width: 180px;
+  }
+}
+
 }
