@@ -73,19 +73,20 @@ function generaSnakeDraftBase(teams, rounds) {
 
 // Applica gli scambi sulle pick originali
 function applicaScambi(draft, scambi, conference) {
-  scambi.forEach(([conf, round, squadraOriginale, nuovaSquadra]) => {
+  scambi.forEach(([conf, round, teamDa, teamA]) => {
     if (conf !== conference) return;
 
     const r = parseInt(round);
     const roundPicks = draft[r - 1];
     if (!roundPicks) return;
 
-    const pick = roundPicks.find(p => p.team === squadraOriginale);
+    // Trova la pick nella posizione originaria
+    const pick = roundPicks.find(p => p.team === teamDa);
     if (!pick) return;
 
-    console.log('✅ Scambio:', { conf, round: r, da: squadraOriginale, a: nuovaSquadra });
+    console.log('✅ Scambio:', { conf, round: r, da: teamDa, a: teamA });
 
-    pick.team = nuovaSquadra; // Cambia il team che possiede quella pick
+    pick.team = teamA;  // Cambia il team di quella posizione
   });
 
   return draft;
