@@ -1,1 +1,235 @@
-const championshipDraft = [{"Round":0,"Pick 1":"Sharknado 04","Pick 2":"wildboys78","Pick 3":"PokerMantra","Pick 4":"Union Librino","Pick 5":"Rafa Casablanca","Pick 6":"Giody","Pick 7":"Real Mimmo","Pick 8":"Rubinkebab"},{"Round":1,"Pick 1":"Rubinkebab","Pick 2":"Real Mimmo","Pick 3":"Giody","Pick 4":"Rafa Casablanca","Pick 5":"Union Librino","Pick 6":"PokerMantra","Pick 7":"wildboys78","Pick 8":"Sharknado 04"},{"Round":2,"Pick 1":"Sharknado 04","Pick 2":"wildboys78","Pick 3":"PokerMantra","Pick 4":"Union Librino","Pick 5":"Rafa Casablanca","Pick 6":"Giody","Pick 7":"Real Mimmo","Pick 8":"Rubinkebab"},{"Round":3,"Pick 1":"Rubinkebab","Pick 2":"Real Mimmo","Pick 3":"Giody","Pick 4":"Rafa Casablanca","Pick 5":"Union Librino","Pick 6":"PokerMantra","Pick 7":"wildboys78","Pick 8":"Sharknado 04"},{"Round":4,"Pick 1":"Sharknado 04","Pick 2":"wildboys78","Pick 3":"PokerMantra","Pick 4":"Union Librino","Pick 5":"Rafa Casablanca","Pick 6":"Giody","Pick 7":"Real Mimmo","Pick 8":"Rubinkebab"},{"Round":5,"Pick 1":"Rubinkebab","Pick 2":"Real Mimmo","Pick 3":"Giody","Pick 4":"Rafa Casablanca","Pick 5":"Union Librino","Pick 6":"PokerMantra","Pick 7":"wildboys78","Pick 8":"Sharknado 04"},{"Round":6,"Pick 1":"Sharknado 04","Pick 2":"wildboys78","Pick 3":"PokerMantra","Pick 4":"Union Librino","Pick 5":"Rafa Casablanca","Pick 6":"Giody","Pick 7":"Real Mimmo","Pick 8":"Rubinkebab"},{"Round":7,"Pick 1":"Rubinkebab","Pick 2":"Real Mimmo","Pick 3":"Giody","Pick 4":"Rafa Casablanca","Pick 5":"Union Librino","Pick 6":"PokerMantra","Pick 7":"wildboys78","Pick 8":"Sharknado 04"},{"Round":8,"Pick 1":"Sharknado 04","Pick 2":"wildboys78","Pick 3":"PokerMantra","Pick 4":"Union Librino","Pick 5":"Rafa Casablanca","Pick 6":"Giody","Pick 7":"Real Mimmo","Pick 8":"Rubinkebab"},{"Round":9,"Pick 1":"Rubinkebab","Pick 2":"Real Mimmo","Pick 3":"Giody","Pick 4":"Rafa Casablanca","Pick 5":"Union Librino","Pick 6":"PokerMantra","Pick 7":"wildboys78","Pick 8":"Sharknado 04"},{"Round":10,"Pick 1":"Sharknado 04","Pick 2":"wildboys78","Pick 3":"PokerMantra","Pick 4":"Union Librino","Pick 5":"Rafa Casablanca","Pick 6":"Giody","Pick 7":"Real Mimmo","Pick 8":"Rubinkebab"},{"Round":11,"Pick 1":"Rubinkebab","Pick 2":"Real Mimmo","Pick 3":"Giody","Pick 4":"Rafa Casablanca","Pick 5":"Union Librino","Pick 6":"PokerMantra","Pick 7":"wildboys78","Pick 8":"Sharknado 04"},{"Round":12,"Pick 1":"Sharknado 04","Pick 2":"wildboys78","Pick 3":"PokerMantra","Pick 4":"Union Librino","Pick 5":"Rafa Casablanca","Pick 6":"Giody","Pick 7":"Real Mimmo","Pick 8":"Rubinkebab"},{"Round":13,"Pick 1":"Rubinkebab","Pick 2":"Real Mimmo","Pick 3":"Giody","Pick 4":"Rafa Casablanca","Pick 5":"Union Librino","Pick 6":"PokerMantra","Pick 7":"wildboys78","Pick 8":"Sharknado 04"},{"Round":14,"Pick 1":"Sharknado 04","Pick 2":"wildboys78","Pick 3":"PokerMantra","Pick 4":"Union Librino","Pick 5":"Rafa Casablanca","Pick 6":"Giody","Pick 7":"Real Mimmo","Pick 8":"Rubinkebab"}];
+const championshipDraft = [{
+    "Round": 1,
+    "Picks": [
+      "Sharknado 04",
+      "wildboys78",
+      "PokerMantra",
+      "Rubinkebab",
+      "Union Librino",
+      "Rafa Casablanca",
+      "Giody",
+      "Real Mimmo"
+    ]
+  },
+  {
+    "Round": 2,
+    "Picks": [
+      "Real Mimmo",
+      "Giody",
+      "Rafa Casablanca",
+      "Union Librino",
+      "Rubinkebab",
+      "PokerMantra",
+      "wildboys78",
+      "Sharknado 04"
+    ]
+  },
+  {
+    "Round": 3,
+    "Picks": [
+      "Sharknado 04",
+      "wildboys78",
+      "PokerMantra",
+      "Rubinkebab",
+      "Union Librino",
+      "Rafa Casablanca",
+      "Giody",
+      "Real Mimmo"
+    ]
+  },
+  {
+    "Round": 4,
+    "Picks": [
+      "Real Mimmo",
+      "Giody",
+      "Rafa Casablanca",
+      "Union Librino",
+      "Rubinkebab",
+      "PokerMantra",
+      "wildboys78",
+      "Sharknado 04"
+    ]
+  },
+  {
+    "Round": 5,
+    "Picks": [
+      "Sharknado 04",
+      "wildboys78",
+      "PokerMantra",
+      "Rubinkebab",
+      "Union Librino",
+      "Rafa Casablanca",
+      "Giody",
+      "Real Mimmo"
+    ]
+  },
+  {
+    "Round": 6,
+    "Picks": [
+      "Real Mimmo",
+      "Giody",
+      "Rafa Casablanca",
+      "Union Librino",
+      "Rubinkebab",
+      "PokerMantra",
+      "wildboys78",
+      "Sharknado 04"
+    ]
+  },
+  {
+    "Round": 7,
+    "Picks": [
+      "Sharknado 04",
+      "wildboys78",
+      "PokerMantra",
+      "Rubinkebab",
+      "Union Librino",
+      "Rafa Casablanca",
+      "Giody",
+      "Real Mimmo"
+    ]
+  },
+  {
+    "Round": 8,
+    "Picks": [
+      "Real Mimmo",
+      "Giody",
+      "Rafa Casablanca",
+      "Union Librino",
+      "Rubinkebab",
+      "PokerMantra",
+      "wildboys78",
+      "Sharknado 04"
+    ]
+  },
+  {
+    "Round": 9,
+    "Picks": [
+      "Sharknado 04",
+      "wildboys78",
+      "PokerMantra",
+      "Rubinkebab",
+      "Union Librino",
+      "Rafa Casablanca",
+      "Giody",
+      "Real Mimmo"
+    ]
+  },
+  {
+    "Round": 10,
+    "Picks": [
+      "Real Mimmo",
+      "Giody",
+      "Rafa Casablanca",
+      "Union Librino",
+      "Rubinkebab",
+      "PokerMantra",
+      "wildboys78",
+      "Sharknado 04"
+    ]
+  },
+  {
+    "Round": 11,
+    "Picks": [
+      "Sharknado 04",
+      "wildboys78",
+      "PokerMantra",
+      "Rubinkebab",
+      "Union Librino",
+      "Rafa Casablanca",
+      "Giody",
+      "Real Mimmo"
+    ]
+  },
+  {
+    "Round": 12,
+    "Picks": [
+      "Real Mimmo",
+      "Giody",
+      "Rafa Casablanca",
+      "Union Librino",
+      "Rubinkebab",
+      "PokerMantra",
+      "wildboys78",
+      "Sharknado 04"
+    ]
+  },
+  {
+    "Round": 13,
+    "Picks": [
+      "Sharknado 04",
+      "wildboys78",
+      "PokerMantra",
+      "Rubinkebab",
+      "Union Librino",
+      "Rafa Casablanca",
+      "Giody",
+      "Real Mimmo"
+    ]
+  },
+  {
+    "Round": 14,
+    "Picks": [
+      "Real Mimmo",
+      "Giody",
+      "Rafa Casablanca",
+      "Union Librino",
+      "Rubinkebab",
+      "PokerMantra",
+      "wildboys78",
+      "Sharknado 04"
+    ]
+  },
+  {
+    "Round": 15,
+    "Picks": [
+      "Sharknado 04",
+      "wildboys78",
+      "PokerMantra",
+      "Rubinkebab",
+      "Union Librino",
+      "Rafa Casablanca",
+      "Giody",
+      "Real Mimmo"
+    ]
+  },
+  {
+    "Round": 16,
+    "Picks": [
+      "Real Mimmo",
+      "Giody",
+      "Rafa Casablanca",
+      "Union Librino",
+      "Rubinkebab",
+      "PokerMantra",
+      "wildboys78",
+      "Sharknado 04"
+    ]
+  },
+  {
+    "Round": 17,
+    "Picks": [
+      "Sharknado 04",
+      "wildboys78",
+      "PokerMantra",
+      "Rubinkebab",
+      "Union Librino",
+      "Rafa Casablanca",
+      "Giody",
+      "Real Mimmo"
+    ]
+  },
+  {
+    "Round": 18,
+    "Picks": [
+      "Real Mimmo",
+      "Giody",
+      "Rafa Casablanca",
+      "Union Librino",
+      "Rubinkebab",
+      "PokerMantra",
+      "wildboys78",
+      "Sharknado 04"
+    ]
+  }
+]
