@@ -92,8 +92,12 @@ function applicaScambi(draft, scambi, conference) {
   });
 
   return draft;
-}
 
+  console.log('Tentativo scambio:', { conf, roundA, teamA, roundB, teamB });
+console.log('pickA:', pickA);
+console.log('pickB:', pickB);
+}
+  
 // Trasforma il draft in formato finale
 function formattaDraft(draft) {
   return draft.map((round, i) => ({
