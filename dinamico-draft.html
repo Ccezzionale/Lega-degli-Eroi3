@@ -58,11 +58,13 @@ function generaTabellaVerticale(containerId, draftData) {
   squadre.forEach(s => draftPerSquadra[s] = []);
 
   // Riempi le colonne con le pick
-  draftData.forEach((roundData, roundIndex) => {
-    roundData.Picks.forEach((squadra, pickIndex) => {
-      draftPerSquadra[squadra].push(`Pick #${roundIndex + 1}`);
-    });
+ let pickCounter = 1;
+draftData.forEach((roundData) => {
+  roundData.Picks.forEach((squadra) => {
+    draftPerSquadra[squadra].push(`Pick #${pickCounter}`);
+    pickCounter++;
   });
+});
 
   // Costruisci le colonne
   let html = '<div style="display:flex;gap:30px;overflow-x:auto;justify-content:center;">';
