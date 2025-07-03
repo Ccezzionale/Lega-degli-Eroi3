@@ -131,8 +131,8 @@ const scambi = scambiCSV.trim().split("\n").slice(1).map(r => {
 
 
   return {
-    league: formattaDraft(applicaScambi(generaSnakeDraftBase(leagueTeams, 18), scambi, "Conference League")),
-    championship: formattaDraft(applicaScambi(generaSnakeDraftBase(champTeams, 18), scambi, "Conference Championship"))
+    league: formattaDraft(applicaScambi(generaSnakeDraftBase(leagueTeams, 21), scambi, "Conference League")),
+    championship: formattaDraft(applicaScambi(generaSnakeDraftBase(champTeams, 21), scambi, "Conference Championship"))
   };
 }
 
