@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<!-- NAVBAR (copia quella di chiamate.html) -->
+<!-- NAVBAR -->
 <nav>
   <div class="nav-left">
     <span id="hamburger" class="hamburger">☰</span>
@@ -46,30 +46,41 @@
 <script src="championship_draft.js"></script>
 
 <script>
-function generaTabellaDraft(containerId, draftData) {
+// NUOVA FUNZIONE
+function generaTabellaVerticale(containerId, draftData) {
   const container = document.getElementById(containerId);
-  let html = '<table><thead><tr><th>Round</th>';
 
-  // Intestazioni Pick
-  const picks = Object.keys(draftData[0]).filter(k => k !== "Round");
-  picks.forEach(p => html += `<th>${p}</th>`);
-  html += '</tr></thead><tbody>';
+  const pickKeys = Object.keys(draftData[0]).filter(k => k !== "Round");
+  const squadre = pickKeys.map(k => draftData[0][k]);
 
-  draftData.forEach(round => {
-    html += `<tr><td>${round.Round + 1}</td>`;
-    picks.forEach(pick => {
-      html += `<td>${round[pick]}</td>`;
+  const draftPerSquadra = {};
+  squadre.forEach(s => draftPerSquadra[s] = []);
+
+  draftData.forEach((roundData, roundIndex) => {
+    pickKeys.forEach((pick) => {
+      const squadra = roundData[pick];
+      draftPerSquadra[squadra].push(`Pick #${roundIndex + 1}`);
     });
-    html += '</tr>';
   });
-  html += '</tbody></table>';
+
+  let html = '<div style="display:flex;gap:20px;overflow-x:auto;">';
+  squadre.forEach(squadra => {
+    html += `<div style="flex:1; min-width:120px;">
+               <h3 style="text-align:center;">${squadra}</h3>
+               <div style="display:flex;flex-direction:column;align-items:center;">`;
+    draftPerSquadra[squadra].forEach(pick => {
+      html += `<div style="margin:4px 0;">${pick}</div>`;
+    });
+    html += `</div></div>`;
+  });
+  html += '</div>';
 
   container.innerHTML = html;
 }
 
-// Carica i draft
-generaTabellaDraft("draft-league", leagueDraft);
-generaTabellaDraft("draft-championship", championshipDraft);
+// CHIAMATA AI DRAFT
+generaTabellaVerticale("draft-league", leagueDraft);
+generaTabellaVerticale("draft-championship", championshipDraft);
 </script>
 
 </body>
