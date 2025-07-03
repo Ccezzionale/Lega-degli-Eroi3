@@ -126,6 +126,39 @@ nav {
   padding: 8px 16px;
 }
 
+/* Container delle colonne draft */
+.draft-columns {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap; /* se vuoi mandare a capo su mobile */
+  gap: 30px;
+  margin-bottom: 40px;
+}
+
+/* Colonna singola */
+.draft-column {
+  flex: 1;
+  min-width: 120px;
+  max-width: 160px;
+  text-align: center;
+}
+
+/* Nome squadra */
+.draft-column h3 {
+  margin-bottom: 10px;
+  min-height: 50px; /* forza tutte le intestazioni alla stessa altezza */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+}
+
+/* Lista delle pick */
+.draft-column div {
+  margin: 4px 0;
+}
+
 @media (max-width: 768px) {
   .hamburger {
     display: block;
