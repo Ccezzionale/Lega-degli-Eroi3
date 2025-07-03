@@ -166,10 +166,12 @@ nav {
   gap: 4px;
   flex-grow: 1;
 }
+
 .draft-logo {
   width: 40px;
   height: 40px;
-  object-fit: contain;
+  object-fit: contain;   /* ✔️ NON taglia il logo, lo adatta */
+  display: block;
 }
 
 .draft-picks .pick {
