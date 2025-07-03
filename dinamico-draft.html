@@ -73,15 +73,15 @@ function generaTabellaVerticale(containerId, draftData) {
         <h3 style="margin-bottom:10px;">${squadra}</h3>
         <div style="display:flex; flex-direction:column; gap:6px;">`;
 
-    const pickAssoluta = roundIndex * squadre.length + pickIndex + 1;
-draftPerSquadra[squadra].push(`Pick #${pickAssoluta}`);
+    draftPerSquadra[squadra].forEach((pick, pickIndex, arr) => {
       html += `<div>${pick}</div>`;
     });
 
-    html += `</div></div>`;
+    html += `</div>
+      </div>`;  // ✅ questa chiude correttamente il div della colonna
   });
 
-  html += '</div>';
+  html += '</div>';  // ✅ chiusura corretta del contenitore principale
 
   container.innerHTML = html;
 }
