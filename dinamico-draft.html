@@ -142,12 +142,11 @@ function generaSnakeDraft(teams, rounds, conference, trades = {}) {
 
 
 // CHIAMATA AI GOOGLE SCRIPT
-fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vTduESMbJiPuCDLaAFdOHjep9GW-notjraILSyyjo6SA0xKSR0H0fgMLPNNYSwXgnGGJUyv14kjFRqv/pub?gid=691152130&single=true&output=csv")
-  .then(response => response.text())
-  .then(csv => {
-    const draftData = csvToDraft(csv);
-    generaTabellaVerticale("draft-league", draftData.league);
-    generaTabellaVerticale("draft-championship", draftData.championship);
+fetch("https://script.google.com/macros/s/AKfycbzQHGP3cbEi1Nosw_qG4hVlWbjN2HN1US4HmnJT_QFBdhk-SfWPLEojWsABtVLn36pw/exec")
+  .then(response => response.json())
+  .then(data => {
+    generaTabellaVerticale("draft-league", data.league);
+    generaTabellaVerticale("draft-championship", data.championship);
   })
   .catch(error => {
     console.error("Errore nel caricamento del draft:", error);
