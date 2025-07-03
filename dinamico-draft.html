@@ -88,7 +88,7 @@ function generaTabellaVerticale(containerId, draftData) {
 }
 
 // CHIAMATA AI GOOGLE SCRIPT
-fetch("https://script.google.com/macros/s/AKfycbxY20iTw4_KREQ__rtP5ng7UcKyu3iwSFNtuKCU4GYQYD8MZDdSgS6LLAEX1gayWAY/exec")
+fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vTduESMbJiPuCDLaAFdOHjep9GW-notjraILSyyjo6SA0xKSR0H0fgMLPNNYSwXgnGGJUyv14kjFRqv/pub?gid=691152130&single=true&output=csv")
   .then(response => response.json())
   .then(data => {
     generaTabellaVerticale("draft-league", data.league);
