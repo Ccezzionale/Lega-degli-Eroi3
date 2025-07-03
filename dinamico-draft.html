@@ -50,37 +50,32 @@
 function generaTabellaVerticale(containerId, draftData) {
   const container = document.getElementById(containerId);
 
-  // Squadre dal primo round
+  // Prendi le squadre dal primo round
   const pickKeys = Object.keys(draftData[0]).filter(k => k !== "Round");
   const squadre = pickKeys.map(k => draftData[0][k]);
 
-  // Prepara draft per squadra
+  // Prepara le pick per ogni squadra
   const draftPerSquadra = {};
   squadre.forEach(s => draftPerSquadra[s] = []);
 
-  // Popola il draft
   draftData.forEach((roundData, roundIndex) => {
-  Object.keys(roundData).forEach((pickKey) => {
-    if (pickKey === "Round") return;
-    const squadra = roundData[pickKey];
-    
-    // Se la squadra non esiste ancora, la inizializzo
-    if (!draftPerSquadra[squadra]) {
-      draftPerSquadra[squadra] = [];
-    }
-
-    draftPerSquadra[squadra].push(`Pick #${roundIndex + 1}`);
+    pickKeys.forEach((pickKey) => {
+      const squadra = roundData[pickKey];
+      if (!draftPerSquadra[squadra]) {
+        draftPerSquadra[squadra] = [];
+      }
+      draftPerSquadra[squadra].push(`Pick #${roundIndex + 1}`);
+    });
   });
-});
 
-  // Layout a colonne
-  let html = '<div style="display:flex;gap:30px;overflow-x:auto;justify-content:center;">';
+  // Costruisci le colonne
+  let html = '<div style="display:flex;gap:30px;overflow-x:auto;justify-content:center;align-items:flex-start;">';
 
   squadre.forEach(squadra => {
     html += `
-      <div style="flex:1; min-width:150px; text-align:center;">
-        <h3>${squadra}</h3>
-        <div style="display:flex; flex-direction:column; gap:4px;">`;
+      <div style="flex:1; min-width:140px; text-align:center;">
+        <h3 style="margin-bottom:10px;">${squadra}</h3>
+        <div style="display:flex; flex-direction:column; gap:6px;">`;
 
     draftPerSquadra[squadra].forEach(pick => {
       html += `<div>${pick}</div>`;
