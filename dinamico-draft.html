@@ -75,9 +75,10 @@ draftData.forEach((roundData) => {
         <h3>${squadra}</h3>
         <div>
 
-    draftPerSquadra[squadra].forEach((pick, pickIndex, arr) => {
-      html += `<div>${pick}</div>`;
-    });
+  draftPerSquadra[squadra].forEach(pick => {
+  html += `<div>${pick}</div>`;
+});
+
 
     html += `</div>
       </div>`;  // ✅ questa chiude correttamente il div della colonna
