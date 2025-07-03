@@ -172,7 +172,7 @@ nav {
 .draft-logo {
   width: 40px;
   height: 40px;
-  object-fit: contain;   /* ✔️ NON taglia il logo, lo adatta */
+  object-fit: contain;   /* ✅ NON taglia il logo, lo adatta */
   display: block;
 }
 
