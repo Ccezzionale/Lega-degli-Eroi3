@@ -126,11 +126,14 @@ nav {
 }
 
 /* Colonna singola */
-.draft-column {
-  flex: 1;
-  min-width: 120px;
-  max-width: 160px;
-  text-align: center;
+.draft-columns {
+  display: flex;
+  flex-wrap: nowrap;     /* ⬅️ questo impedisce il ritorno a capo */
+  overflow-x: auto;      /* ⬅️ questo abilita lo scroll orizzontale */
+  justify-content: flex-start;
+  gap: 30px;
+  margin-bottom: 40px;
+  width: 100%;
 }
 
 .draft-card {
