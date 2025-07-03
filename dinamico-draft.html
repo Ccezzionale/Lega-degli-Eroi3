@@ -120,14 +120,23 @@ function csvToDraft(csvText) {
 }
 
 // Serpentina
-function generaSnakeDraft(teams, rounds) {
+function generaSnakeDraft(teams, rounds, conference, trades = {}) {
   const draft = [];
-  for (let i = 1; i <= rounds; i++) {
+
+  for (let round = 1; round <= rounds; round++) {
+    const baseOrder = (round % 2 === 1 ? teams : [...teams].reverse());
+
+    const picks = baseOrder.map(team => {
+      const tradeKey = `${conference}-${round}-${team}`;
+      return trades[tradeKey] || team;
+    });
+
     draft.push({
-      Round: i,
-      Picks: (i % 2 === 1 ? teams : [...teams].reverse())
+      Round: round,
+      Picks: picks
     });
   }
+
   return draft;
 }
 
