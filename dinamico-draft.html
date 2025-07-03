@@ -72,7 +72,7 @@ function generaSnakeDraftBase(teams, rounds) {
 }
 
 // Applica gli scambi sulle pick originali
-ffunction applicaScambi(draft, scambi, conference) {
+function applicaScambi(draft, scambi, conference) {
   scambi.forEach(([conf, round, squadraOriginale, nuovaSquadra]) => {
     if (conf !== conference) return;
     const r = parseInt(round);
