@@ -58,37 +58,37 @@ function generaTabellaVerticale(containerId, draftData) {
   squadre.forEach(s => draftPerSquadra[s] = []);
 
   // Riempi le colonne con le pick
- let pickCounter = 1;
-draftData.forEach((roundData) => {
-  roundData.Picks.forEach((squadra) => {
-    draftPerSquadra[squadra].push(`Pick #${pickCounter}`);
-    pickCounter++;
+  let pickCounter = 1;
+  draftData.forEach((roundData) => {
+    roundData.Picks.forEach((squadra) => {
+      draftPerSquadra[squadra].push(`Pick #${pickCounter}`);
+      pickCounter++;
+    });
   });
-});
 
   // Costruisci le colonne
- let html = '<div class="draft-columns">';
+  let html = '<div class="draft-columns">';
 
   squadre.forEach(squadra => {
     html += `
-           <div class="draft-column">
+      <div class="draft-column">
         <h3>${squadra}</h3>
         <div>
+    `;
 
-  draftPerSquadra[squadra].forEach(pick => {
-  html += `<div>${pick}</div>`;
-});
+    draftPerSquadra[squadra].forEach(pick => {
+      html += `<div>${pick}</div>`;
+    });
 
-
-    html += `</div>
-      </div>`;  // ✅ questa chiude correttamente il div della colonna
+    html += `
+        </div>
+      </div>`;
   });
 
-  html += '</div>';  // ✅ chiusura corretta del contenitore principale
+  html += '</div>';
 
   container.innerHTML = html;
-}
-  
+} 
 
 // CHIAMATA AI DRAFT
 generaTabellaVerticale("draft-league", leagueDraft);
