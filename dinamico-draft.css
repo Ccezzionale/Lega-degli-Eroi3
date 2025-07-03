@@ -149,15 +149,16 @@ nav {
 
 .draft-header {
   display: flex;
+  flex-direction: column; /* 👈 logo sopra, nome sotto */
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 4px;
   margin-bottom: 10px;
-  min-height: 70px;  /* 👉 aumenta per gestire i nomi lunghi */
-  max-height: 70px;  /* 👉 forza la stessa altezza */
+  min-height: 70px;
+  max-height: 70px;
   text-align: center;
-  flex-wrap: wrap;   /* 👉 se serve manda a capo il nome, ma lo spazio resta fisso */
 }
+
 
 .draft-picks {
   display: flex;
@@ -166,8 +167,9 @@ nav {
   flex-grow: 1;
 }
 .draft-logo {
-  width: 32px;
-  height: 32px;
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
 }
 
 .draft-picks .pick {
