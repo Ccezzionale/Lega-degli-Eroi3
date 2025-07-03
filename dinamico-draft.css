@@ -155,12 +155,6 @@ nav {
   font-size: 1rem;
 }
 
-.draft-columns {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-}
-
 .draft-card {
   background-color: #f9f9f9;
   border: 1px solid #ccc;
