@@ -42,6 +42,7 @@
 <h1 class="titolo">Draft Conference Championship</h1>
 <div id="draft-championship" class="draft-container"></div>
 
+
 <script>
 const conferenceMap = {
   "Team Bartowski": "Conference League",
@@ -73,6 +74,8 @@ function generaSnakeDraftBase(teams, rounds) {
 
 // Applica gli scambi sulle pick originali
 function applicaScambi(draft, scambi, conference) {
+  let scambioIdCounter = 1;
+
   scambi.forEach(([conf, round1, squadra1, round2, squadra2]) => {
     if (conf !== conference) return;
 
@@ -87,20 +90,27 @@ function applicaScambi(draft, scambi, conference) {
 
     console.log('✅ Scambio pickNumber:', { conf, round1, squadra1, round2, squadra2 });
 
-    // Scambia SOLO i pick number
     [pick1.pickNumber, pick2.pickNumber] = [pick2.pickNumber, pick1.pickNumber];
+
+    // Assegna lo stesso ID a entrambe le pick scambiate
+    pick1.scambioId = scambioIdCounter;
+    pick2.scambioId = scambioIdCounter;
+
+    scambioIdCounter++;
   });
 
   return draft;
 }
 
-
-  
 // Trasforma il draft in formato finale
 function formattaDraft(draft) {
   return draft.map((round, i) => ({
     Round: i + 1,
-    Picks: round.map(p => `${p.team} (Pick #${p.pickNumber})`)
+    Picks: round.map(p => ({
+      team: p.team,
+      pickNumber: p.pickNumber,
+      scambioId: p.scambioId || null
+    }))
   }));
 }
 
@@ -127,36 +137,41 @@ const scambi = scambiCSV.trim().split("\n").slice(1).map(r => {
 }
 
 // Mostra il draft in colonne
-function generaTabellaVerticale(containerId, draftData) {
+ffunction generaTabellaVerticale(containerId, draftData) {
   const container = document.getElementById(containerId);
   if (!draftData || draftData.length === 0) {
     container.innerHTML = "<p>⚠️ Nessun dato disponibile</p>";
     return;
   }
 
-  const squadre = draftData[0].Picks.map(p => p.split(" (")[0]);
+  // Prende l'elenco squadre dal primo round
+  const squadre = draftData[0].Picks.map(p => p.team);
   const draftPerSquadra = {};
   squadre.forEach(s => draftPerSquadra[s] = []);
 
+  // Costruisce la lista di pick per squadra
   draftData.forEach(round => {
-    round.Picks.forEach(pick => {
-      const [team, pickNum] = pick.split(" (");
-      draftPerSquadra[team]?.push(pickNum.replace(")", ""));
+    round.Picks.forEach(p => {
+      draftPerSquadra[p.team]?.push({
+        pickNumber: p.pickNumber,
+        scambioId: p.scambioId
+      });
     });
   });
 
+  // Crea l'HTML
   let html = '<div class="draft-columns">';
   squadre.forEach(squadra => {
     html += `<div class="draft-column"><h3>${squadra}</h3><div>`;
     draftPerSquadra[squadra].forEach(pick => {
-      html += `<div>${pick}</div>`;
+      const scambioClass = pick.scambioId ? `scambio-${pick.scambioId}` : "";
+      html += `<div class="pick ${scambioClass}">Pick #${pick.pickNumber}</div>`;
     });
     html += `</div></div>`;
   });
   html += '</div>';
   container.innerHTML = html;
 }
-
   
 
 // Carica CSV e genera il draft
