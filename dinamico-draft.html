@@ -87,7 +87,7 @@ function generaTabellaVerticale(containerId, draftData) {
   container.innerHTML = html;
 }
 
-function csvToDraft(csvText) {
+function generaDraftDaCSV(classificaCSV, scambiCSV) {
   const conferenceMap = {
     "Team Bartowski": "Conference League",
     "Desperados": "Conference League",
@@ -107,15 +107,25 @@ function csvToDraft(csvText) {
     "Pandinicoccolosini": "Conference League"
   };
 
-  const rows = csvText.trim().split("\n").slice(1); // salta intestazione
-  const squadre = rows.map(row => row.split(",")[1]).reverse(); // prendi la colonna squadra e inverti l’ordine
-
+  // Leggi la classifica
+  const rows = classificaCSV.trim().split("\n").slice(1);
+  const squadre = rows.map(row => row.split(",")[1]).reverse(); // colonna B
   const leagueTeams = squadre.filter(s => conferenceMap[s] === "Conference League");
   const championshipTeams = squadre.filter(s => conferenceMap[s] === "Conference Championship");
 
+  // Leggi gli scambi
+  const scambiRows = scambiCSV.trim().split("\n").slice(1);
+  const trades = {};
+  scambiRows.forEach(row => {
+    const [conference, round, squadraOriginale, nuovaSquadra] = row.split(",");
+    const key = `${conference}-${round}-${squadraOriginale}`;
+    trades[key] = nuovaSquadra;
+  });
+
+  // Genera draft
   return {
-    league: generaSnakeDraft(leagueTeams, 18),
-    championship: generaSnakeDraft(championshipTeams, 18)
+    league: generaSnakeDraft(leagueTeams, 18, "Conference League", trades),
+    championship: generaSnakeDraft(championshipTeams, 18, "Conference Championship", trades)
   };
 }
 
@@ -142,16 +152,19 @@ function generaSnakeDraft(teams, rounds, conference, trades = {}) {
 
 
 // CHIAMATA AI GOOGLE SCRIPT
-fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vTduESMbJiPuCDLaAFdOHjep9GW-notjraILSyyjo6SA0xKSR0H0fgMLPNNYSwXgnGGJUyv14kjFRqv/pub?output=csv")
-  .then(response => response.text())
-  .then(csvText => {
-    const draft = csvToDraft(csvText);  // questa funzione converte il CSV in JSON draft
-    generaTabellaVerticale("draft-league", draft.league);
-    generaTabellaVerticale("draft-championship", draft.championship);
-  })
-  .catch(error => {
-    console.error("Errore nel caricamento del draft:", error);
-  });
+Promise.all([
+  fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vTduESMbJiPuCDLaAFdOHjep9GW-notjraILSyyjo6SA0xKSR0H0fgMLPNNYSwXgnGGJUyv14kjFRqv/pub?gid=691152130&single=true&output=csv").then(res => res.text()),
+  fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vTduESMbJiPuCDLaAFdOHjep9GW-notjraILSyyjo6SA0xKSR0H0fgMLPNNYSwXgnGGJUyv14kjFRqv/pub?gid=940716301&single=true&output=csv").then(res => res.text())
+])
+.then(([classificaCSV, scambiCSV]) => {
+  const draft = generaDraftDaCSV(classificaCSV, scambiCSV);
+  generaTabellaVerticale("draft-league", draft.league);
+  generaTabellaVerticale("draft-championship", draft.championship);
+})
+.catch(error => {
+  console.error("Errore nel caricamento del draft:", error);
+});
+
 </script>
 
 </body>
