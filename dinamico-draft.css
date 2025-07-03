@@ -174,10 +174,10 @@ nav {
 .draft-picks {
   display: flex;
   flex-direction: column;
+  align-items: center; /* ✅ forza tutto al centro */
+  justify-content: flex-start;
   gap: 4px;
   flex-grow: 1;
-  align-items: center; /* ✅ centra tutte le pick nella colonna */
-  padding-top: 10px;
 }
 
 .draft-logo-wrapper {
