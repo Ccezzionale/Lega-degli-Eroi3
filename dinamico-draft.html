@@ -57,11 +57,14 @@ function generaTabellaVerticale(containerId, draftData) {
   squadre.forEach(s => draftPerSquadra[s] = []);
 
   draftData.forEach((roundData, roundIndex) => {
-    pickKeys.forEach((pick) => {
-      const squadra = roundData[pick];
-      draftPerSquadra[squadra].push(`Pick #${roundIndex + 1}`);
-    });
+  pickKeys.forEach((pick) => {
+    const squadra = roundData[pick];
+    if (!draftPerSquadra[squadra]) {
+      draftPerSquadra[squadra] = [];
+    }
+    draftPerSquadra[squadra].push(`Pick #${roundIndex + 1}`);
   });
+});
 
   let html = '<div style="display:flex;gap:20px;overflow-x:auto;">';
   squadre.forEach(squadra => {
