@@ -161,6 +161,7 @@ function generaTabellaVerticale(containerId, draftData) {
 
   // Crea l'HTML
 let html = '<div class="draft-columns">';
+let html = '<div class="draft-columns">';
 squadre.forEach(squadra => {
   html += `<div class="draft-card">
               <div class="draft-header">
@@ -170,19 +171,19 @@ squadre.forEach(squadra => {
                 <h3>${squadra}</h3>
               </div>
               <div class="draft-picks">`;
-});
-  
+
   draftPerSquadra[squadra].forEach(pick => {
     const scambioClass = pick.scambioId ? `scambio-${pick.scambioId}` : "";
     html += `<div class="pick ${scambioClass}">Pick #${pick.pickNumber}</div>`;
   });
 
-  html +=    `</div></div>`;
+  html += `</div></div>`;  // chiude draft-picks e draft-card
 });
-html += '</div>';
 
-    container.innerHTML = html;
-}  // <--- Manca questa graffa
+html += '</div>';  // chiude draft-columns
+
+container.innerHTML = html;
+;
 
   
 // Carica CSV e genera il draft
