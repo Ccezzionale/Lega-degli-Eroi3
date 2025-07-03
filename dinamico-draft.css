@@ -149,16 +149,15 @@ nav {
 }
 
 .draft-header {
+  min-height: 130px; /* aumenta per allineare TUTTO */
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 4px;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  min-height: 100px;  /* 🔑 aumenta l'altezza totale */
+  justify-content: space-between;
+  padding: 8px 0;
   box-sizing: border-box;
 }
+
 
 .draft-header h3 {
   text-align: center;
