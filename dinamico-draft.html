@@ -130,16 +130,23 @@ function generaDraftDaCSV(classificaCSV, scambiCSV) {
 }
 
 // Crea serpentina e applica scambi
-function generaSnakeDraft(teams, rounds, conference, trades) {
+function generaSnakeDraft(teams, rounds, conference, trades = {}) {
   const draft = [];
+
   for (let round = 1; round <= rounds; round++) {
-    const baseOrder = (round % 2 === 1 ? teams : [...teams].reverse());
-    const picks = baseOrder.map(team => {
-      const key = `${conference}-${round}-${team}`;
-      return trades[key] || team;
+    const baseOrder = (round % 2 === 1 ? [...teams] : [...teams].reverse());
+
+    const picks = baseOrder.map(owner => {
+      const tradeKey = `${conference}-${round}-${owner}`;
+      return trades[tradeKey] || owner;  // Se c'è uno scambio, restituisci il nuovo proprietario
     });
-    draft.push({ Round: round, Picks: picks });
+
+    draft.push({
+      Round: round,
+      Picks: picks
+    });
   }
+
   return draft;
 }
 
