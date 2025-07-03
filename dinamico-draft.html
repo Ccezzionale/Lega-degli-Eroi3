@@ -51,25 +51,21 @@ function generaTabellaVerticale(containerId, draftData) {
   const container = document.getElementById(containerId);
 
   // Prendi le squadre dal primo round
-  const pickKeys = Object.keys(draftData[0]).filter(k => k !== "Round");
-  const squadre = pickKeys.map(k => draftData[0][k]);
+  const squadre = draftData[0].Picks;
 
   // Prepara le pick per ogni squadra
   const draftPerSquadra = {};
   squadre.forEach(s => draftPerSquadra[s] = []);
 
+  // Riempi le colonne con le pick
   draftData.forEach((roundData, roundIndex) => {
-    pickKeys.forEach((pickKey) => {
-      const squadra = roundData[pickKey];
-      if (!draftPerSquadra[squadra]) {
-        draftPerSquadra[squadra] = [];
-      }
+    roundData.Picks.forEach((squadra, pickIndex) => {
       draftPerSquadra[squadra].push(`Pick #${roundIndex + 1}`);
     });
   });
 
   // Costruisci le colonne
-  let html = '<div style="display:flex;gap:30px;overflow-x:auto;justify-content:center;align-items:flex-start;">';
+  let html = '<div style="display:flex;gap:30px;overflow-x:auto;justify-content:center;">';
 
   squadre.forEach(squadra => {
     html += `
