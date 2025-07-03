@@ -153,7 +153,10 @@ nav {
   justify-content: center;
   gap: 8px;
   margin-bottom: 10px;
-  min-height: 60px; /* forza la stessa altezza per tutte le intestazioni */
+  min-height: 70px;  /* 👉 aumenta per gestire i nomi lunghi */
+  max-height: 70px;  /* 👉 forza la stessa altezza */
+  text-align: center;
+  flex-wrap: wrap;   /* 👉 se serve manda a capo il nome, ma lo spazio resta fisso */
 }
 
 .draft-picks {
