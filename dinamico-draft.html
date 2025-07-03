@@ -76,11 +76,8 @@ function applicaScambi(draft, scambi, conference) {
   scambi.forEach(([conf, round1, squadra1, round2, squadra2]) => {
     if (conf !== conference) return;
 
-    const r1 = parseInt(round1);
-    const r2 = parseInt(round2);
-
-    const roundPicks1 = draft[r1 - 1];
-    const roundPicks2 = draft[r2 - 1];
+    const roundPicks1 = draft[round1 - 1];
+    const roundPicks2 = draft[round2 - 1];
     if (!roundPicks1 || !roundPicks2) return;
 
     const pick1 = roundPicks1.find(p => p.team === squadra1);
@@ -88,7 +85,7 @@ function applicaScambi(draft, scambi, conference) {
 
     if (!pick1 || !pick2) return;
 
-    console.log('✅ Scambio numeri pick:', { conf, round1: r1, round2: r2, squadre: [squadra1, squadra2] });
+    console.log('✅ Scambio pickNumber:', { conf, round1, squadra1, round2, squadra2 });
 
     // Scambia SOLO i pick number
     [pick1.pickNumber, pick2.pickNumber] = [pick2.pickNumber, pick1.pickNumber];
@@ -96,6 +93,7 @@ function applicaScambi(draft, scambi, conference) {
 
   return draft;
 }
+
 
   
 // Trasforma il draft in formato finale
@@ -116,7 +114,11 @@ function generaDraftDaCSV(classificaCSV, scambiCSV) {
   const leagueTeams = squadre.filter(s => conferenceMap[s] === "Conference League");
   const champTeams = squadre.filter(s => conferenceMap[s] === "Conference Championship");
 
-  const scambi = scambiCSV.trim().split("\n").slice(1).map(r => r.split(",").map(s => s.trim()));
+const scambi = scambiCSV.trim().split("\n").slice(1).map(r => {
+  const [conf, round1, squadra1, round2, squadra2] = r.split(",").map(s => s.trim());
+  return [conf, parseInt(round1), squadra1, parseInt(round2), squadra2];
+});
+
 
   return {
     league: formattaDraft(applicaScambi(generaSnakeDraftBase(leagueTeams, 18), scambi, "Conference League")),
