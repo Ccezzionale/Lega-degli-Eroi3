@@ -73,7 +73,8 @@ function generaTabellaVerticale(containerId, draftData) {
         <h3 style="margin-bottom:10px;">${squadra}</h3>
         <div style="display:flex; flex-direction:column; gap:6px;">`;
 
-    draftPerSquadra[squadra].forEach(pick => {
+    const pickAssoluta = roundIndex * squadre.length + pickIndex + 1;
+draftPerSquadra[squadra].push(`Pick #${pickAssoluta}`);
       html += `<div>${pick}</div>`;
     });
 
