@@ -43,50 +43,44 @@
 <div id="draft-championship" class="draft-container"></div>
 
 <script>
-// NUOVA FUNZIONE
+// Mostra il draft in colonne
 function generaTabellaVerticale(containerId, draftData) {
   const container = document.getElementById(containerId);
+  if (!draftData || draftData.length === 0) {
+    container.innerHTML = "<p>⚠️ Nessun dato disponibile</p>";
+    return;
+  }
 
-  // Prendi le squadre dal primo round
-  const squadre = draftData[0].Picks;
+  const squadre = draftData[0]?.Picks;
+  if (!squadre) {
+    container.innerHTML = "<p>⚠️ Errore: Draft vuoto</p>";
+    return;
+  }
 
-  // Prepara le pick per ogni squadra
   const draftPerSquadra = {};
   squadre.forEach(s => draftPerSquadra[s] = []);
 
-  // Riempi le colonne con le pick
   let pickCounter = 1;
-  draftData.forEach((roundData) => {
-    roundData.Picks.forEach((squadra) => {
-      draftPerSquadra[squadra].push(`Pick #${pickCounter}`);
+  draftData.forEach(round => {
+    round.Picks.forEach(squadra => {
+      draftPerSquadra[squadra]?.push(`Pick #${pickCounter}`);
       pickCounter++;
     });
   });
 
-  // Costruisci le colonne
   let html = '<div class="draft-columns">';
-
   squadre.forEach(squadra => {
-    html += `
-      <div class="draft-column">
-        <h3>${squadra}</h3>
-        <div>
-    `;
-
+    html += `<div class="draft-column"><h3>${squadra}</h3><div>`;
     draftPerSquadra[squadra].forEach(pick => {
       html += `<div>${pick}</div>`;
     });
-
-    html += `
-        </div>
-      </div>`;
+    html += `</div></div>`;
   });
-
   html += '</div>';
-
   container.innerHTML = html;
 }
 
+// Genera il draft da 2 CSV (classifica e scambi)
 function generaDraftDaCSV(classificaCSV, scambiCSV) {
   const conferenceMap = {
     "Team Bartowski": "Conference League",
@@ -107,64 +101,61 @@ function generaDraftDaCSV(classificaCSV, scambiCSV) {
     "Pandinicoccolosini": "Conference League"
   };
 
-  // Leggi la classifica
+  // Classifica
   const rows = classificaCSV.trim().split("\n").slice(1);
-  const squadre = rows.map(row => row.split(",")[1]).reverse(); // colonna B
+  const squadre = rows
+    .map(row => row.split(","))
+    .filter(cols => cols[1]) // elimina righe senza squadra
+    .map(cols => cols[1].trim())
+    .reverse();
+
   const leagueTeams = squadre.filter(s => conferenceMap[s] === "Conference League");
   const championshipTeams = squadre.filter(s => conferenceMap[s] === "Conference Championship");
 
-  // Leggi gli scambi
+  // Scambi
   const scambiRows = scambiCSV.trim().split("\n").slice(1);
   const trades = {};
   scambiRows.forEach(row => {
     const [conference, round, squadraOriginale, nuovaSquadra] = row.split(",");
-    const key = `${conference}-${round}-${squadraOriginale}`;
-    trades[key] = nuovaSquadra;
+    if (conference && round && squadraOriginale && nuovaSquadra) {
+      const key = `${conference}-${round}-${squadraOriginale}`;
+      trades[key] = nuovaSquadra;
+    }
   });
 
-  // Genera draft
   return {
     league: generaSnakeDraft(leagueTeams, 18, "Conference League", trades),
     championship: generaSnakeDraft(championshipTeams, 18, "Conference Championship", trades)
   };
 }
 
-// Serpentina
-function generaSnakeDraft(teams, rounds, conference, trades = {}) {
+// Crea serpentina e applica scambi
+function generaSnakeDraft(teams, rounds, conference, trades) {
   const draft = [];
-
   for (let round = 1; round <= rounds; round++) {
     const baseOrder = (round % 2 === 1 ? teams : [...teams].reverse());
-
     const picks = baseOrder.map(team => {
-      const tradeKey = `${conference}-${round}-${team}`;
-      return trades[tradeKey] || team;
+      const key = `${conference}-${round}-${team}`;
+      return trades[key] || team;
     });
-
-    draft.push({
-      Round: round,
-      Picks: picks
-    });
+    draft.push({ Round: round, Picks: picks });
   }
-
   return draft;
 }
 
-
-// CHIAMATA AI GOOGLE SCRIPT
+// Legge classifica e scambi dai CSV pubblici
 Promise.all([
-  fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vTduESMbJiPuCDLaAFdOHjep9GW-notjraILSyyjo6SA0xKSR0H0fgMLPNNYSwXgnGGJUyv14kjFRqv/pub?gid=691152130&single=true&output=csv").then(res => res.text()),
-  fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vTduESMbJiPuCDLaAFdOHjep9GW-notjraILSyyjo6SA0xKSR0H0fgMLPNNYSwXgnGGJUyv14kjFRqv/pub?gid=940716301&single=true&output=csv").then(res => res.text())
+  fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vTduESMbJiPuCDLaAFdOHjep9GW-notjraILSyyjo6SA0xKSR0H0fgMLPNNYSwXgnGGJUyv14kjFRqv/pub?gid=691152130&single=true&output=csv").then(r => r.text()),
+  fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vTduESMbJiPuCDLaAFdOHjep9GW-notjraILSyyjo6SA0xKSR0H0fgMLPNNYSwXgnGGJUyv14kjFRqv/pub?gid=940716301&single=true&output=csv").then(r => r.text())
 ])
 .then(([classificaCSV, scambiCSV]) => {
   const draft = generaDraftDaCSV(classificaCSV, scambiCSV);
   generaTabellaVerticale("draft-league", draft.league);
   generaTabellaVerticale("draft-championship", draft.championship);
 })
-.catch(error => {
-  console.error("Errore nel caricamento del draft:", error);
+.catch(err => {
+  console.error("Errore nel caricamento del draft:", err);
 });
-
 </script>
 
 </body>
