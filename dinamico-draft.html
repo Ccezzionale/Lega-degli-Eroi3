@@ -105,7 +105,7 @@ function generaDraftDaCSV(classificaCSV, scambiCSV) {
   const rows = classificaCSV.trim().split("\n").slice(1);
   const squadre = rows
     .map(row => row.split(","))
-    .filter(cols => cols[1]) // elimina righe senza squadra
+    .filter(cols => cols[1])
     .map(cols => cols[1].trim())
     .reverse();
 
@@ -114,12 +114,17 @@ function generaDraftDaCSV(classificaCSV, scambiCSV) {
 
   // Scambi
   const scambiRows = scambiCSV.trim().split("\n").slice(1);
-  const trades = {};
+  const trades = [];
   scambiRows.forEach(row => {
-    const [conference, round, squadraOriginale, nuovaSquadra] = row.split(",");
-    if (conference && round && squadraOriginale && nuovaSquadra) {
-      const key = `${conference}-${round}-${squadraOriginale}`;
-      trades[key] = nuovaSquadra;
+    const [conference, round1, team1, round2, team2] = row.split(",");
+    if (conference && round1 && team1 && round2 && team2) {
+      trades.push({
+        conference,
+        fromRound: parseInt(round1),
+        fromTeam: team1.trim(),
+        toRound: parseInt(round2),
+        toTeam: team2.trim()
+      });
     }
   });
 
@@ -129,21 +134,37 @@ function generaDraftDaCSV(classificaCSV, scambiCSV) {
   };
 }
 
-// Crea serpentina e applica scambi
-function generaSnakeDraft(teams, rounds, conference, trades = {}) {
+function generaSnakeDraft(teams, rounds, conference, trades) {
   const draft = [];
+  const picksPerRound = {};
 
+  // Crea l'ordine base per ogni round
   for (let round = 1; round <= rounds; round++) {
     const baseOrder = (round % 2 === 1 ? [...teams] : [...teams].reverse());
+    picksPerRound[round] = baseOrder.map(team => ({ team, originalTeam: team }));
+  }
 
-    const picks = baseOrder.map(owner => {
-      const tradeKey = `${conference}-${round}-${owner}`;
-      return trades[tradeKey] || owner;  // Se c'è uno scambio, restituisci il nuovo proprietario
+  // Applica gli scambi
+  trades
+    .filter(t => t.conference === conference)
+    .forEach(({ fromRound, fromTeam, toRound, toTeam }) => {
+      // Trova il pick originale
+      const fromPickIndex = picksPerRound[fromRound].findIndex(p => p.originalTeam === fromTeam);
+      const toPickIndex = picksPerRound[toRound].findIndex(p => p.originalTeam === toTeam);
+
+      if (fromPickIndex !== -1 && toPickIndex !== -1) {
+        // Scambia i pick
+        const temp = picksPerRound[fromRound][fromPickIndex];
+        picksPerRound[fromRound][fromPickIndex] = picksPerRound[toRound][toPickIndex];
+        picksPerRound[toRound][toPickIndex] = temp;
+      }
     });
 
+  // Crea il draft finale
+  for (let round = 1; round <= rounds; round++) {
     draft.push({
       Round: round,
-      Picks: picks
+      Picks: picksPerRound[round].map(p => p.team)
     });
   }
 
