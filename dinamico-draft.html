@@ -53,29 +53,37 @@ function generaTabellaVerticale(containerId, draftData) {
   const pickKeys = Object.keys(draftData[0]).filter(k => k !== "Round");
   const squadre = pickKeys.map(k => draftData[0][k]);
 
+  // Inizializza un array per ogni squadra
   const draftPerSquadra = {};
   squadre.forEach(s => draftPerSquadra[s] = []);
 
+  // Riempie i turni correttamente
   draftData.forEach((roundData, roundIndex) => {
-  pickKeys.forEach((pick) => {
-    const squadra = roundData[pick];
-    if (!draftPerSquadra[squadra]) {
-      draftPerSquadra[squadra] = [];
-    }
-    draftPerSquadra[squadra].push(`Pick #${roundIndex + 1}`);
-  });
-});
-
-  let html = '<div style="display:flex;gap:20px;overflow-x:auto;">';
-  squadre.forEach(squadra => {
-    html += `<div style="flex:1; min-width:120px;">
-               <h3 style="text-align:center;">${squadra}</h3>
-               <div style="display:flex;flex-direction:column;align-items:center;">`;
-    draftPerSquadra[squadra].forEach(pick => {
-      html += `<div style="margin:4px 0;">${pick}</div>`;
+    pickKeys.forEach((pick, pickIndex) => {
+      const squadra = roundData[pick];
+      if (!draftPerSquadra[squadra]) {
+        draftPerSquadra[squadra] = [];
+      }
+      draftPerSquadra[squadra].push(`Pick #${roundIndex + 1}`);
     });
+  });
+
+  // Genera la struttura a colonne
+  let html = '<div style="display:flex;gap:30px;overflow-x:auto;justify-content:center;">';
+
+  squadre.forEach(squadra => {
+    html += `
+      <div style="flex:1; min-width:150px; text-align:center;">
+        <h3>${squadra}</h3>
+        <div style="display:flex; flex-direction:column; gap:4px;">`;
+
+    draftPerSquadra[squadra].forEach(pick => {
+      html += `<div>${pick}</div>`;
+    });
+
     html += `</div></div>`;
   });
+
   html += '</div>';
 
   container.innerHTML = html;
