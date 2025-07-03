@@ -67,13 +67,13 @@ draftData.forEach((roundData) => {
 });
 
   // Costruisci le colonne
-  let html = '<div style="display:flex;gap:30px;overflow-x:auto;justify-content:center;">';
+ let html = '<div class="draft-columns">';
 
   squadre.forEach(squadra => {
     html += `
-      <div style="flex:1; min-width:140px; text-align:center;">
-        <h3 style="margin-bottom:10px;">${squadra}</h3>
-        <div style="display:flex; flex-direction:column; gap:6px;">`;
+           <div class="draft-column">
+        <h3>${squadra}</h3>
+        <div>
 
     draftPerSquadra[squadra].forEach((pick, pickIndex, arr) => {
       html += `<div>${pick}</div>`;
