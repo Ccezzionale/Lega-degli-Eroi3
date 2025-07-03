@@ -89,13 +89,13 @@ function applicaScambi(draft, scambi, conference) {
 
     // Cambia SOLO il team che possiede la pick, ma NON il pickNumber
     [pickA.team, pickB.team] = [pickB.team, pickA.team];
+
+console.log('Tentativo scambio:', { conf, roundA, teamA, roundB, teamB });
+console.log('pickA:', pickA);
+console.log('pickB:', pickB);
   });
 
   return draft;
-
-  console.log('Tentativo scambio:', { conf, roundA, teamA, roundB, teamB });
-console.log('pickA:', pickA);
-console.log('pickB:', pickB);
 }
   
 // Trasforma il draft in formato finale
