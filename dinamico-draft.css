@@ -166,9 +166,11 @@ nav {
 
 .draft-header {
   display: flex;
-  align-items: center;
+  align-items: center;   /* allinea logo e nome in verticale */
+  justify-content: center;  /* centra tutto orizzontalmente nella card */
   gap: 8px;
   margin-bottom: 10px;
+  min-height: 60px; /* forza tutte le intestazioni ad avere la stessa altezza */
 }
 
 .draft-logo {
