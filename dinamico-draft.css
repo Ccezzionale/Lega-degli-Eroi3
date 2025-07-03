@@ -165,6 +165,8 @@ nav {
   flex-direction: column;
   gap: 4px;
   flex-grow: 1;
+  align-items: center; /* ✅ centra tutte le pick nella colonna */
+  padding-top: 10px;
 }
 
 .draft-logo {
@@ -178,6 +180,8 @@ nav {
   padding: 4px 8px;
   margin: 2px 0;
   border-radius: 4px;
+  text-align: center;    /* ✅ centra il testo dentro la pick */
+  justify-content: center; /* se mai userai flex per pick singole */
 }
 
 /* Lista delle pick */
