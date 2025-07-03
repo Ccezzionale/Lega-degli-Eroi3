@@ -177,7 +177,7 @@ nav {
   align-items: center;
   gap: 4px;
   flex-grow: 1;
-  margin-top: 12px;  /* ✅ sposta più in basso le pick */
+  margin-top: 16px;  /* ✅ sposta più in basso le pick */
 }
 
 .draft-logo-wrapper {
