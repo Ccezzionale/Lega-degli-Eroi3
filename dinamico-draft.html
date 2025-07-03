@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Draft Dinamico</title>
+  <link rel="stylesheet" href="main.css" />
+</head>
+<body>
+
+<!-- NAVBAR (copia quella di chiamate.html) -->
+<nav>
+  <div class="nav-left">
+    <span id="hamburger" class="hamburger">☰</span>
+    <a href="index.html" class="home-icon">🏠</a>
+    <ul class="navbar" id="mainMenu">
+      <li><a href="rose.html">Rose</a></li>
+      <li class="dropdown">
+        <a href="#" class="toggle-submenu">Draft ▾</a>
+        <ul class="submenu">
+          <li><a href="draft_championship.html">🟦 Conf.Championship</a></li>
+          <li><a href="draft_conference.html">🟨 Conf.League</a></li>
+        </ul>
+      </li>
+      <li class="dropdown">
+        <a href="#" class="toggle-submenu">Classifiche ▾</a>
+        <ul class="submenu">
+          <li><a href="classifica.html">📊 Classifica</a></li>
+          <li><a href="playoff.html">🏆 Playoff</a></li>
+        </ul>
+      </li>
+      <li><a href="svincolati.html">Svincolati</a></li>
+      <li><a href="chiamate.html">Chiamate</a></li>
+      <li><a href="albo.html">Albo d'Oro</a></li>
+    </ul>
+  </div>
+</nav>
+
+<h1 class="titolo">Draft Conference League</h1>
+<div id="draft-league" class="draft-container"></div>
+
+<h1 class="titolo">Draft Conference Championship</h1>
+<div id="draft-championship" class="draft-container"></div>
+
+<script src="league_draft.js"></script>
+<script src="championship_draft.js"></script>
+
+<script>
+function generaTabellaDraft(containerId, draftData) {
+  const container = document.getElementById(containerId);
+  let html = '<table><thead><tr><th>Round</th>';
+
+  // Intestazioni Pick
+  const picks = Object.keys(draftData[0]).filter(k => k !== "Round");
+  picks.forEach(p => html += `<th>${p}</th>`);
+  html += '</tr></thead><tbody>';
+
+  draftData.forEach(round => {
+    html += `<tr><td>${round.Round + 1}</td>`;
+    picks.forEach(pick => {
+      html += `<td>${round[pick]}</td>`;
+    });
+    html += '</tr>';
+  });
+  html += '</tbody></table>';
+
+  container.innerHTML = html;
+}
+
+// Carica i draft
+generaTabellaDraft("draft-league", leagueDraft);
+generaTabellaDraft("draft-championship", championshipDraft);
+</script>
+
+</body>
+</html>
