@@ -199,8 +199,7 @@ nav {
   padding: 4px 8px;
   margin: 2px 0;
   border-radius: 4px;
-  text-align: center;    /* ✅ centra il testo dentro la pick */
-  justify-content: center; /* se mai userai flex per pick singole */
+  text-align: center;
 }
 
 /* Lista delle pick */
