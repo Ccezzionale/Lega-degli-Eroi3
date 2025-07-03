@@ -50,34 +50,23 @@
 function generaTabellaVerticale(containerId, draftData) {
   const container = document.getElementById(containerId);
 
-  // Trova tutte le squadre coinvolte
-  const squadreSet = new Set();
-  draftData.forEach(round => {
-    Object.keys(round).forEach(key => {
-      if (key !== "Round") {
-        squadreSet.add(round[key]);
-      }
-    });
-  });
-  const squadre = Array.from(squadreSet);
+  // Squadre dal primo round
+  const pickKeys = Object.keys(draftData[0]).filter(k => k !== "Round");
+  const squadre = pickKeys.map(k => draftData[0][k]);
 
-  // Prepara draft per ogni squadra
+  // Prepara draft per squadra
   const draftPerSquadra = {};
-  squadre.forEach(squadra => draftPerSquadra[squadra] = []);
+  squadre.forEach(s => draftPerSquadra[s] = []);
 
-  // Inserisce il numero del round sotto ogni squadra
+  // Popola il draft
   draftData.forEach((roundData, roundIndex) => {
-    squadre.forEach(squadra => {
-      const pick = Object.keys(roundData).find(key => roundData[key] === squadra);
-      if (pick) {
-        draftPerSquadra[squadra].push(`Pick #${roundIndex + 1}`);
-      } else {
-        draftPerSquadra[squadra].push('-'); // se non ha pick in quel round
-      }
+    pickKeys.forEach((pickKey, pickIndex) => {
+      const squadra = roundData[pickKey];
+      draftPerSquadra[squadra].push(`Pick #${roundIndex + 1}`);
     });
   });
 
-  // Genera HTML a colonne
+  // Layout a colonne
   let html = '<div style="display:flex;gap:30px;overflow-x:auto;justify-content:center;">';
 
   squadre.forEach(squadra => {
