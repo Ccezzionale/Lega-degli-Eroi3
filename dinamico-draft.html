@@ -42,9 +42,6 @@
 <h1 class="titolo">Draft Conference Championship</h1>
 <div id="draft-championship" class="draft-container"></div>
 
-<script src="league_draft.js"></script>
-<script src="championship_draft.js"></script>
-
 <script>
 // NUOVA FUNZIONE
 function generaTabellaVerticale(containerId, draftData) {
@@ -88,11 +85,18 @@ function generaTabellaVerticale(containerId, draftData) {
   html += '</div>';
 
   container.innerHTML = html;
-} 
+}
 
-// CHIAMATA AI DRAFT
-generaTabellaVerticale("draft-league", leagueDraft);
-generaTabellaVerticale("draft-championship", championshipDraft);
+// CHIAMATA AI GOOGLE SCRIPT
+fetch("https://script.google.com/macros/s/AKfycBxxx.../exec")
+  .then(response => response.json())
+  .then(data => {
+    generaTabellaVerticale("draft-league", data.league);
+    generaTabellaVerticale("draft-championship", data.championship);
+  })
+  .catch(error => {
+    console.error("Errore nel caricamento del draft:", error);
+  });
 </script>
 
 </body>
