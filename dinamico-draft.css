@@ -159,6 +159,33 @@ nav {
   margin: 4px 0;
 }
 
+.pick {
+  padding: 4px 8px;
+  margin: 2px 0;
+  border-radius: 4px;
+}
+
+.scambio-1 {
+  background-color: #ff9999; /* rosso chiaro */
+}
+
+.scambio-2 {
+  background-color: #99ccff; /* azzurro chiaro */
+}
+
+.scambio-3 {
+  background-color: #99ff99; /* verde chiaro */
+}
+
+.scambio-4 {
+  background-color: #ffff99; /* giallo chiaro */
+}
+
+.scambio-5 {
+  background-color: #ffcc99; /* arancio chiaro */
+}
+
+
 @media (max-width: 768px) {
   .hamburger {
     display: block;
