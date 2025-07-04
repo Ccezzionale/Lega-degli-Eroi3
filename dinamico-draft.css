@@ -267,21 +267,20 @@ nav {
 
 @media (max-width: 768px) {
   .draft-container {
-    overflow-x: auto;
+    overflow-x: auto;  /* ✅ lo scroll è solo QUI */
     width: 100%;
   }
 
   .draft-columns {
     display: flex;
     flex-wrap: nowrap;
-    overflow-x: auto;
-    width: max-content;   /* ✅ questa prende la larghezza di tutte le card */
+    width: max-content;  /* ✅ prende la larghezza totale dei figli */
   }
 
   .draft-card {
     width: 220px;
     min-width: 220px;
     max-width: 220px;
-    flex-shrink: 0;
+    flex-shrink: 0;  /* ✅ impedisce il resize */
   }
 }
