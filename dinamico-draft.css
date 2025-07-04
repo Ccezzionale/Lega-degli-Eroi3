@@ -265,6 +265,7 @@ nav {
     font-size: 1.5rem;
   }
 
+@media (max-width: 768px) {
   .draft-container {
     overflow-x: auto;
     width: 100%;
@@ -274,8 +275,7 @@ nav {
     display: flex;
     flex-wrap: nowrap;
     overflow-x: auto;
-    width: max-content; /* ✅ larghezza totale basata sul contenuto */
-    min-width: 100%;
+    width: max-content;   /* ✅ questa prende la larghezza di tutte le card */
   }
 
   .draft-card {
