@@ -270,18 +270,23 @@ nav {
   }
 
   /* 🔑 Elimina lo scale che ti restringeva tutto */
-  .draft-columns {
-    overflow-x: auto;
-    flex-wrap: nowrap;
-    width: max-content;  /* ✅ mantiene la larghezza totale */
-  }
 
   .draft-container {
     overflow-x: auto;  /* ✅ permette lo scroll fuori dalla pagina */
   }
 
-.draft-card {
-  width: 220px; /* ✅ oppure la larghezza che vuoi, es. 200px o 250px */
-  flex-shrink: 0; /* ❌ evita che si restringano */
+  .draft-columns {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    width: 100%; /* occupa tutta la larghezza visibile */
+  }
+
+  .draft-card {
+    width: 220px;     /* ✅ larghezza fissa */
+    min-width: 220px; /* ✅ impedisce che si stringa */
+    max-width: 220px;
+    flex-shrink: 0;   /* ✅ non permette il resize automatico */
+  }
 }
-}
+
