@@ -280,8 +280,8 @@ nav {
     overflow-x: auto;  /* ✅ permette lo scroll fuori dalla pagina */
   }
 
-  .draft-card {
-    width: 220px; /* stessa misura desktop per mantenere il layout */
-    flex: 0 0 auto;
-  }
+.draft-card {
+  width: 220px; /* ✅ oppure la larghezza che vuoi, es. 200px o 250px */
+  flex-shrink: 0; /* ❌ evita che si restringano */
+}
 }
