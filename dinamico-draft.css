@@ -271,24 +271,52 @@ nav {
   }
 
 @media (max-width: 768px) {
-  .draft-container {
+  .draft-scroll {
     overflow-x: auto;
     width: 100%;
   }
 
   .draft-columns {
-  display: flex;
-  flex-wrap: nowrap;
-  min-width: 1200px;  /* 👈 larghezza minima che permette di dezoomare */
-  width: max-content;
-}
+    display: flex;
+    flex-wrap: nowrap;
+    width: max-content;
+  }
 
   .draft-card {
-    width: 220px;
-    min-width: 220px;
-    max-width: 220px;
+    width: 160px;
+    min-width: 160px;
+    max-width: 160px;
     flex-shrink: 0;
   }
 
+  .draft-header {
+    min-height: 100px; /* ridotto */
+    padding: 4px 0;
+  }
+
+  .draft-logo-wrapper {
+    width: 32px;
+    height: 32px;
+  }
+
+  .draft-logo {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+
+  .draft-header h3 {
+    font-size: 0.85rem;
+    min-height: 30px;
+  }
+
+  .draft-picks .pick {
+    font-size: 0.8rem;
+    padding: 2px 6px;
+  }
+
+  .titolo {
+    font-size: 1.3rem;
+  }
 }
 
