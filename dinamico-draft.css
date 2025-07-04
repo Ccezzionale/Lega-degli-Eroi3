@@ -265,28 +265,23 @@ nav {
     font-size: 1.5rem;
   }
 
-  .draft-container table {
-    font-size: 0.85rem;
-  }
-
-  /* 🔑 Elimina lo scale che ti restringeva tutto */
-
   .draft-container {
-    overflow-x: auto;  /* ✅ permette lo scroll fuori dalla pagina */
+    overflow-x: auto;
+    width: 100%;
   }
 
   .draft-columns {
     display: flex;
     flex-wrap: nowrap;
     overflow-x: auto;
-    width: 100%; /* occupa tutta la larghezza visibile */
+    width: max-content; /* ✅ larghezza totale basata sul contenuto */
+    min-width: 100%;
   }
 
   .draft-card {
-    width: 220px;     /* ✅ larghezza fissa */
-    min-width: 220px; /* ✅ impedisce che si stringa */
+    width: 220px;
+    min-width: 220px;
     max-width: 220px;
-    flex-shrink: 0;   /* ✅ non permette il resize automatico */
+    flex-shrink: 0;
   }
 }
-
