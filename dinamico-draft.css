@@ -55,9 +55,10 @@ nav {
   color: white;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start; /* 👈 cambia da space-between */
   padding: 10px 20px;
   flex-wrap: wrap;
+  gap: 20px; /* 👈 aggiungi se vuoi spazio tra casetta e menu */
 }
 
 .nav-left {
