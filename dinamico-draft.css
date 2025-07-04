@@ -279,7 +279,7 @@ nav {
   .draft-columns {
   display: flex;
   flex-wrap: nowrap;
-  min-width: 1200px;  /* 👈 larghezza minima che permette di dezoomare */
+  min-width: 2400px;  /* 👈 larghezza minima che permette di dezoomare */
   width: max-content;
 }
 
