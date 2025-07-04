@@ -257,9 +257,9 @@ nav {
     position: static;
   }
 
-      table { display: none; }
-      .accordion { display: block; }
-    }
+  /* Nasconde eventuali tabelle alternative */
+  table { display: none; }
+  .accordion { display: block; }
 
   .titolo {
     font-size: 1.5rem;
@@ -269,14 +269,19 @@ nav {
     font-size: 0.85rem;
   }
 
+  /* 🔑 Elimina lo scale che ti restringeva tutto */
   .draft-columns {
-    transform: scale(0.75); /* 👈 riduce tutto al 85% */
-    transform-origin: top center;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    width: max-content;  /* ✅ mantiene la larghezza totale */
+  }
+
+  .draft-container {
+    overflow-x: auto;  /* ✅ permette lo scroll fuori dalla pagina */
   }
 
   .draft-card {
+    width: 220px; /* stessa misura desktop per mantenere il layout */
     flex: 0 0 auto;
-    width: 180px;
   }
 }
-
