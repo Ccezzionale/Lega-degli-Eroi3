@@ -194,6 +194,11 @@ nav {
   display: block;
 }
 
+.draft-scroll {
+  overflow-x: auto;
+  width: 100%;
+}
+
 .draft-picks .pick {
   padding: 4px 8px;
   margin: 2px 0;
@@ -283,9 +288,6 @@ nav {
     max-width: 220px;
     flex-shrink: 0;
   }
-  .draft-scroll {
-  overflow-x: auto;
-  width: 100%;
-}
+
 }
 
