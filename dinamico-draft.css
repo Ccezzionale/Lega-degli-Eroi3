@@ -277,10 +277,11 @@ nav {
   }
 
   .draft-columns {
-    display: flex;
-    flex-wrap: nowrap;
-    width: max-content;
-  }
+  display: flex;
+  flex-wrap: nowrap;
+  min-width: 1200px;  /* 👈 larghezza minima che permette di dezoomare */
+  width: max-content;
+}
 
   .draft-card {
     width: 220px;
