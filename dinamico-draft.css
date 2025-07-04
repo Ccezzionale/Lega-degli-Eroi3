@@ -283,20 +283,20 @@ nav {
   }
 
   .draft-card {
-    width: 160px;
-    min-width: 160px;
-    max-width: 160px;
+    width: 130px;
+    min-width: 130px;
+    max-width: 130px;
     flex-shrink: 0;
   }
 
   .draft-header {
-    min-height: 100px; /* ridotto */
-    padding: 4px 0;
+    min-height: 80px;
+    padding: 2px 0;
   }
 
   .draft-logo-wrapper {
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
   }
 
   .draft-logo {
@@ -306,17 +306,18 @@ nav {
   }
 
   .draft-header h3 {
-    font-size: 0.85rem;
-    min-height: 30px;
+    font-size: 0.7rem;
+    min-height: 26px;
+    text-align: center;
   }
 
   .draft-picks .pick {
-    font-size: 0.8rem;
-    padding: 2px 6px;
+    font-size: 0.7rem;
+    padding: 2px 4px;
+    margin: 1px 0;
   }
 
   .titolo {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
   }
 }
-
