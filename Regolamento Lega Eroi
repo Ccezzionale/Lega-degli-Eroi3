@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Regolamento 2025/26 - Lega degli Eroi</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      padding: 2rem;
+      max-width: 900px;
+      margin: auto;
+      background-color: #f9f9f9;
+      color: #222;
+    }
+    h1, h2 {
+      color: #003366;
+    }
+    nav {
+      background-color: #003366;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin-right: 1rem;
+    }
+    section {
+      margin-bottom: 3rem;
+    }
+    details {
+      background: white;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+    summary {
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>📘 Regolamento Lega degli Eroi – Stagione 2025/26</h1>
+
+  <nav>
+    <a href="#draft">Draft</a>
+    <a href="#u21">Under 21</a>
+    <a href="#fp">Franchise Player</a>
+    <a href="#scambi">Scambi</a>
+    <a href="#waiver">Waiver</a>
+    <a href="#uscita">Squadra che lascia</a>
+    <a href="#seriea">Giocatore che lascia la Serie A</a>
+    <a href="#bonus">Bonus & Malus</a>
+    <a href="#switch">Switch</a>
+    <a href="#premi">Quote e Premi</a>
+  </nav>
+
+  <section id="draft">
+    <details open>
+      <summary>🧩 Draft & Composizione delle Rose</summary>
+      <p>Ogni rosa è composta da 27 giocatori: 21 di movimento (inclusi 3 Under 21) + 6 portieri (in 2 blocchi da 3). Il draft è a serpentone su 23 round. Tutti i giocatori, inclusi portieri e U21, devono essere scelti durante il draft. Sono consentiti scambi di pick, scelte future e giocatori.</p>
+    </details>
+  </section>
+
+  <section id="u21">
+    <details>
+      <summary>🌱 Regolamento Under 21</summary>
+      <p>Ogni squadra deve avere 3 U21. Possono essere riconfermati rinunciando a una pick del Round 15. Solo uno può essere mantenuto per 2 stagioni. Scambiabili solo con altri U21, e con quotazione ≤ 5 se svincolati.</p>
+    </details>
+  </section>
+
+  <section id="fp">
+    <details>
+      <summary>⭐ Franchise Player</summary>
+      <p>Un calciatore può essere confermato per 1 o 2 stagioni se scelto dal Round 10 in poi o acquistato rispettando limiti di quotazione. La conferma costa la perdita della pick 8 (1° anno) e pick 4 (2° anno).</p>
+    </details>
+  </section>
+
+  <section id="scambi">
+    <details>
+      <summary>🔄 Mercato degli Scambi</summary>
+      <p>Due sessioni per Conference, due per Round Robin. Scambi anche con scelte WW o scelte future. I portieri si scambiano solo in blocchi da 3. Regole per squilibri numerici e comportamento (risposte entro 24h).</p>
+    </details>
+  </section>
+
+  <section id="waiver">
+    <details>
+      <summary>📥 Waiver Wire</summary>
+      <p>Chiamate settimanali segrete tramite web app. Bonus seconda chiamata. Lista svincolati diversa per conference/round robin. Priorità in base a classifica o diritto se giocatore protetto lascia la Serie A.</p>
+    </details>
+  </section>
+
+  <section id="uscita">
+    <details>
+      <summary>🚪 Squadra che lascia la Lega</summary>
+      <p>La squadra subentrante non eredita scambi della precedente. Le pick cedute non tornano ma si sceglie subito dopo. Ordine del draft legato alla classifica della squadra uscente.</p>
+    </details>
+  </section>
+
+  <section id="seriea">
+    <details>
+      <summary>🚨 Giocatore che lascia la Serie A</summary>
+      <p>Se lascia prima del 1 settembre: i protetti vanno sostituiti con priorità nel WW speciale. I non protetti solo con chiamata compensativa. Dopo il 1 settembre: tutti seguono la regola dei non protetti.</p>
+    </details>
+  </section>
+
+  <section id="bonus">
+    <details>
+      <summary>⚙️ Bonus & Malus</summary>
+      <p>Gol (+3), gol decisivo (+1/+0.5), autogol (-2), assist da +0.5 a +1.5, clean sheet portiere (+1), fattore campo +2, D-Factor esteso da +1 a +7. Regole sospensioni, 6 politico e contributo al gol.</p>
+    </details>
+  </section>
+
+  <section id="switch">
+    <details>
+      <summary>🔁 Switch</summary>
+      <p>Consente di garantire la titolarità di un giocatore. Se non parte titolare, entra automaticamente un panchinaro preselezionato (anche con cambio modulo). 1 switch per partita. Non conta come sostituzione.</p>
+    </details>
+  </section>
+
+  <section id="premi">
+    <details>
+      <summary>🏆 Quote e Premi</summary>
+      <p>Quota di partecipazione: 70 €. Montepremi: 1050 €. Premi distribuiti a vincitori di Conference, Round Robin, Regular Season, Highlander, Playoff e posizioni finali (1°, 2°, 3°).</p>
+    </details>
+  </section>
+
+</body>
+</html>
