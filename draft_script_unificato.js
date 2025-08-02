@@ -282,13 +282,17 @@ function filtraLista() {
     const r = row.children[1].textContent.toLowerCase();
     const s = row.children[2].textContent.toLowerCase();
     const ruoliGiocatore = r.split(/[,;\s]+/).map(part => part.trim());
+    const key = normalize(nome);
+const isU21 = mappaGiocatori[key]?.u21?.toLowerCase() === "u21";
+const matchU21 = !soloU21 || isU21;
+
 
     const matchInput = !ruoloTesto || ruoliGiocatore.some(part => part.includes(ruoloTesto));
     const matchSelect = !ruoloSelect.length || ruoloSelect.some(rs => ruoliGiocatore.includes(rs));
     const matchSquadra = !squadra || s === squadra;
     const matchNome = !cerca || nome.includes(cerca);
 
-    row.style.display = (matchInput && matchSelect && matchSquadra && matchNome) ? "" : "none";
+    row.style.display = (matchInput && matchSelect && matchSquadra && matchNome && matchU21) ? "" : "none";
   });
 }
 
