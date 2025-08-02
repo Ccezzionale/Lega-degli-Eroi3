@@ -166,16 +166,15 @@ function popolaListaDisponibili() {
     const key = normalize(nome);
     if (giocatoriScelti.has(key)) return;
 
- const key = normalize(nome);
-const u21 = mappaGiocatori[key]?.u21?.toLowerCase() === "u21" ? "U21" : "";
+    const u21 = mappaGiocatori[key]?.u21?.toLowerCase() === "u21" ? "U21" : "";
 
-const tr = document.createElement("tr");
-tr.innerHTML = `
-  <td>${nome}</td>
-  <td>${ruolo}</td>
-  <td>${squadra}</td>
-  <td>${parseInt(quotazione)}</td>
-  <td>${u21}</td>`;
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${nome}</td>
+      <td>${ruolo}</td>
+      <td>${squadra}</td>
+      <td>${parseInt(quotazione)}</td>
+      <td>${u21}</td>`;
 
     tr.addEventListener("click", () => {
       const conferma = confirm(`Vuoi selezionare ${nome} per la squadra al turno?`);
