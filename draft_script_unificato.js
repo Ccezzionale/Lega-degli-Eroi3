@@ -166,12 +166,16 @@ function popolaListaDisponibili() {
     const key = normalize(nome);
     if (giocatoriScelti.has(key)) return;
 
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td>${nome}</td>
-      <td>${ruolo}</td>
-      <td>${squadra}</td>
-      <td>${parseInt(quotazione)}</td>`;
+ const key = normalize(nome);
+const u21 = mappaGiocatori[key]?.u21?.toLowerCase() === "u21" ? "U21" : "";
+
+const tr = document.createElement("tr");
+tr.innerHTML = `
+  <td>${nome}</td>
+  <td>${ruolo}</td>
+  <td>${squadra}</td>
+  <td>${parseInt(quotazione)}</td>
+  <td>${u21}</td>`;
 
     tr.addEventListener("click", () => {
       const conferma = confirm(`Vuoi selezionare ${nome} per la squadra al turno?`);
@@ -275,7 +279,6 @@ function filtraLista() {
   const ruoloSelect = filtroRuolo.value.toLowerCase().split(/[,;\s]+/).filter(Boolean);
   const squadra = filtroSerieA.value.toLowerCase();
   const cerca = searchInput.value.toLowerCase();
-  const soloU21 = document.getElementById("filtroU21")?.checked;
 
   Array.from(listaGiocatori.children).forEach(row => {
     const nome = row.children[0].textContent.toLowerCase();
@@ -283,8 +286,6 @@ function filtraLista() {
     const s = row.children[2].textContent.toLowerCase();
     const ruoliGiocatore = r.split(/[,;\s]+/).map(part => part.trim());
     const key = normalize(nome);
-const isU21 = mappaGiocatori[key]?.u21?.toLowerCase() === "u21";
-const matchU21 = !soloU21 || isU21;
 
 
     const matchInput = !ruoloTesto || ruoliGiocatore.some(part => part.includes(ruoloTesto));
