@@ -46,9 +46,9 @@ function caricaGiocatori() {
     .then(csv => {
       const righe = csv.trim().split(/\r?\n/).slice(1);
       righe.forEach(r => {
-        const [nome, ruolo, squadra, quotazione] = r.split(",");
-        const key = normalize(nome);
-        mappaGiocatori[key] = { nome, ruolo, squadra, quotazione };
+        const [nome, ruolo, squadra, quotazione, u21] = r.split(",");
+const key = normalize(nome);
+mappaGiocatori[key] = { nome, ruolo, squadra, quotazione, u21 };
         if (ruolo) ruoli.add(ruolo);
         if (squadra) squadre.add(squadra);
       });
