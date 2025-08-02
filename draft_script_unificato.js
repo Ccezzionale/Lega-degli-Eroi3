@@ -316,11 +316,14 @@ function aggiornaChiamatePerSquadra() {
     const celle = r.querySelectorAll("td");
     const team = celle[1]?.textContent?.trim();
     const nome = celle[2]?.textContent?.trim();
-    const ruolo = mappaGiocatori[normalize(nome)]?.ruolo || "";
-    const isU21 = mappaGiocatori[normalize(nome)]?.u21?.toLowerCase() === "u21";
+    const key = normalize(nome);
+const ruolo = mappaGiocatori[key]?.ruolo || "";
+const isU21 = mappaGiocatori[key]?.u21?.toLowerCase() === "u21";
     if (!team || !nome) return;
     if (!riepilogo[team]) riepilogo[team] = [];
-    riepilogo[team].push(`${riepilogo[team].length + 1}. ${nome} (${ruolo})`);
+    const u21label = isU21 ? " (U21)" : "";
+riepilogo[team].push(`${riepilogo[team].length + 1}. ${nome} (${ruolo})${u21label}`);
+
   });
 
   const container = document.getElementById("riepilogo-squadre");
