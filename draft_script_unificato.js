@@ -275,6 +275,7 @@ function filtraLista() {
   const ruoloSelect = filtroRuolo.value.toLowerCase().split(/[,;\s]+/).filter(Boolean);
   const squadra = filtroSerieA.value.toLowerCase();
   const cerca = searchInput.value.toLowerCase();
+  const soloU21 = document.getElementById("filtroU21")?.checked;
 
   Array.from(listaGiocatori.children).forEach(row => {
     const nome = row.children[0].textContent.toLowerCase();
