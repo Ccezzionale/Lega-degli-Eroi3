@@ -24,14 +24,21 @@ function inviaPickAlFoglio(pick, fantaTeam, nome, ruolo, squadra, quotazione) {
   dati.append("ruolo", ruolo);
   dati.append("quotazione", quotazione);
 
-  fetch(`https://script.google.com/macros/s/AKfycby8hk9db1JtLsi6UyuKCBrDntO7JAATwuI3lEHJmqx1VXKrPmlOnFGv3k6Ie3UKQspyPA/exec?tab=${encodeURIComponent(tab)}`, {
-    method: "POST",
-    body: dati
-  })
-  .then(res => res.text())
-  .then(txt => console.log("Risposta foglio:", txt))
-  .catch(err => console.error("Errore invio pick:", err));
-}
+console.log("🌐 Chiamata a endpoint:", endpoint);
+fetch(endpoint, {
+  method: "POST",
+  body: dati
+})
+.then(res => res.text())
+.then(txt => {
+  console.log("✅ Risposta dal foglio:", txt);
+  alert("✅ Pick inviata al foglio: " + txt);
+})
+.catch(err => {
+  console.error("❌ Errore invio pick:", err);
+  alert("❌ ERRORE invio pick: " + err);
+});
+  }
 
 function caricaGiocatori() {
   return fetch("giocatori_completo_finale.csv")
@@ -97,11 +104,10 @@ function caricaPick() {
 
           giocatoriScelti.add(normalize(nome));
 
-          tr.innerHTML = `
-            <td>${pick}</td>
-            <td>${fantaTeam}</td>
-            <td>${nome}</td>
-            <td>${ruolo}</td>`;
+        tr.innerHTML = `
+  <td>${pick}</td>
+  <td>${fantaTeam}</td>
+  <td>${nome}</td>`;
 
           if (i === prossimaIndex) {
             tr.classList.add("next-pick");
@@ -117,6 +123,18 @@ function caricaPick() {
           corpoTabella.appendChild(tr);
         });
 
+        applicaColoriPickSpeciali();
+
+        // 🎯 Ricolora la pick attuale in giallo
+if (prossimaIndex >= 0) {
+  const righe = document.querySelectorAll("#tabella-pick tbody tr");
+  const rigaCorrente = righe[prossimaIndex];
+  if (rigaCorrente) {
+    rigaCorrente.style.backgroundColor = "#ffcc00";
+    rigaCorrente.classList.add("next-pick");
+  }
+}
+
         // Su mobile, mostra solo le 5 righe attorno alla pick corrente
         if (window.innerWidth <= 768 && prossimaIndex >= 0) {
           const start = Math.max(0, prossimaIndex - 2);
@@ -129,8 +147,8 @@ function caricaPick() {
         }
 
         document.getElementById("turno-attuale").textContent = prossima
-          ? `🎯 È il turno di: ${prossima.fantaTeam} (Pick ${prossima.pick})`
-          : "✅ Draft completato!";
+  ? `🎯 È il turno di: ${prossima.fantaTeam} (Pick ${prossima.pick})`
+  : "✅ Draft completato!";
       } catch (err) {
         console.error("❌ Errore parsing JSON:", err);
         console.error("❌ Risposta ricevuta:", txt);
@@ -143,40 +161,63 @@ function caricaPick() {
 
 function popolaListaDisponibili() {
   listaGiocatori.innerHTML = "";
+
   Object.values(mappaGiocatori).forEach(({ nome, ruolo, squadra, quotazione }) => {
     const key = normalize(nome);
     if (giocatoriScelti.has(key)) return;
+
     const tr = document.createElement("tr");
     tr.innerHTML = `
       <td>${nome}</td>
       <td>${ruolo}</td>
       <td>${squadra}</td>
       <td>${parseInt(quotazione)}</td>`;
+
     tr.addEventListener("click", () => {
       const conferma = confirm(`Vuoi selezionare ${nome} per la squadra al turno?`);
       if (conferma) {
         const righe = document.querySelectorAll("#tabella-pick tbody tr");
         for (let r of righe) {
           const celle = r.querySelectorAll("td");
-          if (!celle[2].textContent.trim()) {
-            const pick = celle[0].textContent;
-            const fantaTeam = celle[1].textContent;
-            celle[2].textContent = nome;
-            celle[3].textContent = ruolo;
-            tr.style.backgroundColor = "white";
+          if (celle.length >= 3 && !celle[2].textContent.trim()) {
+            const pick = celle[0]?.textContent || "";
+            const fantaTeam = celle[1]?.textContent || "";
+
+            // 🔥 Elimina eventuali celle in eccesso oltre la 3
+            while (r.children.length > 3) {
+              r.removeChild(r.lastChild);
+            }
+
+            // ✅ Inserisci il nome nella terza colonna
+            r.children[2].textContent = nome;
+
+            // 🔄 Aggiorna stile della pick
             r.style.fontWeight = "bold";
             r.classList.remove("next-pick");
+
+            // ✅ Aggiorna messaggio turno
             document.getElementById("turno-attuale").textContent = `✅ ${nome} selezionato!`;
+
+            // 📤 Invia la pick al foglio
             inviaPickAlFoglio(pick, fantaTeam, nome, ruolo, squadra, quotazione);
+
+            // 🎨 Riapplica i colori speciali FP / U21
+            applicaColoriPickSpeciali();
+
             break;
           }
         }
+
+        // 🔄 Rimuovi il giocatore dalla lista
         tr.remove();
+        listaGiocatori.appendChild(tr);
       }
     });
+
     listaGiocatori.appendChild(tr);
   });
 
+  // 🎯 Aggiunta dei filtri Ruolo
   Array.from(ruoli).forEach(r => {
     const opt = document.createElement("option");
     opt.value = r;
@@ -184,6 +225,7 @@ function popolaListaDisponibili() {
     filtroRuolo.appendChild(opt);
   });
 
+  // 🎯 Aggiunta dei filtri Squadra Serie A
   Array.from(squadre).sort((a, b) => a.localeCompare(b)).forEach(s => {
     const opt = document.createElement("option");
     opt.value = s;
@@ -191,7 +233,43 @@ function popolaListaDisponibili() {
     filtroSerieA.appendChild(opt);
   });
 }
+function applicaColoriPickSpeciali() {
+  const righe = document.querySelectorAll("#tabella-pick tbody tr");
 
+  righe.forEach(r => {
+    const celle = r.querySelectorAll("td");
+    const pickNum = parseInt(celle[0]?.textContent);
+
+    if (isNaN(pickNum)) return;
+
+    // Reset base
+    r.style.backgroundColor = "";
+    r.style.borderLeft = "";
+
+    if (tab === "Draft Championship") {
+      if (pickNum >= 49 && pickNum <= 55) {
+        r.style.backgroundColor = "#cce5ff";
+        r.style.borderLeft = "4px solid #004085";
+      }
+      if (pickNum >= 98 && pickNum <= 104) {
+        r.style.backgroundColor = "#d4edda";
+        r.style.borderLeft = "4px solid #155724";
+      }
+    }
+
+    if (tab === "Draft Conference") {
+      const pickFP = [44, 46, 51, 52, 53, 54, 56];
+      if (pickFP.includes(pickNum)) {
+        r.style.backgroundColor = "#cce5ff";
+        r.style.borderLeft = "4px solid #004085";
+      }
+      if (pickNum >= 99 && pickNum <= 105) {
+        r.style.backgroundColor = "#d4edda";
+        r.style.borderLeft = "4px solid #155724";
+      }
+    }
+  });
+}
 function filtraLista() {
   const ruoloTesto = cercaRuolo.value.toLowerCase();
   const ruoloSelect = filtroRuolo.value.toLowerCase().split(/[,;\s]+/).filter(Boolean);
@@ -233,7 +311,7 @@ function aggiornaChiamatePerSquadra() {
     const celle = r.querySelectorAll("td");
     const team = celle[1]?.textContent?.trim();
     const nome = celle[2]?.textContent?.trim();
-    const ruolo = celle[3]?.textContent?.trim();
+    const ruolo = mappaGiocatori[normalize(nome)]?.ruolo || "";
     if (!team || !nome) return;
     if (!riepilogo[team]) riepilogo[team] = [];
     riepilogo[team].push(`${riepilogo[team].length + 1}. ${nome} (${ruolo})`);
