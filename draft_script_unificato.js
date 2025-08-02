@@ -307,7 +307,7 @@ function filtraLista() {
     const matchSquadra = !squadra || s === squadra;
     const matchNome = !cerca || nome.includes(cerca);
 
-    row.style.display = (matchInput && matchSelect && matchSquadra && matchNome && matchU21) ? "" : "none";
+   row.style.display = (matchInput && matchSelect && matchSquadra && matchNome) ? "" : "none";
   });
 }
 
@@ -442,6 +442,7 @@ function ordinaLista(colonnaIndex, numerico = false) {
     }
   });
 
+  
   tbody.innerHTML = "";
   righe.forEach(r => tbody.appendChild(r));
 }
