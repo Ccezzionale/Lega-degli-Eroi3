@@ -162,11 +162,23 @@ if (prossimaIndex >= 0) {
 function popolaListaDisponibili() {
   listaGiocatori.innerHTML = "";
 
+  // 🧼 Pulizia dei filtri per evitare duplicati
+  filtroRuolo.innerHTML = '<option value="">-- Tutti i Ruoli --</option>';
+  filtroSerieA.innerHTML = '<option value="">-- Tutte --</option>';
+
+  // 🧠 Set temporanei per ricostruire i filtri (senza duplicati)
+  const ruoliTrovati = new Set();
+  const squadreTrovate = new Set();
+
   Object.values(mappaGiocatori).forEach(({ nome, ruolo, squadra, quotazione }) => {
     const key = normalize(nome);
     if (giocatoriScelti.has(key)) return;
 
     const u21 = mappaGiocatori[key]?.u21?.toLowerCase() === "u21" ? "U21" : "";
+
+    // 🧠 Accumula per i filtri
+    if (ruolo) ruoliTrovati.add(ruolo);
+    if (squadra) squadreTrovate.add(squadra);
 
     const tr = document.createElement("tr");
     tr.innerHTML = `
@@ -207,13 +219,12 @@ function popolaListaDisponibili() {
             // 🎨 Riapplica i colori speciali FP / U21
             applicaColoriPickSpeciali();
 
+            // 🔄 Ricostruisci la lista aggiornata
+            popolaListaDisponibili();
+
             break;
           }
         }
-
-        // 🔄 Rimuovi il giocatore dalla lista
-        tr.remove();
-        listaGiocatori.appendChild(tr);
       }
     });
 
@@ -221,7 +232,7 @@ function popolaListaDisponibili() {
   });
 
   // 🎯 Aggiunta dei filtri Ruolo
-  Array.from(ruoli).forEach(r => {
+  Array.from(ruoliTrovati).forEach(r => {
     const opt = document.createElement("option");
     opt.value = r;
     opt.textContent = r;
@@ -229,13 +240,17 @@ function popolaListaDisponibili() {
   });
 
   // 🎯 Aggiunta dei filtri Squadra Serie A
-  Array.from(squadre).sort((a, b) => a.localeCompare(b)).forEach(s => {
+  Array.from(squadreTrovate).sort((a, b) => a.localeCompare(b)).forEach(s => {
     const opt = document.createElement("option");
     opt.value = s;
     opt.textContent = s;
     filtroSerieA.appendChild(opt);
   });
+
+  // 🧠 Applica filtri se ci sono già valori scritti
+  filtraLista();
 }
+
 function applicaColoriPickSpeciali() {
   const righe = document.querySelectorAll("#tabella-pick tbody tr");
 
