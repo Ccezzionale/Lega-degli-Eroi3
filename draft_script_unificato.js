@@ -317,6 +317,7 @@ function aggiornaChiamatePerSquadra() {
     const team = celle[1]?.textContent?.trim();
     const nome = celle[2]?.textContent?.trim();
     const ruolo = mappaGiocatori[normalize(nome)]?.ruolo || "";
+    const isU21 = mappaGiocatori[normalize(nome)]?.u21?.toLowerCase() === "u21";
     if (!team || !nome) return;
     if (!riepilogo[team]) riepilogo[team] = [];
     riepilogo[team].push(`${riepilogo[team].length + 1}. ${nome} (${ruolo})`);
@@ -344,11 +345,15 @@ div.className = "card-pick";
 
 picks.forEach((txt, index) => {
   const riga = document.createElement("div");
-  riga.textContent = txt;
-  riga.style.textAlign = "center";
-  if (index < 6) {
-    riga.classList.add("highlight-pick");
-  }
+riga.textContent = isU21 ? `${txt} (U21)` : txt;
+riga.style.textAlign = "center";
+
+if (index < 6) {
+  riga.classList.add("highlight-pick");
+}
+if (isU21) {
+  riga.classList.add("under21");
+}
   div.appendChild(riga);
 });
 
