@@ -4,211 +4,45 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Rose - Lega degli Eroi</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f4f4f4;
-      color: #222;
-    }
-
-    nav {
-      background-color: #001f3f;
-      color: white;
-      display: flex;
-      align-items: center;
-      padding: 10px 20px;
-      flex-wrap: wrap;
-    }
-
-    .home-icon {
-      font-size: 1.4rem;
-      margin-right: 20px;
-      text-decoration: none;
-      color: white;
-    }
-
-    .hamburger {
-      font-size: 1.5rem;
-      cursor: pointer;
-      margin-right: 20px;
-      display: none;
-    }
-
-    .navbar {
-      list-style-type: none;
-      padding: 0;
-      margin: 0;
-      display: flex;
-      flex-direction: row;
-      gap: 15px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-
-    .navbar li {
-      position: relative;
-    }
-
-    .navbar a {
-      text-decoration: none;
-      color: white;
-      padding: 8px 12px;
-      display: block;
-    }
-
-    .navbar a:hover {
-      background-color: #0074D9;
-      border-radius: 6px;
-    }
-
-    .submenu {
-      display: none;
-      position: absolute;
-      top: 100%;
-      left: 0;
-      background-color: #003366;
-      border-radius: 4px;
-      z-index: 10;
-      min-width: 180px;
-      flex-direction: column;
-    }
-
-    .submenu a {
-      font-size: 0.95rem;
-    }
-
-    .dropdown.show .submenu {
-      display: flex;
-    }
-
-    #filtri-rose {
-      padding: 20px;
-      text-align: center;
-      background-color: #001f3f;
-    }
-
-    #filtri-rose select,
-    #filtri-rose input {
-      padding: 8px;
-      margin: 5px;
-      border-radius: 6px;
-      border: none;
-      font-size: 1rem;
-    }
-
-    #filtri-rose button {
-      padding: 8px 12px;
-      margin-left: 10px;
-      background-color: #ffcc00;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    h1 {
-      color: #001f3f;
-      margin: 20px 0 10px;
-      text-align: center;
-      font-size: 2rem;
-    }
-    
-.box-rosa {
-  border: 1px solid #ccc;
-  border-radius: 12px;
-  padding: 20px;
-  margin: 40px auto;
-  max-width: 700px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  background-color: white;
-}
-
-table {
-  border-collapse: collapse;
-  width: 100%;
-}
-th, td {
-  padding: 6px 8px;
-  text-align: left;
-}
-thead {
-  background-color: #001f3f;
-  color: white;
-}
-
-    .logo-nome {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 30px 0 10px;
-}
-
-.logo-nome img {
-  width: 140px;
-  height: 140px;
-  object-fit: contain;
-  margin-bottom: 10px;
-}
-
-.logo-nome span {
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: #001f3f;
-  text-align: center;
-}
-
-    @media (max-width: 768px) {
-      .hamburger {
-        display: block;
-      }
-
-      .navbar {
-        display: none;
-        flex-direction: column;
-        width: 100%;
-        background-color: #001f3f;
-        margin-top: 10px;
-      }
-
-      .navbar.show {
-        display: flex;
-      }
-
-      .submenu {
-        position: relative;
-        background-color: #003366;
-        margin-left: 10px;
-      }
-
-      .dropdown .submenu a {
-        padding-left: 20px;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="rose.css">
 </head>
 <body>
 
 <nav>
-  <span id="hamburger" class="hamburger">☰</span>
-  <a href="index.html" class="home-icon">🏠</a>
-  <ul class="navbar" id="mainMenu">
-    <li><a href="rose.html">Rose</a></li>
+    <span id="hamburger" class="hamburger">☰</span>
+    <a href="index.html" class="home-icon">🏠</a>
+    <ul class="navbar" id="mainMenu">
+      <li><a href="rose.html">Rose</a></li>
     <li class="dropdown">
       <a href="#" class="toggle-submenu">Draft ▾</a>
       <ul class="submenu">
-        <li><a href="draft_championship.html?tab=Draft Championship">🟦 Conf.Championship</a></li>
-        <li><a href="draft_conference.html?tab=Draft Conference">🟨 Conf.League</a></li>
+        <li><a href="draft_championship.html">🟦 Conf.Championship</a></li>
+        <li><a href="draft_conference.html">🟨 Conf.League</a></li>
+        <li><a href="dinamico-draft.html">🧑‍💼 Draft 2026</a></li>
       </ul>
     </li>
-    <li><a href="classifica.html">Classifica</a></li>
+    <li class="dropdown">
+      <a href="#" class="toggle-submenu">Competizioni ▾</a>
+      <ul class="submenu">
+        <li><a href="classifica.html">📊 Classifiche</a></li>
+        <li><a href="playoff.html">🏆 Playoff</a></li>
+        <li><a href="arena.html">🏟️ Higlander</a></li>
+         <li><a href="crashoutcup.html">💥 Crash out Cup</a></li>
+        <li><a href="crashoutcup.html">💥 Crash out Cup - Playoff</a></li>
+      </ul>
+    </li>
     <li><a href="svincolati.html">Svincolati</a></li>
     <li><a href="chiamate.html">Chiamate</a></li>
-    <li><a href="albo.html">Albo d'Oro</a></li>
-  </ul>
-</nav>
+    <li class="dropdown">
+      <a href="#" class="toggle-submenu">Hall of Fame ▾</a>
+      <ul class="submenu">
+   <li><a href="medagliere.html">👑 Albo d'Oro</a></li>
+      <li><a href="albo.html">🏅  Medagliere</a></li>
+    </ul>
+      <li><a href="regolamento.html">Regolamento</a></li>
+  </nav>
 
-<h1>Rose delle Squadre</h1>
+<h1 class="titolo-pagina">Rose delle Squadre</h1>
 
 <div id="filtri-rose">
   <input id="filtro-nome" type="text" placeholder="Cerca giocatore..." />
@@ -228,26 +62,26 @@ thead {
 
 <div id="contenitore-rose">Caricamento rose...</div>
 
-<script src="rose.js?v=11"></script>
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const hamburger = document.getElementById("hamburger");
-    const mainMenu = document.getElementById("mainMenu");
-    const submenuToggles = document.querySelectorAll(".toggle-submenu");
+<script src="rose.js?v=12"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const hamburger = document.getElementById("hamburger");
+      const mainMenu = document.getElementById("mainMenu");
+      const submenuToggles = document.querySelectorAll(".toggle-submenu");
 
-    hamburger?.addEventListener("click", () => {
-      mainMenu.classList.toggle("show");
-    });
+      hamburger?.addEventListener("click", () => {
+        mainMenu.classList.toggle("show");
+      });
 
-    submenuToggles.forEach(toggle => {
-      toggle.addEventListener("click", function (e) {
-        e.preventDefault();
-        const parent = this.closest(".dropdown");
-        parent.classList.toggle("show");
+      submenuToggles.forEach(toggle => {
+        toggle.addEventListener("click", function (e) {
+          e.preventDefault();
+          const parent = this.closest(".dropdown");
+          parent.classList.toggle("show");
+        });
       });
     });
-  });
-</script>
+  </script>
 
 </body>
 </html>

@@ -4,50 +4,49 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Regolamento 2025/26 - Lega degli Eroi</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      line-height: 1.6;
-      padding: 2rem;
-      max-width: 900px;
-      margin: auto;
-      background-color: #f9f9f9;
-      color: #222;
-    }
-    h1, h2 {
-      color: #003366;
-    }
-    nav {
-      background-color: #003366;
-      padding: 1rem;
-      border-radius: 8px;
-      margin-bottom: 2rem;
-    }
-    nav a {
-      color: white;
-      text-decoration: none;
-      margin-right: 1rem;
-    }
-    section {
-      margin-bottom: 3rem;
-    }
-    details {
-      background: white;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      padding: 1rem;
-      margin-bottom: 1rem;
-    }
-    summary {
-      font-weight: bold;
-      cursor: pointer;
-    }
-  </style>
+<link rel="stylesheet" href="regolamento.css">
+    
 </head>
 <body>
+
+<nav>
+    <span id="hamburger" class="hamburger">☰</span>
+    <a href="index.html" class="home-icon">🏠</a>
+    <ul class="navbar" id="mainMenu">
+      <li><a href="rose.html">Rose</a></li>
+    <li class="dropdown">
+      <a href="#" class="toggle-submenu">Draft ▾</a>
+      <ul class="submenu">
+        <li><a href="draft_championship.html">🟦 Conf.Championship</a></li>
+        <li><a href="draft_conference.html">🟨 Conf.League</a></li>
+        <li><a href="dinamico-draft.html">🧑‍💼 Draft 2026</a></li>
+      </ul>
+    </li>
+    <li class="dropdown">
+      <a href="#" class="toggle-submenu">Competizioni ▾</a>
+      <ul class="submenu">
+        <li><a href="classifica.html">📊 Classifiche</a></li>
+        <li><a href="playoff.html">🏆 Playoff</a></li>
+        <li><a href="arena.html">🏟️ Higlander</a></li>
+         <li><a href="crashoutcup.html">💥 Crash out Cup</a></li>
+        <li><a href="crashoutcup.html">💥 Crash out Cup - Playoff</a></li>
+      </ul>
+    </li>
+    <li><a href="svincolati.html">Svincolati</a></li>
+    <li><a href="chiamate.html">Chiamate</a></li>
+    <li class="dropdown">
+      <a href="#" class="toggle-submenu">Hall of Fame ▾</a>
+      <ul class="submenu">
+   <li><a href="medagliere.html">👑 Albo d'Oro</a></li>
+      <li><a href="albo.html">🏅  Medagliere</a></li>
+    </ul>
+      <li><a href="regolamento.html">Regolamento</a></li>
+  </nav>
+  
+<div class="wrapper">
   <h1>📘 Regolamento Lega degli Eroi – Stagione 2025/26</h1>
 
-  <nav>
+  <div class="link-sezione">
     <a href="#lega">Lega</a>
     <a href="#draft">Draft</a>
     <a href="#fp">Franchise Player</a>
@@ -58,8 +57,195 @@
     <a href="#bonus">Bonus & Malus</a>
     <a href="#uscita">Abbandono Squadra</a>
     <a href="#premi">Quote e Premi</a>
-  </nav>
+  </div>
+  
+<div class="search-container">
+  <input type="text" id="searchInput" placeholder="Cerca nel regolamento..." />
+  <button onclick="cercaNelRegolamento()">🔍 Cerca</button>
+</div>
 
+<section id="lega">
+   <details>
+      <summary>🏟️ Struttura e Formula della Lega</summary>
+     
+<h4>🏟️ Struttura e Formula della Lega</h4>
+<h4>🏟️ Benvenuti nella Lega degli Eroi - Mantra</h4>
+<p>Cari colleghi fantallenatori,<br>
+siamo lieti di presentarvi una nuova e coinvolgente modalità di gioco per il fantacalcio: la <strong>Lega degli Eroi - Mantra</strong>. Il torneo adotta il regolamento <strong>Mantra</strong> e si ispira alle dinamiche dei fantasy games delle principali leghe sportive professionistiche americane, con una struttura divisa in <strong>regular season</strong> e <strong>playoff</strong>.</p>
+
+<h5>🧩 Composizione della Lega</h5>
+<p>La lega è composta da 16 squadre, suddivise (solo per la prima parte della stagione) in due conferences da 8 squadre ciascuna:</p>
+<ul>
+  <li>Conference League</li>
+  <li>Conference Championship</li>
+</ul>
+<p>La composizione delle conferences è stabile nel tempo e rimane invariata ogni anno, salvo eventuali rinunce.</p>
+
+<h5>📆 Regular Season – 29 giornate</h5>
+<p>La stagione regolare è composta da 29 giornate, suddivise in due fasi distinte:</p>
+
+<h6>🔹 Fase 1 – Conference</h6>
+<ul>
+  <li>Ogni squadra affronta solo le altre della propria conference, in due leghe separate su Fantacalcio®.</li>
+  <li>Ogni squadra gioca 14 partite.</li>
+  <li>Due classifiche separate e titolo di Campione di Conference per ciascun gruppo.</li>
+  <li>Fattore campo +2 per la squadra che gioca in casa</li>
+</ul>
+
+<h6>🔸 Fase 2 – Round Robin</h6>
+<ul>
+  <li>Girone unico con tutte le 16 squadre.</li>
+  <li>15 giornate con gare di sola andata.</li>
+  <li>Nessun fattore campo</li>
+  <li>La classifica finale è la somma di Conference + Round Robin.</li>
+  <li>Il primo classificato è proclamato Campione della Regular Season.</li>
+</ul>
+
+<h4>🏆 Playoff</h4>
+<p>Le prime 12 classificate della regular season accedono ai playoff, articolati in cinque fasi:</p>
+
+<h5>1️⃣ Accesso diretto ai quarti di finale</h5>
+<p>Le prime quattro classificate accedono direttamente ai quarti di finale.</p>
+
+<h5>2️⃣ Ottavi di finale – 30ª giornata</h5>
+<ul>
+  <li>5ª vs 12ª</li>
+  <li>6ª vs 11ª</li>
+  <li>7ª vs 10ª</li>
+  <li>8ª vs 9ª</li>
+</ul>
+<p>In caso di pareggio, passa la meglio piazzata in regular season. Niente supplementari o rigori (Nessun fattore campo).</p>
+
+<h5>3️⃣ Quarti di finale – 31ª giornata (tabellone fisso)</h5>
+<ul>
+  <li>Q1: 1ª vs Vincente 8ª-9ª</li>
+  <li>Q2: 2ª vs Vincente 7ª-10ª</li>
+  <li>Q3: 3ª vs Vincente 6ª-11ª</li>
+  <li>Q4: 4ª vs Vincente 5ª-12ª</li>
+</ul>
+<p>Stesse regole: passa la meglio piazzata se pareggio, senza supplementari (Nessun fattore campo).</p>
+
+<h5>4️⃣ Semifinali – 32ª e 33ª giornata</h5>
+<ul>
+  <li>SF1: Vincente Q1 vs Vincente Q4</li>
+  <li>SF2: Vincente Q2 vs Vincente Q3</li>
+</ul>
+<p>Andata e ritorno: andata in casa della peggio piazzata, ritorno in casa della meglio piazzata. In caso di parità totale: supplementari e rigori (Fattore campo).</p>
+
+<h5>5️⃣ Finale 3° posto – 34ª giornata</h5>
+<p>Gara secca in campo neutro. Supplementari e rigori in caso di pareggio (Nessun fattore campo).</p>
+
+<h5>6️⃣ Finale Scudetto – 34ª giornata</h5>
+<p>Gara secca in campo neutro. Supplementari e rigori in caso di pareggio (Nessun fattore campo).</p>
+
+<h5>🏅 Premiazioni finali</h5>
+<ul>
+  <li>🥇 Campione della Lega degli Eroi - Mantra</li>
+  <li>🥈 Seconda classificata</li>
+  <li>🥉 Terza classificata (vincente finale 3° posto)</li>
+</ul>
+
+<h4>🌬️ Highlander Cup</h4>
+<p>La Highlander Cup avrà inizio a partire dalla diciassettesima giornata della Regular Season.</p>
+<p>La competizione si concluderà con la tradizionale finale a tre squadre, che si disputerà in coincidenza con la ventinovesima e ultima giornata della Regular Season.</p>
+
+<h4>🏀 NBA Cup</h4>
+<h5>📌 Struttura generale</h5>
+<p>La competizione partirà con la terza giornata di Serie A e si articola in due fasi distinte:</p>
+
+<h5>🥊 Fase 1 – Battle Royal (7 giornate)</h5>
+<ul>
+  <li>Tutti i 16 partecipanti si sfidano in una classifica unica per 7 giornate consecutive.</li>
+  <li>Ogni giornata corrisponde a uno scontro “tutti contro tutti”.</li>
+  <li>Alla fine delle 7 giornate viene stilata una classifica della Battle Royal che determina gli accoppiamenti della fase successiva.</li>
+  <li>In caso di parità, valgono gli stessi criteri di spareggio del campionato (es. Magic Punti totali, miglior punteggio in una giornata, ecc.).</li>
+</ul>
+
+<h5>🏁 Fase 2 – Playoff a 16 squadre</h5>
+<h6>🔹 Ottavi di finale</h6>
+<ul>
+  <li>1° vs 16°</li>
+  <li>2° vs 15°</li>
+  <li>3° vs 14°</li>
+  <li>4° vs 13°</li>
+  <li>5° vs 12°</li>
+  <li>6° vs 11°</li>
+  <li>7° vs 10°</li>
+  <li>8° vs 9°</li>
+</ul>
+
+<h6>🔹 Quarti di finale</h6>
+<ul>
+  <li>Le 8 vincitrici degli ottavi si affrontano ai quarti.</li>
+  <li>Accoppiamenti stabiliti in base al piazzamento nella Battle Royal (1ª vs peggior rimasta, 2ª vs seconda peggiore, ecc.).</li>
+</ul>
+
+<h6>🔹 Semifinali e Finale</h6>
+<ul>
+  <li>Le 4 vincitrici dei quarti si affrontano in semifinale.</li>
+  <li>Le vincenti si sfidano nella finalissima per il titolo.</li>
+</ul>
+
+<h5>🎮 Formato degli scontri</h5>
+<ul>
+  <li>Tutti i turni (ottavi, quarti, semifinali e finale) si giocano al meglio delle 5 giornate.</li>
+  <li>Vince chi si aggiudica 3 giornate su 5.</li>
+  <li>Fattore campo disponibile.</li>
+  <li>Le giornate si giocano consecutivamente e possono sovrapporsi al campionato.</li>
+  <li>In caso di parità nella singola giornata, passa la squadra meglio piazzata nella Battle Royal.</li>
+  <li>Se una squadra raggiunge 3 vittorie prima delle 5 giornate, il turno termina immediatamente.</li>
+  <li>❌ L'Nba Cup non verrà giocata durante la 16ª giornata, causa Supercoppa Italiana</li>
+</ul>
+
+<h4>🌟 Supercoppa Lega degli Eroi – Prima Edizione</h4>
+<p>A partire da questa stagione si disputerà la prima edizione della Supercoppa della Lega degli Eroi.</p>
+<p>Verrà giocata durante le giornate 13 e 14 di Serie A.</p>
+<p>Parteciperanno le vincitrici delle quattro competizioni stagionali:</p>
+<ul>
+  <li>🥇 Vincitrice dei Playoff 2024/2025</li>
+  <li>🛡 Vincitrice della Highlander Cup 2024/2025</li>
+  <li>🏅 Vincitrice della Conference Championship 2024/2025</li>
+  <li>🏅 Vincitrice della Conference League 2024/2025</li>
+</ul>
+
+<h5>🎲 Modalità di svolgimento</h5>
+<p>Le quattro squadre verranno sorteggiate per determinare gli accoppiamenti delle semifinali.</p>
+<p>Le partite saranno a gara unica, nessun fattore campo. In caso di pareggio si disputeranno i tempi supplementari ed eventualmente i calci di rigore.</p>
+
+<h5>⚠️ Casi di squadre vincitrici multiple</h5>
+<p>In caso una stessa squadra conquisti più di una competizione, il posto vacante verrà assegnato secondo il seguente ordine di priorità:</p>
+<ol>
+  <li>Seconda classificata dei Playoff</li>
+  <li>Seconda classificata della Highlander Cup</li>
+  <li>Seconda classificata della Conference non ancora rappresentata</li>
+</ol>
+
+<hr>
+
+<h4>🔮 Supercoppa Lega degli Eroi – Edizioni future</h4>
+<p>A partire dalla prossima stagione, con l’introduzione della NBA Cup, i partecipanti alla Supercoppa saranno:</p>
+<ul>
+  <li>🥇 Vincitore dei Playoff</li>
+  <li>🛡 Vincitore della Highlander Cup</li>
+  <li>🏆 Vincitore della NBA Cup</li>
+  <li>🎯 Vincitore del Play-In tra le due Conference</li>
+</ul>
+
+<h5>⚠️ Casi particolari</h5>
+<ul>
+  <li>Se una squadra ha vinto due competizioni, si giocherà la Supercoppa con sole quattro squadre, senza bisogno del Play-In.</li>
+  <li>Se una squadra ha vinto tre o più competizioni, lasciando solo tre posti disponibili, verranno aggiunti partecipanti secondo quest’ordine:</li>
+</ul>
+<ol>
+  <li>Seconda classificata dei Playoff</li>
+  <li>Seconda classificata della Highlander Cup</li>
+  <li>Seconda classificata della NBA Cup</li>
+  <li>Seconda classificata della Conference non ancora rappresentata</li>
+</ol>
+
+
+</section>
+  
   <section id="draft">
     <details>
       <summary>🧩 Draft & Composizione delle Rose</summary>
@@ -147,19 +333,22 @@
 
     <h4>🔁 Modalità di conferma</h4>
     <ul>
-      <li>La conferma avviene alla vigilia della nuova stagione, rinunciando alla propria ottava scelta del Draft
-        <br><small>(da non confondere con il Round 8: a causa di trade, potrebbe non coincidere con l’ottava chiamata effettiva)</small>.
+      <li>La conferma avviene alla vigilia della nuova stagione, rinunciando al round otto del proprio Draft
+        <br><small>(da non confondere con la scelta numero 8)</small>.
       </li>
-      <li>È possibile estendere la conferma per un secondo anno consecutivo, rinunciando alla quarta scelta.</li>
+      <li>Se la squadra che riconferma un “Franchise Player” non dispone di una scelta al round 8 (per il primo anno) o al round 4 (per il secondo anno) dovrà, a compensazione, privarsi di una chiamata al draft nel primo round precedente disponibile (round 7 o round 3 nei casi esemplificati). </li>
+      <li>È possibile estendere la conferma per un secondo anno consecutivo, rinunciando alla quarto round.</li>
       <li><strong>Nota:</strong> La conferma è opzionale, non è obbligatoria.</li>
     </ul>
 
     <h4>⚠️ Altre regole importanti</h4>
     <ul>
       <li>Un calciatore può essere FP per massimo due stagioni consecutive.</li>
-      <li>Un calciatore presente in rosa in due squadre della stessa Conference potrà essere confermato solo da una. In tal caso, ha precedenza la squadra peggio classificata nella stagione precedente (ordine inverso della classifica).</li>
+      <li>Un calciatore presente in rosa in due squadre della stessa Conference potrà essere confermato solo da una. In tal caso, ha precedenza la squadra peggio classificata nella stagione precedente (ordine inverso della classifica) e l'altra squadra avrà diritto a sceglierne un altro.</li>
       <li>Un Under 21 riconfermato (quindi al secondo anno) può essere anche registrato come FP, se viene esercitata l’opzione per mantenerlo.</li>
       <li>Se un giocatore è Under 21 per una squadra e FP per un’altra, ha priorità la squadra che lo detiene come Under 21.</li>
+      <li> Se un Franchise Player viene venduto, diventerà un giocatore normale. Anche se viene scambiato per un altro Franchise Player</li>
+       <li> ❌ Non puo' essere scelto come Franchise Player un giocatore non presente nel listone</li>
     </ul>
 
     <hr>
@@ -187,6 +376,8 @@
       <li>A fine stagione, uno dei tre U21 presenti in rosa potrà essere riconfermato per le due stagioni successive.</li>
       <li>Per farlo, sarà sufficiente rinunciare alla chiamata del Round 15 del draft dell’anno successivo.</li>
       <li>Per la seconda riconferma (terza stagione consecutiva), si applica nuovamente la stessa regola: rinuncia al Round 15.</li>
+      <li> Se un Under21 riconfermato viene venduto, diventerà un giocatore normale. Anche se viene scambiato per un altro Under 21 riconfermato</li>
+  <li> ❌ Non puo' essere scelto come Under 21 un giocatore non presente nel listone</li>
     </ul>
 
     <h4>📦 Slot rosa e priorità</h4>
@@ -218,18 +409,12 @@
     <h4>🔄 Mercato degli Scambi</h4>
     <p>Permette di acquistare e cedere calciatori tra le squadre della Lega.</p>
 
-    <h5>📆 Fasi e Calendario</h5>
-    <ul>
-      <li><strong>Prima fase (Conference):</strong>
-        <ul>
-          <li>Sessione 1 → dalla vigilia della 2ª alla vigilia della 5ª giornata</li>
-          <li>Sessione 2 → dalla vigilia della 9ª alla vigilia della 12ª giornata</li>
-        </ul>
-      </li>
-      <li><strong>Seconda fase (Round Robin – mercato unificato):</strong>
-        <ul>
-          <li>Sessione 1 → vigilia 1ª - vigilia 4ª</li>
-          <li>Sessione 2 → vigilia 8ª - vigilia 11ª</li>
+    <h5>📆 Calendario Mercato degli Scambi</h5>
+
+          <li>Sessione 1 → dall'inzio del draft fino alla vigilia della 1ª giornata Serie A </li>
+          <li>Sessione 2 → dalla vigilia della 7ª alla vigilia della 9ª giornata Serie A </li>
+          <li>Sessione 3 → dalla vigilia della 15ª alla vigilia della 17ª giornata Serie A</li>
+          <li>Sessione 4 → dalla vigilia della 22ª alla vigilia della 24ª giornata Serie A</li>
         </ul>
       </li>
       <li><strong>Mercato chiuso:</strong> ultime giornate della regular season e durante i playoff</li>
@@ -272,8 +457,8 @@
 <h5>🔎 Chi è svincolato?</h5>
     <ul>
       <li>Non scelto al Draft o non presente in rosa</li>
-      <li>Prima fase: svincolato se fuori da tutte le rose della Conference</li>
-      <li>Seconda fase: svincolato se fuori da almeno due rose della Lega</li>
+      <li>Prima fase: svincolato se fuori da tutte le rose della propria Conference</li>
+      <li>Seconda fase: svincolato se presente in al massimo una rosa.</li>
     </ul>
 
     <h5>📅 Lista svincolati</h5>
@@ -285,7 +470,7 @@
     <h5>⚙️ Funzionamento settimanale</h5>
     <ul>
       <li>Chiamata segreta tramite web app ogni settimana</li>
-      <li>Pubblicazione risultati:
+      <li>Pubblicazione risultati ogni Venerdi:
         <ul>
           <li>15:00 → prima chiamata</li>
           <li>16:00 → chiamata compensativa (se disponibile)</li>
@@ -328,6 +513,7 @@
     <ul>
       <li>Scambi di scelte WW ammessi anche a mercato scambi chiuso</li>
       <li>❌ Scelte WW non scambiabili durante i playoff</li>
+      <li>❌ Scelte WW non scambiabili senza niente in cambio</li>
     </ul>
 
     <h5>📅 Playoff</h5>
@@ -342,7 +528,7 @@
         <ul>
           <li>Scambiare scelte future ↔ giocatori</li>
           <li>Scelte future + WW</li>
-          <li>Solo scelte future tra loro</li>
+          <li>Solo scelte future tra loro (solo durante il draft di inizio anno durante la composizione delle rose. Non si possono scambiare solo scelte future nel mercato aperto durante la stagione).</li>
         </ul>
       </li>
       <li>❌ Vietato scambiare chiamate future esclusivamente in cambio di WW (senza giocatori)</li>
@@ -377,6 +563,7 @@
     <ul>
       <li>Se una scelta della squadra uscente è stata ceduta, la nuova squadra non la recupera, ma sceglierà <strong>subito dopo</strong> quella pick ceduta (come se "la rincorresse").</li>
       <li>La nuova squadra seguirà l’<strong>ordine di Draft</strong> della squadra uscente, in base alla classifica dell’anno precedente.</li>
+<li>Sarà permesso alle squadre subentranti di poter scegliere tra i franchise players e gli under 21 delle squadre uscenti.</li>
     </ul>
     <hr>
   </details>
@@ -394,7 +581,7 @@
     <h5>🔐 Giocatore Protetto</h5>
     <ul>
       <li>Si considera protetto ogni calciatore selezionato nei primi 6 round del Draft.</li>
-      <li>Deve essere sostituito nel Waiver Wire Speciale che si terrà immediatamente dopo la chiusura del mercato estivo.</li>
+      <li>Deve essere sostituito nel Waiver Wire Speciale che si terrà il 13 Settembre.</li>
       <li>Può essere rimpiazzato da:
         <ul>
           <li>Un calciatore arrivato in Serie A dopo la data del Draft</li>
@@ -440,7 +627,7 @@
   </details>
 </section>
 
-  <section id="Bonus & Malus">
+  <section id="bonus">
     <section>
   <details>
     <summary>⚙️ Bonus & Malus </summary>
@@ -562,6 +749,109 @@
       <p>Quota di partecipazione: 70 €. Montepremi: 1050 €. Premi distribuiti a vincitori di Conference, Round Robin, Regular Season, Highlander, Playoff e posizioni finali (1°, 2°, 3°).</p>
     </details>
   </section>
+    
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const hamburger = document.getElementById("hamburger");
+      const mainMenu = document.getElementById("mainMenu");
+      const submenuToggles = document.querySelectorAll(".toggle-submenu");
+
+      hamburger?.addEventListener("click", () => {
+        mainMenu.classList.toggle("show");
+      });
+
+      submenuToggles.forEach(toggle => {
+        toggle.addEventListener("click", function (e) {
+          e.preventDefault();
+          const parent = this.closest(".dropdown");
+          parent.classList.toggle("show");
+        });
+      });
+    });
+  </script>
+
+<script>
+function cercaNelRegolamento() {
+  const input = document.getElementById("searchInput").value.trim().toLowerCase();
+  const sections = document.querySelectorAll("details");
+
+  // Rimuove vecchie evidenziazioni
+  document.querySelectorAll(".highlight").forEach(el => {
+    el.outerHTML = el.innerText;
+  });
+
+  if (!input) return;
+
+  let trovato = false;
+
+  sections.forEach(section => {
+    // Apri temporaneamente per accedere a tutto il contenuto
+    const eraAperto = section.open;
+    section.open = true;
+    const text = section.innerText.toLowerCase();
+
+    if (text.includes(input)) {
+      trovato = true;
+      section.open = true; // lascialo aperto
+      evidenziaInSezione(section, input);
+    } else {
+      section.open = eraAperto; // rimettilo com'era
+    }
+  });
+
+  if (!trovato) {
+    alert("🔍 Nessun risultato trovato.");
+  }
+}
+
+function evidenziaInSezione(section, parola) {
+  const regex = new RegExp(`(${parola})`, 'gi');
+  section.querySelectorAll("p, li, td, summary").forEach(el => {
+    if (el.innerText.toLowerCase().includes(parola)) {
+      el.innerHTML = el.innerHTML.replace(regex, `<span class="highlight flash">$1</span>`);
+    }
+  });
+}
+</script>
+    
+<script>
+  function apriFisarmonicaDaHash(hash) {
+    if (!hash) return;
+
+    let details = document.querySelector(`details${hash}`);
+    if (!details) {
+      const section = document.querySelector(hash);
+      if (section) {
+        details = section.querySelector("details");
+      }
+    }
+
+    if (details) {
+      details.open = true;
+      const summary = details.querySelector("summary");
+      if (summary) {
+        setTimeout(() => {
+          summary.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 100);
+      }
+    }
+  }
+
+  // Quando la pagina viene caricata con un hash nell'URL
+  document.addEventListener("DOMContentLoaded", function () {
+    apriFisarmonicaDaHash(window.location.hash);
+  });
+
+  // Quando clicchi uno dei link nella griglia
+  document.querySelectorAll('.link-sezione a').forEach(link => {
+    link.addEventListener('click', function (e) {
+      const href = this.getAttribute('href');
+      apriFisarmonicaDaHash(href);
+    });
+  });
+</script>
+
+
 
 </body>
 </html>

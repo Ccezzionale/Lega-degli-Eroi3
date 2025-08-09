@@ -1,14 +1,16 @@
 const rose = {};
 
+
 const conferencePerSquadra = {
   "Team Bartowski": "Conference League",
   "Desperados": "Conference League",
-  "Sharknado 04": "Conference Championship",
-  "Real Mimmo": "Conference Championship",
-  "Giody": "Conference Championship",
+  "Riverfilo": "Conference Championship",
+  "Golden Knights": "Conference Championship",
+  "Lokomotiv Lipsia": "Conference Championship",
   "Union Librino": "Conference Championship",
   "Rubinkebab": "Conference Championship",
-  "Rafa Casablanca": "Conference Championship",
+  "Eintracht Franco 126": "Conference Championship",
+  "FC Disoneste": "Conference Championship",
   "PokerMantra": "Conference Championship",
   "wildboys78": "Conference Championship",
   "Bayern Christiansen": "Conference League",
@@ -16,7 +18,8 @@ const conferencePerSquadra = {
   "Giulay": "Conference League",
   "MinneSota Snakes": "Conference League",
   "Ibla": "Conference League",
-  "Pandinicoccolosini": "Conference League"
+  "Pandinicoccolosini": "Conference League",
+  "Athletic Pongao": "Conference League"
 };
 
 const giocatoriFP = new Set();
@@ -24,21 +27,38 @@ const giocatoriFP = new Set();
 const giocatoriU21PerSquadra = {
   "Team Bartowski": ["baldanzi"],
   "Desperados": ["fazzini"],
-  "Sharknado 04": [],
-  "Real Mimmo": ["bonny"],
-  "Giody": ["goglichidze"],
-  "Union Librino": [],
+  "Riverfilo": ["fabbian"],
+  "Golden Knights": ["bonny"],
+  "Lokomotiv Lipsia": ["goglichidze"],
+  "FC Disoneste": [],
   "Rubinkebab": [],
-  "Rafa Casablanca": [],
+  "Eintracht Franco 126": ["coppola d."],
   "PokerMantra": ["yildiz"],
   "wildboys78": ["tchaouna"],
   "Bayern Christiansen": ["castro s."],
   "Minnesode Timberland": ["scalvini"],
-  "Giulay": ["goglichidze"],
+  "Athletic Pongao": ["goglichidze"],
   "MinneSota Snakes": ["fabbian"],
   "Ibla": ["soule'"],
+  "FC Disoneste": ["soule'"],
   "Pandinicoccolosini": ["yildiz"]
 };
+
+const giocatoriFPManualiPerSquadra = {
+  "Rubinkebab": ["ranieri l."],
+  "wildboys78": ["adams c."],
+  "Desperados": ["vasquez", "dodo'"],
+  "MinneSota Snakes": ["darmian"],
+  "PokerMantra": ["n'dicka"],
+  "Minnesode Timberland": ["zortea"],
+  "Bayern Christiansen": ["paleari", "frattesi"],
+  "Golden Knights": ["terracciano", "paleari", "mandragora"],
+  "Ibla": ["skorupski", "angelino", "zambo anguissa"],
+  "FC Disoneste": ["angelino", "gatti"],
+  "Athletic Pongao": ["de roon", "weah"],
+  "Pandinicoccolosini": ["leali", "n'dicka"]
+};
+
 
 const URL_ROSE = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSE8Q0l1pnU8NCtId51qCk8Pstat27g6JBQaU-3UKIY0ZCZicUJ1u1T-ElvuR9NK9pc2WYpunW-a4ld/pub?output=csv";
 const URL_QUOTAZIONI = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSE8Q0l1pnU8NCtId51qCk8Pstat27g6JBQaU-3UKIY0ZCZicUJ1u1T-ElvuR9NK9pc2WYpunW-a4ld/pub?gid=2087990274&single=true&output=csv";
@@ -56,10 +76,10 @@ const squadre = [
   { col: 5, start: 126, end: 153, headerRow: 124 },
   { col: 0, start: 157, end: 184, headerRow: 155 },
   { col: 5, start: 157, end: 184, headerRow: 155 },
-  { col: 0, start: 187, end: 215, headerRow: 186 },
-  { col: 5, start: 187, end: 215, headerRow: 186 },
-  { col: 0, start: 218, end: 246, headerRow: 217 },
-  { col: 5, start: 218, end: 246, headerRow: 217 },
+  { col: 0, start: 188, end: 215, headerRow: 186 },
+  { col: 5, start: 188, end: 215, headerRow: 186 },
+  { col: 0, start: 219, end: 246, headerRow: 217 },
+  { col: 5, start: 219, end: 246, headerRow: 217 },
 ];
 
 function trovaLogo(nomeSquadra) {
@@ -112,9 +132,34 @@ async function caricaGiocatoriFP() {
         blocco.forEach(p => giocatoriFP.add(p.nome));
       }
     }
+
+    // 🔥 Aggiunta finale: FP manuali per squadra
+    for (const [squadra, giocatori] of Object.entries(giocatoriFPManualiPerSquadra)) {
+      giocatori.forEach(nome => {
+        giocatoriFP.add(nome.toLowerCase());
+      });
+    }
+
   } catch (e) {
     console.error("Errore nel caricamento FP:", e);
   }
+}
+
+function isFP(nome, squadra) {
+  const nomeClean = nome.toLowerCase();
+
+  // Se è FP automatico, va bene ovunque
+  if (giocatoriFP.has(nomeClean)) {
+    // Se non è stato forzato in una squadra specifica, è valido ovunque
+    const squadreManuali = Object.keys(giocatoriFPManualiPerSquadra);
+    const èManuale = squadreManuali.some(s => giocatoriFPManualiPerSquadra[s].includes(nomeClean));
+    if (!èManuale) return true;
+
+    // Se è stato forzato manualmente, è FP solo nella squadra specifica
+    return giocatoriFPManualiPerSquadra[squadra]?.includes(nomeClean) || false;
+  }
+
+  return false;
 }
 
 async function caricaRose() {
@@ -141,7 +186,7 @@ async function caricaRose() {
           ruolo,
           squadra,
           quotazione,
-          fp: giocatoriFP.has(nomeClean),
+          fp: isFP(nome, nomeSquadra),
           u21: giocatoriU21PerSquadra[nomeSquadra]?.includes(nomeClean) || false
         });
       }
@@ -163,6 +208,8 @@ function mostraRose() {
   const container = document.getElementById("contenitore-rose");
   if (!container) return;
   container.innerHTML = "";
+
+  const nomeCercato = document.getElementById("filtro-nome")?.value?.toLowerCase() || "";
 
   for (const [nome, data] of Object.entries(rose)) {
     const div = document.createElement("div");
@@ -187,21 +234,27 @@ function mostraRose() {
 
     const table = document.createElement("table");
     table.innerHTML = `
-  <thead><tr><th>Ruolo</th><th>Nome</th><th>Squadra</th></tr></thead>
-  <tbody>
-    ${data.giocatori.map(g => `
-      <tr>
-        <td>${g.ruolo}</td>
-        <td class="nome">${g.nome} ${g.fp ? '🅕' : ''} ${g.u21 ? '🅤21' : ''}</td>
-        <td>${g.squadra}</td>
-      </tr>`).join("")}
-  </tbody>
+      <thead><tr><th>Ruolo</th><th>Nome</th><th>Squadra</th></tr></thead>
+      <tbody>
+        ${data.giocatori.map(g => {
+          const nomeBasso = g.nome.toLowerCase();
+          const evidenziato = nomeCercato && nomeBasso.includes(nomeCercato)
+            ? g.nome.replace(new RegExp(`(${nomeCercato})`, 'i'), '<span class="evidenziato">$1</span>')
+            : g.nome;
+
+          return `
+            <tr>
+              <td>${g.ruolo}</td>
+              <td class="nome">${evidenziato} ${g.fp ? '🅕' : ''} ${g.u21 ? '🅤21' : ''}</td>
+              <td>${g.squadra}</td>
+            </tr>`;
+        }).join("")}
+      </tbody>
     `;
     div.appendChild(table);
     container.appendChild(div);
   }
 }
-
 function popolaFiltri() {
   const selectSquadra = document.getElementById("filtro-squadra");
   const selectConference = document.getElementById("filtro-conference");
@@ -238,6 +291,9 @@ function filtraGiocatori() {
   const conference = document.getElementById('filtro-conference').value;
   const squadra = document.getElementById('filtro-squadra').value;
 
+  // Mostra di nuovo tutte le rose aggiornate con evidenziato
+  mostraRose();
+
   document.querySelectorAll('.giocatore').forEach(row => {
     const nomiGiocatori = [...row.querySelectorAll('.nome')].map(e => e.textContent.toLowerCase());
     const conf = row.getAttribute('data-conference');
@@ -254,6 +310,7 @@ function filtraGiocatori() {
     }
   });
 }
+
 
 document.getElementById('filtro-nome').addEventListener('input', filtraGiocatori);
 document.getElementById('filtro-conference').addEventListener('change', filtraGiocatori);

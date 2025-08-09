@@ -1,0 +1,243 @@
+ body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f4f4;
+      color: #222;
+    }
+
+nav {
+  background-color: #001f3f;
+  color: white;
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  flex-wrap: wrap;
+}
+.home-icon {
+  font-size: 1.4rem;
+  margin-right: 20px;
+  text-decoration: none;
+  color: white;
+}
+.hamburger {
+  font-size: 1.5rem;
+  cursor: pointer;
+  margin-right: 20px;
+  display: none;
+}
+.navbar {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.navbar li { position: relative; }
+.navbar a {
+  text-decoration: none;
+  color: white;
+  padding: 8px 12px;
+  display: block;
+}
+.navbar a:hover {
+  background-color: #0074D9;
+  border-radius: 6px;
+}
+.submenu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #003366;
+  border-radius: 4px;
+  z-index: 10;
+  min-width: 180px;
+  flex-direction: column;
+}
+.submenu a { font-size: 0.95rem; }
+.dropdown.show .submenu { display: flex; }
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px 20px;
+}
+
+/* Header */
+.header {
+  background: #fff;
+  border-bottom: 1px solid #e0e6ef;
+}
+
+.page-title {
+  color: #001f3f;
+  margin: 15px 0 25px; /* spazio sopra piccolo, sotto più ampio */
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+.container {
+  margin-top: 0; /* niente margine aggiuntivo */
+}
+
+/* Card */
+.card {
+  background: #ffffff;
+  border: 1px solid #e0e6ef;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.06);
+}
+
+/* Desktop table */
+.table-wrap { overflow: auto; }
+
+#tabCoppa { /* tabella-classifica */
+  border-collapse: collapse;
+  width: 100%;
+  table-layout: auto;
+}
+
+#tabCoppa thead {
+  background-color: #001f3f;
+  color: white;
+}
+
+#tabCoppa th, #tabCoppa td {
+  padding: 10px;
+  text-align: center;
+}
+
+/* Colonna Squadra allineata a sinistra e con wrapping */
+#tabCoppa th:nth-child(2),
+#tabCoppa td:nth-child(2) {
+  text-align: left;
+  white-space: normal;
+  word-break: break-word;
+}
+
+/* Righe */
+#tabCoppa tbody tr {
+  background-color: white;
+  border-bottom: 1px solid #e0e6ef;
+}
+
+#tabCoppa tbody tr:hover {
+  background-color: #eef6ff;
+}
+
+/* Logo + Nome (equivalente a .logo-nome) */
+.team {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow: hidden;
+  font-weight: 600;
+}
+
+.logo {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
+/* Mobile – fisarmonica */
+.mobile { display: none; }
+
+@media (max-width: 768px) {
+  .desktop { display: none; }
+  .mobile { display: block; }
+}
+
+/* Ogni item è un <details> */
+.mobile details {
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #e0e6ef;
+  background: #fff;
+}
+
+.mobile details + details { margin-top: 10px; }
+
+/* Header del dettaglio = <summary> */
+.mobile summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px;
+  font-weight: bold;
+  font-size: 0.95rem;
+  background-color: #003b66; /* blu scuro */
+  color: white;
+  cursor: pointer;
+  list-style: none;
+}
+
+.mobile summary::-webkit-details-marker { display: none; }
+
+.summary-left { /* wrapper a sinistra */
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+/* Logo nel summary */
+.mobile summary .logo {
+  width: 48px;
+  height: 48px;
+}
+
+.summary-title { display: flex; flex-direction: column; }
+.team-name { font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sub { font-size: 12px; opacity: 0.9; }
+
+/* Corpo dell'accordion */
+.accordion-body {
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 12px 16px;
+  background-color: #004080;
+  color: white;
+  font-size: 0.9rem;
+}
+
+details:not([open]) .accordion-body { display: none; }
+details[open] .accordion-body { display: flex; }
+
+/* Griglia chiave:valore */
+.kv { display: grid; grid-template-columns: 1fr auto; gap: 6px 12px; width: 100%; }
+.kv div:nth-child(odd) { opacity: 0.9; }
+
+/* Badge posizione */
+.badge {
+  display: inline-block;
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid #e0e6ef;
+  background: #ffcc00; /* giallo/arancio */
+  color: #000;
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .hamburger { display: block; }          /* mostra l’icona */
+  .navbar {
+    display: none;                        /* nascondi il menu */
+    flex-direction: column;
+    width: 100%;
+    background-color: #001f3f;
+    margin-top: 10px;
+  }
+  .navbar.show { display: flex; }         /* visibile quando clicchi hamburger */
+  .navbar li { width: 100%; }
+  .submenu { position: static; width: 100%; background-color: #003366; }
+  .dropdown .submenu a { padding-left: 20px; }
+}

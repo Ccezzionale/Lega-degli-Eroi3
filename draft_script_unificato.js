@@ -15,30 +15,30 @@ function normalize(nome) {
   return nome.trim().toLowerCase();
 }
 
-function inviaPickAlFoglio(pick, fantaTeam, nome, ruolo, squadra, quotazione) {
+function inviaPickAlFoglio(pick, fantaTeam, nome, ruolo, squadra, quotazione, options = {}) {
   const dati = new URLSearchParams();
-  dati.append("pick", pick);
-  dati.append("squadra", squadra);
-  dati.append("fantaTeam", fantaTeam);
-  dati.append("giocatore", nome);
-  dati.append("ruolo", ruolo);
-  dati.append("quotazione", quotazione);
+  dati.append("tab", tab); // <-- aggiungi questo, così prende il tab corretto
+  dati.append("pick", pick || "");
+  dati.append("fantaTeam", fantaTeam || "");
+  dati.append("giocatore", nome || "");
+  dati.append("ruolo", ruolo || "");
+  dati.append("squadra", squadra || "");
+  dati.append("quotazione", quotazione || "");
 
-console.log("🌐 Chiamata a endpoint:", endpoint);
-fetch(endpoint, {
-  method: "POST",
-  body: dati
-})
-.then(res => res.text())
-.then(txt => {
-  console.log("✅ Risposta dal foglio:", txt);
-  alert("✅ Pick inviata al foglio: " + txt);
-})
-.catch(err => {
-  console.error("❌ Errore invio pick:", err);
-  alert("❌ ERRORE invio pick: " + err);
-});
+  if (options.targetPick) dati.append("targetPick", options.targetPick);
+  if (typeof options.locked !== "undefined") {
+    dati.append("locked", options.locked ? "TRUE" : "FALSE");
   }
+
+  fetch(endpoint, { method: "POST", body: dati })
+    .then(r => r.text())
+    .then(txt => {
+      console.log("✅ Risposta:", txt);
+      return caricaPick().then(() => { popolaListaDisponibili(); aggiornaChiamatePerSquadra(); });
+    })
+    .catch(err => alert("❌ ERRORE invio pick: " + err));
+}
+
 
 function caricaGiocatori() {
   return fetch("giocatori_completo_finale.csv")
@@ -64,7 +64,8 @@ const tab = urlParams.get("tab") || (
 );
 
 // 🌐 Imposta l'endpoint corretto con il tab scelto
-const endpoint = `https://script.google.com/macros/s/AKfycbwGlBiarvPyDSGBIQfOp-nUXzwF9gIdP1K6TKY-jy_VGKyCGtji5pe46BCED5prESvytg/exec?tab=${encodeURIComponent(tab)}`;
+const endpoint = "https://script.google.com/macros/s/AKfycbyFSp-hdD7_r2pNoCJ_X1vjxAzVKXG4py42RUT5cFloUA9PG5zFGWh3sp-qg2MEg7H5OQ/exec";
+
 
 // 🧪 Debug
 console.log("🧪 Tab scelto:", tab);
@@ -72,11 +73,15 @@ console.log("📡 Endpoint:", endpoint);
 
 
 function caricaPick() {
-  return fetch(endpoint)
+  return fetch(`${endpoint}?tab=${encodeURIComponent(tab)}`)
     .then(res => res.text())
     .then(txt => {
       try {
-        const dati = JSON.parse(txt);
+        if (!txt.trim().startsWith('[')) {
+  console.error("❌ Risposta non JSON dal server:", txt);
+  throw new Error("Risposta non JSON (doGet). Controlla il tab passato.");
+}
+const dati = JSON.parse(txt);
         const corpoTabella = document.querySelector("#tabella-pick tbody");
         corpoTabella.innerHTML = "";
 
@@ -265,23 +270,23 @@ function applicaColoriPickSpeciali() {
     r.style.borderLeft = "";
 
     if (tab === "Draft Championship") {
-      if (pickNum >= 49 && pickNum <= 55) {
+      if (pickNum >= 56 && pickNum <= 63) {
         r.style.backgroundColor = "#cce5ff";
         r.style.borderLeft = "4px solid #004085";
       }
-      if (pickNum >= 98 && pickNum <= 104) {
+      if (pickNum >= 112 && pickNum <= 119) {
         r.style.backgroundColor = "#d4edda";
         r.style.borderLeft = "4px solid #155724";
       }
     }
 
     if (tab === "Draft Conference") {
-      const pickFP = [44, 46, 51, 52, 53, 54, 56];
+      const pickFP = [50, 52, 58, 59, 60, 61, 62, 64];
       if (pickFP.includes(pickNum)) {
         r.style.backgroundColor = "#cce5ff";
         r.style.borderLeft = "4px solid #004085";
       }
-      if (pickNum >= 99 && pickNum <= 105) {
+      if (pickNum >= 113 && pickNum <= 120) {
         r.style.backgroundColor = "#d4edda";
         r.style.borderLeft = "4px solid #155724";
       }
@@ -324,29 +329,61 @@ window.addEventListener("DOMContentLoaded", function () {
   );
 });
 
+function mappaIndiceAssolutoPerTeam() {
+  const righe = document.querySelectorAll("#tabella-pick tbody tr");
+  const picksPerTeam = {};           // { team: [pick,...] }
+  const indexMap = {};               // { "team|pick": posizioneAssoluta }
+
+  righe.forEach(r => {
+    const celle = r.querySelectorAll("td");
+    const pick = parseInt(celle[0]?.textContent);
+    const team = (celle[1]?.textContent || "").trim();
+    if (!team || isNaN(pick)) return;
+    if (!picksPerTeam[team]) picksPerTeam[team] = [];
+    picksPerTeam[team].push(pick);
+  });
+
+  Object.keys(picksPerTeam).forEach(team => {
+    picksPerTeam[team].sort((a, b) => a - b);
+    picksPerTeam[team].forEach((p, i) => {
+      indexMap[`${team}|${p}`] = i + 1; // 1-based
+    });
+  });
+
+  return indexMap;
+}
+
 function aggiornaChiamatePerSquadra() {
   const righe = document.querySelectorAll("#tabella-pick tbody tr");
   const riepilogo = {};
+  const indexMap = mappaIndiceAssolutoPerTeam(); // team|pick -> posizione assoluta
+
   righe.forEach(r => {
     const celle = r.querySelectorAll("td");
+    const pickNum = parseInt(celle[0]?.textContent);
     const team = celle[1]?.textContent?.trim();
     const nome = celle[2]?.textContent?.trim();
-    const key = normalize(nome);
-const ruolo = mappaGiocatori[key]?.ruolo || "";
-const isU21 = mappaGiocatori[key]?.u21?.toLowerCase() === "u21";
-    if (!team || !nome) return;
-    if (!riepilogo[team]) riepilogo[team] = [];
-    const u21label = isU21 ? " (U21)" : "";
-riepilogo[team].push(`${riepilogo[team].length + 1}. ${nome} (${ruolo})${u21label}`);
+    if (!team || !nome || isNaN(pickNum)) return;
 
+    const key = normalize(nome);
+    const ruolo = mappaGiocatori[key]?.ruolo || "";
+    const isU21 = mappaGiocatori[key]?.u21?.toLowerCase() === "u21";
+    const nAssoluto = indexMap[`${team}|${pickNum}`] || 1;
+
+    if (!riepilogo[team]) riepilogo[team] = [];
+    riepilogo[team].push({ n: nAssoluto, nome, ruolo, isU21 });
   });
 
   const container = document.getElementById("riepilogo-squadre");
   container.innerHTML = "";
 
   for (const [team, picks] of Object.entries(riepilogo)) {
-const div = document.createElement("div");
-div.className = "card-pick";
+    // Ordina per numero assoluto della chiamata
+    picks.sort((a, b) => a.n - b.n);
+
+    const div = document.createElement("div");
+    div.className = "card-pick";
+
     const logoPath = `img/${team}.png`;
     const img = document.createElement("img");
     img.src = logoPath;
@@ -361,22 +398,22 @@ div.className = "card-pick";
     h4.style.textAlign = "center";
     div.appendChild(h4);
 
-picks.forEach((txt, index) => {
-  const riga = document.createElement("div");
-  riga.textContent = txt;
-  riga.style.textAlign = "center";
-  if (index < 6) {
-    riga.classList.add("highlight-pick");
-  }
-  if (txt.includes("(U21)")) {
-    riga.classList.add("under21");
-  }
-  div.appendChild(riga);
-});
+    picks.forEach(p => {
+      const riga = document.createElement("div");
+      riga.textContent = `${p.n}. ${p.nome} (${p.ruolo})${p.isU21 ? " (U21)" : ""}`;
+      riga.style.textAlign = "center";
+
+      // 👉 giallo SOLO per le prime 6 chiamate assolute
+      if (p.n <= 6) riga.classList.add("highlight-pick");
+      if (p.isU21) riga.classList.add("under21");
+
+      div.appendChild(riga);
+    });
 
     container.appendChild(div);
   }
 }
+
 window.aggiornaChiamatePerSquadra = aggiornaChiamatePerSquadra;
 
 let ordineAscendente = {};

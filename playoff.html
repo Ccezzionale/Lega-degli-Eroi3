@@ -10,38 +10,41 @@
 </head>
 <body>
 <!-- NAVBAR COMPLETA -->
-<nav>
-  <!-- NAV MOBILE (hamburger e casetta) -->
-  <div class="mobile-nav">
+  <nav>
     <span id="hamburger" class="hamburger">☰</span>
     <a href="index.html" class="home-icon">🏠</a>
-  </div>
-
-  <!-- MENU (sia mobile che desktop) -->
-  <ul class="navbar" id="mainMenu">
-    <li class="home-desktop"><a href="index.html" class="home-icon">🏠</a></li>
-    <li><a href="rose.html">Rose</a></li>
+    <ul class="navbar" id="mainMenu">
+      <li><a href="rose.html">Rose</a></li>
     <li class="dropdown">
-      <a href="#" class="toggle-submenu">Draft</a>
+      <a href="#" class="toggle-submenu">Draft ▾</a>
       <ul class="submenu">
         <li><a href="draft_championship.html">🟦 Conf.Championship</a></li>
         <li><a href="draft_conference.html">🟨 Conf.League</a></li>
+        <li><a href="dinamico-draft.html">🧑‍💼 Draft 2026</a></li>
       </ul>
     </li>
     <li class="dropdown">
-      <a href="#" class="toggle-submenu">Competizioni</a>
+      <a href="#" class="toggle-submenu">Competizioni ▾</a>
       <ul class="submenu">
-        <li><a href="classifica.html">📊 Classifica</a></li>
+        <li><a href="classifica.html">📊 Classifiche</a></li>
         <li><a href="playoff.html">🏆 Playoff</a></li>
+        <li><a href="arena.html">🏟️ Higlander</a></li>
+         <li><a href="crashoutcup.html">💥 Crash out Cup</a></li>
+        <li><a href="crashoutcup.html">💥 Crash out Cup - Playoff</a></li>
       </ul>
     </li>
     <li><a href="svincolati.html">Svincolati</a></li>
     <li><a href="chiamate.html">Chiamate</a></li>
-    <li><a href="albo.html">Albo d'Oro</a></li>
-  </ul>
-</nav>
+    <li class="dropdown">
+      <a href="#" class="toggle-submenu">Hall of Fame ▾</a>
+      <ul class="submenu">
+   <li><a href="medagliere.html">👑 Albo d'Oro</a></li>
+      <li><a href="albo.html">🏅  Medagliere</a></li>
+    </ul>
+      <li><a href="regolamento.html">Regolamento</a></li>
+  </nav>
 
-  <h1>Playoff Lega degli Eroi</h1>
+  <h1 class="titolo-pagina">Playoff Lega degli Eroi</h1>
 
   <!-- BRACKET MOBILE -->
 <div id="bracket-mobile">
@@ -122,15 +125,24 @@
         <div class="match" data-match="WC4-B"></div>
       </div>
   </div>
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const hamburger = document.getElementById("hamburger");
-    const navbar = document.getElementById("mainMenu");
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const hamburger = document.getElementById("hamburger");
+      const mainMenu = document.getElementById("mainMenu");
+      const submenuToggles = document.querySelectorAll(".toggle-submenu");
 
-    hamburger.addEventListener("click", function () {
-      navbar.classList.toggle("show");
-    });
-  });
-</script>
+      hamburger?.addEventListener("click", () => {
+        mainMenu.classList.toggle("show");
+      });
+
+      submenuToggles.forEach(toggle => {
+        toggle.addEventListener("click", function (e) {
+          e.preventDefault();
+          const parent = this.closest(".dropdown");
+          parent.classList.toggle("show");
+        });
+      });
+      });
+  </script>
 </body>
 </html>

@@ -61,6 +61,15 @@
   font-weight: bold;
 }
 
+.titolo-pagina {
+  text-align: center;
+  color: #001f3f;
+  font-size: 2.2rem;
+  margin: 30px 0 20px;
+  font-weight: 700;
+  text-shadow: 2px 2px 6px #FFD700; /* giallo oro tenue */
+}
+
     .squadra.orizzontale {
       display: flex;
       align-items: center;
@@ -171,14 +180,12 @@ justify-content: center;
 
 .submenu {
   display: none;
-  position: absolute;
-  top: 100%;
-  left: 0;
   background-color: #003366;
   border-radius: 4px;
-  z-index: 10;
-  min-width: 180px;
   flex-direction: column;
+  width: 100%;
+  padding-left: 20px;
+  margin-top: 6px;
 }
 
 .submenu a {
@@ -425,8 +432,4 @@ display: block;
   font-weight: 700;
   color: #d35400; /* arancio scuro, oppure lascia #000 per solo bold */
 }   
-    .toggle-submenu::after {
-  content: '▾';
-  margin-left: 6px;
-}
 }
