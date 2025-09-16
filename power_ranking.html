@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Statistiche – Power Ranking</title>
+  <style>
+    :root{ --bg:#fff; --fg:#0b3d91; --muted:#eef3ff; --card:#f8fbff; --border:#dce6ff; }
+    *{ box-sizing:border-box }
+    body{ margin:0; font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif; background:var(--bg); color:#0a1a2a }
+    header{ position:sticky; top:0; background:linear-gradient(180deg,#fff 0%,#f5f9ff 100%); border-bottom:1px solid var(--border); padding:12px 16px }
+    h1{ margin:0; font-size:20px; color:var(--fg) }
+    .container{ max-width:1100px; margin:20px auto; padding:0 16px }
+    .config{ background:var(--card); border:1px solid var(--border); padding:10px; border-radius:10px; font-size:12px; color:#415a77 }
+    .toolbar{ display:flex; gap:8px; align-items:center; margin:16px 0; flex-wrap:wrap }
+    .toolbar input[type="url"]{ flex:1; min-width:280px; padding:8px 10px; border:1px solid var(--border); border-radius:8px }
+    select{ padding:6px 10px; border:1px solid var(--border); border-radius:8px }
+    button{ padding:8px 12px; border:1px solid var(--fg); background:#fff; color:var(--fg); border-radius:10px; cursor:pointer }
+    button:hover{ background:var(--muted) }
+    table{ width:100%; border-collapse:separate; border-spacing:0 8px }
+    th,td{ text-align:left; padding:10px 12px }
+    thead th{ font-size:12px; color:#2b4c7e; border-bottom:1px solid var(--border) }
+    tbody tr{ background:var(--card); border:1px solid var(--border) }
+    .rank{ font-weight:700; color:var(--fg) }
+    .team{ font-weight:600 }
+    .delta{ font-weight:700 }
+    .delta.up{ color:#2e7d32 }
+    .delta.down{ color:#c62828 }
+    .score,.sub{ font-variant-numeric:tabular-nums }
+    .sub{ font-size:12px; color:#415a77 }
+    .footer-note{ margin-top:10px; font-size:12px; color:#5a6f8a }
+  </style>
+</head>
+<body>
+<header><h1>Power Ranking</h1></header>
+<div class="container">
+  <div class="config">
+    <strong>CONFIG</strong>
+    <div>Incolla l’URL CSV pubblicato del tab <code>Risultati PowerRanking</code>, oppure imposta <code>DEFAULT_CSV_URL</code> nello script.</div>
+  </div>
+
+  <div class="toolbar">
+    <input id="csvUrl" type="url" placeholder="https://docs.google.com/spreadsheets/d/e/.../pub?output=csv" />
+    <select id="phase">
+      <option value="">Tutte le fasi</option>
+      <option value="Regular">Regular</option>
+      <option value="Playoff">Playoff</option>
+    </select>
+    <button id="loadBtn">Carica / Aggiorna</button>
+  </div>
+
+  <div id="meta" class="sub"></div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Squadra</th>
+        <th>Score</th>
+        <th>Trend</th>
+        <th>Media (stag.)</th>
+        <th>Forma (ult.5)</th>
+        <th>Consistenza</th>
+      </tr>
+    </thead>
+    <tbody id="tbody"></tbody>
+  </table>
+
+  <div class="footer-note">Lo score è calcolato come 50% Forma (ult.5), 30% Media stagionale, 20% Consistenza (inverso std.dev. ult.5), normalizzati 0–100.</div>
+</div>
+
+<script>
+/** Se vuoi caricare automaticamente senza incollare l’URL ogni volta, mettilo qui: */
+const DEFAULT_CSV_URL = "const DEFAULT_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRhEJKfZhVb7V08KI29T_aPTR0hfx7ayIOlFjQn_v-fqgktImjXFg-QAEA6z7w5eyEh2B3w5KLpaRYz/pub?gid=1065273494&single=true&output=csv"; // 
+
+async function fetchCSV(url){
+  const res = await fetch(url, { cache: 'no-store' });
+  if(!res.ok) throw new Error('Errore fetch CSV');
+  const text = await res.text();
+  return parseCSV(text);
+}
+
+function parseCSV(text){
+  // Parser semplice: va bene se il CSV non ha virgole interne/virgolette nei campi Team
+  const lines = text.split(/\r?\n/).filter(l => l.trim().length);
+  const head = lines[0].split(',').map(s => s.trim());
+  const rows = lines.slice(1).map(line => {
+    const cols = line.split(',');
+    const obj = {};
+    head.forEach((h,i)=> obj[h] = (cols[i] ?? '').trim());
+    // cast
+    obj.GW = +obj.GW || null;
+    // gestisce anche 64,5
+    obj.PointsFor = parseNumber(obj.PointsFor);
+    obj.PointsAgainst = parseNumber(obj.PointsAgainst);
+    return obj;
+  });
+  return { head, rows };
+}
+
+function parseNumber(s){
+  if (s==null) return NaN;
+  if (typeof s !== 'string') return Number(s);
+  const t = s.replace(',', '.').trim();
+  const v = parseFloat(t);
+  return isNaN(v) ? NaN : v;
+}
+
+function groupBy(arr, key){
+  const m = new Map();
+  for(const it of arr){
+    const k = it[key];
+    if(!m.has(k)) m.set(k, []);
+    m.get(k).push(it);
+  }
+  return m;
+}
+
+function lastN(arr, n){ return arr.slice(Math.max(0, arr.length - n)); }
+function mean(nums){
+  const v = nums.filter(Number.isFinite);
+  if(!v.length) return 0;
+  return v.reduce((a,b)=>a+b,0)/v.length;
+}
+function stdDev(nums){
+  const v = nums.filter(Number.isFinite);
+  if(v.length<=1) return 0;
+  const m = mean(v);
+  const vv = mean(v.map(x => (x-m)*(x-m)));
+  return Math.sqrt(vv);
+}
+function normalize(values){
+  const finite = values.filter(Number.isFinite);
+  if(!finite.length) return values.map(_=>0);
+  const min = Math.min(...finite), max = Math.max(...finite);
+  const denom = (max - min) || 1;
+  return values.map(v => Number.isFinite(v) ? ((v-min)/denom)*100 : 0);
+}
+
+function computePower(data, phaseFilter){
+  const rows = data.rows.filter(r => !phaseFilter || r.Phase === phaseFilter);
+  const byTeam = groupBy(rows, 'Team');
+  const teams = Array.from(byTeam.keys()).filter(Boolean);
+
+  const maxGW = Math.max(...rows.map(r => r.GW || 0));
+  const prevGW = Number.isFinite(maxGW) ? maxGW - 1 : null;
+
+  function scoreAt(upToGW){
+    const items = [];
+    for(const team of teams){
+      const series = byTeam.get(team).filter(r => r.GW && r.GW <= upToGW).sort((a,b)=> a.GW - b.GW);
+      const pts = series.map(s => s.PointsFor);
+      const last5 = lastN(pts, 5);
+      const forma = mean(last5);
+      const media = mean(pts);
+      const cons  = 1/(1 + stdDev(last5)); // più alto = più regolare
+      items.push({ team, forma, media, cons });
+    }
+    const nForma = normalize(items.map(x=>x.forma));
+    const nMedia = normalize(items.map(x=>x.media));
+    const nCons  = normalize(items.map(x=>x.cons));
+    return items.map((x,i)=>({
+      team: x.team,
+      forma: nForma[i],
+      media: nMedia[i],
+      cons:  nCons[i],
+      score: 0.5*nForma[i] + 0.3*nMedia[i] + 0.2*nCons[i]
+    })).sort((a,b)=> b.score - a.score);
+  }
+
+  const now  = scoreAt(maxGW);
+  const prev = prevGW>=1 ? scoreAt(prevGW) : [];
+
+  const prevPos = new Map();
+  prev.forEach((it,idx)=> prevPos.set(it.team, idx+1));
+
+  const ranked = now.map((it,idx)=>{
+    const posNow = idx+1;
+    const posPrev = prevPos.get(it.team) || posNow;
+    const delta = posPrev - posNow; // + = salito
+    return { rank: posNow, team: it.team, score: it.score, forma: it.forma, media: it.media, cons: it.cons, delta };
+  });
+
+  return { ranked, maxGW };
+}
+
+function render(table, meta, res){
+  meta.textContent = `Ultima giornata inclusa: GW ${res.maxGW}`;
+  table.innerHTML = res.ranked.map(row=>{
+    const arrow = row.delta>0? '▲' : (row.delta<0? '▼' : '•');
+    const cls = row.delta>0? 'up' : (row.delta<0? 'down' : '');
+    return `<tr>
+      <td class="rank">${row.rank}</td>
+      <td class="team">${row.team}</td>
+      <td class="score">${row.score.toFixed(1)}</td>
+      <td class="delta ${cls}">${arrow} ${row.delta===0? '' : Math.abs(row.delta)}</td>
+      <td class="sub">${row.media.toFixed(0)}</td>
+      <td class="sub">${row.forma.toFixed(0)}</td>
+      <td class="sub">${row.cons.toFixed(0)}</td>
+    </tr>`;
+  }).join('');
+}
+
+(async function(){
+  const urlEl = document.getElementById('csvUrl');
+  const phaseEl = document.getElementById('phase');
+  const btn = document.getElementById('loadBtn');
+  const tbody = document.getElementById('tbody');
+  const meta = document.getElementById('meta');
+
+  const key = 'PR_CSV_URL';
+  urlEl.value = localStorage.getItem(key) || DEFAULT_CSV_URL;
+
+  async function load(){
+    if(!urlEl.value) return alert("Inserisci l'URL CSV pubblicato.");
+    localStorage.setItem(key, urlEl.value);
+    const data = await fetchCSV(urlEl.value);
+    const res = computePower(data, phaseEl.value);
+    render(tbody, meta, res);
+  }
+
+  btn.addEventListener('click', load);
+  if (urlEl.value) load(); // carica automaticamente all’apertura se c’è un URL
+})();
+</script>
+</body>
+</html>
