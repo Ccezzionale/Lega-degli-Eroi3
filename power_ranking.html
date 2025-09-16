@@ -66,12 +66,12 @@
     <tbody id="tbody"></tbody>
   </table>
 
-  <div class="footer-note">Lo score è calcolato come 50% Forma (ult.5), 30% Media stagionale, 20% Consistenza (inverso std.dev. ult.5), normalizzati 0–100.</div>
+  <div class="footer-note">Score = 50% Forma (ult.5), 30% Media stagionale, 20% Consistenza (inverso std.dev. ult.5), normalizzati 0–100. Nelle prime GW i pesi favoriscono la media.</div>
 </div>
 
 <script>
-/** Se vuoi caricare automaticamente senza incollare l’URL ogni volta, mettilo qui: */
-const DEFAULT_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRhEJKfZhVb7V08KI29T_aPTR0hfx7ayIOlFjQn_v-fqgktImjXFg-QAEA6z7w5eyEh2B3w5KLpaRYz/pub?gid=1065273494&single=true&output=csv"; // 
+/** Caricamento automatico: metti qui l’URL del CSV */
+const DEFAULT_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRhEJKfZhVb7V08KI29T_aPTR0hfx7ayIOlFjQn_v-fqgktImjXFg-QAEA6z7w5eyEh2B3w5KLpaRYz/pub?gid=1065273494&single=true&output=csv";
 
 async function fetchCSV(url){
   const res = await fetch(url, { cache: 'no-store' });
@@ -81,16 +81,13 @@ async function fetchCSV(url){
 }
 
 function parseCSV(text){
-  // Parser semplice: va bene se il CSV non ha virgole interne/virgolette nei campi Team
   const lines = text.split(/\r?\n/).filter(l => l.trim().length);
   const head = lines[0].split(',').map(s => s.trim());
   const rows = lines.slice(1).map(line => {
     const cols = line.split(',');
     const obj = {};
     head.forEach((h,i)=> obj[h] = (cols[i] ?? '').trim());
-    // cast
     obj.GW = +obj.GW || null;
-    // gestisce anche 64,5
     obj.PointsFor = parseNumber(obj.PointsFor);
     obj.PointsAgainst = parseNumber(obj.PointsAgainst);
     return obj;
@@ -117,11 +114,7 @@ function groupBy(arr, key){
 }
 
 function lastN(arr, n){ return arr.slice(Math.max(0, arr.length - n)); }
-function mean(nums){
-  const v = nums.filter(Number.isFinite);
-  if(!v.length) return 0;
-  return v.reduce((a,b)=>a+b,0)/v.length;
-}
+function mean(nums){ const v = nums.filter(Number.isFinite); return v.length ? v.reduce((a,b)=>a+b,0)/v.length : 0; }
 function stdDev(nums){
   const v = nums.filter(Number.isFinite);
   if(v.length<=1) return 0;
@@ -133,38 +126,72 @@ function normalize(values){
   const finite = values.filter(Number.isFinite);
   if(!finite.length) return values.map(_=>0);
   const min = Math.min(...finite), max = Math.max(...finite);
-  const denom = (max - min) || 1;
-  return values.map(v => Number.isFinite(v) ? ((v-min)/denom)*100 : 0);
+  if (max === min) return values.map(v => Number.isFinite(v) ? 50 : 0);
+  return values.map(v => Number.isFinite(v) ? ((v-min)/(max-min))*100 : 0);
+}
+
+/** Pulisce e deduplica le righe (una per Team per GW), esclude 0–0/placeholder */
+function sanitizeRows(rows, phaseFilter){
+  const filtered = rows.filter(r => !phaseFilter || r.Phase === phaseFilter)
+    .map(r => ({
+      GW: +r.GW || null,
+      Team: r.Team?.trim(),
+      PointsFor: parseNumber(r.PointsFor),
+      PointsAgainst: parseNumber(r.PointsAgainst)
+    }))
+    .filter(r => r.GW && Number.isFinite(r.PointsFor) && Number.isFinite(r.PointsAgainst) && !(r.PointsFor===0 && r.PointsAgainst===0));
+
+  const seen = new Set();
+  const out = [];
+  for(const r of filtered){
+    const key = r.Team + '|' + r.GW;
+    if(!seen.has(key)){
+      seen.add(key);
+      out.push(r);
+    }
+  }
+  return out;
 }
 
 function computePower(data, phaseFilter){
-  const rows = data.rows.filter(r => !phaseFilter || r.Phase === phaseFilter);
-  const byTeam = groupBy(rows, 'Team');
+  const clean = sanitizeRows(data.rows, phaseFilter);
+  const byTeam = groupBy(clean, 'Team');
   const teams = Array.from(byTeam.keys()).filter(Boolean);
 
-  const maxGW = Math.max(...rows.map(r => r.GW || 0));
+  const maxGW = Math.max(...clean.map(r => r.GW || 0));
   const prevGW = Number.isFinite(maxGW) ? maxGW - 1 : null;
+
+  // Pesi dinamici: all'inizio conta più la media
+  const w = (maxGW < 5)
+    ? { forma: 0.2, media: 0.7, cons: 0.1 }
+    : { forma: 0.5, media: 0.3, cons: 0.2 };
 
   function scoreAt(upToGW){
     const items = [];
     for(const team of teams){
-      const series = byTeam.get(team).filter(r => r.GW && r.GW <= upToGW).sort((a,b)=> a.GW - b.GW);
-      const pts = series.map(s => s.PointsFor);
+      const series = byTeam.get(team)
+        .filter(r => r.GW && r.GW <= upToGW)
+        .sort((a,b)=> a.GW - b.GW);
+
+      const pts   = series.map(s => s.PointsFor);
       const last5 = lastN(pts, 5);
-      const forma = mean(last5);
+
       const media = mean(pts);
-      const cons  = 1/(1 + stdDev(last5)); // più alto = più regolare
-      items.push({ team, forma, media, cons });
+      const forma = mean(last5);
+      const cons  = 1/(1 + stdDev(last5));
+
+      items.push({ team, media, forma, cons });
     }
     const nForma = normalize(items.map(x=>x.forma));
     const nMedia = normalize(items.map(x=>x.media));
     const nCons  = normalize(items.map(x=>x.cons));
+
     return items.map((x,i)=>({
       team: x.team,
       forma: nForma[i],
       media: nMedia[i],
       cons:  nCons[i],
-      score: 0.5*nForma[i] + 0.3*nMedia[i] + 0.2*nCons[i]
+      score: w.forma*nForma[i] + w.media*nMedia[i] + w.cons*nCons[i]
     })).sort((a,b)=> b.score - a.score);
   }
 
@@ -220,7 +247,7 @@ function render(table, meta, res){
   }
 
   btn.addEventListener('click', load);
-  if (urlEl.value) load(); // carica automaticamente all’apertura se c’è un URL
+  if (urlEl.value) load(); // carica automaticamente se c'è un URL
 })();
 </script>
 </body>
