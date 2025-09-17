@@ -292,28 +292,28 @@ function renderTopScores(list){
   );
 }
 
-/* ================= ANDAMENTO SQUADRE ================= */
-let trendChart; // istanza Chart.js
+/* ================= ANDAMENTO SQUADRE (fix) ================= */
+let trendChart = null; // istanza Chart.js
 
 function buildTrendStructures(clean){
-  // GW disponibili
   const allGW = Array.from(new Set(clean.map(r=>r.GW))).sort((a,b)=>a-b);
+
   // mediana per GW
   const medByGW = new Map();
   const byGW = groupBy(clean, 'GW');
   for (const [gw, rows] of byGW.entries()){
-    const scores = rows.map(r=> r.PointsFor);
-    medByGW.set(+gw, median(scores));
+    medByGW.set(+gw, median(rows.map(r=> r.PointsFor)));
   }
+
   // PF per squadra per GW
   const byTeam = groupBy(clean, 'Team');
-  const teamMap = new Map(); // team -> Map(gw -> PF)
+  const teamMap = new Map();
   for (const [team, rows] of byTeam.entries()){
     const m = new Map();
     rows.forEach(r => m.set(r.GW, r.PointsFor));
     teamMap.set(team, m);
   }
-  // elenco squadre ordinato
+
   const teams = Array.from(teamMap.keys()).sort((a,b)=> a.localeCompare(b));
   return { allGW, medByGW, teamMap, teams };
 }
@@ -325,70 +325,54 @@ function seriesForTeam(team, structs){
 }
 
 function renderTrend(structs, team1, team2, showMedian){
-  const ctx = document.getElementById('trendChart').getContext('2d');
+  const canvas = document.getElementById('trendChart');
+  if (!canvas || !window.Chart) { console.warn('Canvas/Chart mancante'); return; }
+  const ctx = canvas.getContext('2d');
   const labels = structs.allGW.map(gw => `GW ${gw}`);
 
-  const ds = [];
-  if (team1){
-    ds.push({
-      label: team1,
-      data: seriesForTeam(team1, structs),
-      spanGaps: true,
-      tension: 0.2
-    });
-  }
-  if (team2 && team2 !== team1){
-    ds.push({
-      label: team2,
-      data: seriesForTeam(team2, structs),
-      spanGaps: true,
-      tension: 0.2
-    });
-  }
-  if (showMedian){
-    ds.push({
-      label: 'Mediana GW',
-      data: structs.allGW.map(gw => structs.medByGW.get(gw) ?? null),
-      borderDash: [6,4],
-      spanGaps: true,
-      tension: 0.2
-    });
-  }
+  const mkDataset = (label, data, dashed=false)=>({
+    label, data,
+    spanGaps:true, tension:0.25, borderWidth:2, pointRadius:3, pointHoverRadius:5,
+    ...(dashed ? { borderDash:[6,4] } : {})
+  });
 
-  const cfg = {
+  const ds = [];
+  if (team1) ds.push(mkDataset(team1, seriesForTeam(team1, structs)));
+  if (team2 && team2 !== team1) ds.push(mkDataset(team2, seriesForTeam(team2, structs)));
+  if (showMedian) ds.push(mkDataset('Mediana GW', structs.allGW.map(gw => structs.medByGW.get(gw) ?? null), true));
+
+  const config = {
     type: 'line',
     data: { labels, datasets: ds },
     options: {
       responsive: true,
       maintainAspectRatio: false,
-      plugins: {
-        legend: { position: 'top' },
-        tooltip: { mode: 'index', intersect: false }
-      },
-      interaction: { mode: 'nearest', intersect: false },
+      plugins: { legend: { position: 'top' }, tooltip: { mode: 'index', intersect:false } },
+      interaction: { mode:'nearest', intersect:false },
       scales: {
-        x: { title: { display: true, text: 'Giornata' } },
-        y: { title: { display: true, text: 'Punti Fantacalcio' }, beginAtZero: false }
+        x: { title: { display:true, text:'Giornata' } },
+        y: { title: { display:true, text:'Punti Fantacalcio' }, beginAtZero:false }
       }
     }
   };
 
-  // crea/aggiorna
-  if (trendChart){
-    trendChart.data = cfg.data;
-    trendChart.options = cfg.options;
-    trendChart.update();
-  } else {
-    trendChart = new Chart(ctx, cfg);
+  // distruggi il vecchio grafico per evitare leak/resizing infinito
+  if (trendChart) {
+    trendChart.destroy();
+    trendChart = null;
   }
+  trendChart = new Chart(ctx, config);
 }
 
 function initTrend(clean, defaultTeam){
+  // se il canvas non c'è su questa pagina, esci
+  if (!document.getElementById('trendChart')) return;
+
   const structs = buildTrendStructures(clean);
   const sel1 = document.getElementById('trendTeam1');
   const sel2 = document.getElementById('trendTeam2');
-  const chk = document.getElementById('trendMedian');
-  const btn = document.getElementById('trendBtn');
+  const chk  = document.getElementById('trendMedian');
+  const btn  = document.getElementById('trendBtn');
 
   // popola select
   const opts = ['<option value="">— scegli —</option>']
@@ -397,20 +381,14 @@ function initTrend(clean, defaultTeam){
   sel1.innerHTML = opts;
   sel2.innerHTML = opts;
 
-  // default: migliore del PR come Team1
-  if (defaultTeam){
-    sel1.value = defaultTeam;
-  } else if (structs.teams.length){
-    sel1.value = structs.teams[0];
-  }
+  // default: #1 del Power Ranking o il primo disponibile
+  if (defaultTeam) sel1.value = defaultTeam;
+  else if (structs.teams.length) sel1.value = structs.teams[0];
   sel2.value = '';
 
-  function draw(){
-    renderTrend(structs, sel1.value, sel2.value, chk.checked);
-  }
-
+  function draw(){ renderTrend(structs, sel1.value, sel2.value, chk.checked); }
   btn.addEventListener('click', draw);
-  // auto prima render
+  // prima render automatica
   draw();
 }
 
