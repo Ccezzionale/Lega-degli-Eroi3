@@ -7,10 +7,16 @@ const TEAM_LOGOS = {
   // "Team Bartowski": "images/loghi/team-bartowski.png",
 };
 
-function slug(s){ return String(s||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,''); }
-function logoFor(team){
-  return TEAM_LOGOS[team] || `images/loghi/${slug(team)}.png`;
+function slug(s){
+  return String(s||'')
+    .normalize('NFD').replace(/[\u0300-\u036f]/g,'') // via accenti
+    .toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
 }
+
+function logoFor(team){
+  return TEAM_LOGOS[team] || `img/${slug(team)}.png`;
+}
+
 
 /********** UTILS **********/
 function parseNumber(s){
