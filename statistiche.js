@@ -17,6 +17,17 @@ function logoFor(team){
   return TEAM_LOGOS[team] || `img/${slug(team)}.png`;
 }
 
+function logoTag(team, size=22){
+  const src = logoFor(team);
+  return `<img class="mini-logo" src="${src}" alt="${team}"
+           onerror="if(!this.dataset.jpg){ this.dataset.jpg=1; this.src=this.src.replace(/\\.png$/i,'.jpg'); }
+                    else { this.onerror=null; this.src='img/_placeholder.png'; }"
+           style="width:${size}px;height:${size}px">`;
+}
+function nameWithLogo(team){
+  return `<span class="inline-name">${logoTag(team)}<span>${team}</span></span>`;
+}
+
 
 /********** UTILS **********/
 function parseNumber(s){
