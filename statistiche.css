@@ -61,7 +61,9 @@ h2 { color:var(--nav); margin:28px auto 10px; text-align:center }
 }
 .trend-toolbar button{ background:#001f3f; color:#fff; border:none; cursor:pointer }
 .trend-toolbar button:hover{ background:#0074D9 }
-#trendChart{ width:min(1200px,95%); margin:0 auto 24px; display:block }
+
+.trend-wrap{ width:min(1200px,95%); margin:0 auto 24px; }
+#trendChart{ width:100% !important; height:340px !important; display:block; }
 
 
 /* Mobile */
