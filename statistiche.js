@@ -4,6 +4,7 @@ const DEFAULT_CSV_URL =
 
 // "" = tutte le fasi, altrimenti "Regular" o "Playoff"
 const PHASE_FILTER = "";
+const TREND_GW_LIMIT = 0;
 
 /* Loghi opzionali: mappature manuali (se diverse da img/<slug>.png) */
 const TEAM_LOGOS = {
@@ -326,41 +327,37 @@ function seriesForTeam(team, structs){
 
 function renderTrend(structs, team1, team2, showMedian){
   const canvas = document.getElementById('trendChart');
-  if (!canvas || !window.Chart) { console.warn('Canvas/Chart mancante'); return; }
+  if (!canvas || !window.Chart) return;
   const ctx = canvas.getContext('2d');
-  const labels = structs.allGW.map(gw => `GW ${gw}`);
+
+  // <-- NOVITÀ: scegliamo quali GW disegnare
+  const gwAll = structs.allGW;
+  const gw    = TREND_GW_LIMIT > 0 ? gwAll.slice(-TREND_GW_LIMIT) : gwAll;
+  const labels = gw.map(x => `GW ${x}`);
 
   const mkDataset = (label, data, dashed=false)=>({
-    label, data,
-    spanGaps:true, tension:0.25, borderWidth:2, pointRadius:3, pointHoverRadius:5,
+    label, data, spanGaps:true, tension:0.25, borderWidth:2, pointRadius:3, pointHoverRadius:5,
     ...(dashed ? { borderDash:[6,4] } : {})
   });
 
-  const ds = [];
-  if (team1) ds.push(mkDataset(team1, seriesForTeam(team1, structs)));
-  if (team2 && team2 !== team1) ds.push(mkDataset(team2, seriesForTeam(team2, structs)));
-  if (showMedian) ds.push(mkDataset('Mediana GW', structs.allGW.map(gw => structs.medByGW.get(gw) ?? null), true));
-
-  const config = {
-    type: 'line',
-    data: { labels, datasets: ds },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: { legend: { position: 'top' }, tooltip: { mode: 'index', intersect:false } },
-      interaction: { mode:'nearest', intersect:false },
-      scales: {
-        x: { title: { display:true, text:'Giornata' } },
-        y: { title: { display:true, text:'Punti Fantacalcio' }, beginAtZero:false }
-      }
-    }
+  // helper per estrarre la serie del team sulle GW selezionate
+  const dataForTeam = (team)=>{
+    const m = structs.teamMap.get(team);
+    return gw.map(g => (m && m.has(g) ? m.get(g) : null));
   };
 
-  // distruggi il vecchio grafico per evitare leak/resizing infinito
-  if (trendChart) {
-    trendChart.destroy();
-    trendChart = null;
-  }
+  const ds = [];
+  if (team1) ds.push(mkDataset(team1, dataForTeam(team1)));
+  if (team2 && team2 !== team1) ds.push(mkDataset(team2, dataForTeam(team2)));
+  if (showMedian) ds.push(mkDataset('Mediana GW', gw.map(g => structs.medByGW.get(g) ?? null), true));
+
+  const config = {
+    type:'line',
+    data:{ labels, datasets: ds },
+    options:{ /* resto invariato */ }
+  };
+
+  if (trendChart) { trendChart.destroy(); trendChart = null; }
   trendChart = new Chart(ctx, config);
 }
 
