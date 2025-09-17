@@ -272,6 +272,26 @@ function renderFunFacts(h){
     ]);
 }
 
+// Top N punteggi assoluti (tutta la lega, tutte le fasi del CSV caricato)
+function computeTopScores(clean, n = 5){
+  return clean
+    .slice()
+    .sort((a,b) => b.PointsFor - a.PointsFor)
+    .slice(0, n)
+    .map(r => ({ gw: r.GW, team: r.Team, pf: r.PointsFor }));
+}
+
+function renderTopScores(list){
+  renderTable('fun-top', 'Migliori punteggi di sempre (Top 5)',
+    list,
+    [
+      { key:'gw',   label:'GW' },
+      { key:'team', label:'Team', type:'team' },        // logo + nome
+      { key:'pf',   label:'PF',   format:v => Number(v).toFixed(1) }
+    ]
+  );
+}
+
 
 /********** BOOT (auto-load) **********/
 (async function(){
@@ -287,6 +307,9 @@ function renderFunFacts(h){
   const hall = computeHall(clean);
   renderHall(hall);
   renderFunFacts(hall);
+  
+  const topScores = computeTopScores(clean, 5);
+  renderTopScores(topScores);
 
   const luck = computeLuck(clean);
   renderLuckBox(luck);
