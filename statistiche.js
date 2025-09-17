@@ -2,19 +2,17 @@
 const DEFAULT_CSV_URL =
   "https://docs.google.com/spreadsheets/d/e/2PACX-1vRhEJKfZhVb7V08KI29T_aPTR0hfx7ayIOlFjQn_v-fqgktImjXFg-QAEA6z7w5eyEh2B3w5KLpaRYz/pub?gid=595956835&single=true&output=csv";
 
-/* Se hai i loghi, mappali qui (nome team -> url). Lascia vuoto se non vuoi loghi. */
+/* Loghi (opzionale): mappa nome -> url. Se non trovato, prova images/loghi/<slug>.png, poi placeholder. */
 const TEAM_LOGOS = {
   // "Team Bartowski": "images/loghi/team-bartowski.png",
 };
 
-/********** UTILS **********/
 function slug(s){ return String(s||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,''); }
 function logoFor(team){
-  if (TEAM_LOGOS[team]) return TEAM_LOGOS[team];
-  // fallback opzionale: prova images/loghi/<slug>.png
-  return null;
+  return TEAM_LOGOS[team] || `images/loghi/${slug(team)}.png`;
 }
 
+/********** UTILS **********/
 function parseNumber(s){
   if (s==null) return NaN;
   if (typeof s !== 'string') return Number(s);
@@ -22,14 +20,12 @@ function parseNumber(s){
   const v = parseFloat(t);
   return isNaN(v) ? NaN : v;
 }
-
 async function fetchCSV(url){
   const res = await fetch(url, { cache: 'no-store' });
   if(!res.ok) throw new Error(`Errore fetch CSV (${res.status})`);
   const text = await res.text();
   return parseCSV(text);
 }
-
 // CSV robusto
 function parseCSV(text){
   const rows = []; let field="", row=[], inQ=false;
@@ -49,7 +45,6 @@ function parseCSV(text){
   });
   return { head, rows: objs };
 }
-
 function groupBy(arr, key){ const m=new Map(); for(const it of arr){ const k=it[key]; if(!m.has(k)) m.set(k,[]); m.get(k).push(it);} return m; }
 function lastN(a,n){ return a.slice(Math.max(0,a.length-n)); }
 function mean(ns){ const v=ns.filter(Number.isFinite); return v.length? v.reduce((a,b)=>a+b,0)/v.length : 0; }
@@ -63,14 +58,18 @@ function normalize(vals){
 /********** DATA PREP **********/
 function sanitizeRows(rows, phaseFilter){
   const filtered = rows.filter(r => !phaseFilter || r.Phase === phaseFilter)
-    .map(r => ({
-      GW: +r.GW || null,
-      Team: (r.Team || '').trim(),
-      Opponent: (r.Opponent || '').trim(),
-      Result: (r.Result || '').trim(),
-      PointsFor: parseNumber(r.PointsFor),
-      PointsAgainst: parseNumber(r.PointsAgainst)
-    }))
+    .map(r => {
+      const GW = +r.GW || null;
+      const Team = (r.Team || '').trim();
+      const Opponent = (r.Opponent || '').trim();
+      const PF = parseNumber(r.PointsFor);
+      const PA = parseNumber(r.PointsAgainst);
+      let Result = (r.Result || '').trim();
+      if (!Result && Number.isFinite(PF) && Number.isFinite(PA)) {
+        Result = PF>PA ? 'W' : PF<PA ? 'L' : 'D';
+      }
+      return { GW, Team, Opponent, Result, PointsFor: PF, PointsAgainst: PA };
+    })
     .filter(r =>
       r.GW &&
       Number.isFinite(r.PointsFor) &&
@@ -78,6 +77,7 @@ function sanitizeRows(rows, phaseFilter){
       !(r.PointsFor===0 && r.PointsAgainst===0)
     );
 
+  // dedupe Team×GW
   const seen = new Set(), out=[];
   for(const r of filtered){
     const key = r.Team + '|' + r.GW;
@@ -119,12 +119,15 @@ function renderPR(res){
   const rows = res.ranked.map(r=>{
     const arrow = r.delta>0?'▲':(r.delta<0?'▼':'•');
     const cls = r.delta>0?'trend up':(r.delta<0?'trend down':'');
-    const logo = logoFor(r.team);
-    const logoHtml = logo ? `<img src="${logo}" alt="${r.team}">` : '';
+    const logoGuess = logoFor(r.team);
     return `<tr class="riga-classifica">
       <td class="mono"><strong>${r.rank}</strong></td>
       <td>
-        <div class="logo-nome">${logoHtml}<span>${r.team}</span></div>
+        <div class="logo-nome">
+          <img src="${logoGuess}" alt="${r.team}"
+               onerror="this.onerror=null; this.src='images/loghi/_placeholder.png'">
+          <span>${r.team}</span>
+        </div>
       </td>
       <td class="mono">${r.score.toFixed(1)}</td>
       <td class="${cls}">${arrow} ${r.delta===0?'':Math.abs(r.delta)}</td>
@@ -177,23 +180,24 @@ function renderHall(h){
 
 /********** SCULATI / SFIGATI **********/
 function computeLuck(clean){
+  // mediana per GW su tutta la lega
   const byGW=groupBy(clean,'GW'); const med=new Map();
   for(const [gw,rows] of byGW.entries()) med.set(+gw, median(rows.map(r=>r.PointsFor)));
 
+  // inizializza tutti i team
   const allTeams=Array.from(new Set(clean.map(r=>r.Team)));
   const tally=new Map(allTeams.map(t=>[t,{team:t,sculati:0,sfigati:0,netto:0}]));
 
   for(const r of clean){
     const m=med.get(r.GW)??0;
-    const sc=(r.Result==='W' && r.PointsFor<m)?1:0;
-    const sf=(r.Result==='L' && r.PointsFor>m)?1:0;
+    const sc=(r.Result==='W' && r.PointsFor<m)?1:0; // vinci sotto mediana
+    const sf=(r.Result==='L' && r.PointsFor>m)?1:0; // perdi sopra mediana
     if(!sc && !sf) continue;
     const rec=tally.get(r.Team); rec.sculati+=sc; rec.sfigati+=sf; rec.netto=rec.sculati-rec.sfigati;
   }
   const table=Array.from(tally.values()).sort((a,b)=>(b.netto-a.netto)||(b.sculati-a.sculati)||a.team.localeCompare(b.team));
   return { table };
 }
-
 function renderLuckBox(l){
   renderTable('luck-most','Sculati / Sfigati (cumulato)',
     l.table,
@@ -201,8 +205,19 @@ function renderLuckBox(l){
   );
 }
 
+/********** CURIOSITÀ (blowout & partita più tirata) **********/
+function renderFunFacts(h){
+  renderTable('fun-facts','Curiosità (blowout & partita più tirata)',
+    [
+      ...h.blowouts.map(r=>({type:'Blowout', gw:r.GW, team:r.Team, pf:r.PointsFor, opp:r.Opponent, pa:r.PointsAgainst, m:(r.PointsFor-r.PointsAgainst)})),
+      ...h.closest.map (r=>({type:'Più tirata', gw:r.GW, team:r.Team, pf:r.PointsFor, opp:r.Opponent, pa:r.PointsAgainst, m:(r.PointsFor-r.PointsAgainst)}))
+    ],
+    [{key:'type',label:'Tipo'},{key:'gw',label:'GW'},{key:'team',label:'Team'},{key:'pf',label:'PF',format:v=>v.toFixed(1)},{key:'opp',label:'vs'},{key:'pa',label:'PA',format:v=>v.toFixed(1)},{key:'m',label:'Margine',format:v=>v.toFixed(1)}]
+  );
+}
+
 /********** BOOT **********/
-(async function(){
+(function(){
   const urlEl=document.getElementById('csvUrl');
   const phaseEl=document.getElementById('phase');
   const btn=document.getElementById('loadBtn');
@@ -226,6 +241,7 @@ function renderLuckBox(l){
     // extra
     const hall = computeHall(clean);
     renderHall(hall);
+    renderFunFacts(hall); // <-- ora visibile
 
     const luck = computeLuck(clean);
     renderLuckBox(luck);
