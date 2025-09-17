@@ -120,23 +120,23 @@ function computePower(clean){
   return { ranked, maxGW };
 }
 
+// in statistiche.js
 function renderPR(res){
   const tbody = document.getElementById('tbody-pr');
   const rows = res.ranked.map(r=>{
-    const arrow = r.delta>0?'▲':(r.delta<0?'▼':'•');
-    const cls = r.delta>0?'trend up':(r.delta<0?'trend down':'');
-    const logoGuess = logoFor(r.team);
+    const arrow = r.delta>0 ? '▲' : (r.delta<0 ? '▼' : '•');
+    const cls   = r.delta>0 ? 'trend up' : (r.delta<0 ? 'trend down' : '');
     return `<tr class="riga-classifica">
       <td class="mono"><strong>${r.rank}</strong></td>
       <td>
         <div class="logo-nome">
-          <img src="${logoGuess}" alt="${r.team}"
-               onerror="this.onerror=null; this.src='images/loghi/_placeholder.png'">
+          <img src="${logoFor(r.team)}" alt="${r.team}"
+               onerror="this.onerror=null; this.src='img/_placeholder.png'">
           <span>${r.team}</span>
         </div>
       </td>
       <td class="mono">${r.score.toFixed(1)}</td>
-      <td class="${cls}">${arrow} ${r.delta===0?'':Math.abs(r.delta)}</td>
+      <td class="${cls}">${arrow} ${r.delta===0 ? '' : Math.abs(r.delta)}</td>
       <td class="mono">${r.media.toFixed(0)}</td>
       <td class="mono">${r.forma.toFixed(0)}</td>
       <td class="mono">${r.cons.toFixed(0)}</td>
@@ -145,6 +145,7 @@ function renderPR(res){
   tbody.innerHTML = rows;
   document.getElementById('meta').textContent = `Ultima giornata inclusa: GW ${res.maxGW}`;
 }
+
 
 /********** HALL OF SHAME / CURIOSITA' **********/
 function median(a){ const v=a.filter(Number.isFinite).slice().sort((x,y)=>x-y); const n=v.length; return n? (n%2?v[(n-1)/2]:(v[n/2-1]+v[n/2])/2):0; }
