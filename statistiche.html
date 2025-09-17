@@ -4,11 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Statistiche - Lega degli Eroi</title>
-  <link rel="stylesheet" href="classifica.css">
   <link rel="stylesheet" href="statistiche.css">
 </head>
 <body>
-  <!-- NAVBAR identica al resto del sito -->
+  <!-- NAVBAR -->
   <nav>
     <span id="hamburger" class="hamburger">☰</span>
     <a href="index.html" class="home-icon">🏠</a>
@@ -51,8 +50,8 @@
 
     <!-- Toolbar -->
     <section class="switcher">
-      <input id="csvUrl" type="url" placeholder="Incolla qui l'URL CSV (Risultati PR – Tutte)" style="width:min(95%,800px);max-width:100%;padding:10px;border-radius:6px;border:1px solid #ccc;">
-      <select id="phase" style="padding:10px;border-radius:6px;border:1px solid #ccc;margin-left:8px;">
+      <input id="csvUrl" type="url" placeholder="URL CSV: tab «Risultati PR – Tutte»" />
+      <select id="phase">
         <option value="">Tutte le fasi</option>
         <option value="Regular">Regular</option>
         <option value="Playoff">Playoff</option>
@@ -62,7 +61,7 @@
       <div id="diag" class="meta-note"></div>
     </section>
 
-    <!-- POWER RANKING (riusa il layout classifica) -->
+    <!-- POWER RANKING -->
     <section id="classifica-container">
       <table id="tabella-classifica">
         <thead>
@@ -79,7 +78,7 @@
         <tbody id="tbody-pr"></tbody>
       </table>
       <p class="small-note">
-        Score (0–100) = 50% <u>Forma</u> (media punti ultime 5), 30% <u>Media stagionale</u> (media di tutte le giornate),
+        Score (0–100) = 50% <u>Forma</u> (media ultime 5), 30% <u>Media stagionale</u> (tutte le giornate),
         20% <u>Consistenza</u> (regolarità: meno oscillazioni nelle ultime 5 ⇒ valore più alto). All’inizio la Media pesa di più.
       </p>
     </section>
@@ -99,11 +98,9 @@
     <div id="fun-facts"></div>
   </main>
 
-  <!-- Script pagina -->
   <script src="statistiche.js"></script>
-
-  <!-- Script navbar mobile/dropdown (stesso della tua classifica) -->
   <script>
+    // Navbar mobile/dropdown
     document.addEventListener("DOMContentLoaded", function () {
       const hamburger = document.getElementById("hamburger");
       const mainMenu = document.getElementById("mainMenu");
