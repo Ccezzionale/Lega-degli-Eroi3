@@ -184,17 +184,38 @@ function renderTable(containerId, title, rows, cols){
 function renderHall(h){
   renderTable('shame-worst','Peggiori punteggi',
     h.worst.map(r=>({gw:r.GW, team:r.Team, pf:r.PointsFor, opp:r.Opponent, pa:r.PointsAgainst})),
-    [{key:'gw',label:'GW'},{key:'team',label:'Team'},{key:'pf',label:'PF',format:v=>v.toFixed(1)},{key:'opp',label:'vs'},{key:'pa',label:'PA',format:v=>v.toFixed(1)}]
+    [
+      {key:'gw',   label:'GW'},
+      {key:'team', label:'Team', format:v=>nameWithLogo(v)},
+      {key:'pf',   label:'PF',   format:v=>v.toFixed(1)},
+      {key:'opp',  label:'vs',   format:v=>nameWithLogo(v)},
+      {key:'pa',   label:'PA',   format:v=>v.toFixed(1)}
+    ]
   );
+
   renderTable('shame-lowwins','Vittorie col punteggio più basso',
     h.lowWins.map(r=>({gw:r.GW, team:r.Team, pf:r.PointsFor, opp:r.Opponent, pa:r.PointsAgainst})),
-    [{key:'gw',label:'GW'},{key:'team',label:'Team'},{key:'pf',label:'PF',format:v=>v.toFixed(1)},{key:'opp',label:'vs'},{key:'pa',label:'PA',format:v=>v.toFixed(1)}]
+    [
+      {key:'gw',   label:'GW'},
+      {key:'team', label:'Team', format:v=>nameWithLogo(v)},
+      {key:'pf',   label:'PF',   format:v=>v.toFixed(1)},
+      {key:'opp',  label:'vs',   format:v=>nameWithLogo(v)},
+      {key:'pa',   label:'PA',   format:v=>v.toFixed(1)}
+    ]
   );
+
   renderTable('shame-highloss','Sconfitte col punteggio più alto',
     h.highLoss.map(r=>({gw:r.GW, team:r.Team, pf:r.PointsFor, opp:r.Opponent, pa:r.PointsAgainst})),
-    [{key:'gw',label:'GW'},{key:'team',label:'Team'},{key:'pf',label:'PF',format:v=>v.toFixed(1)},{key:'opp',label:'vs'},{key:'pa',label:'PA',format:v=>v.toFixed(1)}]
+    [
+      {key:'gw',   label:'GW'},
+      {key:'team', label:'Team', format:v=>nameWithLogo(v)},
+      {key:'pf',   label:'PF',   format:v=>v.toFixed(1)},
+      {key:'opp',  label:'vs',   format:v=>nameWithLogo(v)},
+      {key:'pa',   label:'PA',   format:v=>v.toFixed(1)}
+    ]
   );
 }
+
 
 /********** SCULATI / SFIGATI **********/
 function computeLuck(clean){
@@ -219,9 +240,15 @@ function computeLuck(clean){
 function renderLuckBox(l){
   renderTable('luck-most','Sculati / Sfigati (cumulato)',
     l.table,
-    [{key:'team',label:'Team'},{key:'sculati',label:'Sculati'},{key:'sfigati',label:'Sfigati'},{key:'netto',label:'Netto'}]
+    [
+      {key:'team',    label:'Team',    format:v=>nameWithLogo(v)},
+      {key:'sculati', label:'Sculati'},
+      {key:'sfigati', label:'Sfigati'},
+      {key:'netto',   label:'Netto'}
+    ]
   );
 }
+
 
 /********** CURIOSITÀ (blowout & partita più tirata) **********/
 function renderFunFacts(h){
@@ -230,9 +257,18 @@ function renderFunFacts(h){
       ...h.blowouts.map(r=>({type:'Blowout', gw:r.GW, team:r.Team, pf:r.PointsFor, opp:r.Opponent, pa:r.PointsAgainst, m:(r.PointsFor-r.PointsAgainst)})),
       ...h.closest.map (r=>({type:'Più tirata', gw:r.GW, team:r.Team, pf:r.PointsFor, opp:r.Opponent, pa:r.PointsAgainst, m:(r.PointsFor-r.PointsAgainst)}))
     ],
-    [{key:'type',label:'Tipo'},{key:'gw',label:'GW'},{key:'team',label:'Team'},{key:'pf',label:'PF',format:v=>v.toFixed(1)},{key:'opp',label:'vs'},{key:'pa',label:'PA',format:v=>v.toFixed(1)},{key:'m',label:'Margine',format:v=>v.toFixed(1)}]
+    [
+      {key:'type', label:'Tipo'},
+      {key:'gw',   label:'GW'},
+      {key:'team', label:'Team', format:v=>nameWithLogo(v)},
+      {key:'pf',   label:'PF',   format:v=>v.toFixed(1)},
+      {key:'opp',  label:'vs',   format:v=>nameWithLogo(v)},
+      {key:'pa',   label:'PA',   format:v=>v.toFixed(1)},
+      {key:'m',    label:'Margine', format:v=>v.toFixed(1)}
+    ]
   );
 }
+
 
 /********** BOOT **********/
 (function(){
