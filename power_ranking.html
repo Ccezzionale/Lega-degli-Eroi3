@@ -86,7 +86,7 @@
   <div id="shame-lowwins"></div>
   <div id="shame-highloss"></div>
 
-  <h2 style="margin-top:28px;">Lucky / Unlucky (mediana di giornata)</h2>
+  <h2 style="margin-top:28px;">Sculati / Sfigati (mediana di giornata)</h2>
   <div id="luck-most"></div>
 
   <h2 style="margin-top:28px;">Statistiche curiose</h2>
@@ -286,29 +286,34 @@ function computeHall(clean){
 }
 
 function computeLuck(clean){
-  // mediana per GW su tutte le squadre
+  // mediana per giornata
   const byGW = groupBy(clean, 'GW');
   const med = new Map();
   for (const [gw, rows] of byGW.entries()){
-    med.set(+gw, median(rows.map(r=> r.PointsFor)));
+    med.set(+gw, median(rows.map(r => r.PointsFor)));
   }
-  // tally per team
-  const tally = new Map();
+
+  // inizializza tutti i team
+  const allTeams = Array.from(new Set(clean.map(r => r.Team)));
+  const tally = new Map(allTeams.map(t => [t, { team:t, sculati:0, sfigati:0, netto:0 }]));
+
+  // conta sculo/sfiga
   for (const r of clean){
     const m = med.get(r.GW) ?? 0;
-    const isLucky   = (r.Result==='W' && r.PointsFor <  m) ? 1 : 0;
-    const isUnlucky = (r.Result==='L' && r.PointsFor >  m) ? 1 : 0;
-    if (!isLucky && !isUnlucky) continue;
-    const rec = tally.get(r.Team) || { team:r.Team, lucky:0, unlucky:0, net:0 };
-    rec.lucky   += isLucky;
-    rec.unlucky += isUnlucky;
-    rec.net = rec.lucky - rec.unlucky;
-    tally.set(r.Team, rec);
+    const isSculato = (r.Result === 'W' && r.PointsFor <  m) ? 1 : 0; // vinci sotto mediana
+    const isSfigato = (r.Result === 'L' && r.PointsFor >  m) ? 1 : 0; // perdi sopra mediana
+    if (!isSculato && !isSfigato) continue;
+    const rec = tally.get(r.Team);
+    rec.sculati += isSculato;
+    rec.sfigati += isSfigato;
+    rec.netto = rec.sculati - rec.sfigati;
   }
-  const arr = Array.from(tally.values());
-  const mostLucky   = arr.slice().sort((a,b)=> (b.net - a.net) || (b.lucky - a.lucky)).slice(0,8);
-  const mostUnlucky = arr.slice().sort((a,b)=> (a.net - b.net) || (b.unlucky - a.unlucky)).slice(0,8);
-  return { mostLucky, mostUnlucky, medByGW: med };
+
+  // tabella completa, ordinata per Netto desc, poi Sculati, poi nome
+  const table = Array.from(tally.values())
+    .sort((a,b)=> (b.netto - a.netto) || (b.sculati - a.sculati) || a.team.localeCompare(b.team));
+
+  return { table };
 }
 
 /* =================== RENDER SUBTABELLE =================== */
@@ -358,14 +363,13 @@ function renderHall(h){
 }
 
 function renderLuckBox(l){
-  renderTable('luck-most', 'Top lucky / unlucky (netto)',
-    [...l.mostLucky.map(x=>({...x, tag:'Lucky ▲'})), ...l.mostUnlucky.map(x=>({...x, tag:'Unlucky ▼'}))],
+  renderTable('luck-most', 'Sculati / Sfigati (mediana di giornata)',
+    l.table,
     [
-      {key:'team',   label:'Team'},
-      {key:'tag',    label:'Tipo'},
-      {key:'lucky',  label:'Lucky'},
-      {key:'unlucky',label:'Unlucky'},
-      {key:'net',    label:'Netto'}
+      {key:'team',    label:'Team'},
+      {key:'sculati', label:'Sculati'},
+      {key:'sfigati', label:'Sfigati'},
+      {key:'netto',   label:'Netto'}
     ]);
 }
 
