@@ -1,0 +1,19 @@
+/* Piccoli ritocchi per uniformare al tema */
+.meta-note, .small-note {
+  color:#555; font-size:.9rem; margin:8px auto 0; text-align:center;
+}
+h2 { color:#001f3f; margin:28px auto 10px; text-align:center }
+
+/* Sottotabelle (Hall, Sculati/Sfigati, Curiosità) */
+.subtable { width:min(1200px,95%); margin:10px auto 22px; border-collapse:separate; border-spacing:0 6px; }
+.subtable thead th { background:#001f3f; color:#fff; padding:10px; border-radius:6px 6px 0 0; }
+.subtable tbody tr { background:#fff; border:1px solid #ccc; border-radius:12px; }
+.subtable td { padding:10px; text-align:left; }
+.badge { display:block; width:min(1200px,95%); margin:6px auto 0; color:#001f3f; font-weight:600; }
+
+/* PR: usa già #tabella-classifica dal tuo CSS. Aggiungo solo trend/score mono-spazio */
+#tabella-classifica td, #tabella-classifica th { text-align:center }
+#tabella-classifica th:nth-child(2), #tabella-classifica td:nth-child(2) { text-align:left }
+.mono { font-variant-numeric:tabular-nums; }
+.trend.up { color:#2e7d32; font-weight:700 }
+.trend.down { color:#c62828; font-weight:700 }
