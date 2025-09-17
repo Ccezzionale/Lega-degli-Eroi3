@@ -67,6 +67,8 @@
   </table>
 
   <div class="footer-note">Score = 50% Forma (ult.5), 30% Media stagionale, 20% Consistenza (inverso std.dev. ult.5), normalizzati 0–100. Nelle prime GW i pesi favoriscono la media.</div>
+<div id="diag" class="footer-note"></div>
+  
 </div>
 
 <script>
@@ -81,19 +83,41 @@ async function fetchCSV(url){
 }
 
 function parseCSV(text){
-  const lines = text.split(/\r?\n/).filter(l => l.trim().length);
-  const head = lines[0].split(',').map(s => s.trim());
-  const rows = lines.slice(1).map(line => {
-    const cols = line.split(',');
-    const obj = {};
-    head.forEach((h,i)=> obj[h] = (cols[i] ?? '').trim());
-    obj.GW = +obj.GW || null;
-    obj.PointsFor = parseNumber(obj.PointsFor);
-    obj.PointsAgainst = parseNumber(obj.PointsAgainst);
-    return obj;
-  });
-  return { head, rows };
+  // CSV robusto: gestisce virgolette, virgole decimali "64,5" (se quotate), CRLF
+  const rows = [];
+  let field = "", row = [], inQuotes = false;
+
+  for (let i = 0; i < text.length; i++){
+    const c = text[i];
+    if (c === '"'){
+      if (inQuotes && text[i+1] === '"'){ field += '"'; i++; }
+      else { inQuotes = !inQuotes; }
+    } else if (c === ',' && !inQuotes){
+      row.push(field); field = "";
+    } else if ((c === '\n' || c === '\r') && !inQuotes){
+      if (c === '\r' && text[i+1] === '\n') i++; // CRLF
+      row.push(field); rows.push(row); field = ""; row = [];
+    } else {
+      field += c;
+    }
+  }
+  if (field.length || row.length){ row.push(field); rows.push(row); }
+
+  const head = rows.shift().map(s => s.trim());
+  const objs = rows
+    .filter(r => r.length && r.some(x => x !== "")) // salta righe vuote
+    .map(r => {
+      const obj = {};
+      for (let k = 0; k < head.length; k++) obj[head[k]] = (r[k] ?? '').trim();
+      obj.GW = +obj.GW || null;
+      obj.PointsFor = parseNumber(obj.PointsFor);
+      obj.PointsAgainst = parseNumber(obj.PointsAgainst);
+      return obj;
+    });
+
+  return { head, rows: objs };
 }
+
 
 function parseNumber(s){
   if (s==null) return NaN;
@@ -242,6 +266,10 @@ function render(table, meta, res){
     if(!urlEl.value) return alert("Inserisci l'URL CSV pubblicato.");
     localStorage.setItem(key, urlEl.value);
     const data = await fetchCSV(urlEl.value);
+    const clean = sanitizeRows(data.rows, phaseEl.value);
+const teams = Array.from(new Set(clean.map(r => r.Team))).sort();
+document.getElementById('diag').textContent =
+  `Squadre lette: ${teams.length} — ${teams.join(', ')}`;
     const res = computePower(data, phaseEl.value);
     render(tbody, meta, res);
   }
