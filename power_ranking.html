@@ -29,6 +29,13 @@
     .score,.sub{ font-variant-numeric:tabular-nums }
     .sub{ font-size:12px; color:#415a77 }
     .footer-note{ margin-top:10px; font-size:12px; color:#5a6f8a }
+
+    /* mini-stili per le sottotabelle */
+    .subtable { width:100%; border-collapse:separate; border-spacing:0 6px; margin:10px 0 18px }
+    .subtable th, .subtable td { padding:8px 10px; text-align:left; font-size:13px }
+    .subtable thead th { color:#2b4c7e; border-bottom:1px solid var(--border) }
+    .subtable tbody tr { background:var(--card); border:1px solid var(--border) }
+    .badge { display:inline-block; font-size:11px; padding:2px 6px; border:1px solid var(--border); border-radius:999px; color:#335; margin:6px 0 }
   </style>
 </head>
 <body>
@@ -36,7 +43,7 @@
 <div class="container">
   <div class="config">
     <strong>CONFIG</strong>
-    <div>Incolla l’URL CSV pubblicato del tab <code>Risultati PowerRanking</code>, oppure imposta <code>DEFAULT_CSV_URL</code> nello script.</div>
+    <div>Incolla l’URL CSV pubblicato del tab <code>Risultati PR – Tutte</code>, oppure imposta <code>DEFAULT_CSV_URL</code> nello script.</div>
   </div>
 
   <div class="toolbar">
@@ -66,9 +73,24 @@
     <tbody id="tbody"></tbody>
   </table>
 
-  <div class="footer-note">Score = 50% Forma (ult.5), 30% Media stagionale, 20% Consistenza (inverso std.dev. ult.5), normalizzati 0–100. Nelle prime GW i pesi favoriscono la media.</div>
-<div id="diag" class="footer-note"></div>
-  
+  <div class="footer-note">
+    <strong>Come si calcola lo Score</strong> — <em>0–100</em> come media pesata di:
+    50% <u>Forma</u> (media punti ultime 5), 30% <u>Media stagionale</u> (media di tutte le giornate),
+    20% <u>Consistenza</u> (regolarità: meno oscillazioni nelle ultime 5 ⇒ valore più alto). All’inizio la Media pesa di più.
+  </div>
+  <div id="diag" class="footer-note"></div>
+
+  <!-- Sezioni extra -->
+  <h2 style="margin-top:28px;">Hall of Shame</h2>
+  <div id="shame-worst"></div>
+  <div id="shame-lowwins"></div>
+  <div id="shame-highloss"></div>
+
+  <h2 style="margin-top:28px;">Lucky / Unlucky (mediana di giornata)</h2>
+  <div id="luck-most"></div>
+
+  <h2 style="margin-top:28px;">Statistiche curiose</h2>
+  <div id="fun-facts"></div>
 </div>
 
 <script>
@@ -82,8 +104,8 @@ async function fetchCSV(url){
   return parseCSV(text);
 }
 
+// CSV robusto: gestisce virgolette, virgole decimali, CRLF
 function parseCSV(text){
-  // CSV robusto: gestisce virgolette, virgole decimali "64,5" (se quotate), CRLF
   const rows = [];
   let field = "", row = [], inQuotes = false;
 
@@ -95,7 +117,7 @@ function parseCSV(text){
     } else if (c === ',' && !inQuotes){
       row.push(field); field = "";
     } else if ((c === '\n' || c === '\r') && !inQuotes){
-      if (c === '\r' && text[i+1] === '\n') i++; // CRLF
+      if (c === '\r' && text[i+1] === '\n') i++;
       row.push(field); rows.push(row); field = ""; row = [];
     } else {
       field += c;
@@ -117,7 +139,6 @@ function parseCSV(text){
 
   return { head, rows: objs };
 }
-
 
 function parseNumber(s){
   if (s==null) return NaN;
@@ -159,11 +180,18 @@ function sanitizeRows(rows, phaseFilter){
   const filtered = rows.filter(r => !phaseFilter || r.Phase === phaseFilter)
     .map(r => ({
       GW: +r.GW || null,
-      Team: r.Team?.trim(),
+      Team: (r.Team || '').trim(),
+      Opponent: (r.Opponent || '').trim(),
+      Result: (r.Result || '').trim(),
       PointsFor: parseNumber(r.PointsFor),
       PointsAgainst: parseNumber(r.PointsAgainst)
     }))
-    .filter(r => r.GW && Number.isFinite(r.PointsFor) && Number.isFinite(r.PointsAgainst) && !(r.PointsFor===0 && r.PointsAgainst===0));
+    .filter(r =>
+      r.GW &&
+      Number.isFinite(r.PointsFor) &&
+      Number.isFinite(r.PointsAgainst) &&
+      !(r.PointsFor===0 && r.PointsAgainst===0)
+    );
 
   const seen = new Set();
   const out = [];
@@ -177,6 +205,7 @@ function sanitizeRows(rows, phaseFilter){
   return out;
 }
 
+/* =================== POWER RANKING =================== */
 function computePower(data, phaseFilter){
   const clean = sanitizeRows(data.rows, phaseFilter);
   const byTeam = groupBy(clean, 'Team');
@@ -235,23 +264,129 @@ function computePower(data, phaseFilter){
   return { ranked, maxGW };
 }
 
-function render(table, meta, res){
-  meta.textContent = `Ultima giornata inclusa: GW ${res.maxGW}`;
-  table.innerHTML = res.ranked.map(row=>{
-    const arrow = row.delta>0? '▲' : (row.delta<0? '▼' : '•');
-    const cls = row.delta>0? 'up' : (row.delta<0? 'down' : '');
-    return `<tr>
-      <td class="rank">${row.rank}</td>
-      <td class="team">${row.team}</td>
-      <td class="score">${row.score.toFixed(1)}</td>
-      <td class="delta ${cls}">${arrow} ${row.delta===0? '' : Math.abs(row.delta)}</td>
-      <td class="sub">${row.media.toFixed(0)}</td>
-      <td class="sub">${row.forma.toFixed(0)}</td>
-      <td class="sub">${row.cons.toFixed(0)}</td>
-    </tr>`;
-  }).join('');
+/* =================== HALL OF SHAME / LUCKY / CURIOSITA' =================== */
+function median(arr){
+  const v = arr.filter(Number.isFinite).slice().sort((a,b)=>a-b);
+  const n = v.length; if(!n) return 0;
+  return n%2 ? v[(n-1)/2] : (v[n/2-1]+v[n/2])/2;
 }
 
+function computeHall(clean){
+  const worst = clean.slice().sort((a,b)=> a.PointsFor - b.PointsFor).slice(0,10);
+  const lowWins = clean.filter(r=> r.Result==='W').slice().sort((a,b)=> a.PointsFor - b.PointsFor).slice(0,10);
+  const highLoss = clean.filter(r=> r.Result==='L').slice().sort((a,b)=> b.PointsFor - a.PointsFor).slice(0,10);
+
+  // blowout/closest: consideriamo UNA riga per partita (il vincitore)
+  const winners = clean.filter(r => r.PointsFor > r.PointsAgainst)
+    .map(r => ({...r, margin: r.PointsFor - r.PointsAgainst, total: r.PointsFor + r.PointsAgainst}));
+  const blowouts = winners.slice().sort((a,b)=> b.margin - a.margin).slice(0,5);
+  const closest  = winners.slice().sort((a,b)=> a.margin - b.margin).slice(0,5);
+
+  return { worst, lowWins, highLoss, blowouts, closest };
+}
+
+function computeLuck(clean){
+  // mediana per GW su tutte le squadre
+  const byGW = groupBy(clean, 'GW');
+  const med = new Map();
+  for (const [gw, rows] of byGW.entries()){
+    med.set(+gw, median(rows.map(r=> r.PointsFor)));
+  }
+  // tally per team
+  const tally = new Map();
+  for (const r of clean){
+    const m = med.get(r.GW) ?? 0;
+    const isLucky   = (r.Result==='W' && r.PointsFor <  m) ? 1 : 0;
+    const isUnlucky = (r.Result==='L' && r.PointsFor >  m) ? 1 : 0;
+    if (!isLucky && !isUnlucky) continue;
+    const rec = tally.get(r.Team) || { team:r.Team, lucky:0, unlucky:0, net:0 };
+    rec.lucky   += isLucky;
+    rec.unlucky += isUnlucky;
+    rec.net = rec.lucky - rec.unlucky;
+    tally.set(r.Team, rec);
+  }
+  const arr = Array.from(tally.values());
+  const mostLucky   = arr.slice().sort((a,b)=> (b.net - a.net) || (b.lucky - a.lucky)).slice(0,8);
+  const mostUnlucky = arr.slice().sort((a,b)=> (a.net - b.net) || (b.unlucky - a.unlucky)).slice(0,8);
+  return { mostLucky, mostUnlucky, medByGW: med };
+}
+
+/* =================== RENDER SUBTABELLE =================== */
+function renderTable(containerId, title, rows, cols){
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  const thead = `<thead><tr>${cols.map(c=>`<th>${c.label}</th>`).join('')}</tr></thead>`;
+  const tbody = `<tbody>${
+    rows.map(r => `<tr>${
+      cols.map(c => `<td>${c.format? c.format(r[c.key], r): r[c.key]}</td>`).join('')
+    }</tr>`).join('')
+  }</tbody>`;
+  el.innerHTML = `<div class="badge">${title}</div>
+                  <table class="subtable">${thead}${tbody}</table>`;
+}
+
+function renderHall(h){
+  renderTable('shame-worst', 'Peggiori punteggi',
+    h.worst.map(r=>({gw:r.GW, team:r.Team, pf:r.PointsFor, opp:r.Opponent, pa:r.PointsAgainst})),
+    [
+      {key:'gw',   label:'GW'},
+      {key:'team', label:'Team'},
+      {key:'pf',   label:'PF', format:(v)=> v.toFixed(1)},
+      {key:'opp',  label:'vs'},
+      {key:'pa',   label:'PA', format:(v)=> v.toFixed(1)}
+    ]);
+
+  renderTable('shame-lowwins', 'Vittorie col punteggio più basso',
+    h.lowWins.map(r=>({gw:r.GW, team:r.Team, pf:r.PointsFor, opp:r.Opponent, pa:r.PointsAgainst})),
+    [
+      {key:'gw',   label:'GW'},
+      {key:'team', label:'Team'},
+      {key:'pf',   label:'PF', format:(v)=> v.toFixed(1)},
+      {key:'opp',  label:'vs'},
+      {key:'pa',   label:'PA', format:(v)=> v.toFixed(1)}
+    ]);
+
+  renderTable('shame-highloss', 'Sconfitte col punteggio più alto',
+    h.highLoss.map(r=>({gw:r.GW, team:r.Team, pf:r.PointsFor, opp:r.Opponent, pa:r.PointsAgainst})),
+    [
+      {key:'gw',   label:'GW'},
+      {key:'team', label:'Team'},
+      {key:'pf',   label:'PF', format:(v)=> v.toFixed(1)},
+      {key:'opp',  label:'vs'},
+      {key:'pa',   label:'PA', format:(v)=> v.toFixed(1)}
+    ]);
+}
+
+function renderLuckBox(l){
+  renderTable('luck-most', 'Top lucky / unlucky (netto)',
+    [...l.mostLucky.map(x=>({...x, tag:'Lucky ▲'})), ...l.mostUnlucky.map(x=>({...x, tag:'Unlucky ▼'}))],
+    [
+      {key:'team',   label:'Team'},
+      {key:'tag',    label:'Tipo'},
+      {key:'lucky',  label:'Lucky'},
+      {key:'unlucky',label:'Unlucky'},
+      {key:'net',    label:'Netto'}
+    ]);
+}
+
+function renderFunFacts(h){
+  renderTable('fun-facts', 'Curiosità (blowout & partita più tirata)',
+    [
+      ...h.blowouts.map(r=>({type:'Blowout', gw:r.GW, team:r.Team, pf:r.PointsFor, opp:r.Opponent, pa:r.PointsAgainst, m:(r.PointsFor-r.PointsAgainst)})),
+      ...h.closest.map (r=>({type:'Più tirata', gw:r.GW, team:r.Team, pf:r.PointsFor, opp:r.Opponent, pa:r.PointsAgainst, m:(r.PointsFor-r.PointsAgainst)}))
+    ],
+    [
+      {key:'type', label:'Tipo'},
+      {key:'gw',   label:'GW'},
+      {key:'team', label:'Team'},
+      {key:'pf',   label:'PF', format:(v)=> v.toFixed(1)},
+      {key:'opp',  label:'vs'},
+      {key:'pa',   label:'PA', format:(v)=> v.toFixed(1)},
+      {key:'m',    label:'Margine', format:(v)=> v.toFixed(1)}
+    ]);
+}
+
+/* =================== BOOT =================== */
 (async function(){
   const urlEl = document.getElementById('csvUrl');
   const phaseEl = document.getElementById('phase');
@@ -266,12 +401,25 @@ function render(table, meta, res){
     if(!urlEl.value) return alert("Inserisci l'URL CSV pubblicato.");
     localStorage.setItem(key, urlEl.value);
     const data = await fetchCSV(urlEl.value);
-    const clean = sanitizeRows(data.rows, phaseEl.value);
-const teams = Array.from(new Set(clean.map(r => r.Team))).sort();
-document.getElementById('diag').textContent =
-  `Squadre lette: ${teams.length} — ${teams.join(', ')}`;
+
+    // diagnostica (quante squadre leggo)
+    const cleanForDiag = sanitizeRows(data.rows, phaseEl.value);
+    const teams = Array.from(new Set(cleanForDiag.map(r => r.Team))).sort();
+    document.getElementById('diag').textContent = `Squadre lette: ${teams.length} — ${teams.join(', ')}`;
+
+    // Power Ranking
     const res = computePower(data, phaseEl.value);
     render(tbody, meta, res);
+
+    // Sezioni extra
+    const clean = sanitizeRows(data.rows, phaseEl.value); // rileggo per usare Opponent/Result
+    const hall = computeHall(clean);
+    renderHall(hall);
+
+    const luck = computeLuck(clean);
+    renderLuckBox(luck);
+
+    renderFunFacts(hall);
   }
 
   btn.addEventListener('click', load);
