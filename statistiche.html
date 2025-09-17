@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Statistiche - Lega degli Eroi</title>
+  <link rel="stylesheet" href="classifica.css">
+  <link rel="stylesheet" href="statistiche.css">
+</head>
+<body>
+  <!-- NAVBAR identica al resto del sito -->
+  <nav>
+    <span id="hamburger" class="hamburger">☰</span>
+    <a href="index.html" class="home-icon">🏠</a>
+    <ul class="navbar" id="mainMenu">
+      <li><a href="rose.html">Rose</a></li>
+      <li class="dropdown">
+        <a href="#" class="toggle-submenu">Draft ▾</a>
+        <ul class="submenu">
+          <li><a href="draft_championship.html">🟦 Conf.Championship</a></li>
+          <li><a href="draft_conference.html">🟨 Conf.League</a></li>
+          <li><a href="dinamico-draft.html">🧑‍💼 Draft 2026</a></li>
+        </ul>
+      </li>
+      <li class="dropdown">
+        <a href="#" class="toggle-submenu">Competizioni ▾</a>
+        <ul class="submenu">
+          <li><a href="classifica.html">📊 Classifiche</a></li>
+          <li><a href="playoff.html">🏆 Playoff</a></li>
+          <li><a href="arena.html">🏟️ Higlander</a></li>
+          <li><a href="crashoutcup.html">💥 Crash out Cup</a></li>
+          <li><a href="crashoutplayoff.html">💥 Crash out Cup - Playoff</a></li>
+          <li><a href="statistiche.html"><strong>📈 Statistiche</strong></a></li>
+        </ul>
+      </li>
+      <li><a href="svincolati.html">Svincolati</a></li>
+      <li><a href="chiamate.html">Chiamate</a></li>
+      <li class="dropdown">
+        <a href="#" class="toggle-submenu">Hall of Fame ▾</a>
+        <ul class="submenu">
+          <li><a href="medagliere.html">👑 Albo d'Oro</a></li>
+          <li><a href="albo.html">🏅 Medagliere</a></li>
+        </ul>
+      </li>
+      <li><a href="regolamento.html">Regolamento</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <h1>Statistiche</h1>
+
+    <!-- Toolbar -->
+    <section class="switcher">
+      <input id="csvUrl" type="url" placeholder="Incolla qui l'URL CSV (Risultati PR – Tutte)" style="width:min(95%,800px);max-width:100%;padding:10px;border-radius:6px;border:1px solid #ccc;">
+      <select id="phase" style="padding:10px;border-radius:6px;border:1px solid #ccc;margin-left:8px;">
+        <option value="">Tutte le fasi</option>
+        <option value="Regular">Regular</option>
+        <option value="Playoff">Playoff</option>
+      </select>
+      <button id="loadBtn">Carica / Aggiorna</button>
+      <div id="meta" class="meta-note"></div>
+      <div id="diag" class="meta-note"></div>
+    </section>
+
+    <!-- POWER RANKING (riusa il layout classifica) -->
+    <section id="classifica-container">
+      <table id="tabella-classifica">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Squadra</th>
+            <th>Score</th>
+            <th>Trend</th>
+            <th>Media (stag.)</th>
+            <th>Forma (ult.5)</th>
+            <th>Consistenza</th>
+          </tr>
+        </thead>
+        <tbody id="tbody-pr"></tbody>
+      </table>
+      <p class="small-note">
+        Score (0–100) = 50% <u>Forma</u> (media punti ultime 5), 30% <u>Media stagionale</u> (media di tutte le giornate),
+        20% <u>Consistenza</u> (regolarità: meno oscillazioni nelle ultime 5 ⇒ valore più alto). All’inizio la Media pesa di più.
+      </p>
+    </section>
+
+    <!-- HALL OF SHAME -->
+    <h2>Hall of Shame</h2>
+    <div id="shame-worst"></div>
+    <div id="shame-lowwins"></div>
+    <div id="shame-highloss"></div>
+
+    <!-- SCULATI / SFIGATI -->
+    <h2>Sculati / Sfigati (mediana di giornata)</h2>
+    <div id="luck-most"></div>
+
+    <!-- CURIOSITÀ -->
+    <h2>Statistiche curiose</h2>
+    <div id="fun-facts"></div>
+  </main>
+
+  <!-- Script pagina -->
+  <script src="statistiche.js"></script>
+
+  <!-- Script navbar mobile/dropdown (stesso della tua classifica) -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const hamburger = document.getElementById("hamburger");
+      const mainMenu = document.getElementById("mainMenu");
+      const submenuToggles = document.querySelectorAll(".toggle-submenu");
+      hamburger?.addEventListener("click", () => mainMenu.classList.toggle("show"));
+      submenuToggles.forEach(toggle => {
+        toggle.addEventListener("click", function (e) {
+          e.preventDefault();
+          this.closest(".dropdown").classList.toggle("show");
+        });
+      });
+    });
+  </script>
+</body>
+</html>
