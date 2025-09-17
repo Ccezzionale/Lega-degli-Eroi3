@@ -1,41 +1,25 @@
 /********** CONFIG **********/
 const DEFAULT_CSV_URL =
   "https://docs.google.com/spreadsheets/d/e/2PACX-1vRhEJKfZhVb7V08KI29T_aPTR0hfx7ayIOlFjQn_v-fqgktImjXFg-QAEA6z7w5eyEh2B3w5KLpaRYz/pub?gid=595956835&single=true&output=csv";
-(async function(){
-  const url = DEFAULT_CSV_URL;
-  const data = await fetchCSV(url);
-  const clean = sanitizeRows(data.rows, /* phase */ '');
-  // ... render come già fai
-})();
 
-/* Loghi (opzionale): mappa nome -> url. Se non trovato, prova images/loghi/<slug>.png, poi placeholder. */
+// "" = tutte le fasi, altrimenti "Regular" o "Playoff"
+const PHASE_FILTER = "";
+
+/* Loghi opzionali: mappature manuali (se diverse da img/<slug>.png) */
 const TEAM_LOGOS = {
-  // "Team Bartowski": "images/loghi/team-bartowski.png",
+  // "Team Bartowski": "img/team-bartowski.jpg",
 };
 
+/********** UTILS **********/
 function slug(s){
   return String(s||'')
-    .normalize('NFD').replace(/[\u0300-\u036f]/g,'') // via accenti
+    .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
     .toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
 }
-
 function logoFor(team){
   return TEAM_LOGOS[team] || `img/${slug(team)}.png`;
 }
 
-function logoTag(team, size=22){
-  const src = logoFor(team);
-  return `<img class="mini-logo" src="${src}" alt="${team}"
-           onerror="if(!this.dataset.jpg){ this.dataset.jpg=1; this.src=this.src.replace(/\\.png$/i,'.jpg'); }
-                    else { this.onerror=null; this.src='img/_placeholder.png'; }"
-           style="width:${size}px;height:${size}px">`;
-}
-function nameWithLogo(team){
-  return `<span class="inline-name">${logoTag(team)}<span>${team}</span></span>`;
-}
-
-
-/********** UTILS **********/
 function parseNumber(s){
   if (s==null) return NaN;
   if (typeof s !== 'string') return Number(s);
@@ -51,7 +35,7 @@ async function fetchCSV(url){
 }
 // CSV robusto
 function parseCSV(text){
-  const rows = []; let field="", row=[], inQ=false;
+  const rows=[]; let field="", row=[], inQ=false;
   for (let i=0;i<text.length;i++){
     const c=text[i];
     if(c==='"'){ if(inQ && text[i+1]==='"'){ field+='"'; i++; } else inQ=!inQ; }
@@ -137,12 +121,11 @@ function computePower(clean){
   return { ranked, maxGW };
 }
 
-// in statistiche.js
 function renderPR(res){
   const tbody = document.getElementById('tbody-pr');
   const rows = res.ranked.map(r=>{
-    const arrow = r.delta>0 ? '▲' : (r.delta<0 ? '▼' : '•');
-    const cls   = r.delta>0 ? 'trend up' : (r.delta<0 ? 'trend down' : '');
+    const arrow = r.delta>0?'▲':(r.delta<0?'▼':'•');
+    const cls = r.delta>0?'trend up':(r.delta<0?'trend down':'');
     return `<tr class="riga-classifica">
       <td class="mono"><strong>${r.rank}</strong></td>
       <td>
@@ -153,16 +136,16 @@ function renderPR(res){
         </div>
       </td>
       <td class="mono">${r.score.toFixed(1)}</td>
-      <td class="${cls}">${arrow} ${r.delta===0 ? '' : Math.abs(r.delta)}</td>
+      <td class="${cls}">${arrow} ${r.delta===0?'':Math.abs(r.delta)}</td>
       <td class="mono">${r.media.toFixed(0)}</td>
       <td class="mono">${r.forma.toFixed(0)}</td>
       <td class="mono">${r.cons.toFixed(0)}</td>
     </tr>`;
   }).join('');
   tbody.innerHTML = rows;
-  document.getElementById('meta').textContent = `Ultima giornata inclusa: GW ${res.maxGW}`;
+  const metaTop = document.getElementById('meta-top');
+  if (metaTop) metaTop.textContent = `Ultima giornata inclusa: GW ${res.maxGW}`;
 }
-
 
 /********** HALL OF SHAME / CURIOSITA' **********/
 function median(a){ const v=a.filter(Number.isFinite).slice().sort((x,y)=>x-y); const n=v.length; return n? (n%2?v[(n-1)/2]:(v[n/2-1]+v[n/2])/2):0; }
@@ -180,10 +163,25 @@ function computeHall(clean){
   return { worst, lowWins, highLoss, blowouts, closest };
 }
 
+/* tabella con loghi quando il col has type:'team' */
 function renderTable(containerId, title, rows, cols){
   const el=document.getElementById(containerId); if(!el) return;
+
+  function cellHTML(c, r){
+    const val = r[c.key] ?? '';
+    if (c.type === 'team'){
+      const src = logoFor(val);
+      return `<div class="logo-nome mini">
+                <img src="${src}" alt="${val}"
+                     onerror="this.onerror=null; this.src='img/_placeholder.png'">
+                <span>${val}</span>
+              </div>`;
+    }
+    return c.format ? c.format(val, r) : val;
+  }
+
   const thead=`<thead><tr>${cols.map(c=>`<th>${c.label}</th>`).join('')}</tr></thead>`;
-  const tbody=`<tbody>${rows.map(r=>`<tr>${cols.map(c=>`<td>${c.format?c.format(r[c.key],r):r[c.key]}</td>`).join('')}</tr>`).join('')}</tbody>`;
+  const tbody=`<tbody>${rows.map(r=>`<tr>${cols.map(c=>`<td>${cellHTML(c, r)}</td>`).join('')}</tr>`).join('')}</tbody>`;
   el.innerHTML = `<div class="badge">${title}</div><table class="subtable">${thead}${tbody}</table>`;
 }
 
@@ -191,37 +189,31 @@ function renderHall(h){
   renderTable('shame-worst','Peggiori punteggi',
     h.worst.map(r=>({gw:r.GW, team:r.Team, pf:r.PointsFor, opp:r.Opponent, pa:r.PointsAgainst})),
     [
-      {key:'gw',   label:'GW'},
-      {key:'team', label:'Team', format:v=>nameWithLogo(v)},
-      {key:'pf',   label:'PF',   format:v=>v.toFixed(1)},
-      {key:'opp',  label:'vs',   format:v=>nameWithLogo(v)},
-      {key:'pa',   label:'PA',   format:v=>v.toFixed(1)}
-    ]
-  );
-
+      {key:'gw',label:'GW'},
+      {key:'team',label:'Team', type:'team'},
+      {key:'pf',label:'PF',format:v=>v.toFixed(1)},
+      {key:'opp',label:'vs', type:'team'},
+      {key:'pa',label:'PA',format:v=>v.toFixed(1)}
+    ]);
   renderTable('shame-lowwins','Vittorie col punteggio più basso',
     h.lowWins.map(r=>({gw:r.GW, team:r.Team, pf:r.PointsFor, opp:r.Opponent, pa:r.PointsAgainst})),
     [
-      {key:'gw',   label:'GW'},
-      {key:'team', label:'Team', format:v=>nameWithLogo(v)},
-      {key:'pf',   label:'PF',   format:v=>v.toFixed(1)},
-      {key:'opp',  label:'vs',   format:v=>nameWithLogo(v)},
-      {key:'pa',   label:'PA',   format:v=>v.toFixed(1)}
-    ]
-  );
-
+      {key:'gw',label:'GW'},
+      {key:'team',label:'Team', type:'team'},
+      {key:'pf',label:'PF',format:v=>v.toFixed(1)},
+      {key:'opp',label:'vs', type:'team'},
+      {key:'pa',label:'PA',format:v=>v.toFixed(1)}
+    ]);
   renderTable('shame-highloss','Sconfitte col punteggio più alto',
     h.highLoss.map(r=>({gw:r.GW, team:r.Team, pf:r.PointsFor, opp:r.Opponent, pa:r.PointsAgainst})),
     [
-      {key:'gw',   label:'GW'},
-      {key:'team', label:'Team', format:v=>nameWithLogo(v)},
-      {key:'pf',   label:'PF',   format:v=>v.toFixed(1)},
-      {key:'opp',  label:'vs',   format:v=>nameWithLogo(v)},
-      {key:'pa',   label:'PA',   format:v=>v.toFixed(1)}
-    ]
-  );
+      {key:'gw',label:'GW'},
+      {key:'team',label:'Team', type:'team'},
+      {key:'pf',label:'PF',format:v=>v.toFixed(1)},
+      {key:'opp',label:'vs', type:'team'},
+      {key:'pa',label:'PA',format:v=>v.toFixed(1)}
+    ]);
 }
-
 
 /********** SCULATI / SFIGATI **********/
 function computeLuck(clean){
@@ -247,16 +239,14 @@ function renderLuckBox(l){
   renderTable('luck-most','Sculati / Sfigati (cumulato)',
     l.table,
     [
-      {key:'team',    label:'Team',    format:v=>nameWithLogo(v)},
-      {key:'sculati', label:'Sculati'},
-      {key:'sfigati', label:'Sfigati'},
-      {key:'netto',   label:'Netto'}
-    ]
-  );
+      {key:'team',label:'Team', type:'team'},
+      {key:'sculati',label:'Sculati'},
+      {key:'sfigati',label:'Sfigati'},
+      {key:'netto',label:'Netto'}
+    ]);
 }
 
-
-/********** CURIOSITÀ (blowout & partita più tirata) **********/
+/********** CURIOSITÀ **********/
 function renderFunFacts(h){
   renderTable('fun-facts','Curiosità (blowout & partita più tirata)',
     [
@@ -264,49 +254,31 @@ function renderFunFacts(h){
       ...h.closest.map (r=>({type:'Più tirata', gw:r.GW, team:r.Team, pf:r.PointsFor, opp:r.Opponent, pa:r.PointsAgainst, m:(r.PointsFor-r.PointsAgainst)}))
     ],
     [
-      {key:'type', label:'Tipo'},
-      {key:'gw',   label:'GW'},
-      {key:'team', label:'Team', format:v=>nameWithLogo(v)},
-      {key:'pf',   label:'PF',   format:v=>v.toFixed(1)},
-      {key:'opp',  label:'vs',   format:v=>nameWithLogo(v)},
-      {key:'pa',   label:'PA',   format:v=>v.toFixed(1)},
-      {key:'m',    label:'Margine', format:v=>v.toFixed(1)}
-    ]
-  );
+      {key:'type',label:'Tipo'},
+      {key:'gw',label:'GW'},
+      {key:'team',label:'Team', type:'team'},
+      {key:'pf',label:'PF',format:v=>v.toFixed(1)},
+      {key:'opp',label:'vs', type:'team'},
+      {key:'pa',label:'PA',format:v=>v.toFixed(1)},
+      {key:'m',label:'Margine',format:v=>v.toFixed(1)}
+    ]);
 }
 
+/********** BOOT (auto-load) **********/
+(async function(){
+  const url = DEFAULT_CSV_URL;
+  const data = await fetchCSV(url);
+  const clean = sanitizeRows(data.rows, PHASE_FILTER);
 
-/********** BOOT **********/
-(function(){
-  const urlEl=document.getElementById('csvUrl');
-  const phaseEl=document.getElementById('phase');
-  const btn=document.getElementById('loadBtn');
-  const key='PR_CSV_URL';
-  urlEl.value = localStorage.getItem(key) || DEFAULT_CSV_URL;
+  // Power Ranking
+  const pr = computePower(clean);
+  renderPR(pr);
 
-  async function load(){
-    const url=urlEl.value.trim(); if(!url) return alert('Inserisci URL CSV pubblicato (tab "Risultati PR – Tutte").');
-    localStorage.setItem(key,url);
-    const data=await fetchCSV(url);
-    const clean= sanitizeRows(data.rows, phaseEl.value);
+  // Extra
+  const hall = computeHall(clean);
+  renderHall(hall);
+  renderFunFacts(hall);
 
-    // diagnostica
-    const teams = Array.from(new Set(clean.map(r=>r.Team))).sort();
-    document.getElementById('diag').textContent = `Squadre lette: ${teams.length} — ${teams.join(', ')}`;
-
-    // power ranking
-    const pr = computePower(clean);
-    renderPR(pr);
-
-    // extra
-    const hall = computeHall(clean);
-    renderHall(hall);
-    renderFunFacts(hall); // <-- ora visibile
-
-    const luck = computeLuck(clean);
-    renderLuckBox(luck);
-  }
-
-  btn.addEventListener('click', load);
-  if (urlEl.value) load();
+  const luck = computeLuck(clean);
+  renderLuckBox(luck);
 })();
