@@ -186,34 +186,43 @@ function renderTable(containerId, title, rows, cols){
 }
 
 function renderHall(h){
-  renderTable('shame-worst','Peggiori punteggi',
-    h.worst.map(r=>({gw:r.GW, team:r.Team, pf:r.PointsFor, opp:r.Opponent, pa:r.PointsAgainst})),
+  // Peggiori punteggi (assoluti)
+  renderTable(
+    'shame-worst',
+    'Peggiori punteggi',
+    h.worst.map(r => ({ gw: r.GW, team: r.Team, pf: r.PointsFor })),
     [
-      {key:'gw',label:'GW'},
-      {key:'team',label:'Team', type:'team'},
-      {key:'pf',label:'PF',format:v=>v.toFixed(1)},
-      {key:'opp',label:'vs', type:'team'},
-      {key:'pa',label:'PA',format:v=>v.toFixed(1)}
-    ]);
-  renderTable('shame-lowwins','Vittorie col punteggio più basso',
-    h.lowWins.map(r=>({gw:r.GW, team:r.Team, pf:r.PointsFor, opp:r.Opponent, pa:r.PointsAgainst})),
+      { key:'gw',   label:'GW' },
+      { key:'team', label:'Team', type:'team' }, // <-- logo + nome
+      { key:'pf',   label:'PF', format:v => Number(v).toFixed(1) }
+    ]
+  );
+
+  // Vittorie col punteggio più basso
+  renderTable(
+    'shame-lowwins',
+    'Vittorie col punteggio più basso',
+    h.lowWins.map(r => ({ gw: r.GW, team: r.Team, pf: r.PointsFor })),
     [
-      {key:'gw',label:'GW'},
-      {key:'team',label:'Team', type:'team'},
-      {key:'pf',label:'PF',format:v=>v.toFixed(1)},
-      {key:'opp',label:'vs', type:'team'},
-      {key:'pa',label:'PA',format:v=>v.toFixed(1)}
-    ]);
-  renderTable('shame-highloss','Sconfitte col punteggio più alto',
-    h.highLoss.map(r=>({gw:r.GW, team:r.Team, pf:r.PointsFor, opp:r.Opponent, pa:r.PointsAgainst})),
+      { key:'gw',   label:'GW' },
+      { key:'team', label:'Team', type:'team' },
+      { key:'pf',   label:'PF', format:v => Number(v).toFixed(1) }
+    ]
+  );
+
+  // Sconfitte con punteggio più alto (mostro solo quanto hai fatto tu)
+  renderTable(
+    'shame-highloss',
+    'Sconfitte col punteggio più alto',
+    h.highLoss.map(r => ({ gw: r.GW, team: r.Team, pf: r.PointsFor })),
     [
-      {key:'gw',label:'GW'},
-      {key:'team',label:'Team', type:'team'},
-      {key:'pf',label:'PF',format:v=>v.toFixed(1)},
-      {key:'opp',label:'vs', type:'team'},
-      {key:'pa',label:'PA',format:v=>v.toFixed(1)}
-    ]);
+      { key:'gw',   label:'GW' },
+      { key:'team', label:'Team', type:'team' },
+      { key:'pf',   label:'PF', format:v => Number(v).toFixed(1) }
+    ]
+  );
 }
+
 
 /********** SCULATI / SFIGATI **********/
 function computeLuck(clean){
