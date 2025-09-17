@@ -1,6 +1,12 @@
 /********** CONFIG **********/
 const DEFAULT_CSV_URL =
   "https://docs.google.com/spreadsheets/d/e/2PACX-1vRhEJKfZhVb7V08KI29T_aPTR0hfx7ayIOlFjQn_v-fqgktImjXFg-QAEA6z7w5eyEh2B3w5KLpaRYz/pub?gid=595956835&single=true&output=csv";
+(async function(){
+  const url = DEFAULT_CSV_URL;
+  const data = await fetchCSV(url);
+  const clean = sanitizeRows(data.rows, /* phase */ '');
+  // ... render come già fai
+})();
 
 /* Loghi (opzionale): mappa nome -> url. Se non trovato, prova images/loghi/<slug>.png, poi placeholder. */
 const TEAM_LOGOS = {
